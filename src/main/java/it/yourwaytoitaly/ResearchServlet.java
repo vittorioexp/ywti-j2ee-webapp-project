@@ -1,4 +1,4 @@
-//package?
+//TODO: package name?
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -63,11 +63,12 @@ public class ResearchServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        // Get the location, the category and the desired date of booking
+        // Get the location, the category and the desired date of booking from the HTML page
         String location = req.getParameter("location");
         String category = req.getParameter("category");
         String date = req.getParameter("date");
 
+        //TODO: fix the webpage layout
         // Display the web page
         out.printf("<!DOCTYPE html>%n");
         out.printf("<html lang=\"en\">%n");
@@ -86,12 +87,14 @@ public class ResearchServlet extends HttpServlet {
             rs = stmt.executeQuery(query);
             while (rs.next()) {
                 // Read a row from DB
+                // TODO: fix the parameters that must be read from the DB
                 String id_advertisement = rs.getString("ID_advertisement");
                 String param1 = rs.getString("param1");
                 String param2 = rs.getString("param2");
                 String param2 = rs.getString("param2");
 
                 // If this row satisfies the searching criteria
+                // TODO: fix the condition checking
                 if (param1.equals("blabla")) {
                     // Display the ad
                     out.println("<TR>");
@@ -111,5 +114,22 @@ public class ResearchServlet extends HttpServlet {
 
         res.setContentType("text/html; charset=utf-8");
         PrintWriter out = res.getWriter();
+    }
+
+    /**
+     * Close the connection with the DB
+     *
+     * @param config
+     *            servlet config
+     *
+     * @throws ServletException
+     *             if any problem occurs while executing the servlet.
+     */
+    public void destroy() {
+        try {
+            con.close();
+        } catch(SQLException ex) {
+            System.out.println("ResearchServlet > destroy: SQL exception");
+        }
     }
 }
