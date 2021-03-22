@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ 
+ Copyright 2018 University of Padua, Italy
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+     http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ 
+ Author: Nicola Ferro (ferro@dei.unipd.it)
+ Version: 1.0
+ Since: 1.0
+-->
+
+<web-app id="hello-world-webapp" version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+    
+	<display-name>Hello World Servlet Form</display-name>
+	<description>Example of minimal servlet answering "Hello, [name]!" to a GET or POST form request.</description>
+	
+	<!-- HelloWorldGet Servlet -->  
+	<servlet>
+		<servlet-name>HelloWorldGet</servlet-name>
+		<servlet-class>it.unipd.dei.webapp.HelloWorldFormGetServlet</servlet-class>
+	</servlet>
+	
+	<!-- HelloWorldPost Servlet -->  
+	<servlet>
+		<servlet-name>HelloWorldPost</servlet-name>
+		<servlet-class>it.unipd.dei.webapp.HelloWorldFormPostServlet</servlet-class>
+	</servlet>
+
+	<!-- HelloWorld Servlet for both GET and POST-->
+	<servlet>
+		<servlet-name>HelloWorld</servlet-name>
+		<servlet-class>it.unipd.dei.webapp.HelloWorldFormServlet</servlet-class>
+	</servlet>
+    
+	<!-- Mapping between servlets and URIs -->  
+	<servlet-mapping>
+		<servlet-name>HelloWorldGet</servlet-name>
+		<url-pattern>/helloworld-get</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>HelloWorldPost</servlet-name>
+		<url-pattern>/helloworld-post</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>HelloWorld</servlet-name>
+		<url-pattern>/helloworld</url-pattern>
+	</servlet-mapping>
+</web-app>
