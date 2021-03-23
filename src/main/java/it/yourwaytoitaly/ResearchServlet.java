@@ -18,8 +18,6 @@ import java.sql.*;
 public class ResearchServlet extends HttpServlet {
 
     private Connection con = null;
-    private Statement stmt = null;
-    private ResultSet rs = null;
 
     /**
      * Establish a connection with the DB
@@ -32,10 +30,14 @@ public class ResearchServlet extends HttpServlet {
      */
     public void init(ServletConfig config)
             throws ServletException {
-        String url = "jdbc:odbc:db2"; //TODO: edit url
+        //TODO: add postgresql.jar at the following location: tomcat_home/webapps/<project_name>/WEB-INF/lib
+        // Without this jar file --> ClassNotFoundException
+        String dbName = "jdbc:postgresql://localhost/struts_new"; //TODO: edit dbName
+        String dbDriver = "org.postgresql.Driver";
         try {
-            Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-            con = DriverManager.getConnection(url,"","");
+            Class.forName(dbDriver);
+            Connection con = DriverManager.getConnection(dbName, userName, password);
+            System.out.println("ResearchServlet > init(): Got Connection");
         } catch (ClassNotFoundException ex) {
             System.out.println("ResearchServlet > init(): driver not found!");
             return;
@@ -66,7 +68,7 @@ public class ResearchServlet extends HttpServlet {
         // Get the location, the category and the desired date of booking from the HTML page
         String location = req.getParameter("location");
         String category = req.getParameter("category");
-        String date = req.getParameter("date");
+        String date_of_availability = req.getParameter("date");
 
         //TODO: fix the webpage layout
         // Display the web page
@@ -83,19 +85,30 @@ public class ResearchServlet extends HttpServlet {
 
         // Get data from DB and display it
         try {
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
+            String query = "select * from Advertisement"; //TODO: Fix query
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
             while (rs.next()) {
                 // Read a row from DB
                 // TODO: fix the parameters that must be read from the DB
+                // i need to know the location, the category and the date of availability for each advertisement
+                String ad_location = rs.getString("ID_city");
+                String ad_category = getTypeOfAdvertisement(rs.getString("ID_type"));
+                String ad_date = rs.getString("date");
+
                 String id_advertisement = rs.getString("ID_advertisement");
-                String param1 = rs.getString("param1");
-                String param2 = rs.getString("param2");
-                String param2 = rs.getString("param2");
+                String id_user = rs.getString("ID_user");
+                String id_type = rs.getString("ID_type");
+                String score = rs.getString("score");
+                String price = rs.getString("price");
+                String num_item = rs.getString("num_item");
+
+
 
                 // If this row satisfies the searching criteria
                 // TODO: fix the condition checking
-                if (param1.equals("blabla")) {
+                if (advertisementIsGood(ad_location, ad_category, ad_date)) {
                     // Display the ad
                     out.println("<TR>");
                     out.println("<TD>" + param1 + "</TD>");
@@ -129,7 +142,53 @@ public class ResearchServlet extends HttpServlet {
         try {
             con.close();
         } catch(SQLException ex) {
-            System.out.println("ResearchServlet > destroy: SQL exception");
+            System.out.println("ResearchServlet > destroy(): SQL exception");
         }
+    }
+
+    private String getTypeOfAdvertisement(String ID_type) {
+        try {
+            String query = "SELECT name FROM Type_advertisement WHERE ID_type = " + ID_type; //TODO: Fix query
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+        } catch(Exception e) {
+            System.out.println("ResearchServlet > getTypeOfAdvertisement(): SQL exception");
+        }
+    }
+
+    private boolean advertisementIsGood(String loc, String type, String date) {
+
+    }
+
+
+}
+
+public class Advertisement {
+    private String location = null;
+    private String category = null;
+    private String date = null;
+
+    public Advertisement(String location, String category, String date) {
+        this.location=location;
+        this.category=category;
+        this.date = date;
+    }
+    public String getLocation() {
+        return location;
+    }
+    public String getCategory() {
+        return category;
+    }
+    public String getDate() {
+        return date;
+    }
+    public boolean isCompatibleWith(Advertisement other_ad) {
+        if (other_ad.getLocation().equalsIgnoreCase(location) &&
+            other_ad.getCategory().equalsIgnoreCase(category) &&
+            other_ad.getDate().equalsIgnoreCase(date)) {
+            return true;
+        }
+        return false;
     }
 }
