@@ -70,16 +70,20 @@ public class ResearchServlet extends HttpServlet {
         String category = req.getParameter("category");
         String date_of_availability = req.getParameter("date");
 
+        Advertisement ad_user = new Advertisement(location, category, date_of_availability);
+
         //TODO: fix the webpage layout
         // Display the web page
+        res.setContentType("text/html; charset=utf-8");
+        PrintWriter out = res.getWriter();
         out.printf("<!DOCTYPE html>%n");
         out.printf("<html lang=\"en\">%n");
         out.printf("<head>%n");
         out.printf("<meta charset=\"utf-8\">%n");
-        out.printf("<title>HelloWorld Form Post Servlet  Response</title>%n");
+        out.printf("<title>ResearchServlet web page</title>%n");
         out.printf("</head>%n");
         out.printf("<body>%n");
-        out.printf("<h1>HelloWorld Form Post Servlet Response</h1>%n");
+        out.printf("<h1>ResearchServlet web page</h1>%n");
         out.printf("<hr/>%n");
         out.printf("<table border=1>%n");
 
@@ -97,36 +101,36 @@ public class ResearchServlet extends HttpServlet {
                 String ad_category = getTypeOfAdvertisement(rs.getString("ID_type"));
                 String ad_date = rs.getString("date");
 
-                String id_advertisement = rs.getString("ID_advertisement");
-                String id_user = rs.getString("ID_user");
-                String id_type = rs.getString("ID_type");
-                String score = rs.getString("score");
-                String price = rs.getString("price");
-                String num_item = rs.getString("num_item");
+                Advertisement ad_row = new Advertisement(ad_location, ad_category, ad_date);
 
-
-
-                // If this row satisfies the searching criteria
-                // TODO: fix the condition checking
-                if (advertisementIsGood(ad_location, ad_category, ad_date)) {
-                    // Display the ad
+                // If this row (ad) satisfies the searching criteria, display it
+                if (ad_user.isCompatibleWith(ad_row)) {
+                    String id_advertisement = rs.getString("ID_advertisement");
+                    /*String id_user = rs.getString("ID_user");
+                    String id_type = rs.getString("ID_type");
+                    String score = rs.getString("score");
+                    String price = rs.getString("price");
+                    String num_item = rs.getString("num_item");*/
                     out.println("<TR>");
-                    out.println("<TD>" + param1 + "</TD>");
-                    out.println("<TD>" + param2 + "</TD>");
+                    out.println("<TD>" + id_advertisement + "</TD>");
+                    out.println("<TD>" + ad_location + "</TD>");
+                    out.println("<TD>" + ad_category + "</TD>");
+                    out.println("<TD>" + ad_date + "</TD>");
+                    out.println("</TR>");
                 }
             }
             stmt.close();
         } catch (SQLException ex) {
-            out.println("ResearchServlet > doPost(): SQL exception");
+            System.out.println("ResearchServlet > doPost(): SQL exception");
         }
+        out.printf("</table>%n");
         out.printf("</html>%n");
         out.printf("</body>%n");
         out.printf("</html>%n");
         out.flush();
         out.close();
 
-        res.setContentType("text/html; charset=utf-8");
-        PrintWriter out = res.getWriter();
+
     }
 
     /**
@@ -168,6 +172,9 @@ public class Advertisement {
     private String location = null;
     private String category = null;
     private String date = null;
+    private String id = null;
+    private String score = null;
+    private String price = null;
 
     public Advertisement(String location, String category, String date) {
         this.location=location;
@@ -184,6 +191,7 @@ public class Advertisement {
         return date;
     }
     public boolean isCompatibleWith(Advertisement other_ad) {
+        // TODO: fix the condition checking
         if (other_ad.getLocation().equalsIgnoreCase(location) &&
             other_ad.getCategory().equalsIgnoreCase(category) &&
             other_ad.getDate().equalsIgnoreCase(date)) {
