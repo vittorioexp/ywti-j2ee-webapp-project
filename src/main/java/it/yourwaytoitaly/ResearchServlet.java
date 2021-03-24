@@ -1,4 +1,4 @@
-//TODO: package name?
+package it.yourwaytoitaly;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,13 +37,8 @@ public class ResearchServlet extends HttpServlet {
         try {
             Class.forName(dbDriver);
             Connection con = DriverManager.getConnection(dbName, userName, password);
-            System.out.println("ResearchServlet > init(): Got Connection");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("ResearchServlet > init(): driver not found!");
-            return;
-        } catch (SQLException ex) {
-            System.out.println("ResearchServlet > init(): connection with the database is failed!");
-            return;
+        } catch(Exception e) {
+            e.printStackTrace(System.out);
         }
     }
 
@@ -66,11 +61,12 @@ public class ResearchServlet extends HttpServlet {
             throws ServletException, IOException {
 
         // Get the location, the category and the desired date of booking from the HTML page
-        String location = req.getParameter("location");
-        String category = req.getParameter("category");
-        String date_of_availability = req.getParameter("date");
+        int req_city = getIdCity(req.getParameter("city"));
+        int req_type = getIdType(req.getParameter("type"));
+        Date req_date = req.getParameter("date");
 
-        Advertisement ad_user = new Advertisement(location, category, date_of_availability);
+        // Requested advertisement
+        Ad_req ad_req = new Ad_req(req_city, req_type, req_date);
 
         //TODO: fix the webpage layout
         // Display the web page
@@ -89,39 +85,31 @@ public class ResearchServlet extends HttpServlet {
 
         // Get data from DB and display it
         try {
-            String query = "select * from Advertisement"; //TODO: Fix query
+            String query = "SELECT * FROM Advertisement"; //TODO: Fix query
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-
+            Ad_DB ad_db = null;
             while (rs.next()) {
-                // Read a row from DB
-                // TODO: fix the parameters that must be read from the DB
-                // i need to know the location, the category and the date of availability for each advertisement
-                String ad_location = rs.getString("ID_city");
-                String ad_category = getTypeOfAdvertisement(rs.getString("ID_type"));
-                String ad_date = rs.getString("date");
+                // Read a row from DB > Advertisement
+                int city = rs.getInt("ID_city");
+                int type = rs.getInt("ID_type");
+                Date date_start = rs.getDate("date:start");
+                Date date_end = rs.getDate("date:end");
 
-                Advertisement ad_row = new Advertisement(ad_location, ad_category, ad_date);
+                ad_db = new AD_db(city, type, date_start, date_end);
 
                 // If this row (ad) satisfies the searching criteria, display it
-                if (ad_user.isCompatibleWith(ad_row)) {
-                    String id_advertisement = rs.getString("ID_advertisement");
-                    /*String id_user = rs.getString("ID_user");
-                    String id_type = rs.getString("ID_type");
-                    String score = rs.getString("score");
-                    String price = rs.getString("price");
-                    String num_item = rs.getString("num_item");*/
+                if (areAdvertisementsCompatible(ad_req, ad_db)) {
                     out.println("<TR>");
-                    out.println("<TD>" + id_advertisement + "</TD>");
-                    out.println("<TD>" + ad_location + "</TD>");
-                    out.println("<TD>" + ad_category + "</TD>");
-                    out.println("<TD>" + ad_date + "</TD>");
+                    out.println("<TD>" + city + "</TD>");
+                    out.println("<TD>" + type + "</TD>");
+                    out.println("<TD>" + date_start.toString() + "</TD>");
                     out.println("</TR>");
                 }
             }
             stmt.close();
-        } catch (SQLException ex) {
-            System.out.println("ResearchServlet > doPost(): SQL exception");
+        } catch(Exception e) {
+            e.printStackTrace(System.out);
         }
         out.printf("</table>%n");
         out.printf("</html>%n");
@@ -129,8 +117,6 @@ public class ResearchServlet extends HttpServlet {
         out.printf("</html>%n");
         out.flush();
         out.close();
-
-
     }
 
     /**
@@ -145,58 +131,82 @@ public class ResearchServlet extends HttpServlet {
     public void destroy() {
         try {
             con.close();
-        } catch(SQLException ex) {
-            System.out.println("ResearchServlet > destroy(): SQL exception");
+        } catch(Exception e) {
+            e.printStackTrace(System.out);
         }
     }
 
-    private String getTypeOfAdvertisement(String ID_type) {
+    private int getIdCity(String city) {
         try {
-            String query = "SELECT name FROM Type_advertisement WHERE ID_type = " + ID_type; //TODO: Fix query
+            String query = "SELECT ID_city FROM City WHERE name = " + city;
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-
+            return rs.getInt("ID_city");
         } catch(Exception e) {
-            System.out.println("ResearchServlet > getTypeOfAdvertisement(): SQL exception");
+            e.printStackTrace(System.out);
         }
     }
 
-    private boolean advertisementIsGood(String loc, String type, String date) {
-
-    }
-
-
-}
-
-public class Advertisement {
-    private String location = null;
-    private String category = null;
-    private String date = null;
-    private String id = null;
-    private String score = null;
-    private String price = null;
-
-    public Advertisement(String location, String category, String date) {
-        this.location=location;
-        this.category=category;
-        this.date = date;
-    }
-    public String getLocation() {
-        return location;
-    }
-    public String getCategory() {
-        return category;
-    }
-    public String getDate() {
-        return date;
-    }
-    public boolean isCompatibleWith(Advertisement other_ad) {
-        // TODO: fix the condition checking
-        if (other_ad.getLocation().equalsIgnoreCase(location) &&
-            other_ad.getCategory().equalsIgnoreCase(category) &&
-            other_ad.getDate().equalsIgnoreCase(date)) {
-            return true;
+    private int getIdType(String type) {
+        try {
+            String query = "SELECT ID_type FROM Type_advertisement WHERE name = " + type;
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            return rs.getInt("ID_type");;
+        } catch(Exception e) {
+            e.printStackTrace(System.out);
         }
-        return false;
+    }
+
+    private String typeToString(int ID_type) {
+        try {
+            String query = "SELECT name FROM Type_advertisement WHERE ID_type = " + ID_type;
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            return rs.getString("name");
+        } catch(Exception e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
+    private String cityToString(int ID_city) {
+        try {
+            String query = "SELECT name FROM City WHERE ID_city = " + ID_city;
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            return rs.getString("name");
+        } catch(Exception e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
+    private boolean areAdvertisementsCompatible(Ad_req ad_req, Ad_DB ad_db) {
+        // TODO: fix function areAdvertisementsCompatible
+        return true;
     }
 }
+
+public class Ad_DB {
+    private int city = null;
+    private int type = null;
+    private Date date_start = null;
+    private Date date_end = null;
+    public Ad_DB (int city, int type, Date date_start, Date date_end) {
+        this.city=city;
+        this.type=type;
+        this.date_start=date_start;
+        this.date_end=date_end;
+    }
+}
+
+public class Ad_req {
+    private int city = null;
+    private int type = null;
+    private Date date = null;
+    public Ad_req (int city, int type, Date date) {
+        this.city=city;
+        this.type=type;
+        this.date=date;
+    }
+}
+
