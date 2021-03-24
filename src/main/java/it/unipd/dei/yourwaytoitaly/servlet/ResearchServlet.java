@@ -1,4 +1,4 @@
-package it.yourwaytoitaly;
+package it.unipd.dei.yourwaytoitaly.servlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -66,7 +66,7 @@ public class ResearchServlet extends HttpServlet {
         Date req_date = req.getParameter("date");
 
         // Requested advertisement
-        Ad_req ad_req = new Ad_req(req_city, req_type, req_date);
+        Advertisement ad_req = new Advertisement(req_city, req_type, req_date, req_date);
 
         //TODO: fix the webpage layout
         // Display the web page
@@ -88,15 +88,15 @@ public class ResearchServlet extends HttpServlet {
             String query = "SELECT * FROM Advertisement"; //TODO: Fix query
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-            Ad_DB ad_db = null;
+            Advertisement ad_db;
             while (rs.next()) {
-                // Read a row from DB > Advertisement
+                // Read a row from DB.Advertisement
                 int city = rs.getInt("ID_city");
                 int type = rs.getInt("ID_type");
                 Date date_start = rs.getDate("date:start");
                 Date date_end = rs.getDate("date:end");
 
-                ad_db = new AD_db(city, type, date_start, date_end);
+                ad_db = new Advertisement(city, type, date_start, date_end);
 
                 // If this row (ad) satisfies the searching criteria, display it
                 if (areAdvertisementsCompatible(ad_req, ad_db)) {
@@ -186,27 +186,6 @@ public class ResearchServlet extends HttpServlet {
     }
 }
 
-public class Ad_DB {
-    private int city = null;
-    private int type = null;
-    private Date date_start = null;
-    private Date date_end = null;
-    public Ad_DB (int city, int type, Date date_start, Date date_end) {
-        this.city=city;
-        this.type=type;
-        this.date_start=date_start;
-        this.date_end=date_end;
-    }
-}
 
-public class Ad_req {
-    private int city = null;
-    private int type = null;
-    private Date date = null;
-    public Ad_req (int city, int type, Date date) {
-        this.city=city;
-        this.type=type;
-        this.date=date;
-    }
-}
+
 
