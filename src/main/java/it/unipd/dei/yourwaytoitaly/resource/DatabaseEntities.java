@@ -6,18 +6,7 @@ package it.unipd.dei.yourwaytoitaly.resource;
  * @version 1.0
  * @since 1.0
  */
-/*
-le date sono timestamp
-id = int
-num booking = int
-num_tot_item = int
-state = bool
-score = int
-denomination = string
-email = string
-password = string
-user_name = string
- */
+
 private final class City {
     private final int idCity;
     private final String idCityName;
@@ -157,11 +146,11 @@ private final class Advertisement {
     private final int score;
     private final int price;
     private final int numTotItem;
-    private final Date dateStart;
-    private final Date dateEnd;
+    private final Timestamp dateStart;
+    private final Timestamp dateEnd;
 
     public Advertisement(int idAdvertisement, int idUser, int idType, String description, int score, int price,
-                         int numTotItem, Date dateStart, Date dateEnd) {
+                         int numTotItem, Timestamp dateStart, Timestamp dateEnd) {
         this.idAdvertisement = idAdvertisement;
         this.idUser = idUser;
         this.idType = idType;
@@ -193,10 +182,10 @@ private final class Advertisement {
     public int getNumTotItem() {
         return numTotItem;
     }
-    public Date getDateStart() {
+    public Timestamp getDateStart() {
         return dateStart;
     }
-    public Date getDateEnd() {
+    public Timestamp getDateEnd() {
         return dateEnd;
     }
 }
@@ -220,10 +209,10 @@ private final class TypeAdvertisement {
 private final class Booking {
     private final int idUser;
     private final int idAdvertisement;
-    private final Date dateTime;
+    private final Timestamp dateTime;
     private final int numBooking;
 
-    public Booking(int idUser, int idAdvertisement, Date dateTime, int numBooking) {
+    public Booking(int idUser, int idAdvertisement, Timestamp dateTime, int numBooking) {
         this.idUser = idUser;
         this.idAdvertisement = idAdvertisement;
         this.dateTime = dateTime;
@@ -235,7 +224,7 @@ private final class Booking {
     public int getIdAdvertisement() {
         return idAdvertisement;
     }
-    public Date getDateTime() {
+    public Timestamp getDateTime() {
         return dateTime;
     }
     public int getNumBooking() {
