@@ -6,15 +6,35 @@ package it.unipd.dei.yourwaytoitaly.resource;
  * @version 1.0
  * @since 1.0
  */
-
+/*
+le date sono timestamp
+id = int
+num booking = int
+num_tot_item = int
+state = bool
+score = int
+denomination = string
+email = string
+password = string
+user_name = string
+ */
 private final class City {
     private final int idCity;
     private final String idCityName;
-    // Write constructor, getters and setters
 
+    public City(int idCity, String idCityName) {
+        this.idCity = idCity;
+        this.idCityName = idCityName;
+    }
+    public int getIdCity() {
+        return idCity;
+    }
+    public String getIdCityName() {
+        return idCityName;
+    }
 }
 
-public final class User {
+private final class User {
     private final int idUser;
     private final String email;
     private final String phoneNumber;
@@ -22,32 +42,114 @@ public final class User {
     private final String password;
     private final String userName;
     private final int idCity;
-    // Write constructor, getters and setters
+
+    public User(int idUser, String email, String phoneNumber, String address, String password, String userName, int idCity) {
+        this.idUser = idUser;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.password = password;
+        this.userName = userName;
+        this.idCity = idCity;
+    }
+    public int getIdUser() {
+        return idUser;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    public String getAddress() {
+        return address;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public String getUserName() {
+        return userName;
+    }
+    public int getIdCity() {
+        return idCity;
+    }
 }
 
-public final class Company extends User {
+private final class Company extends User {
     private final int idUser;
     private final String denomination;
-    // Write constructor, getters and setters
+
+    public Company(int idUser, String email, String phoneNumber, String address, String password, String userName,
+                   int idCity, int idUser1, String denomination) {
+        super(idUser, email, phoneNumber, address, password, userName, idCity);
+        this.idUser = idUser1;
+        this.denomination = denomination;
+    }
+    @java.lang.Override
+    public int getIdUser() {
+        return idUser;
+    }
+    public String getDenomination() {
+        return denomination;
+    }
 }
 
-public final class Tourist extends User {
+private final class Tourist extends User {
     private final int idUser;
     private final String surname;
     private final String name;
     private final Date birthDate;
-    // Write constructor, getters and setters
+
+    public Tourist(int idUser, String email, String phoneNumber, String address, String password, String userName,
+                   int idCity, int idUser1, String surname, String name, Date birthDate) {
+        super(idUser, email, phoneNumber, address, password, userName, idCity);
+        this.idUser = idUser1;
+        this.surname = surname;
+        this.name = name;
+        this.birthDate = birthDate;
+    }
+    @java.lang.Override
+    public int getIdUser() {
+        return idUser;
+    }
+    public String getSurname() {
+        return surname;
+    }
+    public String getName() {
+        return name;
+    }
+    public Date getBirthDate() {
+        return birthDate;
+    }
 }
 
-public final class FeedBack {
+private final class FeedBack {
     private final int idUser;
     private final int idAdvertisement;
     private final int rate;
     private final String text;
-    // Write constructor, getters and setters
+
+    public FeedBack(int idUser, int idAdvertisement, int rate, String text) {
+        this.idUser = idUser;
+        this.idAdvertisement = idAdvertisement;
+        this.rate = rate;
+        this.text = text;
+    }
+    public int getIdUser() {
+        return idUser;
+    }
+    public int getIdAdvertisement() {
+        return idAdvertisement;
+    }
+    public int getRate() {
+        return rate;
+    }
+    public String getText() {
+        return text;
+    }
 }
 
-public final class Advertisement {
+private final class Advertisement {
     private final int idAdvertisement;
     private final int idUser;
     private final int idType;
@@ -57,18 +159,86 @@ public final class Advertisement {
     private final int numTotItem;
     private final Date dateStart;
     private final Date dateEnd;
-    // Write constructor, getters and setters
+
+    public Advertisement(int idAdvertisement, int idUser, int idType, String description, int score, int price,
+                         int numTotItem, Date dateStart, Date dateEnd) {
+        this.idAdvertisement = idAdvertisement;
+        this.idUser = idUser;
+        this.idType = idType;
+        this.description = description;
+        this.score = score;
+        this.price = price;
+        this.numTotItem = numTotItem;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+    }
+    public int getIdAdvertisement() {
+        return idAdvertisement;
+    }
+    public int getIdUser() {
+        return idUser;
+    }
+    public int getIdType() {
+        return idType;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public int getScore() {
+        return score;
+    }
+    public int getPrice() {
+        return price;
+    }
+    public int getNumTotItem() {
+        return numTotItem;
+    }
+    public Date getDateStart() {
+        return dateStart;
+    }
+    public Date getDateEnd() {
+        return dateEnd;
+    }
 }
 
-public final class TypeAdvertisement {
+private final class TypeAdvertisement {
     private final int idType;
     private final String name;
-    // Write constructor, getters and setters
+
+    public TypeAdvertisement(int idType, String name) {
+        this.idType = idType;
+        this.name = name;
+    }
+    public int getIdType() {
+        return idType;
+    }
+    public String getName() {
+        return name;
+    }
 }
 
-public final class Booking {
+private final class Booking {
     private final int idUser;
     private final int idAdvertisement;
     private final Date dateTime;
     private final int numBooking;
+
+    public Booking(int idUser, int idAdvertisement, Date dateTime, int numBooking) {
+        this.idUser = idUser;
+        this.idAdvertisement = idAdvertisement;
+        this.dateTime = dateTime;
+        this.numBooking = numBooking;
+    }
+    public int getIdUser() {
+        return idUser;
+    }
+    public int getIdAdvertisement() {
+        return idAdvertisement;
+    }
+    public Date getDateTime() {
+        return dateTime;
+    }
+    public int getNumBooking() {
+        return numBooking;
+    }
 }
