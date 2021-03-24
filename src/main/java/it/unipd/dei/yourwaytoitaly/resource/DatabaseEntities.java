@@ -237,3 +237,24 @@ public final class Booking {
         return numBooking;
     }
 }
+
+public final class Image {
+    private final int idImage;
+    private final String path;
+    private final int idAdvertisement;
+
+    public Image(final int idImage, final String path, final int idAdvertisement) {
+        this.idImage = idImage;
+        this.path = path;
+        this.idAdvertisement = idAdvertisement;
+    }
+    public final int getIdImage() {
+        return idImage;
+    }
+    public final String getPath() {
+        return path;
+    }
+    public final int getIdAdvertisement() {
+        return idAdvertisement;
+    }
+}
