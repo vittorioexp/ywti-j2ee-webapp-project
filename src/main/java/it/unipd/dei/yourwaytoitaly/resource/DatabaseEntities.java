@@ -1,5 +1,7 @@
 package it.unipd.dei.yourwaytoitaly.resource;
 
+import java.util.Date;
+
 /**
  * Class to define the objects which represents the entities in the DB
  * @author Vittorio Esposito
@@ -7,23 +9,23 @@ package it.unipd.dei.yourwaytoitaly.resource;
  * @since 1.0
  */
 
-private final class City {
+public final class City {
     private final int idCity;
     private final String idCityName;
 
-    public City(int idCity, String idCityName) {
+    public City(final int idCity, final String idCityName) {
         this.idCity = idCity;
         this.idCityName = idCityName;
     }
-    public int getIdCity() {
+    public final int getIdCity() {
         return idCity;
     }
-    public String getIdCityName() {
+    public final String getIdCityName() {
         return idCityName;
     }
 }
 
-private final class User {
+public final class User {
     private final int idUser;
     private final String email;
     private final String phoneNumber;
@@ -32,7 +34,8 @@ private final class User {
     private final String userName;
     private final int idCity;
 
-    public User(int idUser, String email, String phoneNumber, String address, String password, String userName, int idCity) {
+    public User(final int idUser, final String email, final String phoneNumber, final String address,
+                final String password, final String userName, final int idCity) {
         this.idUser = idUser;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -41,56 +44,58 @@ private final class User {
         this.userName = userName;
         this.idCity = idCity;
     }
-    public int getIdUser() {
+    public final int getIdUser() {
         return idUser;
     }
-    public String getEmail() {
+    public final String getEmail() {
         return email;
     }
-    public String getPhoneNumber() {
+    public final String getPhoneNumber() {
         return phoneNumber;
     }
-    public String getAddress() {
+    public final String getAddress() {
         return address;
     }
-    public String getPassword() {
+    public final String getPassword() {
         return password;
     }
-    public String getUserName() {
+    public final String getUserName() {
         return userName;
     }
-    public int getIdCity() {
+    public final int getIdCity() {
         return idCity;
     }
 }
 
-private final class Company extends User {
+public final class Company extends User {
     private final int idUser;
     private final String denomination;
 
-    public Company(int idUser, String email, String phoneNumber, String address, String password, String userName,
-                   int idCity, int idUser1, String denomination) {
+    public Company(final int idUser, final String email, final String phoneNumber, final String address,
+                   final String password, final String userName, final int idCity, final int idUser1,
+                   final String denomination) {
         super(idUser, email, phoneNumber, address, password, userName, idCity);
         this.idUser = idUser1;
         this.denomination = denomination;
     }
     @java.lang.Override
-    public int getIdUser() {
+    public final int getIdUser() {
         return idUser;
     }
-    public String getDenomination() {
+    public final String getDenomination() {
         return denomination;
     }
 }
 
-private final class Tourist extends User {
+public final class Tourist extends User {
     private final int idUser;
     private final String surname;
     private final String name;
     private final Date birthDate;
 
-    public Tourist(int idUser, String email, String phoneNumber, String address, String password, String userName,
-                   int idCity, int idUser1, String surname, String name, Date birthDate) {
+    public Tourist(final int idUser, final String email, final String phoneNumber, final String address,
+                   final String password, final String userName, final int idCity, final int idUser1,
+                   final String surname, final String name, final Date birthDate) {
         super(idUser, email, phoneNumber, address, password, userName, idCity);
         this.idUser = idUser1;
         this.surname = surname;
@@ -98,47 +103,47 @@ private final class Tourist extends User {
         this.birthDate = birthDate;
     }
     @java.lang.Override
-    public int getIdUser() {
+    public final int getIdUser() {
         return idUser;
     }
-    public String getSurname() {
+    public final String getSurname() {
         return surname;
     }
-    public String getName() {
+    public final String getName() {
         return name;
     }
-    public Date getBirthDate() {
+    public final Date getBirthDate() {
         return birthDate;
     }
 }
 
-private final class FeedBack {
+public final class FeedBack {
     private final int idUser;
     private final int idAdvertisement;
     private final int rate;
     private final String text;
 
-    public FeedBack(int idUser, int idAdvertisement, int rate, String text) {
+    public FeedBack(final int idUser, final int idAdvertisement, final int rate, final String text) {
         this.idUser = idUser;
         this.idAdvertisement = idAdvertisement;
         this.rate = rate;
         this.text = text;
     }
-    public int getIdUser() {
+    public final int getIdUser() {
         return idUser;
     }
-    public int getIdAdvertisement() {
+    public final int getIdAdvertisement() {
         return idAdvertisement;
     }
-    public int getRate() {
+    public final int getRate() {
         return rate;
     }
-    public String getText() {
+    public final String getText() {
         return text;
     }
 }
 
-private final class Advertisement {
+public final class Advertisement {
     private final int idAdvertisement;
     private final int idUser;
     private final int idType;
@@ -149,8 +154,9 @@ private final class Advertisement {
     private final Timestamp dateStart;
     private final Timestamp dateEnd;
 
-    public Advertisement(int idAdvertisement, int idUser, int idType, String description, int score, int price,
-                         int numTotItem, Timestamp dateStart, Timestamp dateEnd) {
+    public Advertisement(final int idAdvertisement, final int idUser, final int idType, final String description,
+                         final int score, final int price, final int numTotItem, final Timestamp dateStart,
+                         final Timestamp dateEnd) {
         this.idAdvertisement = idAdvertisement;
         this.idUser = idUser;
         this.idType = idType;
@@ -161,73 +167,73 @@ private final class Advertisement {
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
     }
-    public int getIdAdvertisement() {
+    public final int getIdAdvertisement() {
         return idAdvertisement;
     }
-    public int getIdUser() {
+    public final int getIdUser() {
         return idUser;
     }
-    public int getIdType() {
+    public final int getIdType() {
         return idType;
     }
-    public String getDescription() {
+    public final String getDescription() {
         return description;
     }
-    public int getScore() {
+    public final int getScore() {
         return score;
     }
-    public int getPrice() {
+    public final int getPrice() {
         return price;
     }
-    public int getNumTotItem() {
+    public final int getNumTotItem() {
         return numTotItem;
     }
-    public Timestamp getDateStart() {
+    public final Timestamp getDateStart() {
         return dateStart;
     }
-    public Timestamp getDateEnd() {
+    public final Timestamp getDateEnd() {
         return dateEnd;
     }
 }
 
-private final class TypeAdvertisement {
+public final class TypeAdvertisement {
     private final int idType;
     private final String name;
 
-    public TypeAdvertisement(int idType, String name) {
+    public TypeAdvertisement(final int idType, final String name) {
         this.idType = idType;
         this.name = name;
     }
-    public int getIdType() {
+    public final int getIdType() {
         return idType;
     }
-    public String getName() {
+    public final String getName() {
         return name;
     }
 }
 
-private final class Booking {
+public final class Booking {
     private final int idUser;
     private final int idAdvertisement;
     private final Timestamp dateTime;
     private final int numBooking;
 
-    public Booking(int idUser, int idAdvertisement, Timestamp dateTime, int numBooking) {
+    public Booking(final int idUser, final int idAdvertisement, final Timestamp dateTime, final int numBooking) {
         this.idUser = idUser;
         this.idAdvertisement = idAdvertisement;
         this.dateTime = dateTime;
         this.numBooking = numBooking;
     }
-    public int getIdUser() {
+    public final int getIdUser() {
         return idUser;
     }
-    public int getIdAdvertisement() {
+    public final int getIdAdvertisement() {
         return idAdvertisement;
     }
-    public Timestamp getDateTime() {
+    public final Timestamp getDateTime() {
         return dateTime;
     }
-    public int getNumBooking() {
+    public final int getNumBooking() {
         return numBooking;
     }
 }
