@@ -7,8 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
- * Class for accessing the database, copies to/from application data structures,
- * ensures to release the connection, and delegates the management of any exception to the caller class
+ * Class for inserting a User (Tourist or Company) inside the database
  * @author Vittorio Esposito
  * @version 1.0
  * @since 1.0
