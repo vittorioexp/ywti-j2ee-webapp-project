@@ -53,8 +53,8 @@ CREATE TABLE Advertisement (
  score INT NOT NULL,
  price INT NOT NULL,
  num_tot_item INT NOT NULL,
- date:start TIMESTAMP(10) NOT NULL,
- date:end TIMESTAMP(10) NOT NULL
+ date:start TIMESTAMP(20) NOT NULL,
+ date:end TIMESTAMP(20) NOT NULL
 );
 
 ALTER TABLE Advertisement ADD CONSTRAINT PK_Advertisement PRIMARY KEY (ID_advertisement);
