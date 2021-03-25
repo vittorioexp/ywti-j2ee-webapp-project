@@ -53,8 +53,10 @@ CREATE TABLE Advertisement (
  score INT NOT NULL,
  price INT NOT NULL,
  num_tot_item INT NOT NULL,
- date:start TIMESTAMP(20) NOT NULL,
- date:end TIMESTAMP(20) NOT NULL
+ date_start DATE NOT NULL,
+ date_end DATE,
+ time_start TIME(10),
+ time_end TIME(10)
 );
 
 ALTER TABLE Advertisement ADD CONSTRAINT PK_Advertisement PRIMARY KEY (ID_advertisement);
@@ -63,7 +65,8 @@ ALTER TABLE Advertisement ADD CONSTRAINT PK_Advertisement PRIMARY KEY (ID_advert
 CREATE TABLE Booking (
  ID_user INT DEFAULT AUTO_INCREMENT NOT NULL,
  ID_advertisement INT DEFAULT AUTO_INCREMENT NOT NULL,
- date_time TIMESTAMP(20) NOT NULL,
+ date DATE NOT NULL,
+ time TIME(10) NOT NULL,
  num_booking INT NOT NULL
 );
 
