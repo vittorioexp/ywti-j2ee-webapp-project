@@ -1,5 +1,6 @@
 package it.unipd.dei.yourwaytoitaly.resource;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.Calendar;
 
@@ -10,7 +11,7 @@ import java.util.Calendar;
  * @since 1.0
  */
 
-public final class City {
+final class City {
     private final int idCity;
     private final String idCityName;
 
@@ -26,7 +27,7 @@ public final class City {
     }
 }
 
-public final class User {
+class User {
     private final int idUser;
     private final String email;
     private final String phoneNumber;
@@ -68,7 +69,7 @@ public final class User {
     }
 }
 
-public final class Company extends User {
+final class Company extends User {
     private final int idUser;
     private final String denomination;
 
@@ -79,16 +80,12 @@ public final class Company extends User {
         this.idUser = idUser1;
         this.denomination = denomination;
     }
-    @java.lang.Override
-    public final int getIdUser() {
-        return idUser;
-    }
     public final String getDenomination() {
         return denomination;
     }
 }
 
-public final class Tourist extends User {
+final class Tourist extends User {
     private final int idUser;
     private final String surname;
     private final String name;
@@ -103,10 +100,6 @@ public final class Tourist extends User {
         this.name = name;
         this.birthDate = birthDate;
     }
-    @java.lang.Override
-    public final int getIdUser() {
-        return idUser;
-    }
     public final String getSurname() {
         return surname;
     }
@@ -118,7 +111,7 @@ public final class Tourist extends User {
     }
 }
 
-public final class FeedBack {
+class FeedBack {
     private final int idUser;
     private final int idAdvertisement;
     private final int rate;
@@ -144,7 +137,7 @@ public final class FeedBack {
     }
 }
 
-public final class Advertisement {
+final class Advertisement {
     private final int idAdvertisement;
     private final int idUser;
     private final int idType;
@@ -207,7 +200,7 @@ public final class Advertisement {
     }
 }
 
-public final class TypeAdvertisement {
+final class TypeAdvertisement {
     private final int idType;
     private final String name;
 
@@ -223,7 +216,7 @@ public final class TypeAdvertisement {
     }
 }
 
-public final class Booking {
+final class Booking {
     private final int idUser;
     private final int idAdvertisement;
     private final Date date;
@@ -253,7 +246,7 @@ public final class Booking {
     }
 }
 
-public final class Image {
+final class Image {
     private final int idImage;
     private final String path;
     private final int idAdvertisement;
