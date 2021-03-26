@@ -1,8 +1,7 @@
 package it.unipd.dei.yourwaytoitaly.database;
 
-import it.unipd.dei.yourwaytoitaly.resource.DatabaseEntities;
-import java.util.Date;
-import java.util.Calendar;
+import it.unipd.dei.yourwaytoitaly.resource.*;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -53,15 +52,15 @@ public final class CreateUserDatabase {
 
             if (this.user instanceof Tourist) {
                 pstmt = con.prepareStatement(STATEMENT_TOURIST);
-                pstmt.setInt(1, user.getIdUser());
-                pstmt.setString(2, user.getSurname());
-                pstmt.setString(3, user.getName());
-                pstmt.setDate(4, user.getBirthDate());
+                pstmt.setInt(1, ((Tourist) user).getIdUser());
+                pstmt.setString(2, ((Tourist) user).getSurname());
+                pstmt.setString(3, ((Tourist) user).getName());
+                pstmt.setDate(4, ((Tourist) user).getBirthDate());
                 pstmt.execute();
             } else if (this.user instanceof Company) {
                 pstmt = con.prepareStatement(STATEMENT_COMPANY);
-                pstmt.setInt(1, user.getIdUser());
-                pstmt.setString(2, user.getDenomination());
+                pstmt.setInt(1, ((Company) user).getIdUser());
+                pstmt.setString(2, ((Company) user).getDenomination());
                 pstmt.execute();
             }
         } finally {

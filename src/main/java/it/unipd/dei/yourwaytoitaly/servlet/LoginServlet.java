@@ -2,6 +2,7 @@ package it.unipd.dei.yourwaytoitaly.servlet;
 
 import it.unipd.dei.yourwaytoitaly.resource.User;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ import java.sql.*;
  * @since 1.0
  */
 
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends AbstractDatabaseServlet {
 
     private Connection con = null;
 
@@ -32,16 +33,17 @@ public class LoginServlet extends HttpServlet {
      */
     public void init(ServletConfig config)
             throws ServletException {
-        //TODO: add postgresql.jar at the following location: tomcat_home/webapps/<project_name>/WEB-INF/lib
-        // Without this jar file --> ClassNotFoundException
-        String dbName = "jdbc:postgresql://localhost/struts_new"; //TODO: edit dbName
+        /*
+        String dbName = "jdbc:postgresql://localhost/struts_new";
         String dbDriver = "org.postgresql.Driver";
         try {
             Class.forName(dbDriver);
+            String userName = null;
+            String password = null;
             Connection con = DriverManager.getConnection(dbName, userName, password);
         } catch(Exception e) {
             e.printStackTrace(System.out);
-        }
+        }*/
     }
 
     /**
@@ -61,16 +63,15 @@ public class LoginServlet extends HttpServlet {
      */
     public void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-
+        /*
         // Get the location, the category and the desired date of booking from the HTML page
-        String user = getIdCity(req.getParameter("user"));
-        String pass = getIdType(req.getParameter("password"));
-        Date req_date = req.getParameter("date");
+        //String user = getIdCity(req.getParameter("user"));
+        //String pass = getIdType(req.getParameter("password"));
+        //Date req_date = req.getParameter("date");
 
         // Requested advertisement
         // User ad_req = new User(req_city, req_type, req_date, req_date);
 
-        //TODO: fix the webpage layout
         // Display the web page
         res.setContentType("text/html; charset=utf-8");
         PrintWriter out = res.getWriter();
@@ -87,7 +88,7 @@ public class LoginServlet extends HttpServlet {
 
         // Get data from db
         try {
-            String query = "SELECT user_name FROM User WHERE user_name = ? "; //TODO: Fix query
+            String query = "SELECT user_name FROM User WHERE user_name = ? ";
             PreparedStatement pstmt = null;
             pstmt = con.prepareStatement(query);
             pstmt.setString(1, user);
@@ -120,72 +121,22 @@ public class LoginServlet extends HttpServlet {
         out.printf("</html>%n");
         out.flush();
         out.close();
+        */
+
     }
 
     /**
      * Close the connection with the DB
      *
-     * @param config
-     *            servlet config
-     *
      * @throws ServletException
      *             if any problem occurs while executing the servlet.
      */
     public void destroy() {
-        try {
+        /*try {
             con.close();
         } catch(Exception e) {
             e.printStackTrace(System.out);
-        }
-    }
-
-    private int getIdCity(String city) {
-        try {
-            String query = "SELECT ID_city FROM City WHERE name = " + city;
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            return rs.getInt("ID_city");
-        } catch(Exception e) {
-            e.printStackTrace(System.out);
-        }
-    }
-
-    private int getIdType(String type) {
-        try {
-            String query = "SELECT ID_type FROM Type_advertisement WHERE name = " + type;
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            return rs.getInt("ID_type");;
-        } catch(Exception e) {
-            e.printStackTrace(System.out);
-        }
-    }
-
-    private String typeToString(int ID_type) {
-        try {
-            String query = "SELECT name FROM Type_advertisement WHERE ID_type = " + ID_type;
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            return rs.getString("name");
-        } catch(Exception e) {
-            e.printStackTrace(System.out);
-        }
-    }
-
-    private String cityToString(int ID_city) {
-        try {
-            String query = "SELECT name FROM City WHERE ID_city = " + ID_city;
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            return rs.getString("name");
-        } catch(Exception e) {
-            e.printStackTrace(System.out);
-        }
-    }
-
-    private boolean areAdvertisementsCompatible(Ad_req ad_req, Ad_DB ad_db) {
-        // TODO: fix function areAdvertisementsCompatible
-        return true;
+        }*/
     }
 }
 

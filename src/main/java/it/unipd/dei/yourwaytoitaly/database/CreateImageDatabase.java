@@ -1,8 +1,8 @@
 package it.unipd.dei.yourwaytoitaly.database;
 
-import it.unipd.dei.yourwaytoitaly.resource.DatabaseEntities;
-import java.util.Date;
-import java.util.Calendar;
+
+import it.unipd.dei.yourwaytoitaly.resource.Image;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -28,7 +28,7 @@ public final class CreateImageDatabase {
         PreparedStatement pstmt = null;
         try {
             pstmt = con.prepareStatement(STATEMENT);
-            pstmt.setInt(1, image.getIdUser());
+            pstmt.setInt(1, image.getIdImage());
             pstmt.setString(2, image.getPath());
             pstmt.setInt(3, image.getIdAdvertisement());
             pstmt.execute();

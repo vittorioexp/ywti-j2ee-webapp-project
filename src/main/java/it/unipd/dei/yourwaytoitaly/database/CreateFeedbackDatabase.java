@@ -1,8 +1,6 @@
 package it.unipd.dei.yourwaytoitaly.database;
 
-import it.unipd.dei.yourwaytoitaly.resource.DatabaseEntities;
-import java.util.Date;
-import java.util.Calendar;
+import it.unipd.dei.yourwaytoitaly.resource.Feedback;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

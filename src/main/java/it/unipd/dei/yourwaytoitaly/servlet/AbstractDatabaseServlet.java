@@ -1,4 +1,4 @@
-package it.unipd.dei.yourwaytoitaly.database;
+package it.unipd.dei.yourwaytoitaly.servlet;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -8,8 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 import javax.servlet.ServletConfig;
 
@@ -37,7 +35,7 @@ public class AbstractDatabaseServlet extends HttpServlet{
 
         try {
             ct = new InitialContext();
-            ds = (DataSource) ct.lookup ("java:comp/env/jdbc/ytwiDb") // TODO : changing datase context name
+            ds = (DataSource) ct.lookup ("java:comp/env/jdbc/ytwiDb"); //TODO : changing datase context name
 
         } catch (NamingException e) {
             ds = null;

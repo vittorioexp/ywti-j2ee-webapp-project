@@ -1,6 +1,7 @@
 package it.unipd.dei.yourwaytoitaly.database;
 
-import it.unipd.dei.yourwaytoitaly.resource.DatabaseEntities;
+import it.unipd.dei.yourwaytoitaly.resource.User;
+
 import java.util.Date;
 import java.util.Calendar;
 import java.sql.Connection;
