@@ -1,6 +1,7 @@
 package it.unipd.dei.yourwaytoitaly.resource;
 
 import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Class to define the objects which represents the entities in the DB
@@ -151,12 +152,14 @@ public final class Advertisement {
     private final int score;
     private final int price;
     private final int numTotItem;
-    private final Timestamp dateStart;
-    private final Timestamp dateEnd;
+    private final Date dateStart;
+    private final Date dateEnd;
+    private final Time timeStart;
+    private final Time timeEnd;
 
     public Advertisement(final int idAdvertisement, final int idUser, final int idType, final String description,
-                         final int score, final int price, final int numTotItem, final Timestamp dateStart,
-                         final Timestamp dateEnd) {
+                         final int score, final int price, final int numTotItem, final Date dateStart,
+                         final Date dateEnd, final Time timeStart, final Time timeEnd) {
         this.idAdvertisement = idAdvertisement;
         this.idUser = idUser;
         this.idType = idType;
@@ -166,6 +169,8 @@ public final class Advertisement {
         this.numTotItem = numTotItem;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
     }
     public final int getIdAdvertisement() {
         return idAdvertisement;
@@ -188,11 +193,17 @@ public final class Advertisement {
     public final int getNumTotItem() {
         return numTotItem;
     }
-    public final Timestamp getDateStart() {
+    public final Date getDateStart() {
         return dateStart;
     }
-    public final Timestamp getDateEnd() {
+    public final Date getDateEnd() {
         return dateEnd;
+    }
+    public final Time getTimeStart() {
+        return timeStart;
+    }
+    public final Time getTimeEnd() {
+        return timeEnd;
     }
 }
 
@@ -215,13 +226,16 @@ public final class TypeAdvertisement {
 public final class Booking {
     private final int idUser;
     private final int idAdvertisement;
-    private final Timestamp dateTime;
+    private final Date date;
+    private final Time time;
     private final int numBooking;
 
-    public Booking(final int idUser, final int idAdvertisement, final Timestamp dateTime, final int numBooking) {
+    public Booking(final int idUser, final int idAdvertisement,
+                   final Date date, final Time time, final int numBooking) {
         this.idUser = idUser;
         this.idAdvertisement = idAdvertisement;
-        this.dateTime = dateTime;
+        this.date = date;
+        this.time = time;
         this.numBooking = numBooking;
     }
     public final int getIdUser() {
@@ -230,9 +244,10 @@ public final class Booking {
     public final int getIdAdvertisement() {
         return idAdvertisement;
     }
-    public final Timestamp getDateTime() {
-        return dateTime;
+    public final Date getDate() {
+        return date;
     }
+    public final Time getTime() { return time; }
     public final int getNumBooking() {
         return numBooking;
     }

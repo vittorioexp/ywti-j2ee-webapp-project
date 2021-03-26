@@ -2,6 +2,7 @@ package it.unipd.dei.yourwaytoitaly.database;
 
 import it.unipd.dei.yourwaytoitaly.resource.DatabaseEntities;
 import java.util.Date;
+import java.util.Calendar;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -29,8 +30,9 @@ public final class CreateBookingDatabase {
             pstmt = con.prepareStatement(STATEMENT);
             pstmt.setInt(1, booking.getIdUser());
             pstmt.setInt(2, booking.getIdAdvertisement());
-            pstmt.setTimestamp(3, booking.getDateTime());
-            pstmt.setInt(4, booking.getNumBooking());
+            pstmt.setDate(3, booking.getDate());
+            pstmt.setTime(4, booking.getTime());
+            pstmt.setInt(5, booking.getNumBooking());
             pstmt.execute();
         } finally {
             if (pstmt != null) {
