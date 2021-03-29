@@ -1,12 +1,12 @@
 CREATE TABLE City (
- ID_city VARCHAR(20) PRIMARY KEY,
+ ID_city SERIAL PRIMARY KEY,
  name VARCHAR(100) NOT NULL
 );
 
 
 CREATE TABLE Type_advertisement (
- ID_type VARCHAR(50) PRIMARY KEY,
- description VARCHAR(100) 
+ ID_type SERIAL PRIMARY KEY,
+ type VARCHAR(100) 
 );
 
 
@@ -14,28 +14,28 @@ CREATE TABLE Company (
  email_c VARCHAR(100) PRIMARY KEY,
  name_c VARCHAR(100) NOT NULL,
  phone_number VARCHAR(100) NOT NULL,
- address VARCHAR(100) NOT NULL,
+ address VARCHAR(200) NOT NULL,
  password VARCHAR(100) NOT NULL,
- ID_city VARCHAR(20) NOT NULL,
+ ID_city INT NOT NULL,
  FOREIGN KEY (ID_city) REFERENCES City (ID_city)
 );
 
 
 CREATE TABLE Tourist (
- email_t VARCHAR(100)PRIMARY KEY,
+ email_t VARCHAR(100) PRIMARY KEY,
  surname VARCHAR(100) NOT NULL,
  name VARCHAR(100) NOT NULL,
  birth_date DATE NOT NULL,
  phone_number VARCHAR(100) NOT NULL,
- address VARCHAR(100) NOT NULL,
+ address VARCHAR(200) NOT NULL,
  password VARCHAR(100) NOT NULL,
- ID_city VARCHAR(20) NOT NULL,
+ ID_city INT NOT NULL,
  FOREIGN KEY (ID_city) REFERENCES City (ID_city)
 );
 
 
 CREATE TABLE Advertisement (
- ID_advertisement INT PRIMARY KEY,
+ ID_advertisement SERIAL PRIMARY KEY,
  description VARCHAR(10000) NOT NULL,
  score INT NOT NULL,
  price INT NOT NULL,
@@ -45,18 +45,18 @@ CREATE TABLE Advertisement (
  time_start TIME,
  time_end TIME,
  email_c VARCHAR(100) NOT NULL,
- ID_type VARCHAR(50) NOT NULL,
+ ID_type INT NOT NULL,
  FOREIGN KEY (email_c) REFERENCES Company (email_c),
  FOREIGN KEY (ID_type) REFERENCES Type_advertisement (ID_type)
 );
 
 
 CREATE TABLE Booking (
- PRIMARY KEY (email_t,ID_advertisement,date_b),
+ PRIMARY KEY (email_t,ID_advertisement),
  date_b DATE NOT NULL,
- time_b TIME NOT NULL,
+ time_b TIME,
  num_booking INT NOT NULL,
- state VARCHAR(20) NOT NULL,
+ state VARCHAR(30) NOT NULL,
  email_t VARCHAR(100) NOT NULL,
  ID_advertisement INT  NOT NULL,
  FOREIGN KEY (email_t) REFERENCES Tourist (email_t),
@@ -65,7 +65,7 @@ CREATE TABLE Booking (
 
 
 CREATE TABLE FeedBack (
- PRIMARY KEY (email_t,ID_advertisement,date_f),
+ PRIMARY KEY (email_t,ID_advertisement),
  rate INT NOT NULL,
  text_f VARCHAR(10000),
  date_f DATE NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE FeedBack (
 
 
 CREATE TABLE Image (
- ID_image INT PRIMARY KEY,
+ ID_image SERIAL PRIMARY KEY,
  path_i VARCHAR(10000) NOT NULL,
  description_i VARCHAR(100),
  ID_advertisement INT  NOT NULL,
