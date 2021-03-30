@@ -63,7 +63,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
             User u = new SearchUserLoginDatabase( getDataSource().getConnection() , paramValues[0] , paramValues[1]).SearchUserLogin();
             // TODO : create a session with the user just created
             out.close();
-        }catch (NullPointerException){
+        }catch (NullPointerException e){
 
             out.write( "Not valid username or password format" );
 
@@ -74,19 +74,6 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
     }
 
-    /**
-     * Close the connection with the DB
-     *
-     * @throws ServletException
-     *            if any problem occurs while executing the servlet.
-     */
-    public void destroy() {
-        try {
-            con.close();
-        } catch(Exception e) {
-            e.printStackTrace(System.out);
-        }
-    }
 }
 
 
