@@ -60,7 +60,8 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
         while (parameterNames.hasMoreElements()) paramValues = req.getParameterValues(parameterNames.nextElement());
         try {
-            new SearchUserLoginDatabase( getDataSource().getConnection() , paramValues[0] , paramValues[1]).createSession;
+            User u = new SearchUserLoginDatabase( getDataSource().getConnection() , paramValues[0] , paramValues[1]).SearchUserLogin();
+            // TODO : create a session with the user just created
             out.close();
         }catch (NullPointerException){
 

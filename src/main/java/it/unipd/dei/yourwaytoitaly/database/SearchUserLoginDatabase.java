@@ -30,10 +30,8 @@ public final class SearchUserLoginDatabase {
         this.reqPassword = reqPassword;
     }
 
-    public
-
     public User SearchUserLogin() throws SQLException {
-        //TODO: write the function body
+        //TODO: write the code to query the db and get user data
         return null;
     }
 }
