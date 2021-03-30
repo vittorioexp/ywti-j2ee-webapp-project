@@ -11,22 +11,25 @@ import java.sql.Date;
  */
 
 public final class Booking {
-    private final int idUser;
+    private final String emailTourist;
     private final int idAdvertisement;
     private final Date date;
     private final Time time;
     private final int numBooking;
+    private final String state;
 
-    public Booking(final int idUser, final int idAdvertisement,
-                   final Date date, final Time time, final int numBooking) {
-        this.idUser = idUser;
+    public Booking(final String emailTourist, final int idAdvertisement, final Date date, final Time time,
+                   final int numBooking, final String state) {
+        this.emailTourist = emailTourist;
         this.idAdvertisement = idAdvertisement;
         this.date = date;
         this.time = time;
         this.numBooking = numBooking;
+        this.state = state;
     }
-    public final int getIdUser() {
-        return idUser;
+
+    public final String getEmailTourist() {
+        return emailTourist;
     }
     public final int getIdAdvertisement() {
         return idAdvertisement;
@@ -34,8 +37,13 @@ public final class Booking {
     public final Date getDate() {
         return date;
     }
-    public final Time getTime() { return time; }
+    public final Time getTime() {
+        return time;
+    }
     public final int getNumBooking() {
         return numBooking;
+    }
+    public final String getState() {
+        return state;
     }
 }
