@@ -1,5 +1,6 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
+import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
@@ -20,8 +21,7 @@ import javax.servlet.ServletConfig;
 
 public class AbstractDatabaseServlet extends HttpServlet{
 
-    private DataSource ds;
-
+    private DataSource ds = null;
     /**
      * Creating Initial context
      *
@@ -31,15 +31,15 @@ public class AbstractDatabaseServlet extends HttpServlet{
 
     public void init(ServletConfig config) throws ServletException {
 
+        super.init (config);
         InitialContext ct;
 
         try {
             ct = new InitialContext();
-            ds = (DataSource) ct.lookup ("java:comp/env/jdbc/ytwiDb"); //TODO : changing datase context name
+            ds = (DataSource) ct.lookup ("java:comp/env/jdbc/ytwiDb"); //TODO : changing database context name
 
         } catch (NamingException e) {
             ds = null;
-
             throw new ServletException (String.format("[ERROR_AbstractDatabase] Creating Database connection " + e.getMessage()));
 
         }
@@ -55,6 +55,11 @@ public class AbstractDatabaseServlet extends HttpServlet{
 
         ds = null;
 
+    }
+
+
+    public DataSource getDataSource(){
+        return ds;
     }
 
     /**
@@ -91,6 +96,5 @@ public class AbstractDatabaseServlet extends HttpServlet{
         cleaningOperations(st, null, conn);
 
     }
-
 
 }

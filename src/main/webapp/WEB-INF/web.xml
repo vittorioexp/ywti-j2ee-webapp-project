@@ -30,7 +30,7 @@
 	<!-- Login Servlet -->
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
-		<servlet-class>it.yourwaytoitaly.LoginServlet</servlet-class>
+		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.LoginServlet</servlet-class>
 	</servlet>
 
     
