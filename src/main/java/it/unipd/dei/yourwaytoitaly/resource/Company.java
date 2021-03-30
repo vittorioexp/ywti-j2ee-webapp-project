@@ -8,52 +8,40 @@ package it.unipd.dei.yourwaytoitaly.resource;
  */
 
 public final class Company extends User {
-    //private final int idUser;
-    private final String denomination;
-
-    public Company(int idUser, String email, String phoneNumber, String address, String password,
-                   String userName, int idCity, String denomination) {
-        super(idUser, email, phoneNumber, address, password, userName, idCity);
-        this.denomination = denomination;
-    }
 
 
-    @Override
-    public int getIdUser() {
-        return idUser;
+    public Company(final String email, final String password, final String address, final String phoneNumber,
+                   final int idCity, final String name) {
+        super(email, password, name, address, phoneNumber, idCity);
     }
 
     @Override
-    public String getEmail() {
+    public final String getEmail() {
         return email;
     }
 
     @Override
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    @Override
-    public String getAddress() {
-        return address;
-    }
-
-    @Override
-    public String getPassword() {
+    public final String getPassword() {
         return password;
     }
 
     @Override
-    public String getUserName() {
-        return userName;
+    public final String getPhoneNumber() {
+        return phoneNumber;
     }
 
     @Override
-    public int getIdCity() {
+    public final String getAddress() {
+        return address;
+    }
+
+    @Override
+    public final int getIdCity() {
         return idCity;
     }
 
-    public String getDenomination() {
-        return denomination;
+    public final String getName() {
+        return name;
     }
+
 }

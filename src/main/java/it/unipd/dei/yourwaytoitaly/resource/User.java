@@ -8,30 +8,28 @@ package it.unipd.dei.yourwaytoitaly.resource;
  */
 
 public abstract class User {
-    protected int idUser;
     protected String email;
-    protected String phoneNumber;
-    protected String address;
     protected String password;
-    protected String userName;
+    protected final String name;
+    protected String address;
+    protected String phoneNumber;
     protected int idCity;
 
-    public User(final int idUser, final String email, final String phoneNumber, final String address,
-                final String password, final String userName, final int idCity) {
-        this.idUser = idUser;
+    public User(final String email, final String password, final String name, final String address,
+                final String phoneNumber, final int idCity) {
         this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
         this.password = password;
-        this.userName = userName;
+        this.name = name;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
         this.idCity = idCity;
     }
-    public abstract int getIdUser();
+
     public abstract String getEmail();
-    public abstract String getPhoneNumber();
-    public abstract String getAddress();
     public abstract String getPassword();
-    public abstract String getUserName();
+    public abstract String getName();
+    public abstract String getAddress();
+    public abstract String getPhoneNumber();
     public abstract int getIdCity();
 
 }

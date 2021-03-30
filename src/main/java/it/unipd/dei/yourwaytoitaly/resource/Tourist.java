@@ -10,64 +10,50 @@ import java.sql.Date;
  */
 
 public final class Tourist extends User {
-    //private final int idUser;
     private final String surname;
-    private final String name;
     private final Date birthDate;
 
-    public Tourist(int idUser, String email, String phoneNumber, String address, String password, String userName,
-                   int idCity, String surname, String name, Date birthDate) {
-        super(idUser, email, phoneNumber, address, password, userName, idCity);
+    public Tourist(final String email, final String password, final String name, final String address,
+                   final String phoneNumber, final int idCity, final String surname, final Date birthDate) {
+        super(email, password, name, address, phoneNumber, idCity);
         this.surname = surname;
-        this.name = name;
         this.birthDate = birthDate;
     }
 
-
     @Override
-    public int getIdUser() {
-        return idUser;
-    }
-
-    @Override
-    public String getEmail() {
+    public final String getEmail() {
         return email;
     }
 
     @Override
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    @Override
-    public String getAddress() {
-        return address;
-    }
-
-    @Override
-    public String getPassword() {
+    public final String getPassword() {
         return password;
     }
 
     @Override
-    public String getUserName() {
-        return userName;
+    public final String getPhoneNumber() {
+        return phoneNumber;
     }
 
     @Override
-    public int getIdCity() {
+    public final String getAddress() {
+        return address;
+    }
+
+    @Override
+    public final int getIdCity() {
         return idCity;
     }
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public Date getBirthDate() {
+    public final String getSurname() {
+        return surname;
+    }
+
+    public final Date getBirthDate() {
         return birthDate;
     }
 }

@@ -39,8 +39,6 @@ public final class Advertisement {
         this.idType = idType;
     }
 
-
-
     public final int getIdAdvertisement() {
         return idAdvertisement;
     }

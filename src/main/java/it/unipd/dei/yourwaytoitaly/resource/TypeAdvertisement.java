@@ -9,16 +9,16 @@ package it.unipd.dei.yourwaytoitaly.resource;
 
 public final class TypeAdvertisement {
     private final int idType;
-    private final String name;
+    private final String type;
 
-    public TypeAdvertisement(final int idType, final String name) {
+    public TypeAdvertisement(final int idType, final String type) {
         this.idType = idType;
-        this.name = name;
+        this.type = type;
     }
     public final int getIdType() {
         return idType;
     }
-    public final String getName() {
-        return name;
+    public final String getType() {
+        return type;
     }
 }

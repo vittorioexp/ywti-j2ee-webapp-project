@@ -10,11 +10,13 @@ package it.unipd.dei.yourwaytoitaly.resource;
 public final class Image {
     private final int idImage;
     private final String path;
+    private final String description;
     private final int idAdvertisement;
 
-    public Image(final int idImage, final String path, final int idAdvertisement) {
+    public Image(final int idImage, final String path, final String description, final int idAdvertisement) {
         this.idImage = idImage;
         this.path = path;
+        this.description = description;
         this.idAdvertisement = idAdvertisement;
     }
     public final int getIdImage() {
@@ -25,5 +27,8 @@ public final class Image {
     }
     public final int getIdAdvertisement() {
         return idAdvertisement;
+    }
+    public final String getDescription() {
+        return description;
     }
 }

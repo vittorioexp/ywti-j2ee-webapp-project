@@ -1,4 +1,4 @@
-package it.unipd.dei.yourwaytoitaly;
+package it.unipd.dei.yourwaytoitaly.resource;
 
 /**
  * Class to represents both informative and error messages
