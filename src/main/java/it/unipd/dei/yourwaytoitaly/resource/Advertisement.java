@@ -68,7 +68,7 @@ public final class Advertisement {
     public final Time getTimeEnd() {
         return timeEnd;
     }
-    public int getEmailCompany() {
+    public final int getEmailCompany() {
         return emailCompany;
     }
     public final int getIdType() {
