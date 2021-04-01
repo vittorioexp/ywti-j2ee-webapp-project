@@ -24,8 +24,8 @@ public final class CreateAdvertisementDatabase {
     private static final String STATEMENT =
             "INSERT INTO Advertisement (DESCRIPTION, SCORE, PRICE, NUM_TOT_ITEM, " +
                     "DATE_START, DATE_END, TIME_START, TIME_END, email_c, ID_TYPE) " +
-                    "SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, pID_TYPE " +
-                    "FROM Type_advertisement WHERE Type_advertisement.type = ?;";
+                    "SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ID_TYPE " +
+                    "FROM Type_advertisement WHERE Type_advertisement.type = ? RETURNING *;";
 
     /**
      * The connection to the database
@@ -97,11 +97,9 @@ public final class CreateAdvertisementDatabase {
             if (rs != null) {
                 rs.close();
             }
-
             if (pstmt != null) {
                 pstmt.close();
             }
-
             con.close();
         }
 
