@@ -16,10 +16,6 @@ import java.sql.SQLException;
 
 public final class CreateUserDatabase {
 
-    private static final String STATEMENT_USER = "INSERT INTO YWTIDB.User " +
-            "(ID_user, email, phone_number, address, password, user_name, ID_city) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?)";
-
     private static final String STATEMENT_TOURIST = "INSERT INTO YWTIDB.Tourist " +
             "(ID_user, surname, name, birth_date) VALUES (?, ?, ?, ?)";
 
@@ -37,31 +33,22 @@ public final class CreateUserDatabase {
         this.con = con;
         this.user = company;
     }
-    public void createUser() throws SQLException {
+    public User createUser() throws SQLException {
         PreparedStatement pstmt = null;
+        User u = null;
         try {
-            pstmt = con.prepareStatement(STATEMENT_USER);
-            pstmt.setInt(1, user.getIdUser());
-            pstmt.setString(2, user.getEmail());
-            pstmt.setString(3, user.getPhoneNumber());
-            pstmt.setString(4, user.getAddress());
-            pstmt.setString(5, user.getPassword());
-            pstmt.setString(6, user.getUserName());
-            pstmt.setInt(7, user.getIdCity());
-            pstmt.execute();
-
             if (this.user instanceof Tourist) {
-                pstmt = con.prepareStatement(STATEMENT_TOURIST);
+                /*pstmt = con.prepareStatement(STATEMENT_TOURIST);
                 pstmt.setInt(1, ((Tourist) user).getIdUser());
                 pstmt.setString(2, ((Tourist) user).getSurname());
                 pstmt.setString(3, ((Tourist) user).getName());
                 pstmt.setDate(4, ((Tourist) user).getBirthDate());
-                pstmt.execute();
+                pstmt.execute();*/
             } else if (this.user instanceof Company) {
-                pstmt = con.prepareStatement(STATEMENT_COMPANY);
+                /*pstmt = con.prepareStatement(STATEMENT_COMPANY);
                 pstmt.setInt(1, ((Company) user).getIdUser());
                 pstmt.setString(2, ((Company) user).getDenomination());
-                pstmt.execute();
+                pstmt.execute();*/
             }
         } finally {
             if (pstmt != null) {
@@ -69,6 +56,7 @@ public final class CreateUserDatabase {
             }
             con.close();
         }
+        return u;
     }
 }
 
