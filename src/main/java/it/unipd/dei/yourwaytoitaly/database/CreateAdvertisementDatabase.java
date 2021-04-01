@@ -15,28 +15,33 @@ import java.sql.SQLException;
 
 
 public final class CreateAdvertisementDatabase {
-    private static final String STATEMENT = "";
+    private static final String STATEMENT =
+            "INSERT INTO Advertisement (DESCRIPTION, SCORE, PRICE, NUM_TOT_ITEM, " +
+                    "DATE_START, DATE_END, TIME_START, TIME_END, email_c, ID_TYPE) " +
+                    "SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, pID_TYPE " +
+                    "FROM Type_advertisement WHERE Type_advertisement.type = ?;";
     private final Connection con;
     private final Advertisement advertisement;
     public CreateAdvertisementDatabase(final Connection con, final Advertisement advertisement) {
         this.con = con;
         this.advertisement = advertisement;
     }
+
     public void createAdvertisement() throws SQLException {
         PreparedStatement pstmt = null;
         try {
             pstmt = con.prepareStatement(STATEMENT);
-            pstmt.setInt(1, advertisement.getIdAdvertisement());
-            pstmt.setInt(2, advertisement.getIdUser());
-            pstmt.setInt(3, advertisement.getIdType());
-            pstmt.setString(4, advertisement.getDescription());
-            pstmt.setInt(5, advertisement.getScore());
-            pstmt.setInt(6, advertisement.getPrice());
-            pstmt.setInt(7, advertisement.getNumTotItem());
-            pstmt.setDate(8, advertisement.getDateStart());
-            pstmt.setDate(9, advertisement.getDateEnd());
-            pstmt.setTime(10, advertisement.getTimeStart());
-            pstmt.setTime(11, advertisement.getTimeEnd());
+            pstmt.setString(1, advertisement.getDescription());
+            pstmt.setInt(2, advertisement.getScore());
+            pstmt.setInt(3, advertisement.getPrice());
+            pstmt.setInt(4, advertisement.getNumTotItem());
+            pstmt.setDate(5, advertisement.getDateStart());
+            pstmt.setDate(6, advertisement.getDateEnd());
+            pstmt.setTime(7, advertisement.getTimeStart());
+            pstmt.setTime(8, advertisement.getTimeEnd());
+            pstmt.setString(9, advertisement.getEmailCompany());
+            pstmt.setInt(10, advertisement.getIdType());
+
             pstmt.execute();
         } finally {
             if (pstmt != null) {
