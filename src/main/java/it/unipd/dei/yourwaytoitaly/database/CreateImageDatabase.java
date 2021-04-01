@@ -1,10 +1,12 @@
 package it.unipd.dei.yourwaytoitaly.database;
 
 
+import it.unipd.dei.yourwaytoitaly.resource.Booking;
 import it.unipd.dei.yourwaytoitaly.resource.Image;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
@@ -24,19 +26,38 @@ public final class CreateImageDatabase {
         this.con = con;
         this.image = image;
     }
-    public void CreateImage() throws SQLException {
+    public Image CreateImage() throws SQLException {
         PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        // the results of the creation
+        Image i = null;
         try {
             pstmt = con.prepareStatement(STATEMENT);
             pstmt.setInt(1, image.getIdImage());
             pstmt.setString(2, image.getPath());
-            pstmt.setInt(3, image.getIdAdvertisement());
-            pstmt.execute();
-        } finally {
+            pstmt.setString(3, image.getDescription());
+            pstmt.setInt(4, image.getIdAdvertisement());
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                i = new Image(
+                        rs.getInt("ID_image"),
+                        rs.getString("path_i"),
+                        rs.getString("description_i"),
+                        rs.getInt("ID_advertisement"));
+            }
+        }finally {
+            if (rs != null) {
+                rs.close();
+            }
+
             if (pstmt != null) {
                 pstmt.close();
             }
+
             con.close();
         }
+        return i;
     }
 }

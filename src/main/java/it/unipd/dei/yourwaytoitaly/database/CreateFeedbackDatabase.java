@@ -1,8 +1,11 @@
 package it.unipd.dei.yourwaytoitaly.database;
 
 import it.unipd.dei.yourwaytoitaly.resource.Feedback;
+import it.unipd.dei.yourwaytoitaly.resource.Image;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
@@ -22,20 +25,39 @@ public final class CreateFeedbackDatabase {
         this.con = con;
         this.feedback = feedback;
     }
-    public void CreateFeedback() throws SQLException {
+    public Feedback CreateFeedback() throws SQLException {
         PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        // the results of the creation
+        Feedback f = null;
         try {
             pstmt = con.prepareStatement(STATEMENT);
-            pstmt.setInt(1, feedback.getIdUser());
+            pstmt.setString(1, feedback.getEmailTourist());
             pstmt.setInt(2, feedback.getIdAdvertisement());
             pstmt.setInt(3, feedback.getRate());
             pstmt.setString(4, feedback.getText());
-            pstmt.execute();
-        } finally {
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                f = new Feedback(
+                        rs.getString("email_t"),
+                        rs.getInt("ID_advertisement"),
+                        rs.getInt("rate"),
+                        rs.getString("text_f"),
+                        rs.getDate("date_f"));
+            }
+        }finally {
+            if (rs != null) {
+                rs.close();
+            }
+
             if (pstmt != null) {
                 pstmt.close();
             }
+
             con.close();
         }
+        return f;
     }
 }
