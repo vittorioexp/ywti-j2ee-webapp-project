@@ -14,7 +14,9 @@ import java.sql.SQLException;
  */
 
 public final class CreateBookingDatabase {
-    private static final String STATEMENT = ""; //TODO: query is needed here
+    private static final String STATEMENT =
+            "INSERT INTO Booking (email_t, ID_Advertisement, date_b, time_b, num_booking, state) " +
+                    "VALUES (?, ?, ?, ?, ?, ?);";
     private final Connection con;
     private final Booking booking;
     public CreateBookingDatabase(final Connection con, final Booking booking) {
@@ -25,11 +27,13 @@ public final class CreateBookingDatabase {
         PreparedStatement pstmt = null;
         try {
             pstmt = con.prepareStatement(STATEMENT);
-            pstmt.setInt(1, booking.getIdUser());
+            pstmt.setString(1, booking.getEmailTourist());
             pstmt.setInt(2, booking.getIdAdvertisement());
             pstmt.setDate(3, booking.getDate());
             pstmt.setTime(4, booking.getTime());
             pstmt.setInt(5, booking.getNumBooking());
+            pstmt.setString(6, booking.getState());
+
             pstmt.execute();
         } finally {
             if (pstmt != null) {
