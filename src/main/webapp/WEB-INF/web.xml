@@ -27,22 +27,29 @@
 	<display-name>Your Way To Italy</display-name>
 	<description>Booking site for experiences in Italy</description>
 	
-	<!-- Login Servlet -->
+	<!-- Servlets -->
+
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
 		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.LoginServlet</servlet-class>
 	</servlet>
 
+	<servlet>
+		<servlet-name>RegisterServlet</servlet-name>
+		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.RegisterServlet</servlet-class>
+	</servlet>
+
     
-	<!-- Mapping between servlets and URIs -->  
+	<!-- Mapping between servlets and URIs -->
+
 	<servlet-mapping>
 		<servlet-name>LoginServlet</servlet-name>
-		<url-pattern>/Login-get</url-pattern>
+		<url-pattern>/src/login</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
-		<servlet-name>LoginServlet</servlet-name>
-		<url-pattern>/Login-post</url-pattern>
+		<servlet-name>RegisterServlet</servlet-name>
+		<url-pattern>/src/register</url-pattern>
 	</servlet-mapping>
 
 </web-app>

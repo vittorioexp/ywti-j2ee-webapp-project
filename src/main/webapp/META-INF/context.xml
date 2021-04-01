@@ -28,7 +28,7 @@
           type="javax.sql.DataSource"
           factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
           driverClassName="org.postgresql.Driver"
-          url="jdbc:postgresql://localhost:5432/ywti-Database"
+          url="jdbc:postgresql://localhost:5432/ywti-db"
           username="username"
           password="password"
           testOnBorrow="true"
