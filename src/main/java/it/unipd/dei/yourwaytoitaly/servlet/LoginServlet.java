@@ -25,8 +25,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
 
     /**
-     * Manages HTTP GET requests by showing the results (advertisements) of the search
-     * This method is called when the search button is pressed!
+     * Manages HTTP GET requests for login
      *
      * @param req
      *            the request from the client.
@@ -45,9 +44,38 @@ public class LoginServlet extends AbstractDatabaseServlet {
         handleRequest(req, res);
     }
 
+    /**
+     * Manages HTTP POST requests for login
+     * @param req
+     *            the request from the client.
+     * @param res
+     *            the response from the server.
+     *
+     * @throws ServletException
+     *             if any problem occurs while executing the servlet.
+     * @throws IOException
+     *             if any problem occurs while communicating between the client
+     *             and the server.
+     */
+
+
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
         handleRequest(req, res);
     }
+
+    /**
+     * Manages HTTP GET and POST requests for login
+     * @param req
+     *            the request from the client.
+     * @param res
+     *            the response from the server.
+     *
+     * @throws ServletException
+     *             if any problem occurs while executing the servlet.
+     * @throws IOException
+     *             if any problem occurs while communicating between the client
+     *             and the server.
+     */
 
     public void handleRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
 
@@ -61,7 +89,13 @@ public class LoginServlet extends AbstractDatabaseServlet {
         while (parameterNames.hasMoreElements()) paramValues = req.getParameterValues(parameterNames.nextElement());
         try {
             User u = new SearchUserLoginDatabase( getDataSource().getConnection() , paramValues[0] , paramValues[1]).SearchUserLogin();
-            // TODO : create a session with the user just created
+            // TODO : manage login
+
+            if ( u == null )
+                out.write( "Not valid username or password" );
+            else
+                out.write( "Welcome " + u.getName() );
+
             out.close();
         }catch (NullPointerException e){
 
