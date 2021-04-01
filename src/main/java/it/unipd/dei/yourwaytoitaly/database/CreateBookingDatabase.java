@@ -22,7 +22,7 @@ public final class CreateBookingDatabase {
      */
     private static final String STATEMENT =
             "INSERT INTO YWTI.Booking (email_t, ID_Advertisement, date_b, time_b, num_booking, state) " +
-                    "VALUES (?, ?, ?, ?, ?, ?);";
+                    "VALUES (?, ?, ?, ?, ?, ?) RETURNING *;";
     /**
      * The connection to the database
      */
@@ -71,9 +71,13 @@ public final class CreateBookingDatabase {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                b = new Booking(rs.getString("email_t"), rs.getInt("ID_advertisement"),
-                        rs.getDate("date_b"), rs.getTime("time_b"),
-                        rs.getInt("num_booking"), rs.getString("state"));
+                b = new Booking(
+                        rs.getString("email_t"),
+                        rs.getInt("ID_advertisement"),
+                        rs.getDate("date_b"),
+                        rs.getTime("time_b"),
+                        rs.getInt("num_booking"),
+                        rs.getString("state"));
             }
 
         } finally {
