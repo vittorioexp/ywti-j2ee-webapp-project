@@ -20,12 +20,12 @@ public final class Advertisement {
     private final Date dateEnd;
     private final Time timeStart;
     private final Time timeEnd;
-    private final int emailCompany;
+    private final String emailCompany;
     private final int idType;
 
     public Advertisement(final int idAdvertisement, final String description, final int score, final int price,
                          final int numTotItem, final Date dateStart, final Date dateEnd, final Time timeStart,
-                         final Time timeEnd, final int emailCompany, final int idType) {
+                         final Time timeEnd, final String emailCompany, final int idType) {
         this.idAdvertisement = idAdvertisement;
         this.description = description;
         this.score = score;
@@ -66,7 +66,7 @@ public final class Advertisement {
     public final Time getTimeEnd() {
         return timeEnd;
     }
-    public final int getEmailCompany() {
+    public final String getEmailCompany() {
         return emailCompany;
     }
     public final int getIdType() {
