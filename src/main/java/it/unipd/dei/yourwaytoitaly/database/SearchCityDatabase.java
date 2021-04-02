@@ -24,9 +24,13 @@ public class SearchCityDatabase {
      * The SQL statements to be executed
      */
     // TODO: write query to search for ID or for name
-    private static final String STATEMENT_ID = "";
+    private static final String STATEMENT_ID = "SELECT ID_city, name\n" +
+            "FROM CITY\n" +
+            "WHERE ID_city = ?;";
 
-    private static final String STATEMENT_NAME = "";
+    private static final String STATEMENT_NAME = "SELECT ID_city, name\n" +
+            "FROM CITY\n" +
+            "WHERE name = ?;";
 
     /**
      * The connection to the database
