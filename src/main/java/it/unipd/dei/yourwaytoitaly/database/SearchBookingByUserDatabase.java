@@ -60,7 +60,7 @@ public final class SearchBookingByUserDatabase {
      *             if any error occurs while searching for bookings.
      */
 
-    public List<Booking> SearchBookingByUser() throws SQLException {
+    public List<Booking> searchBookingByUser() throws SQLException {
 
         PreparedStatement pstmt = null;
         ResultSet rs = null;

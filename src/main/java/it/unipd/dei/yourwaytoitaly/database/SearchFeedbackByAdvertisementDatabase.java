@@ -11,6 +11,7 @@ import java.util.List;
 /**
  * Class for searching Feedbacks inside the database and returning them in a List:
  * receives the id relating feedback - advertisement (reqIdAdvertisement) and returns a List of Feedbacks
+ *
  * @author Vittorio Esposito
  * @author Marco Basso
  * @author Matteo Piva
@@ -24,9 +25,9 @@ public final class SearchFeedbackByAdvertisementDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "SELECT RATE, TEXT_F, DATE_F, email_t\\n\" +\n" +
-            "            \"FROM FEEDBACK\\n\" +\n" +
-            "            \"WHERE ID_ADVERTISEMENT = ?;";
+    private static final String STATEMENT =
+            "SELECT RATE, TEXT_F, DATE_F, email_t " +
+                    "FROM YWTI.FEEDBACK WHERE ID_ADVERTISEMENT = ?;";
 
     /**
      * The connection to the database
@@ -39,7 +40,7 @@ public final class SearchFeedbackByAdvertisementDatabase {
     private final int reqIdAdvertisement;
 
     /**
-     * Creates a new object for searching products by category.
+     * Creates a new object for searching feedbacks by id advertisement.
      *
      * @param con
      *            the connection to the database.
@@ -52,15 +53,14 @@ public final class SearchFeedbackByAdvertisementDatabase {
     }
 
     /**
-     * Searches feedback by some search parameter.
+     * Searches feedbacks by id advertisement.
      *
      * @return a list of {@code Feedback} objects matching the parameter.
      *
      * @throws SQLException
-     *             if any error occurs while searching for advertisements.
+     *             if any error occurs while searching for feedbacks.
      */
-
-    public List<Feedback> SearchFeedbackByAdvertisement() throws SQLException {
+    public List<Feedback> searchFeedbackByAdvertisement() throws SQLException {
 
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -69,8 +69,6 @@ public final class SearchFeedbackByAdvertisementDatabase {
         final List<Feedback> feedback = new ArrayList<Feedback>();
 
         try {
-
-            //TODO: Inserire la query per la ricerca utilizzando reqIdAdvertisement
             pstmt = con.prepareStatement(STATEMENT);
             pstmt.setInt(1, reqIdAdvertisement);
 

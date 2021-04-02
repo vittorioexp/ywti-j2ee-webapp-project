@@ -13,6 +13,7 @@ import java.util.List;
 /**
  * Class for searching Feedbacks inside the database and returning them in a List:
  * receives the id relating feedback - advertisement (reqIdAdvertisement) and returns a List of Feedbacks
+ *
  * @author Vittorio Esposito
  * @author Marco Basso
  * @author Matteo Piva
@@ -26,9 +27,9 @@ public final class SearchFeedbackByTouristDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "SELECT RATE, TEXT_F, DATE_F, ID_ADVERTISEMENT\n" +
-            "FROM FEEDBACK\n" +
-            "WHERE email_t = ?;";
+    private static final String STATEMENT =
+            "SELECT RATE, TEXT_F, DATE_F, ID_ADVERTISEMENT " +
+            "FROM FEEDBACK WHERE email_t = ?;";
 
     /**
      * The connection to the database
@@ -41,7 +42,7 @@ public final class SearchFeedbackByTouristDatabase {
     private final int reqIdTourist;
 
     /**
-     * Creates a new object for searching products by category.
+     * Creates a new object for searching feedbacks by id tourist.
      *
      * @param con
      *            the connection to the database.
@@ -62,7 +63,7 @@ public final class SearchFeedbackByTouristDatabase {
      *             if any error occurs while searching for advertisements.
      */
 
-    public List<Feedback> SearchFeedbackByTourist() throws SQLException {
+    public List<Feedback> searchFeedbackByTourist() throws SQLException {
 
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -71,7 +72,6 @@ public final class SearchFeedbackByTouristDatabase {
         final List<Feedback> feedback = new ArrayList<Feedback>();
 
         try {
-            //TODO: Dopo aver preparato le query inserire i valori corretti
             pstmt = con.prepareStatement(STATEMENT);
             pstmt.setInt(1, reqIdTourist);
 

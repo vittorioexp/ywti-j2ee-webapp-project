@@ -1,17 +1,19 @@
 package it.unipd.dei.yourwaytoitaly.database;
 
 
-import it.unipd.dei.yourwaytoitaly.resource.User;
 import it.unipd.dei.yourwaytoitaly.resource.Tourist;
+import it.unipd.dei.yourwaytoitaly.resource.User;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Class for searching a User inside the database and returning it as an User object:
- * receives username / email + password (reqUser / reqEmail + reqPassword) and checks if the pair is present in the DB.
+ * receives email + password (reqEmail + reqPassword) and checks if the pair is present in the DB.
  * If so, it returns the corresponding Company / Tourist object, otherwise it returns null.
+ *
  * @author Vittorio Esposito
  * @author Marco Basso
  * @author Matteo Piva
@@ -26,8 +28,9 @@ public final class SearchUserLoginDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "SELECT email_t, surname, name, birth_date, phone_number, address, password, ID_city\n" +
-            "FROM TOURIST\n" +
+    private static final String STATEMENT =
+            "SELECT email_t, surname, name, birth_date, phone_number, address, password, ID_city " +
+            "FROM TOURIST " +
             "WHERE email_t = ? AND password = MD5(?);";
 
     /**
@@ -36,19 +39,19 @@ public final class SearchUserLoginDatabase {
     private final Connection con;
 
     /**
-     * The ID of the advertisement
+     * Email and password requested
      */
     private final String reqEmail;
     private final String reqPassword;
 
 
     /**
-     * Creates a new object for searching tourist.
+     * Creates a new object for searching a user.
      *
      * @param con
      *            the connection to the database.
      * @param reqEmail
-     *            the ID of the tourist
+     *            the email of the user
      * @param reqPassword
      *            the password of the user
      */
@@ -60,12 +63,12 @@ public final class SearchUserLoginDatabase {
     }
 
     /**
-     * Searches user by some search parameter.
+     * Searches user by email and password
      *
-     * @return a tourist objects matching the parameter.
+     * @return a user objects matching the parameter.
      *
      * @throws SQLException
-     *             if any error occurs while searching for advertisements.
+     *             if any error occurs while searching.
      */
 
     public User SearchUserLogin() throws SQLException {
@@ -77,7 +80,6 @@ public final class SearchUserLoginDatabase {
         User user = null;
 
         try {
-            //TODO: Dopo aver preparato le query inserire i valori corretti
             pstmt = con.prepareStatement(STATEMENT);
             pstmt.setString(1, reqEmail);
             pstmt.setString(2, reqPassword);

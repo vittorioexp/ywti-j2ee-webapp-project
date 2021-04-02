@@ -78,7 +78,7 @@ public final class SearchAdvertisementDatabase {
      * @throws SQLException
      *             if any error occurs while searching for advertisements.
      */
-    public List<Advertisement> SearchAdvertisement() throws SQLException {
+    public List<Advertisement> searchAdvertisement() throws SQLException {
 
         PreparedStatement pstmt = null;
         ResultSet rs = null;

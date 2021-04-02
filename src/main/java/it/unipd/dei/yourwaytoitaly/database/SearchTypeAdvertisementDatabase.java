@@ -1,10 +1,12 @@
 package it.unipd.dei.yourwaytoitaly.database;
 
 
-import it.unipd.dei.yourwaytoitaly.resource.City;
 import it.unipd.dei.yourwaytoitaly.resource.TypeAdvertisement;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Class for searching the Type Advertisement inside the database:
@@ -24,12 +26,12 @@ public class SearchTypeAdvertisementDatabase {
     /**
      * The SQL statements to be executed
      */
-    private static final String STATEMENT_ID = "SELECT ID_type, type\n" +
-            "FROM TYPE_ADVERTISEMENT\n" +
+    private static final String STATEMENT_ID = "SELECT ID_type, type " +
+            "FROM TYPE_ADVERTISEMENT " +
             "WHERE ID_type = ?;";
 
-    private static final String STATEMENT_NAME = "SELECT ID_type, type\n" +
-            "FROM TYPE_ADVERTISEMENT\n" +
+    private static final String STATEMENT_NAME = "SELECT ID_type, type " +
+            "FROM TYPE_ADVERTISEMENT " +
             "WHERE type = ?;";
 
     /**
@@ -68,73 +70,54 @@ public class SearchTypeAdvertisementDatabase {
     }
 
     /**
-     * Searches bookings by tourist.
+     * Searches a type advertisement.
      *
-     * @return a list of {@code Booking} objects matching with the Id of the advertisement.
-     * @throws SQLException if any error occurs while searching for bookings.
+     * @return a TypeAdvertisement objects matching with the Id of the type advertisement.
+     * @throws SQLException if any error occurs while searching for a type advertisement.
      */
-
     public TypeAdvertisement searchTypeAdvertisement() throws SQLException {
 
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         TypeAdvertisement typeAdvertisement = null;
 
-        if(this.idType != -1) {
+        try {
+            if (this.idType != -1) {
+                    pstmt = con.prepareStatement(STATEMENT_ID);
+                    pstmt.setInt(1, idType);
 
-            try {
+                    rs = pstmt.executeQuery();
 
-                pstmt = con.prepareStatement(STATEMENT_ID);
-                pstmt.setInt(1, idType);
+                    while (rs.next()) {
+                        typeAdvertisement = new TypeAdvertisement(
+                                rs.getInt("ID_type"),
+                                rs.getString("type"));
+                    }
+            } else {
+                    pstmt = con.prepareStatement(STATEMENT_NAME);
+                    pstmt.setString(1, type);
 
-                rs = pstmt.executeQuery();
+                    rs = pstmt.executeQuery();
 
-                while (rs.next()) {
-                    typeAdvertisement = new TypeAdvertisement(
-                            rs.getInt("ID_type"),
-                            rs.getString("type"));
-                }
-            } finally {
-                if (rs != null) {
-                    rs.close();
-                }
-
-                if (pstmt != null) {
-                    pstmt.close();
-                }
-
-                con.close();
+                    while (rs.next()) {
+                        typeAdvertisement = new TypeAdvertisement(
+                                rs.getInt("ID_city"),
+                                rs.getString("name"));
+                    }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
             }
 
-            return typeAdvertisement;
-        }
-        else{
-            try {
-
-                pstmt = con.prepareStatement(STATEMENT_NAME);
-                pstmt.setString(1, type);
-
-                rs = pstmt.executeQuery();
-
-                while (rs.next()) {
-                    typeAdvertisement = new TypeAdvertisement(
-                            rs.getInt("ID_city"),
-                            rs.getString("name"));
-                }
-            } finally {
-                if (rs != null) {
-                    rs.close();
-                }
-
-                if (pstmt != null) {
-                    pstmt.close();
-                }
-
-                con.close();
+            if (pstmt != null) {
+                pstmt.close();
             }
 
-            return typeAdvertisement;
+            con.close();
         }
+
+        return typeAdvertisement;
     }
 
 }

@@ -61,7 +61,7 @@ public final class CreateImageDatabase {
      * @throws SQLException
      *             if any error occurs while creating images.
      */
-    public Image CreateImage() throws SQLException {
+    public Image createImage() throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         // the results of the creation

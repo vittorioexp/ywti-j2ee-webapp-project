@@ -58,7 +58,7 @@ public final class CreateFeedbackDatabase {
      * @throws SQLException
      *             if any error occurs while creating feedbacks.
      */
-    public Feedback CreateFeedback() throws SQLException {
+    public Feedback createFeedback() throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         // the results of the creation
