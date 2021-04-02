@@ -7,10 +7,145 @@
     <groupId>it.yourwaytoitaly</groupId>
     <artifactId>ywti-wa2021</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
+    <!-- Project description elements -->
+    <name>Your Way To Italy</name>
+    <description>Your Way To Italy description.</description>
+    <url>https://bitbucket.org/upd-dei-stud-prj/ywti-wa2021</url>
+    <inceptionYear>2021</inceptionYear>
+    <developers>
+        <developer>
+            <id>ve</id>
+            <name>Vittorio Esposito</name>
+        </developer>
+        <developer>
+            <id>mb</id>
+            <name>Marco Basso</name>
+        </developer>
+        <developer>
+            <id>mp</id>
+            <name>Matteo Piva</name>
+        </developer>
+        <developer>
+            <id>fg</id>
+            <name>Francesco Giurisato</name>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>Department of Information Engineering (DEI), University of Padua, Italy</name>
+        <url>http://www.dei.unipd.it/en/</url>
+    </organization>
+
+
+    <!-- Build settings -->
+
+    <!-- Specifies the encoding to be used for project source files -->
     <properties>
-        <maven.compiler.source>16</maven.compiler.source>
-        <maven.compiler.target>16</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <!-- Configuration of the default build lifecycle -->
+    <build>
+        <defaultGoal>compile</defaultGoal>
+
+        <!-- source code folder -->
+        <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+
+        <!-- compiled code folder -->
+        <directory>${basedir}/target</directory>
+
+        <!-- name of the generated package -->
+        <finalName>${project.artifactId}-${project.version}</finalName>
+
+        <!-- configuration of the plugins for the different goals -->
+        <plugins>
+
+            <!-- compiler plugin: source and target code is for Java 1.8 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <!-- javadoc plugin: output in the javadoc folder -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <reportOutputDirectory>${basedir}/javadoc</reportOutputDirectory>
+                    <author>true</author>
+                    <nosince>false</nosince>
+                    <show>protected</show>
+                    <source>8</source>
+                </configuration>
+            </plugin>
+
+            <!-- packager plugin: create a WAR file to be deployed -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <webXml>${basedir}/src/main/webapp/WEB-INF/web.xml</webXml>
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+    <!-- Dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.taglibs</groupId>
+            <artifactId>taglibs-standard-spec</artifactId>
+            <version>1.2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.taglibs</groupId>
+            <artifactId>taglibs-standard-impl</artifactId>
+            <version>1.2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.taglibs</groupId>
+            <artifactId>taglibs-standard-jstlel</artifactId>
+            <version>1.2.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
+            <version>9.0.7</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
 </project>

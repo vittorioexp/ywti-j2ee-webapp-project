@@ -12,6 +12,7 @@ import java.sql.Date;
 
 public final class Advertisement {
     private final int idAdvertisement;
+    private final String title;
     private final String description;
     private final int score;
     private final int price;
@@ -23,10 +24,11 @@ public final class Advertisement {
     private final String emailCompany;
     private final int idType;
 
-    public Advertisement(final int idAdvertisement, final String description, final int score, final int price,
+    public Advertisement(final int idAdvertisement, final String title, final String description, final int score, final int price,
                          final int numTotItem, final Date dateStart, final Date dateEnd, final Time timeStart,
                          final Time timeEnd, final String emailCompany, final int idType) {
         this.idAdvertisement = idAdvertisement;
+        this.title = title;
         this.description = description;
         this.score = score;
         this.price = price;
@@ -42,6 +44,7 @@ public final class Advertisement {
     public final int getIdAdvertisement() {
         return idAdvertisement;
     }
+    public final String getTitle() { return title; }
     public final String getDescription() {
         return description;
     }
