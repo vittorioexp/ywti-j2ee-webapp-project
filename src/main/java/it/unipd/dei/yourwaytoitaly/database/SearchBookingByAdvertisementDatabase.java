@@ -27,7 +27,7 @@ public final class SearchBookingByAdvertisementDatabase {
     private static final String STATEMENT =
             "SELECT DATE_B, TIME_B, num_booking, state, email_t\n" +
             "\tFROM YWTI.BOOKING\n" +
-            "\tWHERE ID_advertisement = ? ";
+            "\tWHERE ID_advertisement = ? ;";
 
     /**
      * The connection to the database

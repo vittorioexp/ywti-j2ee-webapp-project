@@ -24,7 +24,9 @@ public final class SearchFeedbackDatabaseByAdvertisement {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = ""; //TODO: query needed
+    private static final String STATEMENT = "SELECT RATE, TEXT_F, DATE_F, email_t\\n\" +\n" +
+            "            \"FROM FEEDBACK\\n\" +\n" +
+            "            \"WHERE ID_ADVERTISEMENT = ?;";
 
     /**
      * The connection to the database

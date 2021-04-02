@@ -2,6 +2,7 @@ package it.unipd.dei.yourwaytoitaly.database;
 
 import it.unipd.dei.yourwaytoitaly.resource.Feedback;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +26,9 @@ public final class SearchFeedbackDatabaseByTourist {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "";//TODO: query needed
+    private static final String STATEMENT = "SELECT RATE, TEXT_F, DATE_F, ID_ADVERTISEMENT\n" +
+            "FROM FEEDBACK\n" +
+            "WHERE email_t = ?;";
 
     /**
      * The connection to the database
