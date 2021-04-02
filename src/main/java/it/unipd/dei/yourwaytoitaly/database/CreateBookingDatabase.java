@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 /**
  * Class for inserting a Booking inside the database
+ *
  * @author Vittorio Esposito
  * @author Marco Basso
  * @author Matteo Piva

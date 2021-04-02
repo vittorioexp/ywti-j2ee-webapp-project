@@ -57,7 +57,7 @@ public final class SearchBookingByAdvertisementDatabase {
      * @throws SQLException if any error occurs while searching for bookings.
      */
 
-    public List<Booking> SearchBookingByUser() throws SQLException {
+    public List<Booking> SearchBookingByAdvertisement() throws SQLException {
 
         PreparedStatement pstmt = null;
         ResultSet rs = null;

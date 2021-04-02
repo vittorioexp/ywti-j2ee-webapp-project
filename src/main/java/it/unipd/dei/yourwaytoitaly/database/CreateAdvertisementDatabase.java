@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 /**
  * Class for inserting an Advertisement inside the database
+ *
  * @author Vittorio Esposito
  * @author Marco Basso
  * @author Matteo Piva

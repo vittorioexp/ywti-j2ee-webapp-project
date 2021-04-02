@@ -10,7 +10,8 @@ import java.sql.SQLException;
 
 
 /**
- * Class for inserting an Image inside the database (i.e. at the moment of inserting an Advertisement)
+ * Class for inserting an Image inside the database
+ *
  * @author Vittorio Esposito
  * @author Marco Basso
  * @author Matteo Piva
@@ -27,7 +28,7 @@ public final class CreateImageDatabase {
      */
     private static final String STATEMENT =
             "INSERT INTO YWTI.IMAGE (path_i, description_i,ID_Advertisement) " +
-            "VALUES (?, ?, ?);";
+            "VALUES (?, ?, ?) RETURNING *;";
 
     /**
      * The connection to the database
@@ -67,7 +68,6 @@ public final class CreateImageDatabase {
         Image i = null;
         try {
             pstmt = con.prepareStatement(STATEMENT);
-            //pstmt.setInt(1, image.getIdImage());
             pstmt.setString(1, image.getPath());
             pstmt.setString(2, image.getDescription());
             pstmt.setInt(3, image.getIdAdvertisement());

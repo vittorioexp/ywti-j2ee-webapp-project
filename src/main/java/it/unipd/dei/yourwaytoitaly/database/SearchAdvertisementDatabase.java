@@ -10,8 +10,8 @@ import java.util.List;
 
 /**
  * Class for searching Advertisements inside the database and returning them in a List:
- * receives the search parameters requested by the user for an advertisement
- * and returns a List containing all the Advertisement compatible with what the user requested.
+ * receives the search parameters requested by the user and returns a List containing
+ * all the Advertisement compatible with what the user requested.
  * If there are no compatible Advertisement, it returns null.
  *
  * @author Vittorio Esposito
@@ -28,14 +28,14 @@ public final class SearchAdvertisementDatabase {
      * The SQL statement to be executed
      */
     private static final String STATEMENT =
-            "SELECT ADVERTISEMENT.TITLE, ADVERTISEMENT.DESCRIPTION, ADVERTISEMENT.SCORE, ADVERTISEMENT.PRICE, ADVERTISEMENT.NUM_TOT_ITEM\n" +
-                    "\tFROM YWTI.ADVERTISEMENT\n" +
-                    "\t\tJOIN YWTI.COMPANY ON COMPANY.EMAIL_C = ADVERTISEMENT.EMAIL_C\n" +
-                    "\t\tJOIN YWTI.CITY ON CITY.ID_CITY = COMPANY.ID_CITY\n" +
-                    "\t\tJOIN YWTI.TYPE_ADVERTISEMENT ON TYPE_ADVERTISEMENT.ID_Type = ADVERTISEMENT.ID_Type\n" +
-                    "\tWHERE \tCITY.NAME = ? AND\n" +
-                    "\t\t\tTYPE_ADVERTISEMENT.TYPE = ? AND \n" +
-                    "\t\t\tDATE_START >= ? AND\n";
+            "SELECT ADVERTISEMENT.TITLE, ADVERTISEMENT.DESCRIPTION, ADVERTISEMENT.SCORE, ADVERTISEMENT.PRICE, ADVERTISEMENT.NUM_TOT_ITEM " +
+                    "FROM YWTI.ADVERTISEMENT " +
+                    "JOIN YWTI.COMPANY ON COMPANY.EMAIL_C = ADVERTISEMENT.EMAIL_C " +
+                    "JOIN YWTI.CITY ON CITY.ID_CITY = COMPANY.ID_CITY " +
+                    "JOIN YWTI.TYPE_ADVERTISEMENT ON TYPE_ADVERTISEMENT.ID_Type = ADVERTISEMENT.ID_Type " +
+                    "WHERE CITY.NAME = ? AND " +
+                    "TYPE_ADVERTISEMENT.TYPE = ? AND " +
+                    "DATE_START >= ? AND";
 
     /**
      * The connection to the database

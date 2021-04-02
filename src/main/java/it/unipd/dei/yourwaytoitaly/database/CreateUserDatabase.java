@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 /**
  * Class for inserting a User (Tourist or Company) inside the database
+ *
  * @author Vittorio Esposito
  * @author Marco Basso
  * @author Matteo Piva
@@ -72,7 +73,7 @@ public final class CreateUserDatabase {
     }
 
     /**
-     * Creates a new user (company/tourinst).
+     * Creates a new user (company/tourist).
      *
      * @return the just created user
      *

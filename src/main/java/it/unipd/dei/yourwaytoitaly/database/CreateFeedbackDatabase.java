@@ -33,7 +33,7 @@ public final class CreateFeedbackDatabase {
     private final Connection con;
 
     /**
-     * The booking to create
+     * The feedback to create
      */
     private final Feedback feedback;
 
