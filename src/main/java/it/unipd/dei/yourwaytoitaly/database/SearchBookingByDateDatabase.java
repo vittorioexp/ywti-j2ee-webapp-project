@@ -11,6 +11,9 @@ import java.util.List;
  * receives the id related to the user who made the request to show the Bookings related to his
  * account (reqIdUser) and returns a List containing all the Bookings with the same idUser and sorted by dateTime
  * @author Vittorio Esposito
+ * @author Marco Basso
+ * @author Matteo Piva
+ * @author Alessandro Benetti
  * @version 1.0
  * @since 1.0
  */

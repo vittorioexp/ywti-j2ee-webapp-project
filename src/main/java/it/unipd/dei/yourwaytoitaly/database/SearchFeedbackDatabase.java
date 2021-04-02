@@ -10,6 +10,9 @@ import java.util.List;
  * Class for searching Feedbacks inside the database and returning them in a List:
  * receives the id relating feedback - advertisement (reqIdAdvertisement) and returns a List of Feedbacks
  * @author Vittorio Esposito
+ * @author Marco Basso
+ * @author Matteo Piva
+ * @author Alessandro Benetti
  * @version 1.0
  * @since 1.0
  */

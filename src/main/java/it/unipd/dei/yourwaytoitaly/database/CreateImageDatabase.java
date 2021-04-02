@@ -13,6 +13,9 @@ import java.sql.SQLException;
 /**
  * Class for inserting an Image inside the database (i.e. at the moment of inserting an Advertisement)
  * @author Vittorio Esposito
+ * @author Marco Basso
+ * @author Matteo Piva
+ * @author Alessandro Benetti
  * @version 1.0
  * @since 1.0
  */

@@ -14,6 +14,9 @@ import java.sql.SQLException;
  * receives username / email + password (reqUser / reqEmail + reqPassword) and checks if the pair is present in the DB.
  * If so, it returns the corresponding Company / Tourist object, otherwise it returns null.
  * @author Vittorio Esposito
+ * @author Marco Basso
+ * @author Matteo Piva
+ * @author Alessandro Benetti
  * @version 1.0
  * @since 1.0
  */
