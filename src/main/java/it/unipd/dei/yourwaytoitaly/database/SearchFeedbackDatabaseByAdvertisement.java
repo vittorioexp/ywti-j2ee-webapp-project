@@ -1,6 +1,6 @@
 package it.unipd.dei.yourwaytoitaly.database;
 
-import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
+
 import it.unipd.dei.yourwaytoitaly.resource.Feedback;
 
 import java.sql.*;
