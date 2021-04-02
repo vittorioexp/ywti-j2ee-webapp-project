@@ -26,13 +26,14 @@ Since: 1.0
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Create Employee Form</title>
+    <title>Create Advertisement Form</title>
 </head>
 
 <body>
-<h1>Create Employee Form</h1>
+<h1>Create Advertisement Form</h1>
 
-<form method="POST" action="<c:url value="/create-employee"/>">
+<form method="POST" action="<c:url value="/create-advertisement"/>">
+
     <label for="badge">Badge:</label>
     <input name="badge" type="text"/><br/>
 
@@ -47,6 +48,7 @@ Since: 1.0
 
     <button type="submit">Submit</button><br/>
     <button type="reset">Reset the form</button>
+
 </form>
 </body>
 </html>

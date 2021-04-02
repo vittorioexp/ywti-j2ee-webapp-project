@@ -24,18 +24,18 @@ Since: 1.0
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Create Advertisement</title>
+    <title>Create User</title>
 </head>
 
 <body>
-<h1>Create Advertisement</h1>
+<h1>Create User</h1>
 <hr/>
 
 <!-- display the message -->
 <c:import url="/jsp/include/show-message.jsp"/>
 
 <!-- display the just created employee, if any and no errors -->
-<c:if test='${not empty advertisement && !message.error}'>
+<c:if test='${not empty user && !message.error}'>
     <ul>
         <li>badge: <c:out value="${employee.badge}"/></li>
         <li>surname: <c:out value="${employee.surname}"/></li>

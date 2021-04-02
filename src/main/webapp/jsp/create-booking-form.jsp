@@ -21,27 +21,34 @@ Since: 1.0
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Create Advertisement</title>
+    <meta charset="utf-8">
+    <title>Create Booking Form</title>
 </head>
 
 <body>
-<h1>Create Advertisement</h1>
-<hr/>
+<h1>Create Booking Form</h1>
 
-<!-- display the message -->
-<c:import url="/jsp/include/show-message.jsp"/>
+<form method="POST" action="<c:url value="/create-booking"/>">
+    <!--
+    <label for="badge">Badge:</label>
+    <input name="badge" type="text"/><br/>
 
-<!-- display the just created employee, if any and no errors -->
-<c:if test='${not empty advertisement && !message.error}'>
-    <ul>
-        <li>badge: <c:out value="${employee.badge}"/></li>
-        <li>surname: <c:out value="${employee.surname}"/></li>
-        <li>age: <c:out value="${employee.age}"/></li>
-        <li>salary: <c:out value="${employee.salary}"/></li>
-    </ul>
-</c:if>
+    <label for="surname">Surname:</label>
+    <input name="surname" type="text"/><br/>
+
+    <label for="age">Age:</label>
+    <input name="age" type="text"/><br/>
+
+    <label for="salary">Salary:</label>
+    <input name="salary" type="text"/><br/><br/>
+
+    <button type="submit">Submit</button><br/>
+    <button type="reset">Reset the form</button>
+    -->
+</form>
 </body>
 </html>
