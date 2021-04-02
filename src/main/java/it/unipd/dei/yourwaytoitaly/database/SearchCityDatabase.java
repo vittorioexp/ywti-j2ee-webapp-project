@@ -2,7 +2,6 @@ package it.unipd.dei.yourwaytoitaly.database;
 
 
 import it.unipd.dei.yourwaytoitaly.resource.City;
-import it.unipd.dei.yourwaytoitaly.resource.TypeAdvertisement;
 
 import java.sql.*;
 
@@ -19,7 +18,7 @@ import java.sql.*;
  * @since 1.0
  */
 
-public class SearchTypeAdvertisementDatabase {
+public class SearchCityDatabase {
 
     /**
      * The SQL statements to be executed
@@ -41,41 +40,41 @@ public class SearchTypeAdvertisementDatabase {
     private final String type;
 
     /**
-     * Creates a new object for searching type advertisement by idType
+     * Creates a new object for searching city by ID
      *
      * @param con       the connection to the database.
-     * @param idType    the Id type of the advertisement.
+     * @param idType    the Id type of the city.
      */
-    public SearchTypeAdvertisementDatabase(final Connection con, final int idType) {
+    public SearchCityDatabase(final Connection con, final int idType) {
         this.con = con;
         this.idType = idType;
         this.type = null;
     }
 
     /**
-     * Creates a new object for searching type advertisement by type
+     * Creates a new object for searching city by name
      *
      * @param con   the connection to the database.
-     * @param type  the type of the advertisement.
+     * @param type  the name of the city.
      */
-    public SearchTypeAdvertisementDatabase(final Connection con, final String type) {
+    public SearchCityDatabase(final Connection con, final String type) {
         this.con = con;
-        this.type = type;
         this.idType = -1;
+        this.type = type;
     }
 
     /**
      * Searches bookings by tourist.
      *
-     * @return a list of {@code Booking} objects matching with the Id of the advertisement.
+     * @return a City objects matching with the parameter.
      * @throws SQLException if any error occurs while searching for bookings.
      */
 
-    public TypeAdvertisement searchTypeAdvertisement() throws SQLException {
+    public City searchTypeAdvertisement() throws SQLException {
 
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        TypeAdvertisement typeAdvertisement = null;
+        City city = null;
 
         if(this.idType != -1) {
 
@@ -87,34 +86,7 @@ public class SearchTypeAdvertisementDatabase {
                 rs = pstmt.executeQuery();
 
                 while (rs.next()) {
-                    typeAdvertisement = new TypeAdvertisement(
-                            rs.getInt("ID_type"),
-                            rs.getString("type"));
-                }
-            } finally {
-                if (rs != null) {
-                    rs.close();
-                }
-
-                if (pstmt != null) {
-                    pstmt.close();
-                }
-
-                con.close();
-            }
-
-            return typeAdvertisement;
-        }
-        else{
-            try {
-
-                pstmt = con.prepareStatement(STATEMENT_NAME);
-                pstmt.setString(1, type);
-
-                rs = pstmt.executeQuery();
-
-                while (rs.next()) {
-                    typeAdvertisement = new TypeAdvertisement(
+                    city = new City(
                             rs.getInt("ID_city"),
                             rs.getString("name"));
                 }
@@ -130,7 +102,34 @@ public class SearchTypeAdvertisementDatabase {
                 con.close();
             }
 
-            return typeAdvertisement;
+            return city;
+        }
+        else{
+            try {
+
+                pstmt = con.prepareStatement(STATEMENT_NAME);
+                pstmt.setString(1, type);
+
+                rs = pstmt.executeQuery();
+
+                while (rs.next()) {
+                    city = new City(
+                            rs.getInt("ID_city"),
+                            rs.getString("name"));
+                }
+            } finally {
+                if (rs != null) {
+                    rs.close();
+                }
+
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+
+                con.close();
+            }
+
+            return city;
         }
     }
 
