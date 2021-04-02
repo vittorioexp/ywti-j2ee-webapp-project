@@ -35,10 +35,7 @@ public final class SearchAdvertisementDatabase {
                     "\t\tJOIN YWTI.TYPE_ADVERTISEMENT ON TYPE_ADVERTISEMENT.ID_Type = ADVERTISEMENT.ID_Type\n" +
                     "\tWHERE \tCITY.NAME = ? AND\n" +
                     "\t\t\tTYPE_ADVERTISEMENT.TYPE = ? AND \n" +
-                    "\t\t\tDATE_START >= ? AND\n" +
-                    "\t\t\tDATE_END <= ? AND\n" +
-                    "\t\t\tTIME_START >= ? AND\n" +
-                    "\t\t\tTIME_END <= ?;";
+                    "\t\t\tDATE_START >= ? AND\n";
 
     /**
      * The connection to the database
@@ -48,27 +45,29 @@ public final class SearchAdvertisementDatabase {
     /**
      * Some search parameters
      */
-    //TODO: 1) fix these search parameters
     private final int reqIdCity;
     private final int reqIdType;
     private final Date reqDate;
-    private final Time reqTime;
 
-    //TODO: 3) fix the comment below to match with the arguments of the constructor
     /**
      * Creates a new object for searching advertisement by some search parameters.
      *
      * @param con
-     *            the connection to the database.
+     *              the connection to the database.
+     * @param reqIdCity
+     *              the ID of the city
+     * @param reqIdType
+     *              the ID of the advertisement type
+     * @param reqDate
+     *              the date in which the advertisement starts
+     *
      */
-    //TODO: 2) fix the constructor (change search parameters)
     public SearchAdvertisementDatabase(final Connection con, final int reqIdCity, final int reqIdType,
-                                       final Date reqDate, final Time reqTime) {
+                                       final Date reqDate) {
         this.con = con;
         this.reqIdCity = reqIdCity;
         this.reqIdType = reqIdType;
         this.reqDate = reqDate;
-        this.reqTime = reqTime;
     }
 
     /**
@@ -89,18 +88,27 @@ public final class SearchAdvertisementDatabase {
 
         try {
             pstmt = con.prepareStatement(STATEMENT);
-            //pstmt.setString(1, category);
+            pstmt.setInt(1, reqIdCity);
+            pstmt.setInt(2, reqIdType);
+            pstmt.setDate(3, reqDate);
+
 
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
 
-                /*advertisements.add(new Advertisement(
-                        rs.getInt("id"),
-                        rs.getString("category"),
-                        rs.getString("name"),
-                        rs.getString("ageRange"),
-                        rs.getDouble("price")));  */
+                advertisements.add(new Advertisement(
+                        rs.getInt("ID_advertisement"),
+                        rs.getString("description"),
+                        rs.getInt("score"),
+                        rs.getInt("price"),
+                        rs.getInt("num_tot_item"),
+                        rs.getDate("date_start"),
+                        rs.getDate("date_end"),
+                        rs.getTime("time_start"),
+                        rs.getTime("time_end"),
+                        rs.getString("email_c"),
+                        rs.getInt("ID_type")));
             }
         } finally {
             if (rs != null) {
