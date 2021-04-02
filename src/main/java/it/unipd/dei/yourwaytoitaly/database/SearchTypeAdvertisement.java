@@ -71,7 +71,7 @@ public class SearchTypeAdvertisement {
      * @throws SQLException if any error occurs while searching for bookings.
      */
 
-    public TypeAdvertisement Search() throws SQLException {
+    public TypeAdvertisement search() throws SQLException {
         //TODO: write function body
         //if type != -1, search type adv based on id and return TypeAdvertisement
         //else search type adv based on the name and return TypeAdvertisement
