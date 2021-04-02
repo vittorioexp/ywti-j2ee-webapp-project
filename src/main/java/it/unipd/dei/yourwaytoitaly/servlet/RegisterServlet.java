@@ -1,5 +1,7 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
+import it.unipd.dei.yourwaytoitaly.resource;
+import it.unipd.dei.yourwaytoitaly.database;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -82,8 +84,8 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
         while (parameterNames.hasMoreElements()) paramValues = req.getParameterValues(parameterNames.nextElement());
 
-        email = paramValues [0];
-        password = paramValues [1];
+        String email = paramValues [0];
+        String password = paramValues [1];
         // TODO : scanning parameter to create the object Tourist / Company
         Tourist t = new Tourist ( email , password , "ciccio", "via dei desideri" , "12233445" ,
                 1 , "caputo", new Date());
