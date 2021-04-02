@@ -16,6 +16,7 @@
  limitations under the License.
  
  Author: Francesco Giurisato
+ Author: Vittorio Esposito
  Version: 1.0
  Since: 1.0
 -->
@@ -28,7 +29,7 @@
           type="javax.sql.DataSource"
           factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
           driverClassName="org.postgresql.Driver"
-          url="jdbc:postgresql://localhost:5432/ywti-db"
+          url="jdbc:postgresql://localhost:5432/YWTI"
           username="username"
           password="password"
           testOnBorrow="true"
