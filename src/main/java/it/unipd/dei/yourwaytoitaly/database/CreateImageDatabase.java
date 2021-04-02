@@ -1,7 +1,6 @@
 package it.unipd.dei.yourwaytoitaly.database;
 
 
-import it.unipd.dei.yourwaytoitaly.resource.Booking;
 import it.unipd.dei.yourwaytoitaly.resource.Image;
 
 import java.sql.Connection;
@@ -15,20 +14,52 @@ import java.sql.SQLException;
  * @author Vittorio Esposito
  * @author Marco Basso
  * @author Matteo Piva
- * @author Alessandro Benetti
  * @version 1.0
  * @since 1.0
  */
 
 
+
 public final class CreateImageDatabase {
-    private static final String STATEMENT = ""; //TODO: query is needed here
+
+    /**
+     * The SQL statement to be executed
+     */
+    private static final String STATEMENT =
+            "INSERT INTO YWTI.IMAGE (path_i, description_i,ID_Advertisement) " +
+            "VALUES (?, ?, ?);";
+
+    /**
+     * The connection to the database
+     */
     private final Connection con;
+
+    /**
+     * The image to create
+     */
     private final Image image;
+
+    /**
+     * Creates a new object for creating images.
+     *
+     * @param con
+     *            the connection to the database.
+     * @param image
+     *            the image to create.
+     */
     public CreateImageDatabase(final Connection con, final Image image) {
         this.con = con;
         this.image = image;
     }
+
+    /**
+     * Creates a new image.
+     *
+     * @return the just created image
+     *
+     * @throws SQLException
+     *             if any error occurs while creating images.
+     */
     public Image CreateImage() throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -36,10 +67,10 @@ public final class CreateImageDatabase {
         Image i = null;
         try {
             pstmt = con.prepareStatement(STATEMENT);
-            pstmt.setInt(1, image.getIdImage());
-            pstmt.setString(2, image.getPath());
-            pstmt.setString(3, image.getDescription());
-            pstmt.setInt(4, image.getIdAdvertisement());
+            //pstmt.setInt(1, image.getIdImage());
+            pstmt.setString(1, image.getPath());
+            pstmt.setString(2, image.getDescription());
+            pstmt.setInt(3, image.getIdAdvertisement());
 
             rs = pstmt.executeQuery();
 

@@ -12,7 +12,6 @@ import java.sql.SQLException;
  * @author Vittorio Esposito
  * @author Marco Basso
  * @author Matteo Piva
- * @author Alessandro Benetti
  * @version 1.0
  * @since 1.0
  */
@@ -20,25 +19,66 @@ import java.sql.SQLException;
 
 public final class CreateUserDatabase {
 
-    private static final String STATEMENT_TOURIST = "INSERT INTO YWTIDB.Tourist (email_t, surname, name, birth_date, phone_number, address, password, ID_city)" +
-                                                    "SELECT ?, ?, ?, ?, ?, ?, ?, ID_CITY" +
-                                                    "FROM City WHERE City.name = ? RETURNING *;";
+    /**
+     * The SQL statement to be executed
+     */
+    private static final String STATEMENT_TOURIST =
+            "INSERT INTO YWTI.Tourist (email_t, surname, name, birth_date, phone_number, address, password, ID_city)" +
+                    "SELECT ?, ?, ?, ?, ?, ?, ?, ID_CITY" +
+                    "FROM YWTI.City WHERE City.name = ? RETURNING *;";
 
-    private static final String STATEMENT_COMPANY = "INSERT INTO YWTIDB.Company (email_c, name_c, phone_number, address, password, ID_city)" +
-                                                    "SELECT ?, ?, ?, ?, ?, ID_CITY" +
-                                                    "FROM City WHERE City.name = ? RETURNING *;";
+    /**
+     * The SQL statement to be executed
+     */
+    private static final String STATEMENT_COMPANY =
+            "INSERT INTO YWTI.Company (email_c, name_c, phone_number, address, password, ID_city)" +
+                    "SELECT ?, ?, ?, ?, ?, ID_CITY" +
+                    "FROM YWTI.City WHERE City.name = ? RETURNING *;";
 
+    /**
+     * The connection to the database
+     */
     private final Connection con;
+
+    /**
+     * The user to create
+     */
     private final User user;
 
+    /**
+     * Creates a new object for creating tourists.
+     *
+     * @param con
+     *            the connection to the database.
+     * @param tourist
+     *            the tourist to create.
+     */
     public CreateUserDatabase(final Connection con, final Tourist tourist) {
         this.con = con;
         this.user = tourist;
     }
+
+    /**
+     * Creates a new object for creating companies.
+     *
+     * @param con
+     *            the connection to the database.
+     * @param company
+     *            the company to create.
+     */
     public CreateUserDatabase(final Connection con, final Company company) {
         this.con = con;
         this.user = company;
     }
+
+    /**
+     * Creates a new user (company/tourinst).
+     *
+     * @return the just created user
+     *
+     * @throws SQLException
+     *             if any error occurs while creating users.
+     */
     public User createUser() throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
