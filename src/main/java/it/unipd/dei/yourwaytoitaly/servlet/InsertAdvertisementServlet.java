@@ -1,5 +1,18 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
+import it.unipd.dei.yourwaytoitaly.database.CreateAdvertisementDatabase;
+import it.unipd.dei.yourwaytoitaly.database.SearchTypeAdvertisementDatabase;
+import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
+import it.unipd.dei.yourwaytoitaly.resource.Message;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Time;
+
 /**
  * Servlet class, to be written
  * @author Vittorio Esposito
@@ -7,6 +20,101 @@ package it.unipd.dei.yourwaytoitaly.servlet;
  * @since 1.0
  */
 
-public class InsertAdvertisementServlet extends AbstractDatabaseServlet {
+public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
 
+    /**
+     * Create an advertisement
+     *
+     * @param req
+     *            the HTTP request from the client.
+     * @param res
+     *            the HTTP response from the server.
+     *
+     * @throws ServletException
+     *             if any error occurs while executing the servlet.
+     * @throws IOException
+     *             if any error occurs in the client/server communication.
+     */
+    public void doPost(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+
+        // The user must give these parameters
+        String title;
+        String type_adv;
+        String description;
+        int price;
+        int numTotItem;
+        Date dateStart;
+        Date dateEnd;
+        Time timeStart;
+        Time timeEnd;
+          // This must be converted into idType
+
+        int idAdvertisement;    // This is set by the DB
+        String emailCompany=""; // TODO: This can be get by the servlet
+        int idType=0;           // This will be get by inspecting Type_advertisement
+        int score;              // This will be calculated
+
+        Advertisement advertisement  = null;
+        Message m = null;
+
+        try{
+            // retrieves the request parameters
+            title = req.getParameter("title");
+            type_adv = req.getParameter("type");
+            description =  req.getParameter("description");
+            price = Integer.parseInt(req.getParameter("price"));
+            numTotItem = Integer.parseInt(req.getParameter("numTotItem"));
+            dateStart = Date.valueOf(req.getParameter("dateStart"));
+            dateEnd = Date.valueOf(req.getParameter("dateEnd"));
+            timeStart = Time.valueOf(req.getParameter("timeStart"));
+            timeEnd = Time.valueOf(req.getParameter("timeEnd"));
+
+            //TODO: Here make some controls of the inserted data
+            //...
+
+            // Calculate the score
+            score = (int) (price/3.14);
+            idType = new SearchTypeAdvertisementDatabase(getDataSource().getConnection(), type_adv)
+                    .searchTypeAdvertisement().getIdType();
+
+            // creates a new advertisement from the request parameters
+            advertisement = new Advertisement(
+                    0,
+                    title,
+                    description,
+                    score,
+                    price,
+                    numTotItem,
+                    dateStart,
+                    dateEnd,
+                    timeStart,
+                    timeEnd,
+                    emailCompany,
+                    idType
+            );
+
+            // updates the advertisement
+            advertisement =
+                    new CreateAdvertisementDatabase(getDataSource().getConnection(), advertisement)
+                            .createAdvertisement();
+
+            m = new Message(String.format("Advertisement %s successfully created. ID:",
+                    advertisement.getIdAdvertisement()));
+
+        } catch (NumberFormatException ex) {
+            m = new Message("Cannot create the employee. " +
+                    "Invalid input parameters: badge, age, and salary must be integer.",
+                    "E100", ex.getMessage());
+        } catch (SQLException ex) {
+            if (ex.getSQLState().equals("23505")) {
+                m = new Message(String.format("Cannot create the employee: employee %s already exists.",
+                        advertisement.getIdAdvertisement()),
+                        "E300", ex.getMessage());
+            } else {
+                m = new Message("Cannot create the employee: unexpected error while accessing the database.",
+                        "E200", ex.getMessage());
+            }
+        }
+    }
 }
