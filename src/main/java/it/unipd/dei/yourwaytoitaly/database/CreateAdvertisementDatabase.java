@@ -22,7 +22,7 @@ public final class CreateAdvertisementDatabase {
      * The SQL statement to be executed
      */
     private static final String STATEMENT =
-            "INSERT INTO Advertisement (DESCRIPTION, SCORE, PRICE, NUM_TOT_ITEM, " +
+            "INSERT INTO YWTI.Advertisement (DESCRIPTION, SCORE, PRICE, NUM_TOT_ITEM, " +
                     "DATE_START, DATE_END, TIME_START, TIME_END, email_c, ID_TYPE) " +
                     "SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ID_TYPE " +
                     "FROM Type_advertisement WHERE Type_advertisement.type = ? RETURNING *;";
