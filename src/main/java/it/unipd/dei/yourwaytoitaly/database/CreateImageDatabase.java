@@ -26,7 +26,7 @@ public final class CreateImageDatabase {
      * The SQL statement to be executed
      */
     private static final String STATEMENT =
-            "INSERT INTO IMAGE (path_i, description_i,ID_Advertisement) " +
+            "INSERT INTO YWTI.IMAGE (path_i, description_i,ID_Advertisement) " +
             "VALUES (?, ?, ?);";
 
     /**
