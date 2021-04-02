@@ -28,7 +28,7 @@ public final class SearchAdvertisementDatabase {
      * The SQL statement to be executed
      */
     private static final String STATEMENT =
-            "SELECT ADVERTISEMENT.DESCRIPTION, ADVERTISEMENT.SCORE, ADVERTISEMENT.PRICE, ADVERTISEMENT.NUM_TOT_ITEM\n" +
+            "SELECT ADVERTISEMENT.TITLE, ADVERTISEMENT.DESCRIPTION, ADVERTISEMENT.SCORE, ADVERTISEMENT.PRICE, ADVERTISEMENT.NUM_TOT_ITEM\n" +
                     "\tFROM YWTI.ADVERTISEMENT\n" +
                     "\t\tJOIN YWTI.COMPANY ON COMPANY.EMAIL_C = ADVERTISEMENT.EMAIL_C\n" +
                     "\t\tJOIN YWTI.CITY ON CITY.ID_CITY = COMPANY.ID_CITY\n" +
@@ -99,6 +99,7 @@ public final class SearchAdvertisementDatabase {
 
                 advertisements.add(new Advertisement(
                         rs.getInt("ID_advertisement"),
+                        rs.getString("title"),
                         rs.getString("description"),
                         rs.getInt("score"),
                         rs.getInt("price"),
