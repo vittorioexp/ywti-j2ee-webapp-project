@@ -26,8 +26,8 @@ public final class SearchBookingByAdvertisementDatabase {
      */
     private static final String STATEMENT =
             "SELECT DATE_B, TIME_B, num_booking, state, email_t\n" +
-            "\tFROM YWTI.BOOKING\n" +
-            "\tWHERE ID_advertisement = ? ;";
+                    "\tFROM YWTI.BOOKING\n" +
+                    "\tWHERE ID_advertisement = ? ;";
 
     /**
      * The connection to the database
@@ -41,10 +41,9 @@ public final class SearchBookingByAdvertisementDatabase {
 
     /**
      * Creates a new object for searching advertisement by some search parameters.
-     *  @param con
-     *              the connection to the database.
-     * @param reqIdAdvertisement
-     *              the Id of the advertisement.
+     *
+     * @param con                the connection to the database.
+     * @param reqIdAdvertisement the Id of the advertisement.
      */
     public SearchBookingByAdvertisementDatabase(final Connection con, final String reqIdAdvertisement) {
         this.con = con;
@@ -55,9 +54,7 @@ public final class SearchBookingByAdvertisementDatabase {
      * Searches bookings by tourist.
      *
      * @return a list of {@code Booking} objects matching with the Id of the advertisement.
-     *
-     * @throws SQLException
-     *             if any error occurs while searching for bookings.
+     * @throws SQLException if any error occurs while searching for bookings.
      */
 
     public List<Booking> SearchBookingByUser() throws SQLException {
@@ -99,3 +96,4 @@ public final class SearchBookingByAdvertisementDatabase {
 
         return bookings;
     }
+}
