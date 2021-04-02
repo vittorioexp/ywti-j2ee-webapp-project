@@ -1,14 +1,12 @@
 package it.unipd.dei.yourwaytoitaly.database;
 
+
 import it.unipd.dei.yourwaytoitaly.resource.Feedback;
 
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Class for searching Feedbacks inside the database and returning them in a List:
@@ -21,14 +19,14 @@ import java.util.List;
  * @since 1.0
  */
 
-public final class SearchFeedbackDatabaseByTourist {
+public final class SearchFeedbackByAdvertisementDatabase {
 
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "SELECT RATE, TEXT_F, DATE_F, ID_ADVERTISEMENT\n" +
-            "FROM FEEDBACK\n" +
-            "WHERE email_t = ?;";
+    private static final String STATEMENT = "SELECT RATE, TEXT_F, DATE_F, email_t\\n\" +\n" +
+            "            \"FROM FEEDBACK\\n\" +\n" +
+            "            \"WHERE ID_ADVERTISEMENT = ?;";
 
     /**
      * The connection to the database
@@ -36,21 +34,21 @@ public final class SearchFeedbackDatabaseByTourist {
     private final Connection con;
 
     /**
-     * The ID of the tourist
+     * The ID of the advertisement
      */
-    private final int reqIdTourist;
+    private final int reqIdAdvertisement;
 
     /**
      * Creates a new object for searching products by category.
      *
      * @param con
      *            the connection to the database.
-     * @param reqIdTourist
-     *            the ID of the chosen tourist
+     * @param reqIdAdvertisement
+     *            the ID of the chosen advertisement
      */
-    public SearchFeedbackDatabaseByTourist(final Connection con, final int reqIdTourist) {
+    public SearchFeedbackByAdvertisementDatabase(final Connection con, final int reqIdAdvertisement) {
         this.con = con;
-        this.reqIdTourist = reqIdTourist;
+        this.reqIdAdvertisement = reqIdAdvertisement;
     }
 
     /**
@@ -62,7 +60,7 @@ public final class SearchFeedbackDatabaseByTourist {
      *             if any error occurs while searching for advertisements.
      */
 
-    public List<Feedback> SearchFeedbackByTourist() throws SQLException {
+    public List<Feedback> SearchFeedbackByAdvertisement() throws SQLException {
 
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -71,9 +69,10 @@ public final class SearchFeedbackDatabaseByTourist {
         final List<Feedback> feedback = new ArrayList<Feedback>();
 
         try {
-            //TODO: Dopo aver preparato le query inserire i valori corretti
+
+            //TODO: Inserire la query per la ricerca utilizzando reqIdAdvertisement
             pstmt = con.prepareStatement(STATEMENT);
-            pstmt.setInt(1, reqIdTourist);
+            pstmt.setInt(1, reqIdAdvertisement);
 
             rs = pstmt.executeQuery();
 
