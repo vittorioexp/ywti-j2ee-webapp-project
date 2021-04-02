@@ -10,7 +10,8 @@ import java.util.List;
 /**
  * Class for searching Bookings inside the database and returning them in a List:
  * receives the id related to the user who made the request to show the Bookings related to his
- * account (reqIdUser) and returns a List containing all the Bookings with the same idUser and sorted by dateTime
+ * account (reqEmailTourist) and returns a List containing all the Bookings with the same idUser
+ *
  * @author Vittorio Esposito
  * @author Marco Basso
  * @author Matteo Piva
@@ -24,9 +25,9 @@ public final class SearchBookingByUserDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "SELECT DATE_B, TIME_B, num_booking, state, ID_advertisement\n" +
-            "\tFROM BOOKING\n" +
-            "\tWHERE email_t = ? ;";
+    private static final String STATEMENT = "SELECT DATE_B, TIME_B, num_booking, state, ID_advertisement " +
+            "FROM BOOKING " +
+            "WHERE email_t = ? ;";
 
     /**
      * The connection to the database
@@ -36,18 +37,18 @@ public final class SearchBookingByUserDatabase {
     /**
      * Some search parameters
      */
-    private final String reqIdTourist;
+    private final String reqEmailTourist;
 
     /**
-     * Creates a new object for searching advertisement by some search parameters.
+     * Creates a new object for searching bookings by tourist email
      *  @param con
      *              the connection to the database.
-     * @param reqIdTourist
-     *
+     * @param reqEmailTourist
+     *              the email of the tourist
      */
-    public SearchBookingByUserDatabase(final Connection con, final String reqIdTourist) {
+    public SearchBookingByUserDatabase(final Connection con, final String reqEmailTourist) {
         this.con = con;
-        this.reqIdTourist = reqIdTourist;
+        this.reqEmailTourist = reqEmailTourist;
     }
 
     /**
@@ -69,8 +70,7 @@ public final class SearchBookingByUserDatabase {
 
         try {
             pstmt = con.prepareStatement(STATEMENT);
-            pstmt.setString(1, reqIdTourist);
-
+            pstmt.setString(1, reqEmailTourist);
 
             rs = pstmt.executeQuery();
 

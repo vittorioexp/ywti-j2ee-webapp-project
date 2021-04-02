@@ -9,8 +9,10 @@ import java.util.List;
 
 /**
  * Class for searching Bookings inside the database and returning them in a List:
- * receives the id related to the advertisement of the company to show the Bookings related to his
- * advertisement (reqIdAdvertisement) and returns a List containing all the Bookings with the same idAdvertisement and sorted by dateTime
+ * receives the id related to the advertisement of the company to show the Bookings related to
+ * his advertisement (reqIdAdvertisement) and returns a List containing all the Bookings
+ * with the same idAdvertisement
+ *
  * @author Vittorio Esposito
  * @author Marco Basso
  * @author Matteo Piva
@@ -25,9 +27,9 @@ public final class SearchBookingByAdvertisementDatabase {
      * The SQL statement to be executed
      */
     private static final String STATEMENT =
-            "SELECT DATE_B, TIME_B, num_booking, state, email_t\n" +
-                    "\tFROM YWTI.BOOKING\n" +
-                    "\tWHERE ID_advertisement = ? ;";
+            "SELECT DATE_B, TIME_B, num_booking, state, email_t " +
+                    "FROM YWTI.BOOKING\n" +
+                    "WHERE ID_advertisement = ? ;";
 
     /**
      * The connection to the database
@@ -40,7 +42,7 @@ public final class SearchBookingByAdvertisementDatabase {
     private final String reqIdAdvertisement;
 
     /**
-     * Creates a new object for searching advertisement by some search parameters.
+     * Creates a new object for searching advertisements with the requested Id
      *
      * @param con                the connection to the database.
      * @param reqIdAdvertisement the Id of the advertisement.
@@ -68,7 +70,6 @@ public final class SearchBookingByAdvertisementDatabase {
         try {
             pstmt = con.prepareStatement(STATEMENT);
             pstmt.setString(1, reqIdAdvertisement);
-
 
             rs = pstmt.executeQuery();
 

@@ -35,7 +35,7 @@ public final class SearchAdvertisementDatabase {
                     "JOIN YWTI.TYPE_ADVERTISEMENT ON TYPE_ADVERTISEMENT.ID_Type = ADVERTISEMENT.ID_Type " +
                     "WHERE CITY.NAME = ? AND " +
                     "TYPE_ADVERTISEMENT.TYPE = ? AND " +
-                    "DATE_START >= ? AND";
+                    "DATE_START >= ?;";
 
     /**
      * The connection to the database
@@ -50,7 +50,7 @@ public final class SearchAdvertisementDatabase {
     private final Date reqDate;
 
     /**
-     * Creates a new object for searching advertisement by some search parameters.
+     * Creates a new object for searching advertisementS by some search parameters.
      *
      * @param con
      *              the connection to the database.
@@ -91,7 +91,6 @@ public final class SearchAdvertisementDatabase {
             pstmt.setInt(1, reqIdCity);
             pstmt.setInt(2, reqIdType);
             pstmt.setDate(3, reqDate);
-
 
             rs = pstmt.executeQuery();
 

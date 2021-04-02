@@ -23,12 +23,12 @@ public class SearchCityDatabase {
     /**
      * The SQL statements to be executed
      */
-    private static final String STATEMENT_ID = "SELECT ID_city, name\n" +
-            "FROM CITY\n" +
+    private static final String STATEMENT_ID = "SELECT ID_city, name " +
+            "FROM CITY " +
             "WHERE ID_city = ?;";
 
-    private static final String STATEMENT_NAME = "SELECT ID_city, name\n" +
-            "FROM CITY\n" +
+    private static final String STATEMENT_NAME = "SELECT ID_city, name " +
+            "FROM CITY " +
             "WHERE name = ?;";
 
     /**
@@ -67,10 +67,10 @@ public class SearchCityDatabase {
     }
 
     /**
-     * Searches bookings by tourist.
+     * Searches a city
      *
      * @return a City objects matching with the parameter.
-     * @throws SQLException if any error occurs while searching for bookings.
+     * @throws SQLException if any error occurs while searching
      */
 
     public City searchTypeAdvertisement() throws SQLException {
@@ -79,10 +79,8 @@ public class SearchCityDatabase {
         ResultSet rs = null;
         City city = null;
 
-        if(this.idType != -1) {
-
-            try {
-
+        try {
+            if (this.idType != -1) {
                 pstmt = con.prepareStatement(STATEMENT_ID);
                 pstmt.setInt(1, idType);
 
@@ -93,23 +91,7 @@ public class SearchCityDatabase {
                             rs.getInt("ID_city"),
                             rs.getString("name"));
                 }
-            } finally {
-                if (rs != null) {
-                    rs.close();
-                }
-
-                if (pstmt != null) {
-                    pstmt.close();
-                }
-
-                con.close();
-            }
-
-            return city;
-        }
-        else{
-            try {
-
+            } else{
                 pstmt = con.prepareStatement(STATEMENT_NAME);
                 pstmt.setString(1, type);
 
@@ -120,20 +102,20 @@ public class SearchCityDatabase {
                             rs.getInt("ID_city"),
                             rs.getString("name"));
                 }
-            } finally {
-                if (rs != null) {
-                    rs.close();
-                }
-
-                if (pstmt != null) {
-                    pstmt.close();
-                }
-
-                con.close();
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
             }
 
-            return city;
+            if (pstmt != null) {
+                pstmt.close();
+            }
+
+            con.close();
         }
+
+        return city;
     }
 
 }
