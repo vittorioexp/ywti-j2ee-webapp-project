@@ -19,7 +19,7 @@ import java.sql.SQLException;
  * @since 1.0
  */
 
-public class SearchTypeAdvertisement {
+public class SearchTypeAdvertisementDatabase {
 
     /**
      * The SQL statements to be executed
@@ -46,7 +46,7 @@ public class SearchTypeAdvertisement {
      * @param con       the connection to the database.
      * @param idType    the Id type of the advertisement.
      */
-    public SearchTypeAdvertisement(final Connection con, final int idType) {
+    public SearchTypeAdvertisementDatabase(final Connection con, final int idType) {
         this.con = con;
         this.idType = idType;
         this.type = null;
@@ -58,7 +58,7 @@ public class SearchTypeAdvertisement {
      * @param con   the connection to the database.
      * @param type  the type of the advertisement.
      */
-    public SearchTypeAdvertisement(final Connection con, final String type) {
+    public SearchTypeAdvertisementDatabase(final Connection con, final String type) {
         this.con = con;
         this.type = type;
         this.idType = -1;
@@ -71,7 +71,7 @@ public class SearchTypeAdvertisement {
      * @throws SQLException if any error occurs while searching for bookings.
      */
 
-    public TypeAdvertisement search() throws SQLException {
+    public TypeAdvertisement searchTypeAdvertisement() throws SQLException {
         //TODO: write function body
         //if type != -1, search type adv based on id and return TypeAdvertisement
         //else search type adv based on the name and return TypeAdvertisement
