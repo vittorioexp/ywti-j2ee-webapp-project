@@ -19,13 +19,14 @@ import java.util.List;
  * @since 1.0
  */
 
-public final class SearchBookingByUserDatabase {
+public final class SearchBookingByAdvertisementDatabase {
 
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = "SELECT DATE_B, TIME_B, num_booking, state, email_t\n" +
-            "\tFROM BOOKING\n" +
+    private static final String STATEMENT =
+            "SELECT DATE_B, TIME_B, num_booking, state, email_t\n" +
+            "\tFROM YWTI.BOOKING\n" +
             "\tWHERE ID_advertisement = ? ";
 
     /**
