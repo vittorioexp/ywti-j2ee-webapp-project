@@ -14,7 +14,8 @@ import java.sql.SQLException;
 import java.sql.Time;
 
 /**
- * Servlet class, to be written
+ * Servlet class to create a new advertisement
+ *
  * @author Vittorio Esposito
  * @version 1.0
  * @since 1.0
@@ -48,7 +49,7 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
         Date dateEnd;
         Time timeStart;
         Time timeEnd;
-          // This must be converted into idType
+        // This must be converted into idType
 
         int idAdvertisement;    // This is set by the DB
         String emailCompany=""; // TODO: This can be get by the servlet
@@ -102,19 +103,17 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
             m = new Message(String.format("Advertisement %s successfully created. ID:",
                     advertisement.getIdAdvertisement()));
 
+            // Show the advertisement just created in a web page
+
+
         } catch (NumberFormatException ex) {
-            m = new Message("Cannot create the employee. " +
-                    "Invalid input parameters: badge, age, and salary must be integer.",
+            m = new Message("Cannot create the advertisement. " +
+                    "Invalid input parameters",
                     "E100", ex.getMessage());
         } catch (SQLException ex) {
-            if (ex.getSQLState().equals("23505")) {
-                m = new Message(String.format("Cannot create the employee: employee %s already exists.",
-                        advertisement.getIdAdvertisement()),
-                        "E300", ex.getMessage());
-            } else {
-                m = new Message("Cannot create the employee: unexpected error while accessing the database.",
-                        "E200", ex.getMessage());
-            }
+            m = new Message("Cannot create the advertisement.: unexpected error while accessing the database.",
+                    "E200", ex.getMessage());
+
         }
     }
 }
