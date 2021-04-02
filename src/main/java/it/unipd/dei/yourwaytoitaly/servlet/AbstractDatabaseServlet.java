@@ -1,34 +1,43 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
-import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.ServletException;
-import javax.servlet.ServletConfig;
 
 /**
-* Database Abstract Class manages basic connection to the Database
-*
-* @author Francesco Giurisato
-*
-* */
+ * Abstract Database Servlet that manages basic connection to the Database
+ *
+ * @author Francesco Giurisato
+ * @author Vittorio Esposito
+ * @version 1.0
+ * @since 1.0
+ */
+
 
 public class AbstractDatabaseServlet extends HttpServlet{
 
-    private DataSource ds = null;
     /**
-     * Creating Initial context
-     *
-     * @param config  ServletConfig configuration object
-     * @exception ServletException if connection to db fails
-     * */
+     * The connection pool to the database.
+     */
+    private DataSource ds = null;
 
+    /**
+     * Gets the {@code DataSource} for managing the connection pool to the database.
+     *
+     * @param config
+     *          a {@code ServletConfig} object containing the servlet's
+     *          configuration and initialization parameters.
+     *
+     * @throws ServletException
+     *          if an exception has occurred that interferes with the servlet's normal operation
+     */
     public void init(ServletConfig config) throws ServletException {
 
         super.init (config);
@@ -36,28 +45,29 @@ public class AbstractDatabaseServlet extends HttpServlet{
 
         try {
             ct = new InitialContext();
-            ds = (DataSource) ct.lookup ("java:comp/env/jdbc/ytwiDb"); //TODO : changing database context name
+            ds = (DataSource) ct.lookup ("java:/comp/env/jdbc/YWTI"); //TODO : changing database context name
 
         } catch (NamingException e) {
             ds = null;
-            throw new ServletException (String.format("[ERROR_AbstractDatabase] Creating Database connection " + e.getMessage()));
+            throw new ServletException (
+                    String.format("[ERROR_AbstractDatabase] Creating Database connection " + e.getMessage()));
 
         }
 
     }
 
     /**
-     * Destroy Datasource handler
-     *
-     * */
-
+     * Releases the {@code DataSource} for managing the connection pool to the database.
+     */
     public void destroy (){
-
         ds = null;
-
     }
 
-
+    /**
+     * Returns the {@code DataSource} for managing the connection pool to the database.
+     *
+     * @return the {@code DataSource} for managing the connection pool to the database
+     */
     public DataSource getDataSource(){
         return ds;
     }
@@ -69,8 +79,7 @@ public class AbstractDatabaseServlet extends HttpServlet{
      * @param result  ResultSet object
      * @param conn  Connection object
      * @exception ServletException if connection to db fails
-     * */
-
+     */
      static void cleaningOperations(PreparedStatement st, ResultSet result, Connection conn) throws SQLException {
         if (st!=null) {
             st.close();
