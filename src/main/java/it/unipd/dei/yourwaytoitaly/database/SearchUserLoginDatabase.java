@@ -26,7 +26,9 @@ public final class SearchUserLoginDatabase {
     /**
      * The SQL statement to be executed
      */
-    private static final String STATEMENT = ""; //TODO: query needed
+    private static final String STATEMENT = "SELECT email_t, surname, name, birth_date, phone_number, address, password, ID_city\n" +
+            "FROM TOURIST\n" +
+            "WHERE email_t = ? AND password = MD5(?);";
 
     /**
      * The connection to the database

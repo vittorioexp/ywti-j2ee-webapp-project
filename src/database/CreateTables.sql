@@ -36,6 +36,7 @@ CREATE TABLE Tourist (
 
 CREATE TABLE Advertisement (
  ID_advertisement SERIAL PRIMARY KEY,
+ title VARCHAR(200) NOT NULL,
  description VARCHAR(10000) NOT NULL,
  score INT NOT NULL,
  price INT NOT NULL,
