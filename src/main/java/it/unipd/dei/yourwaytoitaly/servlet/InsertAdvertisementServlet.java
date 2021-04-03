@@ -9,9 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.sql.Time;
+import java.sql.*;
 
 /**
  * Servlet class to create a new advertisement
@@ -71,8 +69,21 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
             timeStart = Time.valueOf(req.getParameter("timeStart"));
             timeEnd = Time.valueOf(req.getParameter("timeEnd"));
 
+
             //TODO: Here make some controls of the inserted data
-            //...
+            if(numTotItem<=0 || price<=0){
+                Message msg = new Message("Input value not valid.","E1","Total number of item or price not valid");
+                //...
+            }
+            if(dateEnd.compareTo(dateStart)<0 || timeEnd.compareTo(timeStart)<0){
+                Message msg = new Message("Input value not valid.","E2","Dates entered are not compatible.");
+                //...
+            }
+            if(description=="" || description==null){
+                Message msg = new Message("Input value not valid.","E3","Description of the advertisement empty.");
+                //...
+            }
+
 
             // Calculate the score
             score = (int) (price/3.14);
@@ -113,7 +124,6 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
         } catch (SQLException ex) {
             m = new Message("Cannot create the advertisement.: unexpected error while accessing the database.",
                     "E200", ex.getMessage());
-
         }
     }
 }
