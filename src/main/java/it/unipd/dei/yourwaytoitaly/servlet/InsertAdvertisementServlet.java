@@ -115,7 +115,7 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
                     advertisement.getIdAdvertisement()));
 
             // Show the advertisement just created in a web page
-
+            // ?
 
         } catch (NumberFormatException ex) {
             m = new Message("Cannot create the advertisement. " +
@@ -125,5 +125,6 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
             m = new Message("Cannot create the advertisement.: unexpected error while accessing the database.",
                     "E200", ex.getMessage());
         }
+
     }
 }
