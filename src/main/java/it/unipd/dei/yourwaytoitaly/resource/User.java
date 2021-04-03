@@ -31,5 +31,6 @@ public abstract class User {
     public abstract String getAddress();
     public abstract String getPhoneNumber();
     public abstract int getIdCity();
+    public abstract String getType();
 
 }

@@ -40,6 +40,11 @@ public final class Company extends User {
         return idCity;
     }
 
+    @Override
+    public final String getType() {
+        return new String("Company");
+    }
+
     public final String getName() {
         return name;
     }

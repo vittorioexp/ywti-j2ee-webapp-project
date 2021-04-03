@@ -1,13 +1,22 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
 import it.unipd.dei.yourwaytoitaly.database.SearchUserLoginDatabase;
+import it.unipd.dei.yourwaytoitaly.resource.Message;
+import it.unipd.dei.yourwaytoitaly.resource.Tourist;
+import it.unipd.dei.yourwaytoitaly.resource.Company;
 import it.unipd.dei.yourwaytoitaly.resource.User;
+import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
+
+import javax.jms.Session;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -77,33 +86,102 @@ public class LoginServlet extends AbstractDatabaseServlet {
      *             and the server.
      */
 
-    public void handleRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    public void handleRequest(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
 
-        PrintWriter out = res.getWriter();
-        res.setContentType("text/plain");
+        String op = req.getRequestURI();
+        op = op.substring(op.lastIndexOf("user") + 5);
 
-        Enumeration<String> parameterNames = req.getParameterNames();
-        String[] paramValues;
 
-        while (parameterNames.hasMoreElements()) paramValues = req.getParameterValues(parameterNames.nextElement());
-        try {
-            User u = new SearchUserLoginDatabase( getDataSource().getConnection() , paramValues[0] , paramValues[1]).SearchUserLogin();
-            // TODO : manage login
-
-            if ( u == null )
-                out.write( "Not valid username or password" );
-            else
-                out.write( "Welcome " + u.getName() );
-
-            out.close();
-        }catch (NullPointerException e){
-
-            out.write( "Not valid username or password format" );
-
+        switch (op){
+            case "login/":
+                // the requested operation is login
+                login(req, res);
+                break;
+            default:
+                // the requested operation is unknown
+                sendError(res, ErrorCode.OPERATION_UNKNOWN);
         }
-        catch ( SQLException e){
-            System.out.print( "[ERROR] Failed database connection" );
+    }
+
+
+    public void login (HttpServletRequest req, HttpServletResponse res)  throws IOException ,ServletException {
+
+        try {
+
+            String email = req.getParameter("email");
+            String password = req.getParameter("password");
+            String userType = req.getParameter("userType");
+
+            if ( email == null || email == "" ) {
+
+                ErrorCode ec = ErrorCode.EMAIL_MISSING;
+                res.setStatus(ec.getHTTPCode());
+
+                req.setAttribute("message", new Message("Email missing"));
+                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+
+            }
+
+
+            if ( userType == null ) {
+
+                ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", new Message("User type not selected"));
+                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+
+            }
+
+            if ( password == null || password == "" ) {
+
+                ErrorCode ec = ErrorCode.PASSWORD_MISSING;
+                res.setStatus(ec.getHTTPCode());
+
+                req.setAttribute("message", new Message("Password missing"));
+                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+
+            }
+
+            User usr = null;
+
+            if ( userType == "tourist"){
+
+                usr = (Tourist) new SearchUserLoginDatabase( getDataSource().getConnection() , email , password).SearchUserLogin();
+
+            }else {
+
+                usr = (Company) new SearchUserLoginDatabase( getDataSource().getConnection() , email , password).SearchUserLogin();
+
+            }
+
+            if ( usr == null ){
+
+                ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
+                res.setStatus(ec.getHTTPCode());
+                Message m = new Message( "credentials are wrong");
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+
+            }
+
+            HttpSession session = req.getSession();
+
+            session.setAttribute("email", usr.getEmail());
+            session.setAttribute("role", usr.getType());
+
+            // login credentials were correct: we redirect the user to the homepage
+            // now the session is active and its data can used to change the homepage
+            res.sendRedirect(req.getContextPath()+"/jsp/index.jsp");
+
+
+        }catch ( SQLException e){
+
+            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            res.setStatus(ec.getHTTPCode());
+            Message m = new Message( "Failed to connect to database");
+            req.setAttribute("message", m);
+            req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
         }
 
     }

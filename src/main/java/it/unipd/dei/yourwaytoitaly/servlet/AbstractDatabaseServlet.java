@@ -1,11 +1,15 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
+import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -55,6 +59,12 @@ public class AbstractDatabaseServlet extends HttpServlet{
         }
 
     }
+
+    public void sendError(HttpServletResponse res, ErrorCode ec) throws IOException {
+        res.setStatus(ec.getHTTPCode());
+        res.getWriter().write(ec.toJSON().toString());
+    }
+}
 
     /**
      * Releases the {@code DataSource} for managing the connection pool to the database.

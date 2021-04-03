@@ -45,6 +45,11 @@ public final class Tourist extends User {
         return idCity;
     }
 
+    @Override
+    public final String getType() {
+        return new String("Tourist");
+    }
+
     public final String getName() {
         return name;
     }
