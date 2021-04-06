@@ -22,7 +22,7 @@ import java.util.List;
  * @since 1.0
  */
 
-public final class SearchAdvertisementDatabase {
+public final class SearchAdvertisementById {
 
     /**
      * The SQL statement to be executed
@@ -45,58 +45,40 @@ public final class SearchAdvertisementDatabase {
     /**
      * Some search parameters
      */
-    private final int reqIdCity;
-    private final int reqIdType;
-    private final Date reqDate;
+    private final int reqIdAdvertisement;
 
     /**
      * Creates a new object for searching advertisementS by some search parameters.
      *
      * @param con
      *              the connection to the database.
-     * @param reqIdCity
-     *              the ID of the city
-     * @param reqIdType
-     *              the ID of the advertisement type
-     * @param reqDate
-     *              the date in which the advertisement starts
+     * @param reqIdAdvertisement
+     *              the request ID
      *
      */
-    public SearchAdvertisementDatabase(final Connection con, final int reqIdCity, final int reqIdType,
-                                       final Date reqDate) {
+
+    public SearchAdvertisementById(final Connection con, final int reqIdAdvertisement) {
         this.con = con;
-        this.reqIdCity = reqIdCity;
-        this.reqIdType = reqIdType;
-        this.reqDate = reqDate;
+        this.reqIdAdvertisement = reqIdAdvertisement;
     }
 
-    /**
-     * Searches advertisements by some search parameters.
-     *
-     * @return a list of {@code Advertisement} objects matching the parameters.
-     *
-     * @throws SQLException
-     *             if any error occurs while searching for advertisements.
-     */
-    public List<Advertisement> searchAdvertisement() throws SQLException {
+    public Advertisement searchAdvertisement() throws SQLException {
 
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         // the results of the search
-        final List<Advertisement> advertisements = new ArrayList<Advertisement>();
+        Advertisement advertisement=null;
 
         try {
             pstmt = con.prepareStatement(STATEMENT);
-            pstmt.setInt(1, reqIdCity);
-            pstmt.setInt(2, reqIdType);
-            pstmt.setDate(3, reqDate);
+            pstmt.setInt(1, reqIdAdvertisement);
 
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
 
-                advertisements.add(new Advertisement(
+                advertisement = new Advertisement(
                         rs.getInt("ID_advertisement"),
                         rs.getString("title"),
                         rs.getString("description"),
@@ -108,7 +90,7 @@ public final class SearchAdvertisementDatabase {
                         rs.getTime("time_start"),
                         rs.getTime("time_end"),
                         rs.getString("email_c"),
-                        rs.getInt("ID_type")));
+                        rs.getInt("ID_type"));
             }
         } finally {
             if (rs != null) {
@@ -122,6 +104,6 @@ public final class SearchAdvertisementDatabase {
             con.close();
         }
 
-        return advertisements;
+        return advertisement;
     }
 }

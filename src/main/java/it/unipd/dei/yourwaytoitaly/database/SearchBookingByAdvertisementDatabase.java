@@ -39,7 +39,7 @@ public final class SearchBookingByAdvertisementDatabase {
     /**
      * Some search parameters
      */
-    private final String reqIdAdvertisement;
+    private final int reqIdAdvertisement;
 
     /**
      * Creates a new object for searching advertisements with the requested Id
@@ -47,7 +47,7 @@ public final class SearchBookingByAdvertisementDatabase {
      * @param con                the connection to the database.
      * @param reqIdAdvertisement the Id of the advertisement.
      */
-    public SearchBookingByAdvertisementDatabase(final Connection con, final String reqIdAdvertisement) {
+    public SearchBookingByAdvertisementDatabase(final Connection con, final int reqIdAdvertisement) {
         this.con = con;
         this.reqIdAdvertisement = reqIdAdvertisement;
     }
@@ -69,7 +69,7 @@ public final class SearchBookingByAdvertisementDatabase {
 
         try {
             pstmt = con.prepareStatement(STATEMENT);
-            pstmt.setString(1, reqIdAdvertisement);
+            pstmt.setInt(1, reqIdAdvertisement);
 
             rs = pstmt.executeQuery();
 
