@@ -8,6 +8,7 @@ import it.unipd.dei.yourwaytoitaly.resource.Message;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.*;
 
@@ -37,6 +38,8 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
+        HttpSession session = req.getSession();
+
         // The user must give these parameters
         String title;
         String type_adv;
@@ -50,7 +53,7 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
         // This must be converted into idType
 
         int idAdvertisement;    // This is set by the DB
-        String emailCompany=""; // TODO: This can be get by the servlet
+        String emailCompany = session.getAttribute("email").toString();
         int idType=0;           // This will be get by inspecting Type_advertisement
         int score;              // This will be calculated
 
@@ -71,9 +74,17 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
 
 
             //TODO: Here make some controls of the inserted data
+            if(title=="" || title==null || title.length()<5){
+                Message msg = new Message("Input value not valid.",
+                        "E3","Title of the advertisement empty.");
+                res.setStatus(200);
+                req.getRequestDispatcher("/jsp/create-advertisement.jsp").forward(req, res);
+            }
             if(numTotItem<=0 || price<=0){
-                Message msg = new Message("Input value not valid.","E1","Total number of item or price not valid");
-                //...
+                Message msg = new Message("Input value not valid.",
+                        "E1","Total number of item or price not valid");
+                res.setStatus(200);
+                req.getRequestDispatcher("/jsp/create-advertisement.jsp").forward(req, res);
             }
             if(dateEnd.compareTo(dateStart)<0 || timeEnd.compareTo(timeStart)<0){
                 Message msg = new Message("Input value not valid.","E2","Dates entered are not compatible.");
@@ -111,11 +122,11 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
                     new CreateAdvertisementDatabase(getDataSource().getConnection(), advertisement)
                             .createAdvertisement();
 
+            // TODO: check if advertisement==null
             m = new Message(String.format("Advertisement %s successfully created. ID:",
                     advertisement.getIdAdvertisement()));
 
-            // Show the advertisement just created in a web page
-            // ?
+            // TODO: forward to show-advertisement.jsp
 
         } catch (NumberFormatException ex) {
             m = new Message("Cannot create the advertisement. " +

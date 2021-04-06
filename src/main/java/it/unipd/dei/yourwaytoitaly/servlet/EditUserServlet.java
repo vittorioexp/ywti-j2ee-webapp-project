@@ -1,12 +1,12 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
 /**
- * Servlet class, to be written
+ * Servlet class to edit the user profile
  * @author Vittorio Esposito
  * @version 1.0
  * @since 1.0
  */
 
-public class EditProfileServlet extends AbstractDatabaseServlet {
+public class EditUserServlet extends AbstractDatabaseServlet {
 
 }
