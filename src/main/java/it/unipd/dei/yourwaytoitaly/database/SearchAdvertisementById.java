@@ -27,14 +27,9 @@ public final class SearchAdvertisementById {
      * The SQL statement to be executed
      */
     private static final String STATEMENT =
-            "SELECT ADVERTISEMENT.TITLE, ADVERTISEMENT.DESCRIPTION, ADVERTISEMENT.SCORE, ADVERTISEMENT.PRICE, ADVERTISEMENT.NUM_TOT_ITEM " +
+            "SELECT * " +
                     "FROM YWTI.ADVERTISEMENT " +
-                    "JOIN YWTI.COMPANY ON COMPANY.EMAIL_C = ADVERTISEMENT.EMAIL_C " +
-                    "JOIN YWTI.CITY ON CITY.ID_CITY = COMPANY.ID_CITY " +
-                    "JOIN YWTI.TYPE_ADVERTISEMENT ON TYPE_ADVERTISEMENT.ID_Type = ADVERTISEMENT.ID_Type " +
-                    "WHERE CITY.NAME = ? AND " +
-                    "TYPE_ADVERTISEMENT.TYPE = ? AND " +
-                    "DATE_START >= ?;";
+                    "WHERE ADVERTISEMENT.ID_ADVERTISEMENT = ? ;";
 
     /**
      * The connection to the database
