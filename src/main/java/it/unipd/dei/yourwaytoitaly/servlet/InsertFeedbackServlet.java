@@ -59,9 +59,6 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
         int rate;
         String text;
 
-
-
-
         Feedback feedback  = null;
         Message m = null;
 

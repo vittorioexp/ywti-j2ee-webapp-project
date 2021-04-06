@@ -1,6 +1,7 @@
 package it.unipd.dei.yourwaytoitaly.database;
 
 import it.unipd.dei.yourwaytoitaly.resource.Booking;
+import it.unipd.dei.yourwaytoitaly.servlet.AbstractDatabaseServlet;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -96,4 +97,42 @@ public final class CreateBookingDatabase {
         }
         return b;
     }
+
+
+    /**
+     * Delete a booking.
+     *
+     * @return the just deleted booking
+     *
+     * @throws SQLException
+     *             if any error occurs while creating bookings.
+     */
+    public void deleteBooking(Booking booking) throws SQLException{
+
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            String query = "UPDATE YWTI.BOOKING SET state = 'DELETED' WHERE email_t = ? AND ID_advertisement = ?;";
+
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, booking.getEmailTourist());
+            pstmt.setInt(2, booking.getIdAdvertisement());
+
+            rs = pstmt.executeQuery();
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+
+            if (pstmt != null) {
+                pstmt.close();
+            }
+
+            con.close();
+        }
+    }
+
 }

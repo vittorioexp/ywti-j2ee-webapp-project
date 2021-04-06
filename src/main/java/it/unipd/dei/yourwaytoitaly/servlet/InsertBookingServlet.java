@@ -3,6 +3,7 @@ package it.unipd.dei.yourwaytoitaly.servlet;
 import it.unipd.dei.yourwaytoitaly.database.CreateBookingDatabase;
 import it.unipd.dei.yourwaytoitaly.database.SearchAdvertisementById;
 import it.unipd.dei.yourwaytoitaly.database.SearchBookingByAdvertisementDatabase;
+import it.unipd.dei.yourwaytoitaly.database.SearchUserScoreById;
 import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
 import it.unipd.dei.yourwaytoitaly.resource.Booking;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
@@ -108,8 +109,10 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             m = new Message(String.format("Booking %s successfully completed. IDs:",
                     booking.getEmailTourist()));
             */
-            m = new Message("Booking successfully completed. IDs: "+emailTourist +" and "+idAdvertisement);
 
+            int totalUserScore = new SearchUserScoreById(getDataSource().getConnection(), emailTourist).searchUserScore();
+
+            m = new Message("Booking successfully completed. User total score: "+ totalUserScore + ", IDs: "+emailTourist +" and "+idAdvertisement);
 
             // Show the booking just created in a web page
             req.getRequestDispatcher("/jsp/show-result-booking.jsp").forward(req, res);

@@ -25,7 +25,7 @@ import java.sql.SQLException;
  */
 
 
-public class AbstractDatabaseServlet extends HttpServlet{
+public class AbstractDatabaseServlet extends HttpServlet {
 
     /**
      * The connection pool to the database.
@@ -35,25 +35,22 @@ public class AbstractDatabaseServlet extends HttpServlet{
     /**
      * Gets the {@code DataSource} for managing the connection pool to the database.
      *
-     * @param config
-     *          a {@code ServletConfig} object containing the servlet's
-     *          configuration and initialization parameters.
-     *
-     * @throws ServletException
-     *          if an exception has occurred that interferes with the servlet's normal operation
+     * @param config a {@code ServletConfig} object containing the servlet's
+     *               configuration and initialization parameters.
+     * @throws ServletException if an exception has occurred that interferes with the servlet's normal operation
      */
     public void init(ServletConfig config) throws ServletException {
 
-        super.init (config);
+        super.init(config);
         InitialContext ct;
 
         try {
             ct = new InitialContext();
-            ds = (DataSource) ct.lookup ("java:/comp/env/jdbc/YWTI"); //TODO : changing database context name
+            ds = (DataSource) ct.lookup("java:/comp/env/jdbc/YWTI"); //TODO : changing database context name
 
         } catch (NamingException e) {
             ds = null;
-            throw new ServletException (
+            throw new ServletException(
                     String.format("[ERROR_AbstractDatabase] Creating Database connection " + e.getMessage()));
 
         }
@@ -64,7 +61,6 @@ public class AbstractDatabaseServlet extends HttpServlet{
         res.setStatus(ec.getHTTPCode());
         res.getWriter().write(ec.toJSON().toString());
     }
-}
 
     /**
      * Releases the {@code DataSource} for managing the connection pool to the database.
