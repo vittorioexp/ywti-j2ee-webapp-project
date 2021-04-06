@@ -90,11 +90,13 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
             }
             if(dateEnd.compareTo(dateStart)<0 || timeEnd.compareTo(timeStart)<0){
                 Message msg = new Message("Input value not valid.","E2","Dates entered are not compatible.");
-                //...
+                res.setStatus(200);
+                req.getRequestDispatcher("/jsp/create-advertisement.jsp").forward(req, res);
             }
-            if(description=="" || description==null){
+            if(description=="" || description==null || description.length()>10000){
                 Message msg = new Message("Input value not valid.","E3","Description of the advertisement empty.");
-                //...
+                res.setStatus(200);
+                req.getRequestDispatcher("/jsp/create-advertisement.jsp").forward(req, res);
             }
 
 
@@ -124,11 +126,18 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
                     new CreateAdvertisementDatabase(getDataSource().getConnection(), advertisement)
                             .createAdvertisement();
 
-            // TODO: check if advertisement==null
+            if(advertisement==null){
+                Message msg = new Message("Generic error","E5","Cannot create the advertisement.");
+                res.setStatus(200);
+                req.getRequestDispatcher("/jsp/create-advertisement.jsp").forward(req, res);
+            }
+            /*
             m = new Message(String.format("Advertisement %s successfully created. ID:",
                     advertisement.getIdAdvertisement()));
+               */
+            m = new Message("Feedback successfully completed. IDs: "+ emailCompany +" and "+idAdvertisement);
 
-            // TODO: forward to show-advertisement.jsp
+            req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
 
         } catch (NumberFormatException ex) {
             m = new Message("Cannot create the advertisement. " +
