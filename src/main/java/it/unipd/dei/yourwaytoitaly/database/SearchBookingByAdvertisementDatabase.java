@@ -16,7 +16,6 @@ import java.util.List;
  * @author Vittorio Esposito
  * @author Marco Basso
  * @author Matteo Piva
- * @author Alessandro Benetti
  * @version 1.0
  * @since 1.0
  */

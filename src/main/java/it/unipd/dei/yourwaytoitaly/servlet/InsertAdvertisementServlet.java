@@ -16,6 +16,8 @@ import java.sql.*;
  * Servlet class to create a new advertisement
  *
  * @author Vittorio Esposito
+ * @author Marco Basso
+ * @author Matteo Piva
  * @version 1.0
  * @since 1.0
  */

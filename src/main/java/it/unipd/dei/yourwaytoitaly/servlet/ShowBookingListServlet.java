@@ -5,6 +5,8 @@ package it.unipd.dei.yourwaytoitaly.servlet;
  * - to a company the bookings of an advertisement
  * - to a user his bookings
  * @author Vittorio Esposito
+ * @author Marco Basso
+ * @author Matteo Piva
  * @version 1.0
  * @since 1.0
  */

@@ -23,6 +23,8 @@ import java.util.List;
  * Servlet class to create a new booking
  *
  * @author Vittorio Esposito
+ * @author Marco Basso
+ * @author Matteo Piva
  * @version 1.0
  * @since 1.0
  */
@@ -110,7 +112,7 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
 
 
             // Show the booking just created in a web page
-            req.getRequestDispatcher("ShowBookingServlet").forward(req, res);
+            req.getRequestDispatcher("/jsp/show-result-booking.jsp").forward(req, res);
 
         } catch (NumberFormatException ex) {
             m = new Message("Cannot create the booking. " +
