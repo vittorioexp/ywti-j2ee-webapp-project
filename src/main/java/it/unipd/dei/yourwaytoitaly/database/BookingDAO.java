@@ -77,7 +77,7 @@ public class BookingDAO extends AbstractDAO{
     }
 
     /**
-     * Edits some parameters of a Booking
+     * Deletes a Booking (mark as DELETED)
      *
      * @throws SQLException
      *             if any error occurs.
@@ -85,7 +85,7 @@ public class BookingDAO extends AbstractDAO{
      *             if any error occurs.
      *
      */
-    public static void editBooking(Booking booking) throws SQLException, NamingException {
+    public static void deleteBooking(Booking booking) throws SQLException, NamingException {
         final String STATEMENT =
                 "UPDATE YWTI.BOOKING SET state = 'DELETED' WHERE email_t = ? AND ID_advertisement = ?;";
         Connection con = DataSourceProvider.getDataSource().getConnection();

@@ -1,17 +1,17 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
 import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
+import it.unipd.dei.yourwaytoitaly.database.TypeAdvertisementDAO;
 import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
+import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.sql.Time;
 
 /**
@@ -42,7 +42,12 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        HttpSession session = req.getSession();
+        // check if a session is valid
+        HttpSession session = req.getSession(false);
+        if (session == null || session.getAttribute("email")==null) {
+            session.invalidate();
+            req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+        }
 
         // The user must give these parameters
         String title;
@@ -62,7 +67,6 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
         int score;              // This will be calculated
 
         Advertisement advertisement  = null;
-        Message m = null;
 
         try{
             // retrieves the request parameters
@@ -76,38 +80,49 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
             timeStart = Time.valueOf(req.getParameter("timeStart"));
             timeEnd = Time.valueOf(req.getParameter("timeEnd"));
 
-
-            //TODO: Here make some controls of the inserted data
-            if(title=="" || title==null || title.length()<5){
-                Message msg = new Message("Input value not valid.",
-                        "E3","Title of the advertisement empty.");
-                res.setStatus(200);
-                req.getRequestDispatcher("/jsp/create-advertisement.jsp").forward(req, res);
+            if(title==null || title.length()<5 || title.length()>100){
+                Message m = new Message("Input value not valid.",
+                        "E3","Title of the advertisement not valid.");
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
             }
-            if(numTotItem<=0 || price<=0){
-                Message msg = new Message("Input value not valid.",
-                        "E1","Total number of item or price not valid");
-                res.setStatus(200);
-                req.getRequestDispatcher("/jsp/create-advertisement.jsp").forward(req, res);
+            if(description==null || description.length()<5 || description.length()>10000){
+                Message m = new Message("Input value not valid.",
+                        "E3","description of the advertisement not valid.");
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+            }
+            if(price<0){
+                Message m = new Message("Input value not valid.",
+                        "E1","Price not valid");
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+            }
+            if(numTotItem<=0){
+                Message m = new Message("Input value not valid.",
+                        "E1","Total number of item not valid");
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
             }
             if(dateEnd.compareTo(dateStart)<0 || timeEnd.compareTo(timeStart)<0){
-                Message msg = new Message("Input value not valid.","E2","Dates entered are not compatible.");
-                res.setStatus(200);
-                req.getRequestDispatcher("/jsp/create-advertisement.jsp").forward(req, res);
-            }
-            if(description=="" || description==null || description.length()>10000){
-                Message msg = new Message("Input value not valid.","E3","Description of the advertisement empty.");
-                res.setStatus(200);
-                req.getRequestDispatcher("/jsp/create-advertisement.jsp").forward(req, res);
+                Message m = new Message("Input value not valid.",
+                        "E2","Dates entered are not valid.");
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
             }
 
-
-            // Calculate the score
             score = (int) (price/3.14);
-            // TODO: USE TypeAdvertisementDAO
-            /*idType = new SearchTypeAdvertisementDatabase(getDataSource().getConnection(), type_adv)
-                    .searchTypeAdvertisement().getIdType();*/
-
+            idType = TypeAdvertisementDAO.searchTypeAdvertisement(type_adv).getIdType();
 
             // creates a new advertisement from the request parameters
             advertisement = new Advertisement(
@@ -125,35 +140,26 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
                     idType
             );
 
-            // updates the advertisement
-            /*advertisement =
-                    new CreateAdvertisementDatabase(getDataSource().getConnection(), advertisement)
-                            .createAdvertisement();*/
             advertisement = AdvertisementDAO.createAdvertisement(advertisement);
 
             if(advertisement==null){
-                Message msg = new Message("Generic error","E5","Cannot create the advertisement.");
-                res.setStatus(200);
-                req.getRequestDispatcher("/jsp/create-advertisement.jsp").forward(req, res);
+                Message m = new Message("Generic error",
+                        "E5","Cannot create the advertisement.");
+                ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
             }
-            /*
-            m = new Message(String.format("Advertisement %s successfully created. ID:",
-                    advertisement.getIdAdvertisement()));
-               */
-            m = new Message("Feedback successfully completed. IDs: "+ emailCompany +" and "+idAdvertisement);
 
             req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
 
-        } catch (NumberFormatException ex) {
-            m = new Message("Cannot create the advertisement. " +
-                    "Invalid input parameters",
+        } catch (Exception ex) {
+            Message m = new Message("Cannot create the advertisement. ",
                     "E100", ex.getMessage());
-        } catch (SQLException ex) {
-            m = new Message("Cannot create the advertisement.: unexpected error while accessing the database.",
-                    "E200", ex.getMessage());
-        } catch (NamingException e) {
-            //TODO fix
-            e.printStackTrace();
+            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            res.setStatus(ec.getHTTPCode());
+            req.setAttribute("message", m);
+            req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
         }
 
     }

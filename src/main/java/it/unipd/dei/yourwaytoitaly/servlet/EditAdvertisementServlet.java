@@ -3,14 +3,14 @@ package it.unipd.dei.yourwaytoitaly.servlet;
 import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
 import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
+import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.sql.Time;
 
 /**
@@ -49,25 +49,44 @@ public class EditAdvertisementServlet extends AbstractDatabaseServlet {
         Date dateEnd = null;
         Time timeStart = null;
         Time timeEnd = null;
-        int idAdvertisement = 0;
+        int idAdvertisement = 0;    // TODO: get this somehow
         String emailCompany = null;
         int idType = 0;
 
         Advertisement advertisement;
-        Message m = null;
 
         try{
 
-            //TODO: Ricavarsi l'idadvertisement dell'annuncio che la company vuole modificare
-            //idAdvertisement = ...
+            // check if a session is valid
+            HttpSession session = req.getSession(false);
+            if (session == null || session.getAttribute("email")==null) {
+                session.invalidate();
+                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+            }
+
+            // check if the email of the session is equal to emailCompany
+            String emailSession = session.getAttribute("email").toString();
+            emailCompany = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
+            if (!emailSession.equals(emailCompany)) {
+                Message m = new Message("User is not authorized.",
+                        "E1","User is not authorized to edit this advertisement");
+                ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+            }
+
             price = Integer.parseInt(req.getParameter("price"));
 
-            if(price<=0){
-                Message msg = new Message("Input value not valid.",
+            if(price<0 || price>50000){
+                Message m = new Message("Price not valid.",
                         "E1","Price not valid");
-                res.setStatus(200);
-                req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
             }
+
             score = (int) (price/3.14);
 
             advertisement = new Advertisement(idAdvertisement,
@@ -81,33 +100,20 @@ public class EditAdvertisementServlet extends AbstractDatabaseServlet {
                     timeStart,
                     timeEnd,
                     emailCompany,
-                    idType);
+                    idType
+            );
 
-            // delete the booking
-            //new CreateAdvertisementDatabase(getDataSource().getConnection(), advertisement).editAdvertisement();
             AdvertisementDAO.editAdvertisement(advertisement);
 
-            /*
-            m = new Message(String.format("Booking %s successfully completed. IDs:",
-                    booking.getEmailTourist()));
-            */
-
-            m = new Message("Advertisement successfully edited.");
-
-            // Show the list of booking
             req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
 
-        } catch (NumberFormatException ex) {
-            m = new Message("Cannot edit the advertisement. " +
-                    "Invalid input parameters",
+        } catch (Exception ex) {
+            Message m = new Message("Cannot edit the advertisement. ",
                     "E100", ex.getMessage());
-        } catch (SQLException ex) {
-            m = new Message("Cannot edit the advertisement: unexpected error while accessing the database.",
-                    "E200", ex.getMessage());
-
-        } catch (NamingException e) {
-            //TODO fix
-            e.printStackTrace();
+            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            res.setStatus(ec.getHTTPCode());
+            req.setAttribute("message", m);
+            req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
         }
     }
 }

@@ -8,14 +8,11 @@ import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.sql.Date;
 import java.util.List;
 
@@ -40,7 +37,6 @@ public class ShowAdvertisementListServlet extends AbstractDatabaseServlet {
         //indicator for the required operation
         op = op.substring(op.lastIndexOf("src") + 4);
         List<Advertisement> listAdvertisement;
-        Message m;
 
         switch (op){
             case "tourist/":
@@ -55,39 +51,17 @@ public class ShowAdvertisementListServlet extends AbstractDatabaseServlet {
 
                     listAdvertisement = AdvertisementDAO.searchAdvertisement(idCity,idType,date);
 
-                    m = new Message("Request list successfully obtained.");
-
                     req.setAttribute("employeeList", listAdvertisement);
-                    req.setAttribute("message", m);
+                    //req.setAttribute("message", m);
 
                     req.getRequestDispatcher("/jsp/homepage.jsp").forward(req, res);
 
-                } catch ( IllegalArgumentException e ) {
-                    ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
-                    res.setStatus(ec.getHTTPCode());
-                    req.setAttribute("message", new Message("Cannot search the advertisement.: unexpected error while accessing the database.",
-                            "E200", "Unespected error."));
-                    req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
-                }catch (NumberFormatException ex) {
-                    m = new Message("Cannot search the advertisement. " +
-                            "Invalid input parameters",
+                } catch (Exception ex) {
+                    Message m = new Message("Cannot show the advertisements. ",
                             "E100", ex.getMessage());
-                    req.setAttribute("message",m);
-                    req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
-                } catch (SQLException ex) {
-                    m = new Message("Cannot search the advertisement.: unexpected error while accessing the database.",
-                            "E200", ex.getMessage());
-                    req.setAttribute("message",m);
-                    req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
-                } catch (NamingException ex) {
-                    m = new Message("Cannot search the advertisement.: Naming error.",
-                            "E200", ex.getMessage());
-                    req.setAttribute("message",m);
-                    req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
-                } catch (ParseException ex) {
-                    m = new Message("Cannot search the advertisement.: Naming error.",
-                            "E200", ex.getMessage());
-                    req.setAttribute("message",m);
+                    ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+                    res.setStatus(ec.getHTTPCode());
+                    req.setAttribute("message", m);
                     req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
                 }
                 break;
@@ -101,36 +75,27 @@ public class ShowAdvertisementListServlet extends AbstractDatabaseServlet {
                 try {
 
                     listAdvertisement = AdvertisementDAO.searchAdvertisement(email);
-                    m = new Message("Request list successfully obtained.");
 
                     req.setAttribute("listAdvertisement", listAdvertisement);
 
                     req.getRequestDispatcher("/jsp/show-profile.jsp").forward(req, res);
 
-                }catch (NumberFormatException ex) {
-                    m = new Message("Cannot search the advertisement. " +
-                            "Invalid input parameters",
+                } catch (Exception ex) {
+                    Message m = new Message("Cannot show the advertisements. ",
                             "E100", ex.getMessage());
-                    req.setAttribute("message",m);
-                    req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
-                } catch (SQLException ex) {
-                    m = new Message("Cannot search the advertisement.: unexpected error while accessing the database.",
-                            "E200", ex.getMessage());
-                    req.setAttribute("message",m);
-                    req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
-                } catch (NamingException ex) {
-                    m = new Message("Cannot search the advertisement.: Naming error.",
-                            "E200", ex.getMessage());
-                    req.setAttribute("message",m);
+                    ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+                    res.setStatus(ec.getHTTPCode());
+                    req.setAttribute("message", m);
                     req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
                 }
                 break;
             default:
                 // the requested operation is unknown
-                ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
+                Message m = new Message("Cannot show the advertisements. ",
+                        "E100", "Operation unknown");
+                ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", new Message("Cannot search the advertisement.: unexpected error while accessing the database.",
-                        "E200", "Unespected error."));
+                req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
         }
 

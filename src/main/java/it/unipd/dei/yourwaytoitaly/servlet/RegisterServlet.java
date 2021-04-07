@@ -112,7 +112,9 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             String phone = req.getParameter("phone");
             int idCity = parseInt(req.getParameter("idCity"));
 
+            // TODO: see InsertAdvertisementServlet.java to see how to generate a Message and redirect to show-message.jsp
 
+            // TODO: string.equals(""), not string==""
 
             if ( email == null || email == "" ) {
 
