@@ -96,7 +96,7 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
 
 
             // Show the booking just created in a web page
-            req.getRequestDispatcher("/jsp/showadvertisement.jsp").forward(req, res);
+            req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
 
         } catch (NumberFormatException ex) {
             m = new Message("Cannot create the booking. " +

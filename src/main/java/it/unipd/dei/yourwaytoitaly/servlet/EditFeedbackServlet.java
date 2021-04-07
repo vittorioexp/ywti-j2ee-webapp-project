@@ -10,6 +10,8 @@ package it.unipd.dei.yourwaytoitaly.servlet;
  * @since 1.0
  */
 
+//Si può cancellare questa servlet?
+
 public class EditFeedbackServlet extends AbstractDatabaseServlet{
 
 }

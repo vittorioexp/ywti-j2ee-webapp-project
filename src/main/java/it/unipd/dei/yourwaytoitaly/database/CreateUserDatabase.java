@@ -37,6 +37,19 @@ public final class CreateUserDatabase {
                     "FROM YWTI.City WHERE City.name = ? RETURNING *;";
 
     /**
+     * The SQL statement to be executed
+     */
+    private static final String STATEMENT_TOURIST_EDIT =
+            "UPDATE TWTI.TOURIST SET password = MD5(?) , phone_number = ? WHERE email_t = ?;";
+
+
+    /**
+     * The SQL statement to be executed
+     */
+    private static final String STATEMENT_COMPANY_EDIT =
+            "UPDATE TWTI.COMPANY SET password = MD5(?) , phone_number = ? WHERE email_c = ?;";
+
+    /**
      * The connection to the database
      */
     private final Connection con;
@@ -143,6 +156,40 @@ public final class CreateUserDatabase {
             con.close();
         }
         return u;
+    }
+
+    public void editUser() throws SQLException{
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            if (this.user instanceof Tourist) {
+                pstmt = con.prepareStatement(STATEMENT_TOURIST_EDIT);
+                pstmt.setString(1, ((Tourist) this.user).getPassword());
+                pstmt.setString(2, ((Tourist) this.user).getPhoneNumber());
+                pstmt.setString(3, ((Tourist) this.user).getEmail());
+                rs = pstmt.executeQuery();
+
+            } else if (this.user instanceof Company) {
+                pstmt = con.prepareStatement(STATEMENT_COMPANY_EDIT);
+                pstmt.setString(1, ((Company) this.user).getPassword());
+                pstmt.setString(2, ((Company) this.user).getPhoneNumber());
+                pstmt.setString(3, ((Company) this.user).getEmail());
+                rs = pstmt.executeQuery();
+
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+
+            if (pstmt != null) {
+                pstmt.close();
+            }
+
+            con.close();
+        }
+        return;
     }
 }
 

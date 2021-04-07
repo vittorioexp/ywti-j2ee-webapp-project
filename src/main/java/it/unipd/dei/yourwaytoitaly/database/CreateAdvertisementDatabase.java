@@ -22,13 +22,16 @@ import java.sql.SQLException;
 public final class CreateAdvertisementDatabase {
 
     /**
-     * The SQL statement to be executed
+     * The SQL statements to be executed
      */
     private static final String STATEMENT =
             "INSERT INTO YWTI.Advertisement (TITLE, DESCRIPTION, SCORE, PRICE, NUM_TOT_ITEM, " +
                     "DATE_START, DATE_END, TIME_START, TIME_END, email_c, ID_TYPE) " +
                     "SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ID_TYPE " +
                     "FROM Type_advertisement WHERE Type_advertisement.type = ? RETURNING *;";
+
+    private static final String STATEMENT_EDIT =
+            "UPDATE TWTI.ADVERTISEMENT SET price = ? , score = ? WHERE ID_advertisement = ?;";
 
     /**
      * The connection to the database
@@ -109,5 +112,30 @@ public final class CreateAdvertisementDatabase {
         }
 
         return a;
+    }
+
+    public void editAdvertisement() throws SQLException {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            pstmt = con.prepareStatement(STATEMENT_EDIT);
+            pstmt.setInt(1, advertisement.getPrice());
+            pstmt.setInt(2, advertisement.getScore());
+            pstmt.setInt(3, advertisement.getIdAdvertisement());
+
+            rs = pstmt.executeQuery();
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            con.close();
+        }
+
+        return;
     }
 }
