@@ -1,14 +1,12 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
-import it.unipd.dei.yourwaytoitaly.database.CreateBookingDatabase;
-import it.unipd.dei.yourwaytoitaly.database.SearchAdvertisementById;
-import it.unipd.dei.yourwaytoitaly.database.SearchBookingByAdvertisementDatabase;
-import it.unipd.dei.yourwaytoitaly.database.SearchUserScoreById;
-import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
+import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
+import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
+import it.unipd.dei.yourwaytoitaly.database.UserDAO;
 import it.unipd.dei.yourwaytoitaly.resource.Booking;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
-import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,13 +50,13 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
         int numBooking;
 
 
-        int idAdvertisement;    // This is set by the DB
+        int idAdvertisement = 0;    // This is set by the DB
         String emailTourist=""; // TODO: This can be get by the servlet
         Date date = new Date(Calendar.getInstance().getTime().getTime());
         Time time = new Time(Calendar.getInstance().getTime().getTime());
         String state = "PROCESSING";
         int itemBooked=0;
-        int NumTotItem=0;
+        int numTotItem=0;
 
 
         Booking booking  = null;
@@ -75,12 +73,16 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             numBooking = Integer.parseInt(req.getParameter("numBooking"));
 
             //TODO: Ottenere l'ID dell'annuncio che l'utente ha selezionato
-            NumTotItem = new SearchAdvertisementById(getDataSource().getConnection(), idAdvertisement).searchAdvertisement().getNumTotItem();
-            List<Booking> bookingList = new SearchBookingByAdvertisementDatabase(getDataSource().getConnection(), idAdvertisement).searchBookingByAdvertisement();
+            //NumTotItem = new SearchAdvertisementById(getDataSource().getConnection(), idAdvertisement).searchAdvertisement().getNumTotItem();
+            //List<Booking> bookingList = new SearchBookingByAdvertisementDatabase(getDataSource().getConnection(), idAdvertisement).searchBookingByAdvertisement();
+
+            numTotItem = AdvertisementDAO.searchAdvertisement(idAdvertisement).getNumTotItem();
+            List<Booking> bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
+
             for(Booking b: bookingList){
                 itemBooked+=b.getNumBooking();
             }
-            if(numBooking<=0 || numBooking>NumTotItem-itemBooked){
+            if(numBooking<=0 || numBooking>numTotItem-itemBooked){
                 //TODO: Sistemare le righe commentate
                 //ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
                 //res.setStatus(ec.getHTTPCode());
@@ -101,16 +103,17 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             );
 
             // updates the booking
-            booking =
+            /*booking =
                     new CreateBookingDatabase(getDataSource().getConnection(), booking)
-                            .createBooking();
-
+                            .createBooking();*/
+            booking = BookingDAO.createBooking(booking);
             /*
             m = new Message(String.format("Booking %s successfully completed. IDs:",
                     booking.getEmailTourist()));
             */
 
-            int totalUserScore = new SearchUserScoreById(getDataSource().getConnection(), emailTourist).searchUserScore();
+            //int totalUserScore = new SearchUserScoreById(getDataSource().getConnection(), emailTourist).searchUserScore();
+            int totalUserScore = UserDAO.searchUserScore(emailTourist);
 
             m = new Message("Booking successfully completed. User total score: "+ totalUserScore + ", IDs: "+emailTourist +" and "+idAdvertisement);
 
@@ -125,6 +128,9 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             m = new Message("Cannot create the booking.: unexpected error while accessing the database.",
                     "E200", ex.getMessage());
 
+        } catch (NamingException e) {
+            // TODO fix
+            e.printStackTrace();
         }
     }
 }

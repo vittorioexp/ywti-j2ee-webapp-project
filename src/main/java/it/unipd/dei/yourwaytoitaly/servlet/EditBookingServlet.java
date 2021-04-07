@@ -1,12 +1,11 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
-import it.unipd.dei.yourwaytoitaly.database.CreateBookingDatabase;
-import it.unipd.dei.yourwaytoitaly.database.SearchAdvertisementById;
-import it.unipd.dei.yourwaytoitaly.database.SearchBookingByAdvertisementDatabase;
-import it.unipd.dei.yourwaytoitaly.database.SearchUserScoreById;
+import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
+import it.unipd.dei.yourwaytoitaly.database.UserDAO;
 import it.unipd.dei.yourwaytoitaly.resource.Booking;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
 
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,8 +14,6 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.util.Calendar;
-import java.util.List;
 
 /**
  * Servlet class to edit a booking
@@ -47,7 +44,7 @@ public class EditBookingServlet extends AbstractDatabaseServlet{
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        int idAdvertisement;    // This is set by the DB
+        int idAdvertisement = 0;    // This is set by the DB
         String emailTourist=""; // TODO: This can be get by the servlet
         Date date = null;
         Time time = null;
@@ -73,18 +70,20 @@ public class EditBookingServlet extends AbstractDatabaseServlet{
                     date,
                     time,
                     numBooking,
-                    state
+                    "DELETED"
             );
 
             // delete the booking
-            new CreateBookingDatabase(getDataSource().getConnection(), booking).deleteBooking(booking);
+            //new CreateBookingDatabase(getDataSource().getConnection(), booking).deleteBooking(booking);
+            BookingDAO.editBooking(booking);
 
             /*
             m = new Message(String.format("Booking %s successfully completed. IDs:",
                     booking.getEmailTourist()));
             */
 
-            int totalUserScore = new SearchUserScoreById(getDataSource().getConnection(), emailTourist).searchUserScore();
+            //int totalUserScore = new SearchUserScoreById(getDataSource().getConnection(), emailTourist).searchUserScore();
+            int totalUserScore = UserDAO.searchUserScore(emailTourist);
 
             m = new Message("Booking successfully deleted. User total score: "+ totalUserScore + ", IDs: "+emailTourist +" and "+idAdvertisement);
 
@@ -99,6 +98,9 @@ public class EditBookingServlet extends AbstractDatabaseServlet{
             m = new Message("Cannot create the booking.: unexpected error while accessing the database.",
                     "E200", ex.getMessage());
 
+        } catch (NamingException e) {
+            // TODO fix
+            e.printStackTrace();
         }
     }
 }

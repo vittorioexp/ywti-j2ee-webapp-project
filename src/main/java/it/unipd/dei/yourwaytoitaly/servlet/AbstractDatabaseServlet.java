@@ -59,7 +59,7 @@ public class AbstractDatabaseServlet extends HttpServlet {
 
     public void sendError(HttpServletResponse res, ErrorCode ec) throws IOException {
         res.setStatus(ec.getHTTPCode());
-        res.getWriter().write(ec.toJSON().toString());
+        //res.getWriter().write(ec.toJSON().toString());
     }
 
     /**

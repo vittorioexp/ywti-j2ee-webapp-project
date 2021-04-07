@@ -1,15 +1,10 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
-import it.unipd.dei.yourwaytoitaly.database.CreateBookingDatabase;
-import it.unipd.dei.yourwaytoitaly.database.CreateFeedbackDatabase;
-import it.unipd.dei.yourwaytoitaly.database.SearchAdvertisementById;
-import it.unipd.dei.yourwaytoitaly.database.SearchBookingByAdvertisementDatabase;
-import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
-import it.unipd.dei.yourwaytoitaly.resource.Booking;
+import it.unipd.dei.yourwaytoitaly.database.FeedbackDAO;
 import it.unipd.dei.yourwaytoitaly.resource.Feedback;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
-import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,9 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * Servlet class to create a new feedback
@@ -53,7 +46,7 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
 
 
 
-        int idAdvertisement;    // TODO: This is set by the DB
+        int idAdvertisement = 0;    // TODO: This is set by the DB
         String emailTourist=""; // This can be get by the servlet
         Date date = new Date(Calendar.getInstance().getTime().getTime());
         int rate;
@@ -84,10 +77,10 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
             );
 
             // updates the booking
-            feedback =
+            /*feedback =
                     new CreateFeedbackDatabase(getDataSource().getConnection(), feedback)
-                            .createFeedback();
-
+                            .createFeedback();*/
+            feedback = FeedbackDAO.createFeedback(feedback);
             /*
             m = new Message(String.format("Booking %s successfully completed. IDs:",
                     booking.getEmailTourist()));
@@ -106,6 +99,9 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
             m = new Message("Cannot create the booking.: unexpected error while accessing the database.",
                     "E200", ex.getMessage());
 
+        } catch (NamingException e) {
+            // TODO fix
+            e.printStackTrace();
         }
     }
 }
