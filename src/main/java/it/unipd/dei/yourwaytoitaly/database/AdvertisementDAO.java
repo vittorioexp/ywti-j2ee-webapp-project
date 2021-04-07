@@ -25,12 +25,15 @@ import java.util.List;
 public class AdvertisementDAO extends AbstractDAO{
 
     /**
-     * Creates a new advertisement.
+     * Inserts a new advertisement.
      *
      * @return the just created advertisement
      *
      * @throws SQLException
-     *             if any error occurs while creating advertisements.
+     *             if any error occurs.
+     * @throws NamingException
+     *             if any error occurs.
+     *
      */
     public static Advertisement createAdvertisement(Advertisement advertisement) throws SQLException, NamingException {
         final String STATEMENT =
@@ -84,12 +87,12 @@ public class AdvertisementDAO extends AbstractDAO{
     }
 
     /**
-     * Edits an advertisement
-     *
-     * @return the just created advertisement
+     * Edits some parameters of an Advertisement
      *
      * @throws SQLException
-     *             if any error occurs while creating advertisements.
+     *             if any error occurs.
+     * @throws NamingException
+     *             if any error occurs.
      */
     public static void editAdvertisement(Advertisement advertisement) throws SQLException, NamingException {
         final String STATEMENT_EDIT =
@@ -110,11 +113,16 @@ public class AdvertisementDAO extends AbstractDAO{
             //close all the possible resources
             cleaningOperations(pstmt, rs, con);
         }
-
-        return;
     }
 
-
+    /**
+     * Searches an Advertisement by ID_ADVERTISEMENT
+     *
+     * @throws SQLException
+     *             if any error occurs.
+     * @throws NamingException
+     *             if any error occurs.
+     */
     public static Advertisement searchAdvertisement(final int reqIdAdvertisement) throws SQLException, NamingException {
         final String STATEMENT =
                 "SELECT * " +
@@ -158,12 +166,12 @@ public class AdvertisementDAO extends AbstractDAO{
     }
 
     /**
-     * Searches advertisements by some search parameters.
-     *
-     * @return a list of {@code Advertisement} objects matching the parameters.
+     * Searches and returns some Advertisements by ID_CITY, ID_TYPE and DATE_START
      *
      * @throws SQLException
-     *             if any error occurs while searching for advertisements.
+     *             if any error occurs.
+     * @throws NamingException
+     *             if any error occurs.
      */
     public static List<Advertisement> searchAdvertisement(final int reqIdCity, final int reqIdType,
                                                    final Date reqDate) throws SQLException, NamingException {

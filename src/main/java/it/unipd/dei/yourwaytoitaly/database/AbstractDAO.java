@@ -5,6 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Abstract DAO class to be extended
+ *
+ * @author Vittorio Esposito
+ * @author Marco Basso
+ * @author Matteo Piva
+ * @version 1.0
+ * @since 1.0
+ */
 public class AbstractDAO {
 
     static void cleaningOperations(PreparedStatement stmnt, ResultSet result, Connection conn) throws SQLException {
