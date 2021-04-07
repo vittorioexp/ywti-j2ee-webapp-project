@@ -1,13 +1,13 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
-import it.unipd.dei.yourwaytoitaly.database.CreateUserDatabase;
-import it.unipd.dei.yourwaytoitaly.database.SearchUserLoginDatabase;
+import it.unipd.dei.yourwaytoitaly.database.UserDAO;
 import it.unipd.dei.yourwaytoitaly.resource.Company;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
 import it.unipd.dei.yourwaytoitaly.resource.Tourist;
 import it.unipd.dei.yourwaytoitaly.resource.User;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +18,6 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 import static java.lang.Integer.parseInt;
-import static java.lang.Long.parseLong;
 
 /**
  * Servlet class, to be written
@@ -175,7 +174,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             if ( Objects.equals(userType, "tourist") ){
 
                 String birthDate = req.getParameter("birthDate");
-                Date birthDateFormatted;
+                Date birthDateFormatted = null;
                 //birthDate : a String object representing a date in in the format "yyyy-[m]m-[d]d".
                 //The leading zero for mm and dd may also be omitted.
                 try {
@@ -202,13 +201,13 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                 }
 
                 Tourist t = new Tourist(email, password , name , address , phone , idCity , surname , birthDateFormatted);
-                usr = (Tourist) new CreateUserDatabase( getDataSource().getConnection() , t).createUser();
-
+                //usr = (Tourist) new CreateUserDatabase( getDataSource().getConnection() , t).createUser();
+                usr = (Tourist) UserDAO.createUser(t);
             }else {
 
                 Company c = new Company( email, password , address , phone , idCity , name);
-                usr = (Company) new CreateUserDatabase( getDataSource().getConnection() , c).createUser();
-
+                //usr = (Company) new CreateUserDatabase( getDataSource().getConnection() , c).createUser();
+                usr = (Company) UserDAO.createUser(c);
             }
 
             if ( usr == null ){
@@ -231,8 +230,8 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             res.sendRedirect(req.getContextPath()+"/jsp/index.jsp");
 
 
-        }catch ( SQLException e){
-
+        }catch (SQLException | NamingException e){
+            // TODO: handle properly NamingException
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             res.setStatus(ec.getHTTPCode());
             Message m = new Message( "Failed to connect to database");
@@ -242,6 +241,6 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
     }
 
-    }
-
 }
+
+

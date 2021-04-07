@@ -1,16 +1,13 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
-import it.unipd.dei.yourwaytoitaly.database.CreateAdvertisementDatabase;
-import it.unipd.dei.yourwaytoitaly.database.CreateBookingDatabase;
-import it.unipd.dei.yourwaytoitaly.database.SearchUserScoreById;
+import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
 import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
-import it.unipd.dei.yourwaytoitaly.resource.Booking;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
 
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -87,7 +84,8 @@ public class EditAdvertisementServlet extends AbstractDatabaseServlet {
                     idType);
 
             // delete the booking
-            new CreateAdvertisementDatabase(getDataSource().getConnection(), advertisement).editAdvertisement();
+            //new CreateAdvertisementDatabase(getDataSource().getConnection(), advertisement).editAdvertisement();
+            AdvertisementDAO.editAdvertisement(advertisement);
 
             /*
             m = new Message(String.format("Booking %s successfully completed. IDs:",
@@ -107,6 +105,9 @@ public class EditAdvertisementServlet extends AbstractDatabaseServlet {
             m = new Message("Cannot edit the advertisement: unexpected error while accessing the database.",
                     "E200", ex.getMessage());
 
+        } catch (NamingException e) {
+            //TODO fix
+            e.printStackTrace();
         }
     }
 }

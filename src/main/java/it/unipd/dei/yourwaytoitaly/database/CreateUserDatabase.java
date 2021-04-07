@@ -36,18 +36,6 @@ public final class CreateUserDatabase {
                     "SELECT ?, ?, ?, ?, ?, ID_CITY" +
                     "FROM YWTI.City WHERE City.name = ? RETURNING *;";
 
-    /**
-     * The SQL statement to be executed
-     */
-    private static final String STATEMENT_TOURIST_EDIT =
-            "UPDATE TWTI.TOURIST SET password = MD5(?) , phone_number = ? WHERE email_t = ?;";
-
-
-    /**
-     * The SQL statement to be executed
-     */
-    private static final String STATEMENT_COMPANY_EDIT =
-            "UPDATE TWTI.COMPANY SET password = MD5(?) , phone_number = ? WHERE email_c = ?;";
 
     /**
      * The connection to the database

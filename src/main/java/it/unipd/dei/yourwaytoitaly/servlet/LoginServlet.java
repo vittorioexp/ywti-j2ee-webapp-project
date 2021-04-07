@@ -1,26 +1,19 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
-import it.unipd.dei.yourwaytoitaly.database.SearchUserLoginDatabase;
+import it.unipd.dei.yourwaytoitaly.database.UserDAO;
+import it.unipd.dei.yourwaytoitaly.resource.Company;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
 import it.unipd.dei.yourwaytoitaly.resource.Tourist;
-import it.unipd.dei.yourwaytoitaly.resource.Company;
 import it.unipd.dei.yourwaytoitaly.resource.User;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
-
-import javax.jms.Session;
-import javax.servlet.ServletConfig;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.*;
-import java.util.Enumeration;
+import java.sql.SQLException;
 
 /**
  * Servlet creating the session after verifying user login and password
@@ -49,7 +42,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
      */
 
 
-    public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         handleRequest(req, res);
     }
 
@@ -68,7 +61,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
      */
 
 
-    public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         handleRequest(req, res);
     }
 
@@ -147,12 +140,13 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
             if ( userType == "tourist"){
 
-                usr = (Tourist) new SearchUserLoginDatabase( getDataSource().getConnection() , email , password).SearchUserLogin();
+                //usr = (Tourist) new SearchUserLoginDatabase( getDataSource().getConnection() , email , password).SearchUserLogin();
+                usr = (Tourist) UserDAO.searchUserLogin(email,password);
 
             }else {
 
-                usr = (Company) new SearchUserLoginDatabase( getDataSource().getConnection() , email , password).SearchUserLogin();
-
+                //usr = (Company) new SearchUserLoginDatabase( getDataSource().getConnection() , email , password).SearchUserLogin();
+                usr = (Company) UserDAO.searchUserLogin(email,password);
             }
 
             if ( usr == null ){
@@ -175,8 +169,8 @@ public class LoginServlet extends AbstractDatabaseServlet {
             res.sendRedirect(req.getContextPath()+"/jsp/index.jsp");
 
 
-        }catch ( SQLException e){
-
+        }catch (SQLException | NamingException e){
+            // TODO: handle properly NamingException
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             res.setStatus(ec.getHTTPCode());
             Message m = new Message( "Failed to connect to database");

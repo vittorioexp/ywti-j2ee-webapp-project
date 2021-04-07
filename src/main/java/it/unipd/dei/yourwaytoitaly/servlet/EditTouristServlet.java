@@ -1,9 +1,10 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
-import it.unipd.dei.yourwaytoitaly.database.CreateUserDatabase;
+import it.unipd.dei.yourwaytoitaly.database.UserDAO;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
 import it.unipd.dei.yourwaytoitaly.resource.Tourist;
 
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -72,7 +73,8 @@ public class EditTouristServlet extends AbstractDatabaseServlet {
                     birthdate);
 
             // edit the user
-            new CreateUserDatabase(getDataSource().getConnection(), tourist).editUser();
+            //new CreateUserDatabase(getDataSource().getConnection(), tourist).editUser();
+            UserDAO.editUser(tourist);
 
             /*
             m = new Message(String.format("Booking %s successfully completed. IDs:",
@@ -92,6 +94,9 @@ public class EditTouristServlet extends AbstractDatabaseServlet {
             m = new Message("Cannot edit the user: unexpected error while accessing the database.",
                     "E200", ex.getMessage());
 
+        } catch (NamingException e) {
+            //TODO: fix
+            e.printStackTrace();
         }
     }
 }

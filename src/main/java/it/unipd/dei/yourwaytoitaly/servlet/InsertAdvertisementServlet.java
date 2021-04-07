@@ -1,16 +1,18 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
-import it.unipd.dei.yourwaytoitaly.database.CreateAdvertisementDatabase;
-import it.unipd.dei.yourwaytoitaly.database.SearchTypeAdvertisementDatabase;
+import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
 import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
 
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Time;
 
 /**
  * Servlet class to create a new advertisement
@@ -54,7 +56,7 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
         Time timeEnd;
         // This must be converted into idType
 
-        int idAdvertisement;    // This is set by the DB
+        int idAdvertisement = 0;    // This is set by the DB
         String emailCompany = session.getAttribute("email").toString();
         int idType=0;           // This will be get by inspecting Type_advertisement
         int score;              // This will be calculated
@@ -102,8 +104,10 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
 
             // Calculate the score
             score = (int) (price/3.14);
-            idType = new SearchTypeAdvertisementDatabase(getDataSource().getConnection(), type_adv)
-                    .searchTypeAdvertisement().getIdType();
+            // TODO: USE TypeAdvertisementDAO
+            /*idType = new SearchTypeAdvertisementDatabase(getDataSource().getConnection(), type_adv)
+                    .searchTypeAdvertisement().getIdType();*/
+
 
             // creates a new advertisement from the request parameters
             advertisement = new Advertisement(
@@ -122,9 +126,10 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
             );
 
             // updates the advertisement
-            advertisement =
+            /*advertisement =
                     new CreateAdvertisementDatabase(getDataSource().getConnection(), advertisement)
-                            .createAdvertisement();
+                            .createAdvertisement();*/
+            advertisement = AdvertisementDAO.createAdvertisement(advertisement);
 
             if(advertisement==null){
                 Message msg = new Message("Generic error","E5","Cannot create the advertisement.");
@@ -146,6 +151,9 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
         } catch (SQLException ex) {
             m = new Message("Cannot create the advertisement.: unexpected error while accessing the database.",
                     "E200", ex.getMessage());
+        } catch (NamingException e) {
+            //TODO fix
+            e.printStackTrace();
         }
 
     }
