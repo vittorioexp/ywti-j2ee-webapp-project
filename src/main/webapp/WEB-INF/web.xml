@@ -53,4 +53,10 @@
 		<url-pattern>/src/register</url-pattern>
 	</servlet-mapping>
 
+	<servlet-mapping>
+		<servlet-name>ShowAdvertisementListServlet</servlet-name>
+		<url-pattern>/src/tourist/homepage</url-pattern>
+		<url-pattern>/src/company/profile</url-pattern>
+	</servlet-mapping>
+
 </web-app>

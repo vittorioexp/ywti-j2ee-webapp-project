@@ -165,6 +165,59 @@ public class AdvertisementDAO extends AbstractDAO{
         return advertisement;
     }
 
+
+
+    /**
+     * Searches an Advertisement by company email
+     *
+     * @throws SQLException
+     *             if any error occurs.
+     * @throws NamingException
+     *             if any error occurs.
+     */
+    public static List<Advertisement> searchAdvertisement(String reqEmail) throws SQLException, NamingException {
+        final String STATEMENT =
+                "SELECT *\n" +
+                        "FROM YWTI.ADVERTISEMENT\n" +
+                        "WHERE ADVERTISEMENT.email_c = ?;";
+        Connection con = DataSourceProvider.getDataSource().getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        // the results of the search
+        List<Advertisement> listAdvertisement=null;
+
+        try {
+            pstmt = con.prepareStatement(STATEMENT);
+            pstmt.setInt(1, reqEmail);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                listAdvertisement.add(new Advertisement(
+                        rs.getInt("ID_advertisement"),
+                        rs.getString("title"),
+                        rs.getString("description"),
+                        rs.getInt("score"),
+                        rs.getInt("price"),
+                        rs.getInt("num_tot_item"),
+                        rs.getDate("date_start"),
+                        rs.getDate("date_end"),
+                        rs.getTime("time_start"),
+                        rs.getTime("time_end"),
+                        rs.getString("email_c"),
+                        rs.getInt("ID_type")));
+            }
+        } finally {
+            //close all the possible resources
+            cleaningOperations(pstmt, rs, con);
+        }
+
+        return listAdvertisement;
+    }
+
+
     /**
      * Searches and returns some Advertisements by ID_CITY, ID_TYPE and DATE_START
      *
