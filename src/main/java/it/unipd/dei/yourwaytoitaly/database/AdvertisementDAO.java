@@ -189,7 +189,7 @@ public class AdvertisementDAO extends AbstractDAO{
 
         try {
             pstmt = con.prepareStatement(STATEMENT);
-            pstmt.setInt(1, reqEmail);
+            pstmt.setString(1, reqEmail);
 
             rs = pstmt.executeQuery();
 
