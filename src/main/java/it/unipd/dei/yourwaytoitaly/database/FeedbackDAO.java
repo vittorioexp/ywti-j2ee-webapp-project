@@ -73,21 +73,6 @@ public class FeedbackDAO extends AbstractDAO{
     }
 
     /**
-     * Edits some parameters of a Feedback
-     *
-     * @return a modified Feedback
-     *
-     * @throws SQLException
-     *             if any error occurs.
-     * @throws NamingException
-     *             if any error occurs.
-     */
-    public static Feedback editFeedback(Feedback feedback) throws SQLException, NamingException {
-        //TODO: write function body
-        return null;
-    }
-
-    /**
      * searches and returns some Feedback by ID_ADVERTISEMENT
      *
      * @return a list of {@code Feedback} objects matching the parameter.

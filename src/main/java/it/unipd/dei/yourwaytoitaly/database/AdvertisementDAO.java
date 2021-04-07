@@ -123,7 +123,7 @@ public class AdvertisementDAO extends AbstractDAO{
      * @throws NamingException
      *             if any error occurs.
      */
-    public static Advertisement searchAdvertisement(final int reqIdAdvertisement) throws SQLException, NamingException {
+    public static Advertisement searchAdvertisement(int reqIdAdvertisement) throws SQLException, NamingException {
         final String STATEMENT =
                 "SELECT * " +
                         "FROM YWTI.ADVERTISEMENT " +

@@ -35,7 +35,7 @@ public class CityDAO extends AbstractDAO{
      * @throws NamingException
      *             if any error occurs.
      */
-    public static City searchTypeAdvertisement(int idType) throws SQLException, NamingException {
+    public static City searchCity(int idType) throws SQLException, NamingException {
         final String STATEMENT_ID = "SELECT ID_city, name " +
                 "FROM CITY " +
                 "WHERE ID_city = ?;";
@@ -75,7 +75,7 @@ public class CityDAO extends AbstractDAO{
      * @throws NamingException
      *             if any error occurs.
      */
-    public static City searchTypeAdvertisement(String type) throws SQLException, NamingException {
+    public static City searchCity(String type) throws SQLException, NamingException {
         final String STATEMENT_NAME = "SELECT ID_city, name " +
                 "FROM CITY " +
                 "WHERE name = ?;";

@@ -67,18 +67,6 @@ public class ImageDAO extends AbstractDAO{
     }
 
     /**
-     * Delete some images by ID_ADVERTISEMENT
-     *
-     * @throws SQLException
-     *             if any error occurs.
-     * @throws NamingException
-     *             if any error occurs.
-     */
-    public static void deleteImageByIdAdvertisement(int idAdvertisement) throws SQLException, NamingException {
-        //TODO: write frunction body
-    }
-
-    /**
      * searching and returning an image by ID_ADVERTISEMENT
      *
      * @return a modified Feedback
@@ -89,7 +77,7 @@ public class ImageDAO extends AbstractDAO{
      *             if any error occurs.
      */
     public static List<Image> SearchImageByIdAdvertisement(int idAdvertisement) throws SQLException, NamingException {
-        //TODO: write frunction body
+        //TODO: write function body
         return null;
     }
 
