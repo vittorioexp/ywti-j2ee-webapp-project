@@ -39,6 +39,7 @@ public class ShowAdvertisementListServlet extends AbstractDatabaseServlet {
         //indicator for the required operation
         op = op.substring(op.lastIndexOf("src") + 4);
         List<Advertisement> listAdvertisement;
+        Message m;
 
         switch (op){
             case "tourist/":
@@ -53,24 +54,29 @@ public class ShowAdvertisementListServlet extends AbstractDatabaseServlet {
 
                     listAdvertisement = AdvertisementDAO.searchAdvertisement(idCity,idType,date );
 
-                    Message msg = new Message("Request list successfully obtained.");
+                    m = new Message("Request list successfully obtained.");
 
                     req.setAttribute("employeeList", listAdvertisement);
-                    req.setAttribute("message", msg);
+                    req.setAttribute("message", m);
 
                     req.getRequestDispatcher("/jsp/homepage.jsp").forward(req, res);
 
                 } catch ( IllegalArgumentException e ) {
                     ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
                     res.setStatus(ec.getHTTPCode());
-                    req.setAttribute("message", new Message("Date missing or incorrect"));
+                    req.setAttribute("message", new Message("Cannot search the advertisement.: unexpected error while accessing the database.",
+                            "E200", "Unespected error."));
                     req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                } catch (NamingException e) {
-                    e.printStackTrace();
-                } catch (ServletException e) {
-                    e.printStackTrace();
+                }catch (NumberFormatException ex) {
+                    m = new Message("Cannot search the advertisement. " +
+                            "Invalid input parameters",
+                            "E100", ex.getMessage());
+                } catch (SQLException ex) {
+                    m = new Message("Cannot search the advertisement.: unexpected error while accessing the database.",
+                            "E200", ex.getMessage());
+                } catch (NamingException ex) {
+                    m = new Message("Cannot search the advertisement.: Naming error.",
+                            "E200", ex.getMessage());
                 }
                 break;
             case "company/":
@@ -83,25 +89,30 @@ public class ShowAdvertisementListServlet extends AbstractDatabaseServlet {
                 try {
 
                     listAdvertisement = AdvertisementDAO.searchAdvertisement(email);
-                    Message msg = new Message("Request list successfully obtained.");
+                    m = new Message("Request list successfully obtained.");
 
                     req.setAttribute("listAdvertisement", listAdvertisement);
 
                     req.getRequestDispatcher("/jsp/show-profile.jsp").forward(req, res);
 
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                } catch (NamingException e) {
-                    e.printStackTrace();
-                } catch (ServletException e) {
-                    e.printStackTrace();
+                }catch (NumberFormatException ex) {
+                    m = new Message("Cannot search the advertisement. " +
+                            "Invalid input parameters",
+                            "E100", ex.getMessage());
+                } catch (SQLException ex) {
+                    m = new Message("Cannot search the advertisement.: unexpected error while accessing the database.",
+                            "E200", ex.getMessage());
+                } catch (NamingException ex) {
+                    m = new Message("Cannot search the advertisement.: Naming error.",
+                            "E200", ex.getMessage());
                 }
                 break;
             default:
                 // the requested operation is unknown
                 ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", new Message("Unespected error occured."));
+                req.setAttribute("message", new Message("Cannot search the advertisement.: unexpected error while accessing the database.",
+                        "E200", "Unespected error."));
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
         }
 
