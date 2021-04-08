@@ -86,14 +86,13 @@ public class LoginServlet extends AbstractDatabaseServlet {
         op = op.substring(op.lastIndexOf("user") + 5);
 
 
-        switch (op){
-            case "login/":
-                // the requested operation is login
-                login(req, res);
-                break;
-            default:
-                // the requested operation is unknown
-                sendError(res, ErrorCode.OPERATION_UNKNOWN);
+        if (op.equals ("login/")) {
+            // the requested operation is register
+            login(req, res);
+        }
+        else{
+            // the requested operation is unknown
+            sendError(res, ErrorCode.OPERATION_UNKNOWN);
         }
     }
 
@@ -106,7 +105,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
             String password = req.getParameter("password");
             String userType = req.getParameter("userType");
 
-            if ( email == null || email == "" ) {
+            if ( email == null || email.equals( "" ) ) {
 
                 ErrorCode ec = ErrorCode.EMAIL_MISSING;
                 res.setStatus(ec.getHTTPCode());
@@ -126,7 +125,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
             }
 
-            if ( password == null || password == "" ) {
+            if ( password == null || password.equals( "" ) ) {
 
                 ErrorCode ec = ErrorCode.PASSWORD_MISSING;
                 res.setStatus(ec.getHTTPCode());
@@ -138,7 +137,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
             User usr = null;
 
-            if ( userType == "tourist"){
+            if ( userType.equals("tourist")){
 
                 //usr = (Tourist) new SearchUserLoginDatabase( getDataSource().getConnection() , email , password).SearchUserLogin();
                 usr = (Tourist) UserDAO.searchUserLogin(email,password);
@@ -160,7 +159,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
             }
 
             HttpSession session = req.getSession();
-
+            assert usr != null; // if user for some reason is null it will raise an AssertionException
             session.setAttribute("email", usr.getEmail());
             session.setAttribute("role", usr.getType());
 
@@ -169,13 +168,23 @@ public class LoginServlet extends AbstractDatabaseServlet {
             res.sendRedirect(req.getContextPath()+"/jsp/index.jsp");
 
 
-        }catch (SQLException | NamingException e){
-            // TODO: handle properly NamingException
+        }catch (SQLException e){
+
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             res.setStatus(ec.getHTTPCode());
             Message m = new Message( "Failed to connect to database");
             req.setAttribute("message", m);
             req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+
+        }catch (NamingException e){
+
+            Message m = new Message("Wrong Format.",
+                    "E1","The data format is not valid.");
+            ErrorCode ec = ErrorCode.WRONG_FORMAT;
+            res.setStatus(ec.getHTTPCode());
+            req.setAttribute("message", m);
+            req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+
         }
 
     }

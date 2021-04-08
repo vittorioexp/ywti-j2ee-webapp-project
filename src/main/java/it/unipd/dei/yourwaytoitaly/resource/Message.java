@@ -9,10 +9,10 @@ package it.unipd.dei.yourwaytoitaly.resource;
 
 public class Message {
     private final String message;
-    private final String errorCode;
+    private final int errorCode;
     private final String errorDetails;
     private final boolean isError;
-    public Message(final String message, final String errorCode, final String errorDetails) {
+    public Message(final String message, final int errorCode, final String errorDetails) {
         this.message = message;
         this.errorCode = errorCode;
         this.errorDetails = errorDetails;
@@ -20,14 +20,14 @@ public class Message {
     }
     public Message(final String message) {
         this.message = message;
-        this.errorCode = null;
+        this.errorCode = 0;
         this.errorDetails = null;
         this.isError = false;
     }
     public final String getMessage() {
         return message;
     }
-    public final String getErrorCode() {
+    public final int getErrorCode() {
         return errorCode;
     }
     public final String getErrorDetails() {
