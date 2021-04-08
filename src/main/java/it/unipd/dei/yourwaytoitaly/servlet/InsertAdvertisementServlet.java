@@ -81,41 +81,41 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
             timeEnd = Time.valueOf(req.getParameter("timeEnd"));
 
             if(title==null || title.length()<5 || title.length()>100){
-                Message m = new Message("Input value not valid.",
-                        "E3","Title of the advertisement not valid.");
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"Title of the advertisement not valid.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
             }
             if(description==null || description.length()<5 || description.length()>10000){
-                Message m = new Message("Input value not valid.",
-                        "E3","description of the advertisement not valid.");
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"description of the advertisement not valid.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
             }
             if(price<0){
-                Message m = new Message("Input value not valid.",
-                        "E1","Price not valid");
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"Price not valid");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
             }
             if(numTotItem<=0){
-                Message m = new Message("Input value not valid.",
-                        "E1","Total number of item not valid");
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"Total number of item not valid");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
             }
             if(dateEnd.compareTo(dateStart)<0 || timeEnd.compareTo(timeStart)<0){
-                Message m = new Message("Input value not valid.",
-                        "E2","Dates entered are not valid.");
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"Dates entered are not valid.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
@@ -143,9 +143,9 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
             advertisement = AdvertisementDAO.createAdvertisement(advertisement);
 
             if(advertisement==null){
-                Message m = new Message("Generic error",
-                        "E5","Cannot create the advertisement.");
                 ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+                Message m = new Message("Generic error",
+                        ec.getErrorCode(),"Cannot create the advertisement.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
@@ -154,9 +154,9 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
             req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
 
         } catch (Exception ex) {
-            Message m = new Message("Cannot create the advertisement. ",
-                    "E100", ex.getMessage());
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("Cannot create the advertisement. ",
+                    ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
             req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
