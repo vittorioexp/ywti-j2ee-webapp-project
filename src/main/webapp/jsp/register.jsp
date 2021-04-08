@@ -29,6 +29,7 @@ Since: 1.0
 <body>
 
 <form method="POST" action="<c:url value="/user/register/"/>">
+
     <label for="email">email:</label>
     <input name="email" type="text"/><br/><br/>
     <label for="name">name:</label>
