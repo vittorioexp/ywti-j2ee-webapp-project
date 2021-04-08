@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.Objects;
 
 import static java.lang.Integer.parseInt;
 
@@ -113,9 +112,9 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
             if ( email == null || email.equals("") ) {
 
-                Message m = new Message("Input value not valid.",
-                        "E4","Email not inserted or not valid.");
                 ErrorCode ec = ErrorCode.EMAIL_MISSING;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"Email not inserted or not valid.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
@@ -125,9 +124,9 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
             if ( userType == null ) {
 
-                Message m = new Message("Input value not valid.",
-                        "E3","User type not selected.");
                 ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
+                Message m = new Message("Input value not valid.", ec.getErrorCode()
+                        ,"User type not selected.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
@@ -136,9 +135,9 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
             if ( password == null || password.equals("")  ) {
 
-                Message m = new Message("Input value not valid.",
-                        "E5","Password not valid.");
                 ErrorCode ec = ErrorCode.PASSWORD_MISSING;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"Password not valid.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
@@ -147,9 +146,9 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
             if ( name == null || name.equals("")  ) {
 
-                Message m = new Message("Input value not valid.",
-                        "E3","Name not present.");
                 ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"Name not present.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
@@ -158,9 +157,9 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
             if ( address == null || address.equals("") ) {
 
-                Message m = new Message("Input value not valid.",
-                        "E3","Address not present.");
                 ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"Address not present.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
@@ -169,16 +168,16 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
             if ( phone == null || phone.equals( "" ) ){
 
-                Message m = new Message("Input value not valid.",
-                        "E3","Phone number not present.");
                 ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"Phone number not present.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
 
             }
 
-            User usr = null;
+            User usr;
 
             if ( userType.equals("tourist") ){
 
@@ -190,10 +189,9 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                     birthDateFormatted = Date.valueOf(birthDate);
                 }
                 catch ( IllegalArgumentException e ) {
-
+                    ErrorCode ec = ErrorCode.WRONG_FORMAT;
                     Message m = new Message("Input value not valid.",
-                            "E3","Date not valid.");
-                    ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
+                            ec.getErrorCode(),"Date not valid.");
                     res.setStatus(ec.getHTTPCode());
                     req.setAttribute("message", m);
                     req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
@@ -203,16 +201,16 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                 String surname = req.getParameter("surname");
 
                 if ( surname == null || surname.equals( "" )) {
-
-                    Message m = new Message("Input value not valid.",
-                            "E3","Surname not present.");
+                    
                     ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
+                    Message m = new Message("Input value not valid.",
+                            ec.getErrorCode(),"Surname not present.");
                     res.setStatus(ec.getHTTPCode());
                     req.setAttribute("message", m);
                     req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
 
                 }
-
+                assert birthDateFormatted != null;
                 Tourist t = new Tourist(email, password , name , address , phone , idCity , surname , birthDateFormatted);
                 //usr = (Tourist) new CreateUserDatabase( getDataSource().getConnection() , t).createUser();
                 usr = (Tourist) UserDAO.createUser(t);
@@ -224,10 +222,10 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             }
 
             if ( usr == null ){
-
-                Message m = new Message("Failed creating user account.",
-                        "E3","Something went wrong creating user account.");
+                
                 ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+                Message m = new Message("Failed creating user account.",
+                        ec.getErrorCode(),"Something went wrong creating user account.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
@@ -247,19 +245,18 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
         }catch (SQLException e){
 
-
-            Message m = new Message("Failed to connect to database.",
-                    "E3","Something went wrong creating user account in the database.");
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("Failed to connect to database.",
+                    ec.getErrorCode(),"Something went wrong creating user account in the database.");
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
             req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
 
         }catch (NamingException e){
 
-            Message m = new Message("Wrong Format.",
-                    "E1","The data format is not valid.");
             ErrorCode ec = ErrorCode.WRONG_FORMAT;
+            Message m = new Message("Wrong Format.",
+                    ec.getErrorCode(),"The data format is not valid.");
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
             req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
