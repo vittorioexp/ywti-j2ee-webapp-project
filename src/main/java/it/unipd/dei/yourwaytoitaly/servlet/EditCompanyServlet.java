@@ -4,6 +4,7 @@ package it.unipd.dei.yourwaytoitaly.servlet;
 import it.unipd.dei.yourwaytoitaly.database.UserDAO;
 import it.unipd.dei.yourwaytoitaly.resource.Company;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
+import it.unipd.dei.yourwaytoitaly.resource.User;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
 import javax.servlet.ServletException;
@@ -39,17 +40,11 @@ public class EditCompanyServlet extends AbstractDatabaseServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        String emailCompany = null;
+        String email = null;
         String password;
-        String name=null;
-        String address=null;
         String phoneNumber;
-        int idCity=0;
-
-        Company company;
 
         try{
-
             // check if a session is valid
             HttpSession session = req.getSession(false);
             if (session == null || session.getAttribute("email")==null) {
@@ -57,20 +52,21 @@ public class EditCompanyServlet extends AbstractDatabaseServlet {
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
             }
 
-            // check if the email of the session is equal to emailCompany
-            String emailSession = session.getAttribute("email").toString();
-            password = req.getParameter("password");
+            email = session.getAttribute("email").toString();
+            password = session.getAttribute("password").toString();
 
-            Company c = (Company) UserDAO.searchUserLogin(emailSession, password);
+            User u = (Company) UserDAO.searchUserLogin(email, password);
 
-            if (c==null) {
+            if (u==null) {
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
                 Message m = new Message("User not found.",
                         ec.getErrorCode(),"User not found.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
             }
+
+            // at this point the user is authorized to edit the profile
 
             phoneNumber = req.getParameter("phonenumber");
 
@@ -80,19 +76,19 @@ public class EditCompanyServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(), "Input phone number is not valid. " + phoneNumber);
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/jsp/edit-profile.jsp").forward(req, res);
             }
 
-            company = new Company(
-                    emailCompany,
+            u = new Company(
+                    email,
                     password,
-                    address,
+                    null,
                     phoneNumber,
-                    idCity,
-                    name
+                    0,
+                    null
             );
 
-            UserDAO.editUser(company);
+            UserDAO.editUser(u);
 
             req.getRequestDispatcher("/jsp/show-profile.jsp").forward(req, res);
 

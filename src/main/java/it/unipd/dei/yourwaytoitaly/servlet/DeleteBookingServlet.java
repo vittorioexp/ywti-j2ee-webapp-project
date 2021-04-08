@@ -1,6 +1,8 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
+import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
 import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
+import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
 import it.unipd.dei.yourwaytoitaly.resource.Booking;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
@@ -42,13 +44,11 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        int idAdvertisement = 0;    // TODO: This can be get somehow
+        int idAdvertisement = 0;
         Date date = null;
         Time time = null;
         String state = null;
         int numBooking=0;
-
-        Booking booking;
 
         try{
             // check if a session is valid
@@ -61,7 +61,20 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
             String emailTourist = session.getAttribute("email").toString();
             String password = session.getAttribute("password").toString();
 
-            booking = new Booking(
+            // check if idAdvertisement is present in the session
+            if (session.getAttribute("idAdvertisement") == null) {
+                ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+                Message m = new Message("Advertisement not found.",
+                        ec.getErrorCode(),"The ID of the advertisement was not found. ");
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+            }
+
+            // receive idAdvertisement from the session
+            idAdvertisement = (int) session.getAttribute("idAdvertisement");
+
+            Booking booking = new Booking(
                     emailTourist,
                     idAdvertisement,
                     date,
@@ -73,7 +86,25 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
             // delete the booking
             BookingDAO.deleteBooking(booking);
 
-            // TODO: numTotItem+=numBooking in the Advertisement relative to the deleted booking
+            // numTotItem+=numBooking in the Advertisement relative to the deleted booking
+            Advertisement advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
+
+            advertisement = new Advertisement(
+                    idAdvertisement,
+                    null,
+                    null,
+                    advertisement.getScore(),
+                    advertisement.getPrice(),
+                    advertisement.getNumTotItem()+numBooking,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    0
+            );
+
+            AdvertisementDAO.editAdvertisement(advertisement);
 
             req.getRequestDispatcher("/jsp/show-bookings-of-user.jsp").forward(req, res);
 

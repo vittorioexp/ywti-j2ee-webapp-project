@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Date;
-import java.sql.Time;
 
 /**
  * Servlet class, for edit an advertisement
@@ -40,18 +38,11 @@ public class EditAdvertisementServlet extends AbstractDatabaseServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        String title = null;
-        String description = null;
         int score;
         int price;
         int numTotItem = 0;
-        Date dateStart = null;
-        Date dateEnd = null;
-        Time timeStart = null;
-        Time timeEnd = null;
-        int idAdvertisement = 0;    // TODO: get this somehow
+        int idAdvertisement = 0;
         String emailCompany = null;
-        int idType = 0;
 
         Advertisement advertisement;
 
@@ -59,7 +50,7 @@ public class EditAdvertisementServlet extends AbstractDatabaseServlet {
 
             // check if a session is valid
             HttpSession session = req.getSession(false);
-            if (session == null || session.getAttribute("email")==null) {
+            if (session == null || session.getAttribute("email") == null) {
                 session.invalidate();
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
             }
@@ -76,7 +67,21 @@ public class EditAdvertisementServlet extends AbstractDatabaseServlet {
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
             }
 
+            // check if idAdvertisement is present in the session
+            if (session.getAttribute("idAdvertisement") == null) {
+                ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+                Message m = new Message("Advertisement not found.",
+                        ec.getErrorCode(),"The ID of the advertisement was not found. ");
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+            }
+
+            // receive idAdvertisement from the session
+            idAdvertisement = (int) session.getAttribute("idAdvertisement");
+
             price = Integer.parseInt(req.getParameter("price"));
+            numTotItem = Integer.parseInt(req.getParameter("numTotItem"));
 
             if(price<0 || price>50000){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
@@ -87,9 +92,19 @@ public class EditAdvertisementServlet extends AbstractDatabaseServlet {
                 req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
             }
 
+            if(numTotItem<0 || numTotItem>1000){
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Number of items not valid.",
+                        ec.getErrorCode(),"Number of items not valid");
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
+            }
+
             score = (int) (price/3.14);
 
-            advertisement = new Advertisement(idAdvertisement,
+            advertisement = new Advertisement(
+                    idAdvertisement,
                     null,
                     null,
                     score,
@@ -99,13 +114,13 @@ public class EditAdvertisementServlet extends AbstractDatabaseServlet {
                     null,
                     null,
                     null,
-                    emailCompany,
-                    idType
+                    null,
+                    0
             );
 
             AdvertisementDAO.editAdvertisement(advertisement);
 
-            req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
+            req.getRequestDispatcher("/jsp/homepage.jsp").forward(req, res);
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

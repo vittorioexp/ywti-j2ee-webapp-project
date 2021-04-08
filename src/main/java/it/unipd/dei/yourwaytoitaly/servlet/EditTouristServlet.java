@@ -3,6 +3,7 @@ package it.unipd.dei.yourwaytoitaly.servlet;
 import it.unipd.dei.yourwaytoitaly.database.UserDAO;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
 import it.unipd.dei.yourwaytoitaly.resource.Tourist;
+import it.unipd.dei.yourwaytoitaly.resource.User;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
 import javax.servlet.ServletException;
@@ -10,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Date;
 
 /**
  * Servlet class to edit the user profile of a tourist
@@ -41,17 +41,9 @@ public class EditTouristServlet extends AbstractDatabaseServlet {
 
         String email = null;
         String password;
-        final String name=null;
-        String address=null;
         String phoneNumber;
-        int idCity=0;
-        String surname=null;
-        Date birthdate=null;
-
-        Tourist tourist;
 
         try{
-
             // check if a session is valid
             HttpSession session = req.getSession(false);
             if (session == null || session.getAttribute("email")==null) {
@@ -59,18 +51,21 @@ public class EditTouristServlet extends AbstractDatabaseServlet {
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
             }
 
-            // check if the email of the session is equal to emailCompany
-            String emailSession = session.getAttribute("email").toString();
-            if (!emailSession.equals(email)) {
-                ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
-                Message m = new Message("User is not authorized.",
-                        ec.getErrorCode(),"User is not authorized to edit this.");
+            email = session.getAttribute("email").toString();
+            password = session.getAttribute("password").toString();
+
+            User u = (Tourist) UserDAO.searchUserLogin(email, password);
+
+            if (u==null) {
+                ErrorCode ec = ErrorCode.USER_NOT_FOUND;
+                Message m = new Message("User not found.",
+                        ec.getErrorCode(),"User not found.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
             }
 
-            password = req.getParameter("password");
+            // at this point the user is authorized to edit the profile
 
             phoneNumber = req.getParameter("phonenumber");
 
@@ -80,21 +75,21 @@ public class EditTouristServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(), "Input phone number is not valid. " + phoneNumber);
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/jsp/edit-profile.jsp").forward(req, res);
             }
 
-            tourist = new Tourist(
+            u = new Tourist(
                     email,
                     password,
-                    name,
-                    address,
+                    null,
+                    null,
                     phoneNumber,
-                    idCity,
-                    surname,
-                    birthdate
+                    0,
+                    null,
+                    null
             );
 
-            UserDAO.editUser(tourist);
+            UserDAO.editUser(u);
 
             req.getRequestDispatcher("/jsp/show-profile.jsp").forward(req, res);
 
