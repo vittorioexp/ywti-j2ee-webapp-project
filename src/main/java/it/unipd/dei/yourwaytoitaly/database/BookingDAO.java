@@ -105,6 +105,22 @@ public class BookingDAO extends AbstractDAO{
         }
     }
 
+    /**
+     * searches and returns a Booking both by EMAIL_T and ID_ADVERTISEMENT
+     *
+     * @return a Booking objects matching with the criteria
+     *
+     * @throws SQLException
+     *             if any error occurs.
+     * @throws NamingException
+     *             if any error occurs.
+     *
+     */
+    public static Booking searchBooking(String emailTourist, int idAdvertisement)
+            throws SQLException, NamingException {
+        // TODO: write function body
+        return null;
+    }
 
     /**
      * searches and returns some Bookings by ID_ADVERTISEMENT
@@ -200,4 +216,6 @@ public class BookingDAO extends AbstractDAO{
 
         return bookings;
     }
+
+
 }

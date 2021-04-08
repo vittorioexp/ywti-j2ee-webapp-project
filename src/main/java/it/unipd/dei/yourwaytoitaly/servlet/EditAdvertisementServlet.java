@@ -68,37 +68,37 @@ public class EditAdvertisementServlet extends AbstractDatabaseServlet {
             String emailSession = session.getAttribute("email").toString();
             emailCompany = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
             if (!emailSession.equals(emailCompany)) {
-                Message m = new Message("User is not authorized.",
-                        "E1","User is not authorized to edit this advertisement");
                 ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
+                Message m = new Message("User is not authorized.",
+                        ec.getErrorCode(),"User is not authorized to edit this advertisement");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
             }
 
             price = Integer.parseInt(req.getParameter("price"));
 
             if(price<0 || price>50000){
-                Message m = new Message("Price not valid.",
-                        "E1","Price not valid");
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Price not valid.",
+                        ec.getErrorCode(),"Price not valid");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
             }
 
             score = (int) (price/3.14);
 
             advertisement = new Advertisement(idAdvertisement,
-                    title,
-                    description,
+                    null,
+                    null,
                     score,
                     price,
                     numTotItem,
-                    dateStart,
-                    dateEnd,
-                    timeStart,
-                    timeEnd,
+                    null,
+                    null,
+                    null,
+                    null,
                     emailCompany,
                     idType
             );
@@ -108,12 +108,12 @@ public class EditAdvertisementServlet extends AbstractDatabaseServlet {
             req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
 
         } catch (Exception ex) {
-            Message m = new Message("Cannot edit the advertisement. ",
-                    "E100", ex.getMessage());
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("Cannot edit the advertisement. ",
+                    ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+            req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
         }
     }
 }

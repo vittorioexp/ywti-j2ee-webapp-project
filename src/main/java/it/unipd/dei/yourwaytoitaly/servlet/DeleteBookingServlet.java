@@ -1,7 +1,6 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
 import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
-import it.unipd.dei.yourwaytoitaly.database.UserDAO;
 import it.unipd.dei.yourwaytoitaly.resource.Booking;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
@@ -15,7 +14,7 @@ import java.sql.Date;
 import java.sql.Time;
 
 /**
- * Servlet class to edit a booking
+ * Servlet class to delete a booking (mark as DELETED)
  *
  * @author Vittorio Esposito
  * @author Marco Basso
@@ -44,7 +43,6 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
             throws ServletException, IOException {
 
         int idAdvertisement = 0;    // TODO: This can be get somehow
-        String emailTourist="";
         Date date = null;
         Time time = null;
         String state = null;
@@ -60,38 +58,29 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
             }
 
-            String emailSession = session.getAttribute("email").toString();
-
-            // TODO: check if the user is authorized (see EditAdvertisementServlet.java)
-
+            String emailTourist = session.getAttribute("email").toString();
+            String password = session.getAttribute("password").toString();
 
             booking = new Booking(
                     emailTourist,
-                    0,
+                    idAdvertisement,
                     date,
                     time,
                     numBooking,
                     state
             );
 
-            // TODO: get the score of the booking which will be deleted
-            int bookingScore = 0;
-
-            // TODO: decrement the user score with that of the booking which will be deleted
-
             // delete the booking
             BookingDAO.deleteBooking(booking);
 
-            int totalUserScore = UserDAO.searchUserScore(emailTourist) - bookingScore;
-
-            // TODO: update the user score which has been decremented
+            // TODO: numTotItem+=numBooking in the Advertisement relative to the deleted booking
 
             req.getRequestDispatcher("/jsp/show-bookings-of-user.jsp").forward(req, res);
 
         } catch (Exception ex) {
-            Message m = new Message("Cannot edit the booking. ",
-                    "E100", ex.getMessage());
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("Cannot edit the booking. ",
+                    ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
             req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);

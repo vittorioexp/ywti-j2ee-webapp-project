@@ -83,7 +83,8 @@ public class EditTouristServlet extends AbstractDatabaseServlet {
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
             }
 
-            tourist = new Tourist(email,
+            tourist = new Tourist(
+                    email,
                     password,
                     name,
                     address,
