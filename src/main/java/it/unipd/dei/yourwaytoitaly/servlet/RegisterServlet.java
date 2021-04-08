@@ -117,7 +117,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Email not inserted or not valid.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
 
             }
 
@@ -129,7 +129,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ,"User type not selected.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
 
             }
 
@@ -140,7 +140,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Password not valid.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
 
             }
 
@@ -151,7 +151,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Name not present.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
 
             }
 
@@ -162,7 +162,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Address not present.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
 
             }
 
@@ -173,7 +173,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Phone number not present.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
 
             }
 
@@ -194,7 +194,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                             ec.getErrorCode(),"Date not valid.");
                     res.setStatus(ec.getHTTPCode());
                     req.setAttribute("message", m);
-                    req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                    req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
 
                 }
 
@@ -207,7 +207,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                             ec.getErrorCode(),"Surname not present.");
                     res.setStatus(ec.getHTTPCode());
                     req.setAttribute("message", m);
-                    req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                    req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
 
                 }
                 assert birthDateFormatted != null;
@@ -228,7 +228,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Something went wrong creating user account.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
 
             }
 
@@ -250,7 +250,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                     ec.getErrorCode(),"Something went wrong creating user account in the database.");
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+            req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
 
         }catch (NamingException e){
 
@@ -259,7 +259,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                     ec.getErrorCode(),"The data format is not valid.");
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+            req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
 
         }
 

@@ -200,7 +200,37 @@ public class UserDAO extends AbstractDAO{
             cleaningOperations(pstmt, rs, con);
         }
 
-        return user;
+        if (user == null ) {
+            final String STATEMENT =
+                    "SELECT email_c, name_c, phone_number, address, password, ID_city " +
+                            "FROM YWTI.COMPANY " +
+                            "WHERE email_t = ? AND password = MD5(?);";
+
+            // the results of the search
+
+            try {
+                pstmt = con.prepareStatement(STATEMENT);
+                pstmt.setString(1, reqEmail);
+                pstmt.setString(2, reqPassword);
+
+                rs = pstmt.executeQuery();
+
+                while (rs.next()) {
+                    user = new Company(
+                            rs.getString("email_c"),
+                            rs.getString("password"),
+                            rs.getString("address"),
+                            rs.getString("phone_number"),
+                            rs.getInt("ID_city"),
+                            rs.getString("name_c"));
+                }
+            } finally {
+                //close all the possible resources
+                cleaningOperations(pstmt, rs, con);
+            }
+        }
+
+        return user; // if search doesn't give result user=null
     }
 
     /**
