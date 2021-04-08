@@ -165,7 +165,7 @@ public class UserDAO extends AbstractDAO{
      *             if any error occurs while searching.
      */
     public static User searchUserLogin(final String reqEmail, final String reqPassword) throws SQLException, NamingException {
-        final String STATEMENT =
+        final String STATEMENT_T =
                 "SELECT email_t, surname, name, birth_date, phone_number, address, password, ID_city " +
                         "FROM YWTI.TOURIST " +
                         "WHERE email_t = ? AND password = MD5(?);";
@@ -178,7 +178,7 @@ public class UserDAO extends AbstractDAO{
         User user = null;
 
         try {
-            pstmt = con.prepareStatement(STATEMENT);
+            pstmt = con.prepareStatement(STATEMENT_T);
             pstmt.setString(1, reqEmail);
             pstmt.setString(2, reqPassword);
 
@@ -201,7 +201,7 @@ public class UserDAO extends AbstractDAO{
         }
 
         if (user == null ) {
-            final String STATEMENT =
+            final String STATEMENT_C =
                     "SELECT email_c, name_c, phone_number, address, password, ID_city " +
                             "FROM YWTI.COMPANY " +
                             "WHERE email_t = ? AND password = MD5(?);";
@@ -209,7 +209,7 @@ public class UserDAO extends AbstractDAO{
             // the results of the search
 
             try {
-                pstmt = con.prepareStatement(STATEMENT);
+                pstmt = con.prepareStatement(STATEMENT_C);
                 pstmt.setString(1, reqEmail);
                 pstmt.setString(2, reqPassword);
 
