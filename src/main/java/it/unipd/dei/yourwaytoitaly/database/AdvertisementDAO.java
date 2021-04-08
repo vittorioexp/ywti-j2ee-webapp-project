@@ -96,7 +96,7 @@ public class AdvertisementDAO extends AbstractDAO{
      */
     public static void editAdvertisement(Advertisement advertisement) throws SQLException, NamingException {
         final String STATEMENT_EDIT =
-                "UPDATE TWTI.ADVERTISEMENT SET price = ? , score = ? WHERE ID_advertisement = ?;";
+                "UPDATE TWTI.ADVERTISEMENT SET price = ? , score = ? , num_tot_item = ? WHERE ID_advertisement = ?;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -105,7 +105,8 @@ public class AdvertisementDAO extends AbstractDAO{
             pstmt = con.prepareStatement(STATEMENT_EDIT);
             pstmt.setInt(1, advertisement.getPrice());
             pstmt.setInt(2, advertisement.getScore());
-            pstmt.setInt(3, advertisement.getIdAdvertisement());
+            pstmt.setInt(3, advertisement.getNumTotItem());
+            pstmt.setInt(4, advertisement.getIdAdvertisement());
 
             rs = pstmt.executeQuery();
 
