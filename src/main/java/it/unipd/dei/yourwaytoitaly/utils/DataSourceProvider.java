@@ -21,7 +21,7 @@ public class DataSourceProvider {
             InitialContext ctx = new InitialContext();
 
             //and use the proper resource to initialize the datasource
-            ds = (DataSource) ctx.lookup("java:/comp/env/jdbc/amusement-park"); //TODO : changing datase context name
+            ds = (DataSource) ctx.lookup("java:/comp/env/jdbc/YWTI");
         }
         return ds;
     }

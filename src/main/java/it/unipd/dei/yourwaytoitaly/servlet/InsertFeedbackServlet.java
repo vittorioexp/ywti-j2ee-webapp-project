@@ -66,17 +66,17 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
             text = req.getParameter("text_f");
 
             if (rate<1 || rate >5) {
-                Message m = new Message("Input rate is not valid. ",
-                        "E100", "Rate is " + rate);
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Input rate is not valid. ",
+                        ec.getErrorCode(), "Rate is " + rate);
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
             }
-            if (text==null || text.equals("") || text.length()<1) {
-                Message m = new Message("Feedback text not valid. ",
-                        "E100", "");
+            if (text==null || text.length()<1) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Feedback text not valid. ",
+                        ec.getErrorCode(), "");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
@@ -97,9 +97,9 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
             req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
 
         } catch (Exception ex) {
-            Message m = new Message("Cannot create the feedback. ",
-                    "E100", ex.getMessage());
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("Cannot create the feedback. ",
+                    ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
             req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);

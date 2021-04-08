@@ -74,9 +74,9 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             numBooking = Integer.parseInt(req.getParameter("numBooking"));
 
             if(numBooking<=0) {
-                Message m = new Message("Input value not valid.",
-                        "E1","The number of item is not valid");
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"The number of item is not valid");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
@@ -93,9 +93,9 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
                 itemBooked += b.getNumBooking();
             }
             if(numBooking > numTotItem - itemBooked){
-                Message m = new Message("Input value not valid.",
-                        "E1","The number of item is too big!");
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"The number of item is too big!");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
@@ -121,9 +121,9 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             req.getRequestDispatcher("/jsp/show-result-booking.jsp").forward(req, res);
 
         } catch (Exception ex) {
-            Message m = new Message("Cannot create the booking. ",
-                    "E100", ex.getMessage());
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("Cannot create the booking. ",
+                    ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
             req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);

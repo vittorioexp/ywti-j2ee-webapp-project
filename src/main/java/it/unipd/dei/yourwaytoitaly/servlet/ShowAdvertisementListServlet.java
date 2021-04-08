@@ -57,6 +57,7 @@ public class ShowAdvertisementListServlet extends AbstractDatabaseServlet {
                     req.getRequestDispatcher("/jsp/homepage.jsp").forward(req, res);
 
                 } catch (Exception ex) {
+                    // TODO fix error code
                     Message m = new Message("Cannot show the advertisements. ",
                             "E100", ex.getMessage());
                     ErrorCode ec = ErrorCode.INTERNAL_ERROR;
