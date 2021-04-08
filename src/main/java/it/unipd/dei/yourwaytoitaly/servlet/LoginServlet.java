@@ -109,8 +109,8 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
                 ErrorCode ec = ErrorCode.EMAIL_MISSING;
                 res.setStatus(ec.getHTTPCode());
-
-                req.setAttribute("message", new Message("Email missing"));
+                req.setAttribute("message", new Message("Input not valid",
+                        ec.getErrorCode(), ec.getErrorMessage()));
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
 
             }
@@ -120,7 +120,8 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
                 ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", new Message("User type not selected"));
+                req.setAttribute("message", new Message( "Input not valid.",
+                        ec.getErrorCode(), "User type not selected"));
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
 
             }
@@ -129,8 +130,8 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
                 ErrorCode ec = ErrorCode.PASSWORD_MISSING;
                 res.setStatus(ec.getHTTPCode());
-
-                req.setAttribute("message", new Message("Password missing"));
+                req.setAttribute("message", new Message("Input not valid.",
+                        ec.getErrorCode(), ec.getErrorMessage()));
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
 
             }
@@ -152,7 +153,8 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
                 ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
                 res.setStatus(ec.getHTTPCode());
-                Message m = new Message( "credentials are wrong");
+                Message m = new Message( "Wrong Format.",
+                        ec.getErrorCode(),"credentials are wrong");
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
 
@@ -171,16 +173,17 @@ public class LoginServlet extends AbstractDatabaseServlet {
         }catch (SQLException e){
 
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("Failed to connect to database.",
+                    ec.getErrorCode(), "Failed to connect to database while login");
             res.setStatus(ec.getHTTPCode());
-            Message m = new Message( "Failed to connect to database");
             req.setAttribute("message", m);
             req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
 
         }catch (NamingException e){
 
-            Message m = new Message("Wrong Format.",
-                    "E1","The data format is not valid.");
             ErrorCode ec = ErrorCode.WRONG_FORMAT;
+            Message m = new Message("Wrong Format.",
+                    ec.getErrorCode(),"The data format is not valid.");
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
             req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);

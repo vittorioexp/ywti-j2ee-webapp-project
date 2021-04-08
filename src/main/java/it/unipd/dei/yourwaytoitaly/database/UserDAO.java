@@ -165,7 +165,7 @@ public class UserDAO extends AbstractDAO{
      *             if any error occurs while searching.
      */
     public static User searchUserLogin(final String reqEmail, final String reqPassword) throws SQLException, NamingException {
-        final String STATEMENT =
+        final String STATEMENT_T =
                 "SELECT email_t, surname, name, birth_date, phone_number, address, password, ID_city " +
                         "FROM YWTI.TOURIST " +
                         "WHERE email_t = ? AND password = MD5(?);";
@@ -178,7 +178,7 @@ public class UserDAO extends AbstractDAO{
         User user = null;
 
         try {
-            pstmt = con.prepareStatement(STATEMENT);
+            pstmt = con.prepareStatement(STATEMENT_T);
             pstmt.setString(1, reqEmail);
             pstmt.setString(2, reqPassword);
 
@@ -200,7 +200,37 @@ public class UserDAO extends AbstractDAO{
             cleaningOperations(pstmt, rs, con);
         }
 
-        return user;
+        if (user == null ) {
+            final String STATEMENT_C =
+                    "SELECT email_c, name_c, phone_number, address, password, ID_city " +
+                            "FROM YWTI.COMPANY " +
+                            "WHERE email_t = ? AND password = MD5(?);";
+
+            // the results of the search
+
+            try {
+                pstmt = con.prepareStatement(STATEMENT_C);
+                pstmt.setString(1, reqEmail);
+                pstmt.setString(2, reqPassword);
+
+                rs = pstmt.executeQuery();
+
+                while (rs.next()) {
+                    user = new Company(
+                            rs.getString("email_c"),
+                            rs.getString("password"),
+                            rs.getString("address"),
+                            rs.getString("phone_number"),
+                            rs.getInt("ID_city"),
+                            rs.getString("name_c"));
+                }
+            } finally {
+                //close all the possible resources
+                cleaningOperations(pstmt, rs, con);
+            }
+        }
+
+        return user; // if search doesn't give result user=null
     }
 
     /**
