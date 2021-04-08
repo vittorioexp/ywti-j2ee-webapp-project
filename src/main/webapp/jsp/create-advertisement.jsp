@@ -24,11 +24,11 @@ Since: 1.0
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>login</title>
+    <title>Create advertisement</title>
 </head>
 <body>
 
-<form method="POST" action="<c:url value="/user/insertadvertisement/"/>">
+<form method="POST" action="<c:url value="/user/insertadvertisement/"/>">       //aggiungere op InsertAdvertisementServlet
 
     <label for="title">title:</label>
     <input name="title" type="text"/><br/><br/>
