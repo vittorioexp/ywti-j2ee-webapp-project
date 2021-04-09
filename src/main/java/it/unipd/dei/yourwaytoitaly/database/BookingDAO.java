@@ -41,7 +41,7 @@ public class BookingDAO extends AbstractDAO{
      */
     public static Booking createBooking(Booking booking) throws SQLException, NamingException {
         final String STATEMENT =
-                "INSERT INTO YWTI.Booking (email_t, ID_Advertisement, date_b, time_b, num_booking, state) " +
+                "INSERT INTO Booking (email_t, ID_Advertisement, date_b, time_b, num_booking, state) " +
                         "VALUES (?, ?, ?, ?, ?, ?) RETURNING *;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
@@ -87,7 +87,7 @@ public class BookingDAO extends AbstractDAO{
      */
     public static void deleteBooking(Booking booking) throws SQLException, NamingException {
         final String STATEMENT =
-                "UPDATE YWTI.BOOKING SET state = 'DELETED' WHERE email_t = ? AND ID_advertisement = ?;";
+                "UPDATE BOOKING SET state = 'DELETED' WHERE email_t = ? AND ID_advertisement = ?;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -142,7 +142,7 @@ public class BookingDAO extends AbstractDAO{
             throws SQLException, NamingException {
         final String STATEMENT =
                 "SELECT DATE_B, TIME_B, num_booking, state, email_t " +
-                        "FROM YWTI.BOOKING\n" +
+                        "FROM BOOKING\n" +
                         "WHERE ID_advertisement = ? ;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;

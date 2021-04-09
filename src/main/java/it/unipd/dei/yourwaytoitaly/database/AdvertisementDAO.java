@@ -37,10 +37,8 @@ public class AdvertisementDAO extends AbstractDAO{
      */
     public static Advertisement createAdvertisement(Advertisement advertisement) throws SQLException, NamingException {
         final String STATEMENT =
-                "INSERT INTO YWTI.Advertisement (TITLE, DESCRIPTION, SCORE, PRICE, NUM_TOT_ITEM, " +
-                        "DATE_START, DATE_END, TIME_START, TIME_END, email_c, ID_TYPE) " +
-                        "SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ID_TYPE " +
-                        "FROM Type_advertisement WHERE Type_advertisement.type = ? RETURNING *;";
+                "INSERT INTO Advertisement (TITLE, DESCRIPTION, SCORE, PRICE, NUM_TOT_ITEM, DATE_START, DATE_END, TIME_START, TIME_END, email_c, ID_TYPE)\n" +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, (SELECT ID_type FROM Type_advertisement WHERE Type_advertisement.type = ?)) RETURNING *;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -96,7 +94,7 @@ public class AdvertisementDAO extends AbstractDAO{
      */
     public static void editAdvertisement(Advertisement advertisement) throws SQLException, NamingException {
         final String STATEMENT_EDIT =
-                "UPDATE TWTI.ADVERTISEMENT SET price = ? , score = ? , num_tot_item = ? WHERE ID_advertisement = ?;";
+                "UPDATE ADVERTISEMENT SET price = ? , score = ? , num_tot_item = ? WHERE ID_advertisement = ?;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -127,8 +125,8 @@ public class AdvertisementDAO extends AbstractDAO{
     public static Advertisement searchAdvertisement(int reqIdAdvertisement) throws SQLException, NamingException {
         final String STATEMENT =
                 "SELECT * " +
-                        "FROM YWTI.ADVERTISEMENT " +
-                        "WHERE ADVERTISEMENT.ID_ADVERTISEMENT = ? ;";
+                        "FROM ADVERTISEMENT " +
+                        "WHERE ID_ADVERTISEMENT = ? ;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -179,8 +177,8 @@ public class AdvertisementDAO extends AbstractDAO{
     public static List<Advertisement> searchAdvertisement(String reqEmail) throws SQLException, NamingException {
         final String STATEMENT =
                 "SELECT *\n" +
-                        "FROM YWTI.ADVERTISEMENT\n" +
-                        "WHERE ADVERTISEMENT.email_c = ?;";
+                        "FROM ADVERTISEMENT\n" +
+                        "WHERE email_c = ?;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -230,11 +228,11 @@ public class AdvertisementDAO extends AbstractDAO{
     public static List<Advertisement> searchAdvertisement(final int reqIdCity, final int reqIdType,
                                                    final Date reqDate) throws SQLException, NamingException {
         final String STATEMENT =
-                "SELECT ADVERTISEMENT.TITLE, ADVERTISEMENT.DESCRIPTION, ADVERTISEMENT.SCORE, ADVERTISEMENT.PRICE, ADVERTISEMENT.NUM_TOT_ITEM " +
-                        "FROM YWTI.ADVERTISEMENT " +
-                        "JOIN YWTI.COMPANY ON COMPANY.EMAIL_C = ADVERTISEMENT.EMAIL_C " +
-                        "JOIN YWTI.CITY ON CITY.ID_CITY = COMPANY.ID_CITY " +
-                        "JOIN YWTI.TYPE_ADVERTISEMENT ON TYPE_ADVERTISEMENT.ID_Type = ADVERTISEMENT.ID_Type " +
+                "SELECT * " +
+                        "FROM ADVERTISEMENT " +
+                        "JOIN COMPANY ON COMPANY.EMAIL_C = ADVERTISEMENT.EMAIL_C " +
+                        "JOIN CITY ON CITY.ID_CITY = COMPANY.ID_CITY " +
+                        "JOIN TYPE_ADVERTISEMENT ON TYPE_ADVERTISEMENT.ID_Type = ADVERTISEMENT.ID_Type " +
                         "WHERE CITY.NAME = ? AND " +
                         "TYPE_ADVERTISEMENT.TYPE = ? AND " +
                         "DATE_START >= ?;";

@@ -35,7 +35,7 @@ public class TypeAdvertisementDAO extends AbstractDAO{
      */
     public static TypeAdvertisement searchTypeAdvertisement(int idType) throws SQLException, NamingException {
         final String STATEMENT_ID = "SELECT ID_type, type " +
-                "FROM YWTI.TYPE_ADVERTISEMENT " +
+                "FROM TYPE_ADVERTISEMENT " +
                 "WHERE ID_type = ?;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
@@ -74,7 +74,7 @@ public class TypeAdvertisementDAO extends AbstractDAO{
      */
     public static TypeAdvertisement searchTypeAdvertisement(String type) throws SQLException, NamingException {
         final String STATEMENT_NAME = "SELECT ID_type, type " +
-                "FROM YWTI.TYPE_ADVERTISEMENT " +
+                "FROM TYPE_ADVERTISEMENT " +
                 "WHERE type = ?;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;

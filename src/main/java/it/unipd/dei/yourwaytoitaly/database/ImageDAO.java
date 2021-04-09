@@ -37,7 +37,7 @@ public class ImageDAO extends AbstractDAO{
      */
     public static Image createImage(Image image) throws SQLException, NamingException {
         final String STATEMENT =
-                "INSERT INTO YWTI.IMAGE (path_i, description_i,ID_Advertisement) " +
+                "INSERT INTO IMAGE (path_i, description_i,ID_Advertisement) " +
                         "VALUES (?, ?, ?) RETURNING *;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
