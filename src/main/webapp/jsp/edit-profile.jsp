@@ -29,7 +29,7 @@ Since: 1.0
 <body>
 
 <c:choose>
-    <c:when test="${isTurist eq false}">      //aggiungere funzionalità per testare se l'utente loggato è un turist o una company
+    <c:when test="${isTurist eq True}">      //aggiungere funzionalità per testare se l'utente loggato è un turist o una company
         <form method="POST" action="<c:url value="/user/editTurist/"/>">
 
             <label for="password">password:</label>
@@ -43,7 +43,7 @@ Since: 1.0
         <br />
     </c:when>
     <c:otherwise>
-        <form method="POST" action="<c:url value="/user/editTurist/"/>">
+        <form method="POST" action="<c:url value="/user/editCompany/"/>">
 
             <label for="password">password:</label>
             <input name="password" type="password"/><br/><br/>
@@ -63,7 +63,7 @@ Since: 1.0
         <p><c:out value="${message.message}"/></p>
     </c:when>
     <c:otherwise>
-        
+
     </c:otherwise>
 </c:choose>
 </body>
