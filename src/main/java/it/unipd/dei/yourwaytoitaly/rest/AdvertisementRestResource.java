@@ -90,7 +90,27 @@ public class AdvertisementRestResource extends RestResource {
             dateEnd = Date.valueOf(req.getParameter("dateEnd"));
             timeStart = Time.valueOf(req.getParameter("timeStart"));
             timeEnd = Time.valueOf(req.getParameter("timeEnd"));
-            Image img = new Image(0,req.getParameter("url").toString(),"",Integer.parseInt(req.getParameter("idAdvertisement")));
+
+            //TODO: IMAGE
+            /*
+            // Create a factory for disk-based file items
+            DiskFileItemFactory factory = new DiskFileItemFactory();
+
+            // Configure a repository (to ensure a secure temp location is used)
+            ServletContext servletContext = this.getServletConfig().getServletContext();
+            File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
+            factory.setRepository(repository);
+
+            // Create a new file upload handler
+            ServletFileUpload upload = new ServletFileUpload(factory);
+
+            // Parse the request
+            List<FileItem> items = upload.parseRequest(request);
+            */
+
+
+
+            Image img = new Image(0,req.getParameter("image").toString(),"",Integer.parseInt(req.getParameter("idAdvertisement")));
             ImageDAO.createImage(img);
 
             if(title==null || title.length()<5 || title.length()>100){
@@ -221,6 +241,8 @@ public class AdvertisementRestResource extends RestResource {
         int idAdvertisement = 0;
         String emailCompany = null;
         Advertisement advertisement;
+        String op = req.getRequestURI();
+        op = op.substring(op.lastIndexOf("advertisement") + 14);
 
         try{
             // check if a session is valid
@@ -247,7 +269,7 @@ public class AdvertisementRestResource extends RestResource {
             }
 
             // receive idAdvertisement from the hidden form
-            idAdvertisement = Integer.parseInt(req.getParameter("idAdvertisement"));
+            idAdvertisement = Integer.parseInt(op);
 
             price = Integer.parseInt(req.getParameter("price"));
             numTotItem = Integer.parseInt(req.getParameter("numTotItem"));
