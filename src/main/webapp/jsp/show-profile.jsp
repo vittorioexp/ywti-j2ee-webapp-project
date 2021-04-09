@@ -17,3 +17,25 @@ Author: Vittorio Esposito
 Version: 1.0
 Since: 1.0
 -->
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.Map" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<body>
+<h2>Result Page</h2>
+<%
+    Map<String,String> name = (Map<String,String>) request.getAttribute("name");
+%>
+<table cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
+    <tr>
+        <td>First Name</td>
+        <td>Last Name</td>
+    </tr>
+    <tr>
+        <td><%=name.get("first_name") %></td>
+        <td><%=name.get("last_name") %></td>
+    </tr>
+</table>
+</body>
+</html>

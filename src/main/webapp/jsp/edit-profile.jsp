@@ -29,7 +29,7 @@ Since: 1.0
 <body>
 
 <c:choose>
-    <c:when test="${isTurist eq True}">      //aggiungere funzionalità per testare se l'utente loggato è un turist o una company
+    <c:when test="${isTurist eq True}">      <!--aggiungere funzionalità per testare se l'utente loggato è un turist o una company-->
         <form method="POST" action="<c:url value="/user/editTurist/"/>">
 
             <label for="password">password:</label>
@@ -37,6 +37,7 @@ Since: 1.0
 
             <label for="phonenumber">timeEnd:</label>
             <input name="phonenumber" type="text"/><br/><br/>
+            <!-- value="<c:out value="${requestScope.user.userId}"/>"-->
 
             <button type="submit">Edit</button><br/>
         </form>
