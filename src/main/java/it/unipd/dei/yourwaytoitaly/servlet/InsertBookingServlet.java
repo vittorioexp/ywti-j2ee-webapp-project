@@ -5,6 +5,7 @@ import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
 import it.unipd.dei.yourwaytoitaly.database.UserDAO;
 import it.unipd.dei.yourwaytoitaly.resource.Booking;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
+import it.unipd.dei.yourwaytoitaly.resource.User;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
 import javax.servlet.ServletException;
@@ -49,7 +50,7 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
         int numBooking;
 
 
-        int idAdvertisement = 0;    // TODO: get this somehow
+        int idAdvertisement = 0;
         String emailTourist="";     // This can be get from the session
         Date date = new Date(Calendar.getInstance().getTime().getTime());
         Time time = new Time(Calendar.getInstance().getTime().getTime());
@@ -61,14 +62,21 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
         try{
 
             // check if a session is valid
-            HttpSession session = req.getSession(false);
-            if (session == null || session.getAttribute("email")==null) {
-                session.invalidate();
+            User u = new SessionCheckServlet(req, res).getUser();
+            if (u == null) {
+                ErrorCode ec = ErrorCode.USER_NOT_FOUND;
+                Message m = new Message("User not found.",
+                        ec.getErrorCode(),"User not found.");
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
             }
 
-            // insert in the session the email
-            emailTourist = session.getAttribute("email").toString();
+            // check if the email of the session is equal to emailCompany
+            emailTourist = u.getEmail();
+
+            idAdvertisement = Integer.parseInt(req.getParameter("idAdvertisement"));
+
 
             // Get how many items the user wants to book
             numBooking = Integer.parseInt(req.getParameter("numBooking"));
@@ -115,10 +123,8 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
 
             booking = BookingDAO.createBooking(booking);
 
-            int totalUserScore = UserDAO.searchUserScore(emailTourist);
-
             // Show the booking just created in a web page
-            req.getRequestDispatcher("/jsp/show-result-booking.jsp").forward(req, res);
+            req.getRequestDispatcher("/jsp/show-bookings-of-user.jsp").forward(req, res);
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

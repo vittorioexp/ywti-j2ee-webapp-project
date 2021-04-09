@@ -1,8 +1,11 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
+import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
 import it.unipd.dei.yourwaytoitaly.database.FeedbackDAO;
+import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
 import it.unipd.dei.yourwaytoitaly.resource.Feedback;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
+import it.unipd.dei.yourwaytoitaly.resource.User;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
 import javax.servlet.ServletException;
@@ -41,26 +44,32 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        int idAdvertisement = 0; // TODO: get this somehow
+        int idAdvertisement = 0;
         String emailTourist="";
         Date date = new Date(Calendar.getInstance().getTime().getTime());
 
         // The user must give these parameters
         int rate;
-        String text;
+        String text="";
 
         Feedback feedback  = null;
 
         try{
             // check if a session is valid
-            HttpSession session = req.getSession(false);
-            if (session == null || session.getAttribute("email")==null) {
-                session.invalidate();
+            User u = new SessionCheckServlet(req, res).getUser();
+            if (u == null) {
+                ErrorCode ec = ErrorCode.USER_NOT_FOUND;
+                Message m = new Message("User not found.",
+                        ec.getErrorCode(),"User not found.");
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
             }
 
-            // insert in the session the email
-            emailTourist = session.getAttribute("email").toString();
+            // check if the email of the session is equal to emailCompany
+            emailTourist = u.getEmail();
+
+            idAdvertisement = Integer.parseInt(req.getParameter("idAdvertisement"));
 
             rate = Integer.parseInt(req.getParameter("rate"));
             text = req.getParameter("text_f");
@@ -69,14 +78,6 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message("Input rate is not valid. ",
                         ec.getErrorCode(), "Rate is " + rate);
-                res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
-            }
-            if (text==null || text.length()<1) {
-                ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                Message m = new Message("Feedback text not valid. ",
-                        ec.getErrorCode(), "");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
@@ -93,6 +94,9 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
 
             feedback = FeedbackDAO.createFeedback(feedback);
 
+            Advertisement advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
+
+            req.setAttribute("advertisement",advertisement);
             // Show the booking just created in a web page
             req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
 
