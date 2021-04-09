@@ -342,12 +342,12 @@ public class AdvertisementRestResource extends RestResource {
         try {
 
             switch (op) {
-                case "advertisement/":
+                case "advertisement-company/":
                     // list all the advertisements of a company
 
                     // check if a session is valid
                     User u = new SessionCheckServlet(req, res).getUser();
-                    if (u == null) {
+                    if (u == null || !(u instanceof Company)) {
                         ErrorCode ec = ErrorCode.USER_NOT_FOUND;
                         Message m = new Message("User not found.",
                                 ec.getErrorCode(),"User not found.");
@@ -365,7 +365,8 @@ public class AdvertisementRestResource extends RestResource {
                     req.getRequestDispatcher("/jsp/show-advertisement-list.jsp").forward(req, res);
                     break;
 
-                default:
+                case "advertisement/":
+
                     // list all the advertisements requested by the user
 
                     int idCity;

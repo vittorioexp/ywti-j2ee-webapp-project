@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Class for:
@@ -90,8 +91,8 @@ public class TypeAdvertisementDAO extends AbstractDAO{
 
             while (rs.next()) {
                 typeAdvertisement = new TypeAdvertisement(
-                        rs.getInt("ID_city"),
-                        rs.getString("name"));
+                        rs.getInt("ID_type"),
+                        rs.getString("type"));
 
             }
         } finally {
@@ -100,5 +101,43 @@ public class TypeAdvertisementDAO extends AbstractDAO{
         }
 
         return typeAdvertisement;
+    }
+
+    /**
+     * searches and returns a list of typeAdvertisement
+     *
+     * @return a City objects matching with the parameter.
+     *
+     * @throws SQLException
+     *             if any error occurs.
+     * @throws NamingException
+     *             if any error occurs.
+     */
+    public static List<TypeAdvertisement> listTypeAdvertisement() throws SQLException, NamingException {
+        final String STATEMENT_LIST = "SELECT ID_type, type " +
+                "FROM TYPE_ADVERTISEMENT;";
+        Connection con = DataSourceProvider.getDataSource().getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<TypeAdvertisement> typeAdvertisementList = null;
+
+        try {
+
+            pstmt = con.prepareStatement(STATEMENT_LIST);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                typeAdvertisementList.add(new TypeAdvertisement(
+                        rs.getInt("ID_type"),
+                        rs.getString("type")));
+            }
+
+        } finally {
+            //close all the possible resources
+            cleaningOperations(pstmt, rs, con);
+        }
+
+        return typeAdvertisementList;
     }
 }
