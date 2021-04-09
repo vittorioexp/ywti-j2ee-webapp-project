@@ -6,13 +6,13 @@ import it.unipd.dei.yourwaytoitaly.database.CityDAO;
 import it.unipd.dei.yourwaytoitaly.database.ImageDAO;
 import it.unipd.dei.yourwaytoitaly.database.TypeAdvertisementDAO;
 import it.unipd.dei.yourwaytoitaly.resource.*;
+import it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
@@ -48,35 +48,38 @@ public class AdvertisementRestResource extends RestResource {
      * @throws ServletException
      *             if any error occurs
      */
-    public void insertAdvertisement() throws IOException, ServletException {
-
-        // check if a session is valid
-        HttpSession session = req.getSession(false);
-        if (session == null || session.getAttribute("email")==null) {
-            session.invalidate();
-            req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
-        }
-
-        // The user must give these parameters
-        String title;
-        String type_adv;
-        String description;
-        int price;
-        int numTotItem;
-        Date dateStart;
-        Date dateEnd;
-        Time timeStart;
-        Time timeEnd;
-        // This must be converted into idType
-
-        int idAdvertisement = 0;    // This is set by the DB
-        String emailCompany = session.getAttribute("email").toString();
-        int idType=0;           // This will be get by inspecting Type_advertisement
-        int score;              // This will be calculated
-
-        Advertisement advertisement  = null;
+    public void insertAdvertisement() throws ServletException, IOException {
 
         try{
+            // check if a session is valid
+            User u = new SessionCheckServlet(req, res).getUser();
+            if (u == null) {
+                ErrorCode ec = ErrorCode.USER_NOT_FOUND;
+                Message m = new Message("User not found.",
+                        ec.getErrorCode(),"User not found.");
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+            }
+
+            // The user must give these parameters
+            String title;
+            String type_adv;
+            String description;
+            int price;
+            int numTotItem;
+            Date dateStart;
+            Date dateEnd;
+            Time timeStart;
+            Time timeEnd;
+
+            int idAdvertisement = 0;    // This is set by the DB
+            String emailCompany = u.getEmail();
+            int idType=0;           // This will be get by inspecting Type_advertisement
+            int score;              // This will be calculated
+
+            Advertisement advertisement  = null;
+
             // retrieves the request parameters
             title = req.getParameter("title");
             type_adv = req.getParameter("type");
@@ -172,7 +175,6 @@ public class AdvertisementRestResource extends RestResource {
             req.setAttribute("message", m);
             req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
         }
-
     }
 
     /**
@@ -187,23 +189,14 @@ public class AdvertisementRestResource extends RestResource {
 
         try {
             String idAdvertisement = req.getRequestURI();
-            idAdvertisement = idAdvertisement.substring(idAdvertisement.lastIndexOf("list") + 5);
-            Advertisement advertisement;
-
-            // check if a session is valid
-            HttpSession session = req.getSession(false);
-            if (session == null || session.getAttribute("email")==null) {
-                session.invalidate();
-                req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
-            }
-
-            advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
+            idAdvertisement = idAdvertisement.substring(idAdvertisement.lastIndexOf("advertisement") + 14);
+            Advertisement advertisement = AdvertisementDAO.searchAdvertisement(Integer.parseInt(idAdvertisement));
 
             req.setAttribute("advertisement", advertisement);
-            req.getRequestDispatcher("/jsp/show-advertisement-list.jsp").forward(req, res);
-        }  catch (Exception ex) {
+            req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
+        } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("Cannot create the advertisement. ",
+            Message m = new Message("Cannot show the advertisement. ",
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
@@ -227,21 +220,22 @@ public class AdvertisementRestResource extends RestResource {
         int numTotItem = 0;
         int idAdvertisement = 0;
         String emailCompany = null;
-
         Advertisement advertisement;
 
-
         try{
-
             // check if a session is valid
-            HttpSession session = req.getSession(false);
-            if (session == null || session.getAttribute("email") == null) {
-                session.invalidate();
+            User u = new SessionCheckServlet(req, res).getUser();
+            if (u == null) {
+                ErrorCode ec = ErrorCode.USER_NOT_FOUND;
+                Message m = new Message("User not found.",
+                        ec.getErrorCode(),"User not found.");
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
             }
 
             // check if the email of the session is equal to emailCompany
-            String emailSession = session.getAttribute("email").toString();
+            String emailSession = u.getEmail();
             emailCompany = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
             if (!emailSession.equals(emailCompany)) {
                 ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
@@ -323,57 +317,72 @@ public class AdvertisementRestResource extends RestResource {
         op = op.substring(op.lastIndexOf("list") + 5);
         List<Advertisement> listAdvertisement;
 
-        switch (op){
-            case "advertisement/":
-                // list all the advertisements of a company
+        try {
 
-                // check if a session is valid
-                HttpSession session = req.getSession(false);
-                if (session == null || session.getAttribute("email")==null) {
-                    session.invalidate();
-                    req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
-                }
+            switch (op) {
+                case "advertisement/":
+                    // list all the advertisements of a company
 
-                // insert in the session the email
-                String email = session.getAttribute("email").toString();
+                    // check if a session is valid
+                    User u = new SessionCheckServlet(req, res).getUser();
+                    if (u == null) {
+                        ErrorCode ec = ErrorCode.USER_NOT_FOUND;
+                        Message m = new Message("User not found.",
+                                ec.getErrorCode(),"User not found.");
+                        res.setStatus(ec.getHTTPCode());
+                        req.setAttribute("message", m);
+                        req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+                    }
 
-                listAdvertisement = AdvertisementDAO.searchAdvertisement(email);
+                    // insert in the session the email
+                    String email = u.getEmail();
 
-                req.setAttribute("advertisement-list", listAdvertisement);
-                req.getRequestDispatcher("/jsp/show-advertisement-list.jsp").forward(req, res);
-                break;
+                    listAdvertisement = AdvertisementDAO.searchAdvertisement(email);
 
-            default:
-                // list all the advertisements requested by the user
+                    req.setAttribute("advertisement-list", listAdvertisement);
+                    req.getRequestDispatcher("/jsp/show-advertisement-list.jsp").forward(req, res);
+                    break;
 
-                int idCity;
-                Date date=null;
-                int idType;
+                default:
+                    // list all the advertisements requested by the user
 
-                date = Date.valueOf(req.getParameter("date").toString());
-                City city = CityDAO.searchCity(req.getParameter("city"));
-                TypeAdvertisement typeAdvertisement =
-                        TypeAdvertisementDAO.searchTypeAdvertisement(req.getParameter("typeAdvertisement"));
+                    int idCity;
+                    Date date = null;
+                    int idType;
 
-                // TODO: check input fields
-                if (date == null || city == null || typeAdvertisement == null) {
-                    ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                    Message m = new Message("Input value not valid.",
-                            ec.getErrorCode(),"Input value not valid.");
-                    res.setStatus(ec.getHTTPCode());
-                    req.setAttribute("message", m);
-                    req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
-                }
+                    date = Date.valueOf(req.getParameter("date").toString());
+                    City city = CityDAO.searchCity(req.getParameter("city"));
+                    TypeAdvertisement typeAdvertisement =
+                            TypeAdvertisementDAO.searchTypeAdvertisement(req.getParameter("typeAdvertisement"));
 
-                idCity = city.getIdCity();
-                idType = typeAdvertisement.getIdType();
+                    if (date == null || city == null || typeAdvertisement == null) {
+                        ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                        Message m = new Message("Input value not valid.",
+                                ec.getErrorCode(), "Input value not valid.");
+                        res.setStatus(ec.getHTTPCode());
+                        req.setAttribute("message", m);
+                        req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                    }
 
-                listAdvertisement = AdvertisementDAO.searchAdvertisement(idCity,idType,date);
+                    idCity = city.getIdCity();
+                    idType = typeAdvertisement.getIdType();
 
-                req.setAttribute("advertisement-list", listAdvertisement);
-                req.getRequestDispatcher("/jsp/show-advertisement-list.jsp").forward(req, res);
-                break;
+                    listAdvertisement = AdvertisementDAO.searchAdvertisement(idCity, idType, date);
+
+                    req.setAttribute("advertisement-list", listAdvertisement);
+                    req.getRequestDispatcher("/jsp/show-advertisement-list.jsp").forward(req, res);
+                    break;
+            }
+        } catch (Exception ex) {
+            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("Cannot show the advertisement. ",
+                    ec.getErrorCode(), ex.getMessage());
+            res.setStatus(ec.getHTTPCode());
+            req.setAttribute("message", m);
+            req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
         }
+
+
     }
 
 
