@@ -59,7 +59,7 @@ public class ShowAdvertisementListServlet extends AbstractDatabaseServlet {
                 } catch (Exception ex) {
                     // TODO fix error code
                     Message m = new Message("Cannot show the advertisements. ",
-                            "E100", ex.getMessage());
+                            100, ex.getMessage());
                     ErrorCode ec = ErrorCode.INTERNAL_ERROR;
                     res.setStatus(ec.getHTTPCode());
                     req.setAttribute("message", m);
@@ -83,7 +83,7 @@ public class ShowAdvertisementListServlet extends AbstractDatabaseServlet {
 
                 } catch (Exception ex) {
                     Message m = new Message("Cannot show the advertisements. ",
-                            "E100", ex.getMessage());
+                            100, ex.getMessage());
                     ErrorCode ec = ErrorCode.INTERNAL_ERROR;
                     res.setStatus(ec.getHTTPCode());
                     req.setAttribute("message", m);
@@ -93,7 +93,7 @@ public class ShowAdvertisementListServlet extends AbstractDatabaseServlet {
             default:
                 // the requested operation is unknown
                 Message m = new Message("Cannot show the advertisements. ",
-                        "E100", "Operation unknown");
+                        100, "Operation unknown");
                 ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
