@@ -5,6 +5,7 @@ import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
 import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
 import it.unipd.dei.yourwaytoitaly.resource.Booking;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
+import it.unipd.dei.yourwaytoitaly.resource.User;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
 import javax.servlet.ServletException;
@@ -51,15 +52,11 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
         int numBooking=0;
 
         try{
-            // TODO: check if a session is valid with filters
-            HttpSession session = req.getSession(false);
-            if (session == null || session.getAttribute("email")==null) {
-                session.invalidate();
-                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
-            }
 
-            String emailTourist = session.getAttribute("email").toString();
-            String password = session.getAttribute("password").toString();
+            User u = new SessionCheckServlet(req , res).getUser();
+
+            String emailTourist = u.getEmail();
+            String password = u.getPassword();
 
             // receive idAdvertisement from the hidden form
             idAdvertisement = Integer.parseInt(req.getParameter("idAdvertisement"));

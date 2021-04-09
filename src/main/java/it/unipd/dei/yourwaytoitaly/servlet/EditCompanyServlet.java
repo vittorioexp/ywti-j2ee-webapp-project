@@ -40,23 +40,13 @@ public class EditCompanyServlet extends AbstractDatabaseServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        String email = null;
+        String email;
         String password;
         String phoneNumber;
 
         try{
-            // check if a session is valid
-            HttpSession session = req.getSession(false);
-            if (session == null || session.getAttribute("email")==null) {
-                session.invalidate();
-                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
-            }
 
-            email = session.getAttribute("email").toString();
-            password = session.getAttribute("password").toString();
-
-            User u = (Company) UserDAO.searchUserLogin(email, password);
-
+            User u = new SessionCheckServlet(req,res).getUser();
             if (u==null) {
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
                 Message m = new Message("User not found.",
@@ -65,7 +55,8 @@ public class EditCompanyServlet extends AbstractDatabaseServlet {
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
             }
-
+            email = u.getEmail();
+            password = u.getPassword();
             // at this point the user is authorized to edit the profile
 
             phoneNumber = req.getParameter("phonenumber");
