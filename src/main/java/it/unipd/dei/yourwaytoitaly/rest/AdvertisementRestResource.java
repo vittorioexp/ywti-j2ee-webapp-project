@@ -1,6 +1,9 @@
 package it.unipd.dei.yourwaytoitaly.rest;
 
 
+import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
+import it.unipd.dei.yourwaytoitaly.resource.Message;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -27,15 +30,15 @@ public class AdvertisementRestResource extends RestResource {
     }
 
     public void createAdvertisement() throws IOException {
-        Advertisement e  = null;
+        Advertisement advertisement= null;
         Message m = null;
 
         try{
 
-            final Employee employee =  Employee.fromJSON(req.getInputStream());
+            final Advertisement adv =  Advertisement.fromJSON(req.getInputStream());
 
             // creates a new object for accessing the database and stores the employee
-            e = new CreateEmployeeDatabase(con, employee).createEmployee();
+             = new CreateEmployeeDatabase(con, employee).createEmployee();
 
             if(e != null) {
                 res.setStatus(HttpServletResponse.SC_CREATED);

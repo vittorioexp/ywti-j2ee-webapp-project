@@ -1,8 +1,10 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
 import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
+import it.unipd.dei.yourwaytoitaly.database.ImageDAO;
 import it.unipd.dei.yourwaytoitaly.database.TypeAdvertisementDAO;
 import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
+import it.unipd.dei.yourwaytoitaly.resource.Image;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
@@ -13,6 +15,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Servlet class to create a new advertisement
@@ -79,6 +83,8 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
             dateEnd = Date.valueOf(req.getParameter("dateEnd"));
             timeStart = Time.valueOf(req.getParameter("timeStart"));
             timeEnd = Time.valueOf(req.getParameter("timeEnd"));
+            Image img = new Image(0,req.getParameter("url").toString(),"",Integer.parseInt(req.getParameter("idAdvertisement")));
+            ImageDAO.createImage(img);
 
             if(title==null || title.length()<5 || title.length()>100){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
@@ -151,6 +157,7 @@ public final class InsertAdvertisementServlet extends AbstractDatabaseServlet {
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
             }
 
+            req.setAttribute("idAdvertisement",idAdvertisement);
             req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
 
         } catch (Exception ex) {
