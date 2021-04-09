@@ -185,6 +185,31 @@ public class AdvertisementRestResource extends RestResource {
      */
     public void showAdvertisement() throws IOException, ServletException {
 
+        try {
+            String idAdvertisement = req.getRequestURI();
+            idAdvertisement = idAdvertisement.substring(idAdvertisement.lastIndexOf("list") + 5);
+            Advertisement advertisement;
+
+            // check if a session is valid
+            HttpSession session = req.getSession(false);
+            if (session == null || session.getAttribute("email")==null) {
+                session.invalidate();
+                req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
+            }
+
+            advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
+
+            req.setAttribute("advertisement", advertisement);
+            req.getRequestDispatcher("/jsp/show-advertisement-list.jsp").forward(req, res);
+        }  catch (Exception ex) {
+            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("Cannot create the advertisement. ",
+                    ec.getErrorCode(), ex.getMessage());
+            res.setStatus(ec.getHTTPCode());
+            req.setAttribute("message", m);
+            req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+        }
+
     }
 
     /**
