@@ -51,19 +51,18 @@ public class ShowAdvertisementListServlet extends AbstractDatabaseServlet {
 
                     listAdvertisement = AdvertisementDAO.searchAdvertisement(idCity,idType,date);
 
-                    req.setAttribute("employeeList", listAdvertisement);
+                    req.setAttribute("advertisementList", listAdvertisement);
                     //req.setAttribute("message", m);
 
                     req.getRequestDispatcher("/jsp/homepage.jsp").forward(req, res);
 
                 } catch (Exception ex) {
-                    // TODO fix error code
-                    Message m = new Message("Cannot show the advertisements. ",
-                            "E100", ex.getMessage());
                     ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+                    Message m = new Message("Cannot show the advertisements. ",
+                            ec.getErrorCode(), ex.getMessage());
                     res.setStatus(ec.getHTTPCode());
                     req.setAttribute("message", m);
-                    req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                    req.getRequestDispatcher("/jsp/homepage.jsp").forward(req, res);
                 }
                 break;
             case "company/":
@@ -82,9 +81,9 @@ public class ShowAdvertisementListServlet extends AbstractDatabaseServlet {
                     req.getRequestDispatcher("/jsp/show-profile.jsp").forward(req, res);
 
                 } catch (Exception ex) {
-                    Message m = new Message("Cannot show the advertisements. ",
-                            "E100", ex.getMessage());
                     ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+                    Message m = new Message("Cannot show the advertisements. ",
+                            ec.getErrorCode(), ex.getMessage());
                     res.setStatus(ec.getHTTPCode());
                     req.setAttribute("message", m);
                     req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
@@ -92,9 +91,9 @@ public class ShowAdvertisementListServlet extends AbstractDatabaseServlet {
                 break;
             default:
                 // the requested operation is unknown
-                Message m = new Message("Cannot show the advertisements. ",
-                        "E100", "Operation unknown");
                 ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
+                Message m = new Message("Cannot show the advertisements. ",
+                        ec.getErrorCode(), ec.getErrorMessage());
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);

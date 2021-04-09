@@ -54,6 +54,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+
     <!-- Configuration of the default build lifecycle -->
     <build>
         <defaultGoal>compile</defaultGoal>
@@ -105,11 +106,15 @@
                 </configuration>
             </plugin>
 
+
         </plugins>
+
 
     </build>
 
     <!-- Dependencies -->
+
+
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -160,8 +165,13 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20200518</version>
+            <version>20210307</version>
         </dependency>
+
+
+
+
+
     </dependencies>
 
 </project>
