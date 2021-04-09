@@ -42,15 +42,13 @@ public class UserDAO extends AbstractDAO{
      */
     public static User createUser(User user) throws SQLException, NamingException {
         final String STATEMENT_TOURIST =
-                "INSERT INTO YWTI.Tourist (email_t, surname, name, birth_date, phone_number, address, password, ID_city)" +
-                        "SELECT ?, ?, ?, ?, ?, ?, ?, ID_CITY" +
-                        "FROM YWTI.City WHERE City.name = ? RETURNING *;";
+                "INSERT INTO Tourist (email_t, surname, name, birth_date, phone_number, address, password, ID_city)\n" +
+                        "VALUES (?, ?, ?, ?, ?, ?, MD5(?), (SELECT ID_city FROM CITY WHERE CITY.name = ?)) RETURNING *;\n";
 
 
         final String STATEMENT_COMPANY =
-                "INSERT INTO YWTI.Company (email_c, name_c, phone_number, address, password, ID_city)" +
-                        "SELECT ?, ?, ?, ?, ?, ID_CITY" +
-                        "FROM YWTI.City WHERE City.name = ? RETURNING *;";
+                "INSERT INTO Company (email_c, name_c, phone_number, address, password, ID_city)\n" +
+                        "VALUES (?, ?, ?, ?, MD5(?), (SELECT ID_city FROM CITY WHERE CITY.name = ?)) RETURNING *;";
 
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
@@ -120,14 +118,14 @@ public class UserDAO extends AbstractDAO{
      */
     public static void editUser(User user) throws SQLException, NamingException {
         final String STATEMENT_TOURIST_EDIT =
-                "UPDATE TWTI.TOURIST SET password = MD5(?) , phone_number = ? WHERE email_t = ?;";
+                "UPDATE TOURIST SET password = MD5(?) , phone_number = ? WHERE email_t = ?;";
 
 
         /**
          * The SQL statement to be executed
          */
         final String STATEMENT_COMPANY_EDIT =
-                "UPDATE TWTI.COMPANY SET password = MD5(?) , phone_number = ? WHERE email_c = ?;";
+                "UPDATE COMPANY SET password = MD5(?) , phone_number = ? WHERE email_c = ?;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -167,7 +165,7 @@ public class UserDAO extends AbstractDAO{
     public static User searchUserLogin(final String reqEmail, final String reqPassword) throws SQLException, NamingException {
         final String STATEMENT_T =
                 "SELECT email_t, surname, name, birth_date, phone_number, address, password, ID_city " +
-                        "FROM YWTI.TOURIST " +
+                        "FROM TOURIST " +
                         "WHERE email_t = ? AND password = MD5(?);";
 
         Connection con = DataSourceProvider.getDataSource().getConnection();
@@ -203,7 +201,7 @@ public class UserDAO extends AbstractDAO{
         if (user == null ) {
             final String STATEMENT_C =
                     "SELECT email_c, name_c, phone_number, address, password, ID_city " +
-                            "FROM YWTI.COMPANY " +
+                            "FROM COMPANY " +
                             "WHERE email_t = ? AND password = MD5(?);";
 
             // the results of the search
@@ -242,7 +240,7 @@ public class UserDAO extends AbstractDAO{
     public static int searchUserScore(String reqIdTourist) throws SQLException, NamingException {
 
         final String STATEMENT = "SELECT *\n" +
-                "FROM YWTI.BOOKING JOIN YWTI.ADVERTISEMENT ON ADVERTISEMENT.ID_ADVERTISEMENT = BOOKING.ID_ADVERTISEMENT\n" +
+                "FROM BOOKING JOIN ADVERTISEMENT ON ADVERTISEMENT.ID_ADVERTISEMENT = BOOKING.ID_ADVERTISEMENT\n" +
                 "WHERE BOOKING.email_t = ? AND BOOKING.state = 'SUCCESSFUL';";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;

@@ -40,7 +40,7 @@ public class FeedbackDAO extends AbstractDAO{
      */
     public static Feedback createFeedback(Feedback feedback) throws SQLException, NamingException {
         final String STATEMENT =
-                "INSERT INTO YWTI.FEEDBACK (email_t, ID_Advertisement, rate, text_f, date_f) " +
+                "INSERT INTO FEEDBACK (email_t, ID_Advertisement, rate, text_f, date_f) " +
                         "VALUES (?, ?, ?, ?, ?) RETURNING *;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
@@ -85,7 +85,7 @@ public class FeedbackDAO extends AbstractDAO{
     public static List<Feedback> searchFeedbackByAdvertisement(int reqIdAdvertisement) throws SQLException, NamingException {
         final String STATEMENT =
                 "SELECT RATE, TEXT_F, DATE_F, email_t " +
-                        "FROM YWTI.FEEDBACK WHERE ID_ADVERTISEMENT = ?;";
+                        "FROM FEEDBACK WHERE ID_ADVERTISEMENT = ?;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;

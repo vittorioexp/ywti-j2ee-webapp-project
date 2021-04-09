@@ -22,7 +22,7 @@ import java.io.IOException;
 
 public class EditAdvertisementServlet extends AbstractDatabaseServlet {
     /**
-     * Edit an advertisement
+     * Update an advertisement
      *
      * @param req
      *            the HTTP request from the client.
@@ -35,7 +35,7 @@ public class EditAdvertisementServlet extends AbstractDatabaseServlet {
      *             if any error occurs in the client/server communication.
      */
 
-    public void doPost(HttpServletRequest req, HttpServletResponse res)
+    public void doPut(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
         int score;
@@ -45,6 +45,7 @@ public class EditAdvertisementServlet extends AbstractDatabaseServlet {
         String emailCompany = null;
 
         Advertisement advertisement;
+
 
         try{
 

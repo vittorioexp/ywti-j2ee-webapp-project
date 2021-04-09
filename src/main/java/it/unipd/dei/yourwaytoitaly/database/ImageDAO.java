@@ -37,7 +37,7 @@ public class ImageDAO extends AbstractDAO{
      */
     public static Image createImage(Image image) throws SQLException, NamingException {
         final String STATEMENT =
-                "INSERT INTO YWTI.IMAGE (path_i, description_i,ID_Advertisement) " +
+                "INSERT INTO IMAGE (path_i, description_i,ID_Advertisement) " +
                         "VALUES (?, ?, ?) RETURNING *;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
@@ -76,9 +76,34 @@ public class ImageDAO extends AbstractDAO{
      * @throws NamingException
      *             if any error occurs.
      */
-    public static List<Image> SearchImageByIdAdvertisement(int idAdvertisement) throws SQLException, NamingException {
-        //TODO: write function body
-        return null;
+    public static List<Image> searchImageByIdAdvertisement(int idAdvertisement) throws SQLException, NamingException {
+        final String STATEMENT =
+                "SELECT *\n" +
+                        "FROM IMAGE\n" +
+                        "WHERE ID_Advertisement = ?;";
+        Connection con = DataSourceProvider.getDataSource().getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        // the results of the creation
+        List<Image> listImages = null;
+        try {
+            pstmt = con.prepareStatement(STATEMENT);
+            pstmt.setInt(1, idAdvertisement);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                listImages.add(new Image(
+                        rs.getInt("ID_image"),
+                        rs.getString("path_i"),
+                        rs.getString("description_i"),
+                        rs.getInt("ID_advertisement")));
+            }
+        } finally {
+            //close all the possible resources
+            cleaningOperations(pstmt, rs, con);
+        }
+        return listImages;
     }
 
 
