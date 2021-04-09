@@ -118,7 +118,12 @@ public class BookingDAO extends AbstractDAO{
      */
     public static Booking searchBooking(String emailTourist, int idAdvertisement)
             throws SQLException, NamingException {
-        // TODO: write function body
+        List<Booking> bookings = searchBookingByAdvertisement(idAdvertisement);
+        for (Booking b : bookings) {
+            if (b.getEmailTourist().equals(emailTourist)) {
+                return b;
+            }
+        }
         return null;
     }
 

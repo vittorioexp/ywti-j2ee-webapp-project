@@ -51,7 +51,7 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
         int numBooking=0;
 
         try{
-            // check if a session is valid
+            // TODO: check if a session is valid with filters
             HttpSession session = req.getSession(false);
             if (session == null || session.getAttribute("email")==null) {
                 session.invalidate();
@@ -61,18 +61,10 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
             String emailTourist = session.getAttribute("email").toString();
             String password = session.getAttribute("password").toString();
 
-            // check if idAdvertisement is present in the session
-            if (session.getAttribute("idAdvertisement") == null) {
-                ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-                Message m = new Message("Advertisement not found.",
-                        ec.getErrorCode(),"The ID of the advertisement was not found. ");
-                res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
-            }
+            // receive idAdvertisement from the hidden form
+            idAdvertisement = Integer.parseInt(req.getParameter("idAdvertisement"));
 
-            // receive idAdvertisement from the session
-            idAdvertisement = (int) session.getAttribute("idAdvertisement");
+            numBooking = BookingDAO.searchBooking(emailTourist, idAdvertisement).getNumBooking();
 
             Booking booking = new Booking(
                     emailTourist,
