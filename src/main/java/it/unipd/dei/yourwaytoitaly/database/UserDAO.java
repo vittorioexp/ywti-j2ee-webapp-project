@@ -202,7 +202,7 @@ public class UserDAO extends AbstractDAO{
             final String STATEMENT_C =
                     "SELECT email_c, name_c, phone_number, address, password, ID_city " +
                             "FROM COMPANY " +
-                            "WHERE email_t = ? AND password = MD5(?);";
+                            "WHERE email_c = ? AND password = MD5(?);";
 
             // the results of the search
 
