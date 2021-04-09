@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Class for:
@@ -103,5 +104,43 @@ public class CityDAO extends AbstractDAO{
         }
 
         return city;
+    }
+
+    /**
+     * searches and returns a list of city
+     *
+     * @return a City objects matching with the parameter.
+     *
+     * @throws SQLException
+     *             if any error occurs.
+     * @throws NamingException
+     *             if any error occurs.
+     */
+    public static List<City> listCities() throws SQLException, NamingException {
+        final String STATEMENT_LIST = "SELECT ID_city, name " +
+                "FROM CITY;";
+        Connection con = DataSourceProvider.getDataSource().getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<City> cityList = null;
+
+        try {
+
+            pstmt = con.prepareStatement(STATEMENT_LIST);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                cityList.add(new City(
+                        rs.getInt("ID_city"),
+                        rs.getString("name")));
+            }
+
+        } finally {
+            //close all the possible resources
+            cleaningOperations(pstmt, rs, con);
+        }
+
+        return cityList;
     }
 }
