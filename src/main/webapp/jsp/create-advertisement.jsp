@@ -28,34 +28,37 @@ Since: 1.0
 </head>
 <body>
 
-<form method="POST" action="<c:url value="/user/insertadvertisement/"/>">       //aggiungere op InsertAdvertisementServlet
+<form method="post" action="<c:url value="/create-advertisement"/>" enctype="multipart/form-data">       //aggiungere op InsertAdvertisementServlet
 
     <label for="title">title:</label>
     <input name="title" type="text"/><br/><br/>
 
-    <label for="type_adv">type_adv:</label>
-    <input name="type_adv" type="text"/><br/><br/>
+    <label for="type">type:</label>
+    <input name="type" type="text"/><br/><br/>
 
     <label for="description">description:</label>
     <input name="description" type="text"/><br/><br/>
 
     <label for="price">price:</label>
-    <input name="price" type="text"/><br/><br/>
+    <input name="price" type="number"/><br/><br/>
 
     <label for="numTotItem">numTotItem:</label>
-    <input name="numTotItem" type="text"/><br/><br/>
+    <input name="numTotItem" type="number"/><br/><br/>
 
     <label for="dateStart">dateStart:</label>
-    <input name="dateStart" type="text"/><br/><br/>
+    <input name="dateStart" type="date"/><br/><br/>
 
     <label for="dateEnd">dateEnd:</label>
-    <input name="dateEnd" type="text"/><br/><br/>
+    <input name="dateEnd" type="date"/><br/><br/>
 
     <label for="timeStart">timeStart:</label>
-    <input name="timeStart" type="text"/><br/><br/>
+    <input name="timeStart" type="time"/><br/><br/>
 
     <label for="timeEnd">timeEnd:</label>
-    <input name="timeEnd" type="text"/><br/><br/>
+    <input name="timeEnd" type="time"/><br/><br/>
+
+    <label for="image">image:</label>
+    <input name="image" type="file"/><br/><br/>
 
     <button type="submit">Create</button><br/>
 

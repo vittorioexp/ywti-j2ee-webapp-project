@@ -40,12 +40,32 @@
 		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.RegisterServlet</servlet-class>
 	</servlet>
 
+	<servlet>
+		<servlet-name>CreateAdvertisementServlet</servlet-name>
+		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.RestAdvertisementServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>EditAdvertisementServlet</servlet-name>
+		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.RestAdvertisementServlet</servlet-class>
+	</servlet>
+
     
 	<!-- Mapping between servlets and URIs -->
 
 	<servlet-mapping>
 		<servlet-name>LoginServlet</servlet-name>
 		<url-pattern>/src/login</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>CreateAdvertisementServlet</servlet-name>
+		<url-pattern>/create-advertisement</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>EditAdvertisementServlet</servlet-name>
+		<url-pattern>/adverisement/*</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>

@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<form method="POST" action="<c:url value="/user/editadvertisement/"/>">         //aggiungere op in EditAdvertisementServlet
+<form method="POST" action="<c:url value="/adverisement/*"/>">         //aggiungere op in EditAdvertisementServlet
 
     <label for="title">title:</label>
     <input name="title" type="text"/><br/><br/>
