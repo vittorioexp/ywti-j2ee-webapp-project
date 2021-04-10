@@ -43,6 +43,8 @@ public class EditTouristServlet extends AbstractDatabaseServlet {
         String password;
         String phoneNumber;
 
+
+        //TODO: Merge EditTouristServlet with EditCompanyServlet
         try{
             // check if a session is valid
             HttpSession session = req.getSession(false);

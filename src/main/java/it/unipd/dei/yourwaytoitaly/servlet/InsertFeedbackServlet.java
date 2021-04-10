@@ -11,7 +11,6 @@ import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.Calendar;
@@ -53,7 +52,7 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
         String text="";
 
         Feedback feedback  = null;
-
+        //TODO: Controllare se l'utente ha prenotato quell'annuncio, e se il giorni corrente è maggiore di quello dell'annuncio (date_start)
         try{
             // check if a session is valid
             User u = new SessionCheckServlet(req, res).getUser();
@@ -98,7 +97,7 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
 
             req.setAttribute("advertisement",advertisement);
             // Show the booking just created in a web page
-            req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
+            req.getRequestDispatcher("/advertisement/"+idAdvertisement).forward(req, res);
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

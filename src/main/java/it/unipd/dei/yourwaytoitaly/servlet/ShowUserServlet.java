@@ -1,16 +1,16 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
 
+import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
+import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
 import it.unipd.dei.yourwaytoitaly.resource.*;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
-
-
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
+import java.util.List;
 
 
 /**
@@ -43,8 +43,14 @@ public class ShowUserServlet extends AbstractDatabaseServlet {
 
                     if (u instanceof Tourist) {
                         req.setAttribute("tourist",(Tourist) u);
+                        String emailTourist = u.getEmail();
+                        List<Booking> listBookings = BookingDAO.searchBookingByUser(emailTourist);
+                        req.setAttribute("bookings-list", listBookings);
                     } else if (u instanceof Company) {
                         req.setAttribute("company",(Company) u);
+                        String emailCompany = u.getEmail();
+                        List<Advertisement> listAdvertisement = AdvertisementDAO.searchAdvertisement(emailCompany);
+                        req.setAttribute("advertisement-list", listAdvertisement);
                     }
 
                     req.getRequestDispatcher("/jsp/show-profile.jsp").forward(req, res);

@@ -1,10 +1,7 @@
 package it.unipd.dei.yourwaytoitaly.rest;
 
 
-import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
-import it.unipd.dei.yourwaytoitaly.database.CityDAO;
-import it.unipd.dei.yourwaytoitaly.database.ImageDAO;
-import it.unipd.dei.yourwaytoitaly.database.TypeAdvertisementDAO;
+import it.unipd.dei.yourwaytoitaly.database.*;
 import it.unipd.dei.yourwaytoitaly.resource.*;
 import it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
@@ -185,7 +182,8 @@ public class AdvertisementRestResource extends RestResource {
             }
 
             req.setAttribute("idAdvertisement",idAdvertisement);
-            req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
+            //TODO: Fix the url
+            req.getRequestDispatcher("/user/profile/").forward(req, res);
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -212,6 +210,19 @@ public class AdvertisementRestResource extends RestResource {
             idAdvertisement = idAdvertisement.substring(idAdvertisement.lastIndexOf("advertisement") + 14);
             Advertisement advertisement = AdvertisementDAO.searchAdvertisement(Integer.parseInt(idAdvertisement));
 
+            // check if a session is valid
+            User u = new SessionCheckServlet(req, res).getUser();
+            if (u != null) {
+                // check if the user (company) is the owner of the advertisement
+                String emailSession = u.getEmail();
+                if (emailSession.equals(advertisement.getEmailCompany())) {
+                    List<Booking> listBookings = BookingDAO.searchBookingByAdvertisement(Integer.parseInt(idAdvertisement));
+                    req.setAttribute("bookings-list", listBookings);
+                }
+
+            }
+            List<Feedback> feedbackList = FeedbackDAO.searchFeedbackByAdvertisement(Integer.parseInt(idAdvertisement));
+            req.setAttribute("feedbackList", feedbackList);
             req.setAttribute("advertisement", advertisement);
             req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
         } catch (Exception ex) {
@@ -311,8 +322,7 @@ public class AdvertisementRestResource extends RestResource {
 
             AdvertisementDAO.editAdvertisement(advertisement);
 
-            req.setAttribute("idAdvertisement",idAdvertisement);
-            req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
+            req.getRequestDispatcher("/user/profile/").forward(req, res);
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -342,29 +352,6 @@ public class AdvertisementRestResource extends RestResource {
         try {
 
             switch (op) {
-                case "advertisement-company/":
-                    // list all the advertisements of a company
-
-                    // check if a session is valid
-                    User u = new SessionCheckServlet(req, res).getUser();
-                    if (u == null || !(u instanceof Company)) {
-                        ErrorCode ec = ErrorCode.USER_NOT_FOUND;
-                        Message m = new Message("User not found.",
-                                ec.getErrorCode(),"User not found.");
-                        res.setStatus(ec.getHTTPCode());
-                        req.setAttribute("message", m);
-                        req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
-                    }
-
-                    // insert in the session the email
-                    String email = u.getEmail();
-
-                    listAdvertisement = AdvertisementDAO.searchAdvertisement(email);
-
-                    req.setAttribute("advertisement-list", listAdvertisement);
-                    req.getRequestDispatcher("/jsp/show-advertisement-list.jsp").forward(req, res);
-                    break;
-
                 case "advertisement/":
 
                     // list all the advertisements requested by the user

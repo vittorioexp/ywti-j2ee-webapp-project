@@ -167,7 +167,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
             // login credentials were correct: we redirect the user to the homepage
             // now the session is active and its data can used to change the homepage
-            res.sendRedirect(req.getContextPath()+"/jsp/index.jsp");
+            res.sendRedirect(req.getContextPath()+"/jsp/homepage.jsp");
 
 
         }catch (SQLException e){

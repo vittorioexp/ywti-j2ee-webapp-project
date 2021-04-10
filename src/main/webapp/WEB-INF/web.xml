@@ -50,35 +50,132 @@
 		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.RestAdvertisementServlet</servlet-class>
 	</servlet>
 
+	<servlet>
+		<servlet-name>ShowAdvertisementListServlet</servlet-name>
+		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.RestAdvertisementServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ShowUserServlet</servlet-name>
+		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.ShowUserServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>RestAdvertisementServlet</servlet-name>
+		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.RestAdvertisementServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>EditUserServlet</servlet-name>
+		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.EditUserServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>LoginPageJSP</servlet-name>
+		<jsp-file>login.jsp</jsp-file>
+	</servlet>
+
+	<servlet>
+		<servlet-name>RegisterPageJSP</servlet-name>
+		<jsp-file>register.jsp</jsp-file>
+	</servlet>
+
+	<servlet>
+		<servlet-name>EditUserJSP</servlet-name>
+		<jsp-file>edit-profile.jsp</jsp-file>
+	</servlet>
+
+	<servlet>
+		<servlet-name>CreateAdvertisementJSP</servlet-name>
+		<jsp-file>create-advertisement.jsp</jsp-file>
+	</servlet>
+
+	<servlet>
+		<servlet-name>EditAdvertisementJSP</servlet-name>
+		<jsp-file>edit-advertisement.jsp</jsp-file>
+	</servlet>
+
+	<servlet>
+		<servlet-name>InsertBookingServlet</servlet-name>
+		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.InsertBookingServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>DeleteBookingServlet</servlet-name>
+		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.DeleteBookingServlet</servlet-class>
+	</servlet>
 
 
-    
 	<!-- Mapping between servlets and URIs -->
 
 	<servlet-mapping>
+		<servlet-name>DeleteBookingServlet</servlet-name>
+		<url-pattern>/booking-delete/</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>InsertBookingServlet</servlet-name>
+		<url-pattern>/booking-create/</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>EditAdvertisementJSP</servlet-name>
+		<url-pattern>/advertisement-edit/</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>RestAdvertisementServlet</servlet-name>
+		<url-pattern>/advertiement-create/</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>EditUserJSP</servlet-name>
+		<url-pattern>/user/do-edit/</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>RegisterPageJSP</servlet-name>
+		<url-pattern>/user/do-register/</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>LoginPageJSP</servlet-name>
+		<url-pattern>/user/do-login/</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
 		<servlet-name>LoginServlet</servlet-name>
-		<url-pattern>/src/login</url-pattern>
+		<url-pattern>/user/login</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
-		<servlet-name>CreateAdvertisementServlet</servlet-name>
-		<url-pattern>/create-advertisement</url-pattern>
+		<servlet-name>ShowUserServlet</servlet-name>
+		<url-pattern>/user/profile/</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
-		<servlet-name>EditAdvertisementServlet</servlet-name>
-		<url-pattern>/adverisement/*</url-pattern>
+		<servlet-name>EditUserServlet</servlet-name>
+		<url-pattern>/user/edit/</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>CreateAdvertisementJSP</servlet-name>
+		<url-pattern>/advertisement-do-create/</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
 		<servlet-name>RegisterServlet</servlet-name>
-		<url-pattern>/src/register</url-pattern>
+		<url-pattern>/user/register/</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
-		<servlet-name>ShowAdvertisementListServlet</servlet-name>
-		<url-pattern>/src/tourist/homepage</url-pattern>
-		<url-pattern>/src/company/profile</url-pattern>
+		<servlet-name>RestAdvertisementServlet</servlet-name>
+		<url-pattern>/advertisement/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>RestAdvertisementServlet</servlet-name>
+		<url-pattern>/list/advertisement/</url-pattern>
 	</servlet-mapping>
 
 </web-app>

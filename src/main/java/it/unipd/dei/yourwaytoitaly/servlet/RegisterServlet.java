@@ -10,11 +10,11 @@ import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 
 import static java.lang.Integer.parseInt;
 
@@ -240,7 +240,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
             // login credentials were correct: we redirect the user to the homepage
             // now the session is active and its data can used to change the homepage
-            res.sendRedirect(req.getContextPath()+"/jsp/index.jsp");
+            res.sendRedirect(req.getContextPath()+"/jsp/homepage.jsp");
 
 
         }catch (SQLException e){

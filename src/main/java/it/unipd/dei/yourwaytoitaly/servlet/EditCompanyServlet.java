@@ -10,7 +10,6 @@ import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -40,6 +39,8 @@ public class EditCompanyServlet extends AbstractDatabaseServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
+
+        //TODO: Merge EditTouristServlet with EditCompanyServlet
         String email;
         String password;
         String phoneNumber;

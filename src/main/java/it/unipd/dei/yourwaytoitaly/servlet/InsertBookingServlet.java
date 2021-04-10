@@ -2,7 +2,6 @@ package it.unipd.dei.yourwaytoitaly.servlet;
 
 import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
 import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
-import it.unipd.dei.yourwaytoitaly.database.UserDAO;
 import it.unipd.dei.yourwaytoitaly.resource.Booking;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
 import it.unipd.dei.yourwaytoitaly.resource.User;
@@ -11,7 +10,6 @@ import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
@@ -124,7 +122,7 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             booking = BookingDAO.createBooking(booking);
 
             // Show the booking just created in a web page
-            req.getRequestDispatcher("/jsp/show-bookings-of-user.jsp").forward(req, res);
+            req.getRequestDispatcher("/user/profile/").forward(req, res);
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
