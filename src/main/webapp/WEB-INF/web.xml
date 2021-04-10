@@ -41,21 +41,6 @@
 	</servlet>
 
 	<servlet>
-		<servlet-name>CreateAdvertisementServlet</servlet-name>
-		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.RestAdvertisementServlet</servlet-class>
-	</servlet>
-
-	<servlet>
-		<servlet-name>EditAdvertisementServlet</servlet-name>
-		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.RestAdvertisementServlet</servlet-class>
-	</servlet>
-
-	<servlet>
-		<servlet-name>ShowAdvertisementListServlet</servlet-name>
-		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.RestAdvertisementServlet</servlet-class>
-	</servlet>
-
-	<servlet>
 		<servlet-name>ShowUserServlet</servlet-name>
 		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.ShowUserServlet</servlet-class>
 	</servlet>

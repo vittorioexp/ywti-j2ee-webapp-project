@@ -1,11 +1,9 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
 import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
+import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
 import it.unipd.dei.yourwaytoitaly.database.FeedbackDAO;
-import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
-import it.unipd.dei.yourwaytoitaly.resource.Feedback;
-import it.unipd.dei.yourwaytoitaly.resource.Message;
-import it.unipd.dei.yourwaytoitaly.resource.User;
+import it.unipd.dei.yourwaytoitaly.resource.*;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
 import javax.servlet.ServletException;
@@ -52,7 +50,7 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
         String text="";
 
         Feedback feedback  = null;
-        //TODO: Controllare se l'utente ha prenotato quell'annuncio, e se il giorni corrente è maggiore di quello dell'annuncio (date_start)
+
         try{
             // check if a session is valid
             User u = new SessionCheckServlet(req, res).getUser();
@@ -65,10 +63,23 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
             }
 
-            // check if the email of the session is equal to emailCompany
             emailTourist = u.getEmail();
-
             idAdvertisement = Integer.parseInt(req.getParameter("idAdvertisement"));
+            Advertisement  advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
+            Booking booking = BookingDAO.searchBooking(emailTourist, idAdvertisement);
+
+            Date currentDate = new Date(Calendar.getInstance().getTime().getTime());
+
+            // check if the user booked this advertisement and
+            // check if the current date is bigger than the dateStart of the advertisement
+            if (booking == null || currentDate.compareTo(advertisement.getDateStart())<0) {
+                ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
+                Message m = new Message("User cannot insert a feedback.",
+                        ec.getErrorCode(),"User cannot insert a feedback about this booking.");
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/advertisement/" + idAdvertisement).forward(req, res);
+            }
 
             rate = Integer.parseInt(req.getParameter("rate"));
             text = req.getParameter("text_f");
@@ -93,10 +104,7 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
 
             feedback = FeedbackDAO.createFeedback(feedback);
 
-            Advertisement advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
-
-            req.setAttribute("advertisement",advertisement);
-            // Show the booking just created in a web page
+            // Show the advertisement
             req.getRequestDispatcher("/advertisement/"+idAdvertisement).forward(req, res);
 
         } catch (Exception ex) {

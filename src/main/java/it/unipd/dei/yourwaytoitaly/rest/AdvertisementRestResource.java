@@ -182,8 +182,7 @@ public class AdvertisementRestResource extends RestResource {
             }
 
             req.setAttribute("idAdvertisement",idAdvertisement);
-            //TODO: Fix the url
-            req.getRequestDispatcher("/user/profile/").forward(req, res);
+            req.getRequestDispatcher("/advertisement/" + idAdvertisement).forward(req, res);
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

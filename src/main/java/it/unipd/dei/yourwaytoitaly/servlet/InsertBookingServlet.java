@@ -2,6 +2,7 @@ package it.unipd.dei.yourwaytoitaly.servlet;
 
 import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
 import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
+import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
 import it.unipd.dei.yourwaytoitaly.resource.Booking;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
 import it.unipd.dei.yourwaytoitaly.resource.User;
@@ -75,9 +76,11 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
 
             idAdvertisement = Integer.parseInt(req.getParameter("idAdvertisement"));
 
-
             // Get how many items the user wants to book
             numBooking = Integer.parseInt(req.getParameter("numBooking"));
+
+            // Get the booking date
+            Date bDate = Date.valueOf(req.getParameter("numBooking"));
 
             if(numBooking<=0) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
@@ -85,26 +88,39 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"The number of item is not valid");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/advertisement/" + idAdvertisement).forward(req, res);
+            }
+
+            // Check if dateStart <= bookingDate <= dateEnd
+            Advertisement adv = AdvertisementDAO.searchAdvertisement(idAdvertisement);
+            if (adv.getDateEnd().compareTo(bDate)<0 || bDate.compareTo(adv.getDateStart())<0) {
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"The booking date is not valid");
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/advertisement/" + idAdvertisement).forward(req, res);
             }
 
             // Get the number of items available
-            numTotItem = AdvertisementDAO.searchAdvertisement(idAdvertisement).getNumTotItem();
+            numTotItem = adv.getNumTotItem();
 
             // Get the bookings relative to this advertisement
             List<Booking> bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
 
+            // Get the number of items already booked
             int itemBooked=0;
             for(Booking b: bookingList){
                 itemBooked += b.getNumBooking();
             }
+
             if(numBooking > numTotItem - itemBooked){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message("Input value not valid.",
                         ec.getErrorCode(),"The number of item is too big!");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/advertisement/" + idAdvertisement).forward(req, res);
             }
 
             state="SUCCESSFUL";
@@ -130,7 +146,7 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+            req.getRequestDispatcher("/jsp/homepage.jsp").forward(req, res);
         }
     }
 }

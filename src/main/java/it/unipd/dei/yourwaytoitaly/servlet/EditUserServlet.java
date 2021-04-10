@@ -1,6 +1,7 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
 import it.unipd.dei.yourwaytoitaly.database.UserDAO;
+import it.unipd.dei.yourwaytoitaly.resource.Company;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
 import it.unipd.dei.yourwaytoitaly.resource.Tourist;
 import it.unipd.dei.yourwaytoitaly.resource.User;
@@ -9,11 +10,10 @@ import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Servlet class to edit the user profile of a tourist
+ * Servlet class to edit the user profile of a company
  * @author Vittorio Esposito
  * @author Marco Basso
  * @author Matteo Piva
@@ -21,7 +21,7 @@ import java.io.IOException;
  * @since 1.0
  */
 
-public class EditTouristServlet extends AbstractDatabaseServlet {
+public class EditUserServlet extends AbstractDatabaseServlet {
     /**
      * Edit an user
      *
@@ -39,25 +39,13 @@ public class EditTouristServlet extends AbstractDatabaseServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        String email = null;
+        String email;
         String password;
         String phoneNumber;
 
-
-        //TODO: Merge EditTouristServlet with EditCompanyServlet
         try{
-            // check if a session is valid
-            HttpSession session = req.getSession(false);
-            if (session == null || session.getAttribute("email")==null) {
-                session.invalidate();
-                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
-            }
 
-            email = session.getAttribute("email").toString();
-            password = session.getAttribute("password").toString();
-
-            User u = (Tourist) UserDAO.searchUserLogin(email, password);
-
+            User u = new SessionCheckServlet(req,res).getUser();
             if (u==null) {
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
                 Message m = new Message("User not found.",
@@ -66,8 +54,10 @@ public class EditTouristServlet extends AbstractDatabaseServlet {
                 req.setAttribute("message", m);
                 req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
             }
+            email = u.getEmail();
+            password = u.getPassword();
 
-            // at this point the user is authorized to edit the profile
+            // at this point the user exists so it is authorized to edit his own profile
 
             phoneNumber = req.getParameter("phonenumber");
 
@@ -80,20 +70,37 @@ public class EditTouristServlet extends AbstractDatabaseServlet {
                 req.getRequestDispatcher("/jsp/edit-profile.jsp").forward(req, res);
             }
 
-            u = new Tourist(
-                    email,
-                    password,
-                    null,
-                    null,
-                    phoneNumber,
-                    0,
-                    null,
-                    null
-            );
+            if (u instanceof Tourist) {
 
-            UserDAO.editUser(u);
+                u = new Tourist(
+                        email,
+                        password,
+                        null,
+                        null,
+                        phoneNumber,
+                        0,
+                        null,
+                        null
+                );
 
-            req.getRequestDispatcher("/jsp/show-profile.jsp").forward(req, res);
+                UserDAO.editUser(u);
+
+            } else if (u instanceof Company) {
+
+                u = new Company(
+                        email,
+                        password,
+                        null,
+                        phoneNumber,
+                        0,
+                        null
+                );
+
+                UserDAO.editUser(u);
+
+            }
+
+            req.getRequestDispatcher("/user/profile/").forward(req, res);
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -101,7 +108,7 @@ public class EditTouristServlet extends AbstractDatabaseServlet {
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+            req.getRequestDispatcher("/user/profile/").forward(req, res);
         }
     }
 }
