@@ -1,3 +1,6 @@
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Advertisement" %>
+<%@ page import="java.util.List" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.City" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -34,9 +37,48 @@ Since: 1.0
 <a href="index.jsp">Contacts</a>
 <a href="index.jsp">About</a>
 
-<a href="index.jsp">About</a>
+<br>
+<br>
+<br>
 
-<a href="index.jsp">About</a>
+<form action="list/advertisement/" method="post">
+
+    <select name="advertisement">
+
+        <%
+            List<Advertisement> listAdvertisement = (List<Advertisement>) request.getAttribute("advertisement_list");
+        %>
+
+        <c:forEach items="<%=listAdvertisement%>" var="advertisement">
+            <option value="${advertisement.title}">${advertisement.title}</option>
+        </c:forEach>
+    </select>
+    <input name="advertisement" type="text"/>
+
+<br>
+    <select name="city">
+
+        <%
+            List<City> listCity = (List<City>) request.getAttribute("city_list");
+        %>
+
+        <c:forEach items="<%=listCity%>" var="city">
+            <option value="${city.title}">${city.title}</option>
+        </c:forEach>
+
+    </select>
+    <input name="city" type="text"/>
+
+
+<br>
+
+    <fmt:formatDate value="${blah.bla}" pattern="dd/MM/yyyy" var="myDate" >
+        <input name="myDate" type="date"/>
+
+    <br>
+    <br>
+    <button type="submit">Start your journey</button><br/>
+</form>
 
 <br>
 <br>
