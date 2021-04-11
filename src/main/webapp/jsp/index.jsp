@@ -35,7 +35,7 @@ Since: 1.0
 <a href="login.jsp">Login</a>
 <a href="register.jsp">Register</a>
 <a href="index.jsp">Contacts</a>
-<a href="index.jsp">About</a>
+
 
 <br>
 <br>
