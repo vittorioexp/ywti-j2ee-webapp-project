@@ -17,3 +17,26 @@ Author: Vittorio Esposito
 Version: 1.0
 Since: 1.0
 -->
+
+<%@ page contentType="text/html;charset=utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home page</title>
+</head>
+<body>
+
+<a href="index.jsp">Home</a>
+<a href="login.jsp">Login</a>
+<a href="register.jsp">Register</a>
+<a href="index.jsp">Contacts</a>
+<a href="index.jsp">About</a>
+
+<br>
+<br>
+
+
+</body>
+</html>
