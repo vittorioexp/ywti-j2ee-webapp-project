@@ -11,7 +11,9 @@
 <body>
 
 <!-- < List<Advertisement> list_adv = (List<Advertisement>) request.getAttribute("advertisement-list"); %> -->
-
+<%
+    List<Advertisement> listAdvertisement = (List<Advertisement>) request.getAttribute("advertisement_list");
+%>
 <table cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
     <tr>
         <td>Title</td>
@@ -26,18 +28,18 @@
         <td>Score</td>
     </tr>
     <!-- Modificare attibute advertisement-list con advertisement_list-->
-    <c:forEach items="${advertisement_list}" var="advertisment">
+    <c:forEach items="<%=listAdvertisement%>" var="advertisment">
         <tr>
-            <td>${advertisment.getTitle()}</td>
-            <td>${advertisment.getDescription()}</td>
-            <td>${advertisment.getDateStart()}</td>
-            <td>${advertisment.getDateEnd()}</td>
-            <td>${advertisment.getTimeStart()}</td>
-            <td>${advertisment.getTimeEnd()}</td>
-            <td>${advertisment.getEmailCompany()}</td>
-            <td>${advertisment.getNumTotItem()}</td>
-            <td>${advertisment.getPrice()}</td>
-            <td>${advertisment.getScore()}</td>
+            <td>${advertisment.title()}</td>
+            <td>${advertisment.description()}</td>
+            <td>${advertisment.dateStart()}</td>
+            <td>${advertisment.dateEnd()}</td>
+            <td>${advertisment.timeStart()}</td>
+            <td>${advertisment.timeEnd()}</td>
+            <td>${advertisment.emailCompany()}</td>
+            <td>${advertisment.numTotItem()}</td>
+            <td>${advertisment.price()}</td>
+            <td>${advertisment.score()}</td>
         </tr>
     </c:forEach>
 </table>

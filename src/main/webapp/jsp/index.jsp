@@ -56,19 +56,9 @@ Since: 1.0
     <input name="advertisement" type="text"/>
 
 <br>
-    <select name="city">
 
-        <%
-            List<City> listCity = (List<City>) request.getAttribute("city_list");
-        %>
-
-        <c:forEach items="<%=listCity%>" var="city">
-            <option value="${city.title}">${city.title}</option>
-        </c:forEach>
-
-    </select>
+    <label for="city">City:</label>
     <input name="city" type="text"/>
-
 
 <br>
 
@@ -86,3 +76,17 @@ Since: 1.0
 
 </body>
 </html>
+
+
+        <select name="city">
+
+        <%
+            List<City> listCity = (List<City>) request.getAttribute("city_list");
+        %>
+
+        <c:forEach items="<%=listCity%>" var="city">
+            <option value="${city.title}">${city.title}</option>
+        </c:forEach>
+
+        </select>
+        <input name="city" type="text"/>

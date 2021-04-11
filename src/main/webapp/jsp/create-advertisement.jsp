@@ -28,7 +28,7 @@ Since: 1.0
 </head>
 <body>
 
-<form method="post" enctype="multipart/form-data" action="<c:url value="/advertiement-create/>">       //aggiungere op InsertAdvertisementServlet
+<form method="post" enctype="multipart/form-data" action="<c:url value="/advertisement-do-create/>"/>">      //aggiungere op InsertAdvertisementServlet
 
     <label for="title">title:</label>
     <input name="title" type="text"/><br/><br/>
