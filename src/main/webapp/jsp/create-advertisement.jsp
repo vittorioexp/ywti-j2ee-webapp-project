@@ -28,7 +28,7 @@ Since: 1.0
 </head>
 <body>
 
-<form method="post" action="<c:url value="/advertiement-create/>" enctype="multipart/form-data">       //aggiungere op InsertAdvertisementServlet
+<form method="post" enctype="multipart/form-data" action="<c:url value="/advertiement-create/>">       //aggiungere op InsertAdvertisementServlet
 
     <label for="title">title:</label>
     <input name="title" type="text"/><br/><br/>
@@ -58,9 +58,9 @@ Since: 1.0
     <input name="timeEnd" type="time"/><br/><br/>
 
     <label for="image">image:</label>
-    <input name="image" type="file"/><br/><br/>
+    <input name="image" type="file" id="file" multiple/><br/><br/>
 
-    <button type="submit">Create</button><br/>
+    <button type="submit" name="Submit" value="Submit">Create</button><br/>
 
 </form>
 

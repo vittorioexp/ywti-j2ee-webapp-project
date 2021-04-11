@@ -5,11 +5,15 @@ import it.unipd.dei.yourwaytoitaly.database.*;
 import it.unipd.dei.yourwaytoitaly.resource.*;
 import it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
@@ -77,6 +81,15 @@ public class AdvertisementRestResource extends RestResource {
 
             Advertisement advertisement  = null;
 
+            if (!ServletFileUpload.isMultipartContent(req)) {
+                ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"Not multipart content.");
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/jsp/homepage.jsp").forward(req, res);
+            }
+
             // retrieves the request parameters
             title = req.getParameter("title");
             type_adv = req.getParameter("type");
@@ -87,28 +100,6 @@ public class AdvertisementRestResource extends RestResource {
             dateEnd = Date.valueOf(req.getParameter("dateEnd"));
             timeStart = Time.valueOf(req.getParameter("timeStart"));
             timeEnd = Time.valueOf(req.getParameter("timeEnd"));
-
-            //TODO: IMAGE
-            /*
-            // Create a factory for disk-based file items
-            DiskFileItemFactory factory = new DiskFileItemFactory();
-
-            // Configure a repository (to ensure a secure temp location is used)
-            ServletContext servletContext = this.getServletConfig().getServletContext();
-            File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
-            factory.setRepository(repository);
-
-            // Create a new file upload handler
-            ServletFileUpload upload = new ServletFileUpload(factory);
-
-            // Parse the request
-            List<FileItem> items = upload.parseRequest(request);
-            */
-
-
-
-            Image img = new Image(0,req.getParameter("image").toString(),"",Integer.parseInt(req.getParameter("idAdvertisement")));
-            ImageDAO.createImage(img);
 
             if(title==null || title.length()<5 || title.length()>100){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
@@ -181,6 +172,25 @@ public class AdvertisementRestResource extends RestResource {
                 req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
             }
 
+            // file upload
+            final String UPLOAD_DIRECTORY = "/" + String.valueOf(idAdvertisement);
+            List <FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(req);
+            for (FileItem item: multiparts) {
+                if (!item.isFormField()) {
+                    String name = new File(item.getName()).getName();
+                    String pathName = UPLOAD_DIRECTORY + File.separator + name;
+                    item.write(new File(pathName));
+                    Image img = new Image
+                            (
+                              0,
+                                  pathName,
+                                  title,
+                                  idAdvertisement
+                            );
+                    ImageDAO.createImage(img);
+                }
+            }
+
             req.setAttribute("idAdvertisement",idAdvertisement);
             req.getRequestDispatcher("/advertisement/" + idAdvertisement).forward(req, res);
 
@@ -203,7 +213,7 @@ public class AdvertisementRestResource extends RestResource {
      *             if any error occurs
      */
     public void showAdvertisement() throws IOException, ServletException {
-
+        // TODO: show the average score of the advertisement
         try {
             String idAdvertisement = req.getRequestURI();
             idAdvertisement = idAdvertisement.substring(idAdvertisement.lastIndexOf("advertisement") + 14);
@@ -221,7 +231,14 @@ public class AdvertisementRestResource extends RestResource {
 
             }
             List<Feedback> feedbackList = FeedbackDAO.searchFeedbackByAdvertisement(Integer.parseInt(idAdvertisement));
+            double rate = 0;
+            for (Feedback f: feedbackList) {
+                rate += f.getRate();
+            }
+            rate/=feedbackList.size();
+
             req.setAttribute("feedbackList", feedbackList);
+            req.setAttribute("rate", (int) rate);
             req.setAttribute("advertisement", advertisement);
             req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
         } catch (Exception ex) {

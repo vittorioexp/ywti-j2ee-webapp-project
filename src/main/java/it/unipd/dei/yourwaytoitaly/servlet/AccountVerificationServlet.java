@@ -1,4 +1,4 @@
-package it.unipd.dei.yourwaytoitaly.servlet;AdvertisementDAO.java
+package it.unipd.dei.yourwaytoitaly.servlet;
 
 /**
  * Servlet class, to be written
