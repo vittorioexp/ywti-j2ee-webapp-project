@@ -31,6 +31,11 @@
 	<!-- Servlets -->
 
 	<servlet>
+		<servlet-name>IndexPageJSP</servlet-name>
+		<jsp-file>index.jsp</jsp-file>
+	</servlet>
+
+	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
 		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.LoginServlet</servlet-class>
 	</servlet>
@@ -92,6 +97,11 @@
 
 
 	<!-- Mapping between servlets and URIs -->
+
+	<servlet-mapping>
+		<servlet-name>LoginPageJSP</servlet-name>
+		<url-pattern>/index/</url-pattern>
+	</servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>DeleteBookingServlet</servlet-name>

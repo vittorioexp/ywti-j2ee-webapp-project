@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Calendar;
 
 /**
  * Servlet class to delete a booking (mark as DELETED)
@@ -59,8 +60,20 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
 
             // receive idAdvertisement from the hidden form
             idAdvertisement = Integer.parseInt(req.getParameter("idAdvertisement"));
+            Advertisement advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
 
             numBooking = BookingDAO.searchBooking(emailTourist, idAdvertisement).getNumBooking();
+
+            // if the event is already started (or ended), user is not allowed to delete the booking
+            Date today = new Date(Calendar.getInstance().getTime().getTime());
+            if (today.compareTo(advertisement.getDateStart())>0) {
+                ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
+                Message m = new Message("Cannot delete the booking. ",
+                        ec.getErrorCode(), "The event is already started!");
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+            }
 
             Booking booking = new Booking(
                     emailTourist,
@@ -75,7 +88,7 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
             BookingDAO.deleteBooking(booking);
 
             // numTotItem+=numBooking in the Advertisement relative to the deleted booking
-            Advertisement advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
+
 
             advertisement = new Advertisement(
                     idAdvertisement,

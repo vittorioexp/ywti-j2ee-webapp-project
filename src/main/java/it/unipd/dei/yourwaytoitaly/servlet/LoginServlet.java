@@ -104,8 +104,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", new Message("Input not valid",
                         ec.getErrorCode(), ec.getErrorMessage()));
-                //req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
-                res.sendRedirect("/user/do-login/");
+                res.sendRedirect(req.getContextPath() + "/user/do-login/");
             }
 
             if ( userType == null ) {
@@ -113,8 +112,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", new Message( "Input not valid.",
                         ec.getErrorCode(), "User type not selected"));
-                //req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
-                res.sendRedirect("/user/do-login/");
+                res.sendRedirect(req.getContextPath() + "/user/do-login/");
             }
 
             if ( password == null || password.equals( "" ) ) {
@@ -122,8 +120,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", new Message("Input not valid.",
                         ec.getErrorCode(), ec.getErrorMessage()));
-                //req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
-                res.sendRedirect("/user/do-login/");
+                res.sendRedirect(req.getContextPath() + "/user/do-login/");
             }
 
             User usr = UserDAO.searchUserLogin(email, password);
@@ -134,7 +131,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
                 Message m = new Message( "Wrong Format.",
                         ec.getErrorCode(),"credentials are wrong");
                 req.setAttribute("message", m);
-                res.sendRedirect("/user/do-login/");
+                res.sendRedirect(req.getContextPath() + "/user/do-login/");
             }
 
             HttpSession session = req.getSession();
@@ -152,7 +149,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
                     ec.getErrorCode(), ex.getStackTrace().toString());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            res.sendRedirect("/user/do-login/");
+            res.sendRedirect(req.getContextPath() + "/user/do-login/");
         }
 
     }

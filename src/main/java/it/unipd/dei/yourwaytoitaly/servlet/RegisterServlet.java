@@ -111,8 +111,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Email not inserted or not valid.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                //req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
-                res.sendRedirect("/user/do-register/");
+                res.sendRedirect(req.getContextPath() + "/user/do-register/");
             }
 
 
@@ -122,8 +121,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ,"User type not selected.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                //req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
-                res.sendRedirect("/user/do-register/");
+                res.sendRedirect(req.getContextPath() + "/user/do-register/");
             }
 
             if ( password == null || password.equals("")  ) {
@@ -133,8 +131,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Password not valid.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                //req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
-                res.sendRedirect("/user/do-register/");
+                res.sendRedirect(req.getContextPath() + "/user/do-register/");
             }
 
             if ( name == null || name.equals("")  ) {
@@ -144,8 +141,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Name not present.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-               // req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
-                res.sendRedirect("/user/do-register/");
+                res.sendRedirect(req.getContextPath() + "/user/do-register/");
             }
 
             if ( address == null || address.equals("") ) {
@@ -155,8 +151,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Address not present.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                //req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
-                res.sendRedirect("/user/do-register/");
+                res.sendRedirect(req.getContextPath() + "/user/do-register/");
             }
 
             if ( phone == null || phone.equals( "" ) ){
@@ -166,8 +161,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Phone number not present.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                //req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
-                res.sendRedirect("/user/do-register/");
+                res.sendRedirect(req.getContextPath() + "/user/do-register/");
             }
 
             User usr;
@@ -187,8 +181,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                             ec.getErrorCode(),"Date not valid.");
                     res.setStatus(ec.getHTTPCode());
                     req.setAttribute("message", m);
-                    //req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
-                    res.sendRedirect("/user/do-register/");
+                    res.sendRedirect(req.getContextPath() + "/user/do-register/");
                 }
 
                 String surname = req.getParameter("surname");
@@ -200,17 +193,14 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                             ec.getErrorCode(),"Surname not present.");
                     res.setStatus(ec.getHTTPCode());
                     req.setAttribute("message", m);
-                    //req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
-                    res.sendRedirect("/user/do-register/");
+                    res.sendRedirect(req.getContextPath() + "/user/do-register/");
                 }
                 assert birthDateFormatted != null;
                 Tourist t = new Tourist(email, password , name , address , phone , idCity , surname , birthDateFormatted);
-                //usr = (Tourist) new CreateUserDatabase( getDataSource().getConnection() , t).createUser();
                 usr = (Tourist) UserDAO.createUser(t);
             }else {
 
                 Company c = new Company( email, password , address , phone , idCity , name);
-                //usr = (Company) new CreateUserDatabase( getDataSource().getConnection() , c).createUser();
                 usr = (Company) UserDAO.createUser(c);
             }
 
@@ -221,8 +211,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Something went wrong creating user account.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                //req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
-                res.sendRedirect("/user/do-register/");
+                res.sendRedirect(req.getContextPath() + "/user/do-register/");
             }
 
             HttpSession session = req.getSession();
@@ -234,7 +223,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             // login credentials were correct: we redirect the user to the homepage
             // now the session is active and its data can used to change the homepage
             //res.sendRedirect(req.getContextPath()+"/jsp/homepage.jsp");
-            res.sendRedirect("/index.jsp/");
+            res.sendRedirect(req.getContextPath() + "/index/");
 
         }catch (Exception ex){
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -242,8 +231,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                     ec.getErrorCode(), ex.getStackTrace().toString());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            //req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
-            res.sendRedirect("/user/do-register/");
+            res.sendRedirect(req.getContextPath() + "/user/do-register/");
         }
     }
 }

@@ -87,7 +87,7 @@ public class AdvertisementRestResource extends RestResource {
                         ec.getErrorCode(),"Not multipart content.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/homepage.jsp").forward(req, res);
+                res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
             }
 
             // retrieves the request parameters
@@ -107,7 +107,7 @@ public class AdvertisementRestResource extends RestResource {
                         ec.getErrorCode(),"Title of the advertisement not valid.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
             }
             if(description==null || description.length()<5 || description.length()>10000){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
@@ -115,7 +115,7 @@ public class AdvertisementRestResource extends RestResource {
                         ec.getErrorCode(),"description of the advertisement not valid.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
             }
             if(price<0){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
@@ -123,7 +123,7 @@ public class AdvertisementRestResource extends RestResource {
                         ec.getErrorCode(),"Price not valid");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
             }
             if(numTotItem<=0){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
@@ -131,7 +131,7 @@ public class AdvertisementRestResource extends RestResource {
                         ec.getErrorCode(),"Total number of item not valid");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
             }
             if(dateEnd.compareTo(dateStart)<0 || timeEnd.compareTo(timeStart)<0){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
@@ -139,7 +139,7 @@ public class AdvertisementRestResource extends RestResource {
                         ec.getErrorCode(),"Dates entered are not valid.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
             }
 
             score = (int) (price/3.14);
@@ -169,7 +169,7 @@ public class AdvertisementRestResource extends RestResource {
                         ec.getErrorCode(),"Cannot create the advertisement.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
             }
 
             // file upload
@@ -193,6 +193,7 @@ public class AdvertisementRestResource extends RestResource {
 
             req.setAttribute("idAdvertisement",idAdvertisement);
             req.getRequestDispatcher("/advertisement/" + idAdvertisement).forward(req, res);
+            //res.sendRedirect(req.getContextPath() + "/advertisement/" + String.valueOf(idAdvertisement));
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -200,7 +201,7 @@ public class AdvertisementRestResource extends RestResource {
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+            res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
         }
     }
 
@@ -247,7 +248,7 @@ public class AdvertisementRestResource extends RestResource {
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+            res.sendRedirect(req.getContextPath() + "/index/");
         }
 
     }
@@ -280,7 +281,7 @@ public class AdvertisementRestResource extends RestResource {
                         ec.getErrorCode(),"User not found.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+                req.getRequestDispatcher("/user/do-login/").forward(req, res);
             }
 
             // check if the email of the session is equal to emailCompany
@@ -292,7 +293,7 @@ public class AdvertisementRestResource extends RestResource {
                         ec.getErrorCode(),"User is not authorized to edit this advertisement");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+                req.getRequestDispatcher("/user/do-login/").forward(req, res);
             }
 
             // receive idAdvertisement from the hidden form
@@ -398,6 +399,14 @@ public class AdvertisementRestResource extends RestResource {
                     req.setAttribute("advertisement-list", listAdvertisement);
                     req.getRequestDispatcher("/jsp/show-advertisement-list.jsp").forward(req, res);
                     break;
+                default:
+                    ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
+                    Message m = new Message("Cannot show the advertisement. ",
+                            ec.getErrorCode(), "Method not allowed");
+                    res.setStatus(ec.getHTTPCode());
+                    req.setAttribute("message", m);
+                    res.sendRedirect(req.getContextPath() + "/index/");
+                    break;
             }
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -405,7 +414,7 @@ public class AdvertisementRestResource extends RestResource {
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+            res.sendRedirect(req.getContextPath() + "/index/");
         }
 
 
