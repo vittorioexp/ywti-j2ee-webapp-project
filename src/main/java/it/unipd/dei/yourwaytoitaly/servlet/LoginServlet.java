@@ -1,19 +1,15 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
 import it.unipd.dei.yourwaytoitaly.database.UserDAO;
-import it.unipd.dei.yourwaytoitaly.resource.Company;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
-import it.unipd.dei.yourwaytoitaly.resource.Tourist;
 import it.unipd.dei.yourwaytoitaly.resource.User;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 
 /**
  * Servlet creating the session after verifying user login and password
@@ -81,10 +77,8 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
     public void handleRequest(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
-
         String op = req.getRequestURI();
         op = op.substring(op.lastIndexOf("user") + 5);
-
 
         if (op.equals ("login/")) {
             // the requested operation is register
@@ -106,58 +100,41 @@ public class LoginServlet extends AbstractDatabaseServlet {
             String userType = req.getParameter("userType");
 
             if ( email == null || email.equals( "" ) ) {
-
                 ErrorCode ec = ErrorCode.EMAIL_MISSING;
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", new Message("Input not valid",
                         ec.getErrorCode(), ec.getErrorMessage()));
-                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
-
+                //req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+                res.sendRedirect("/user/do-login/");
             }
 
-
             if ( userType == null ) {
-
                 ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", new Message( "Input not valid.",
                         ec.getErrorCode(), "User type not selected"));
-                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
-
+                //req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+                res.sendRedirect("/user/do-login/");
             }
 
             if ( password == null || password.equals( "" ) ) {
-
                 ErrorCode ec = ErrorCode.PASSWORD_MISSING;
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", new Message("Input not valid.",
                         ec.getErrorCode(), ec.getErrorMessage()));
-                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
-
+                //req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+                res.sendRedirect("/user/do-login/");
             }
 
-            User usr = null;
-
-            if ( userType.equals("tourist")){
-
-                //usr = (Tourist) new SearchUserLoginDatabase( getDataSource().getConnection() , email , password).SearchUserLogin();
-                usr = (Tourist) UserDAO.searchUserLogin(email,password);
-
-            }else {
-
-                //usr = (Company) new SearchUserLoginDatabase( getDataSource().getConnection() , email , password).SearchUserLogin();
-                usr = (Company) UserDAO.searchUserLogin(email,password);
-            }
+            User usr = UserDAO.searchUserLogin(email, password);
 
             if ( usr == null ){
-
                 ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
                 res.setStatus(ec.getHTTPCode());
                 Message m = new Message( "Wrong Format.",
                         ec.getErrorCode(),"credentials are wrong");
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
-
+                res.sendRedirect("/user/do-login/");
             }
 
             HttpSession session = req.getSession();
@@ -165,29 +142,17 @@ public class LoginServlet extends AbstractDatabaseServlet {
             session.setAttribute("email", usr.getEmail());
             session.setAttribute("role", usr.getType());
 
-            // login credentials were correct: we redirect the user to the homepage
-            // now the session is active and its data can used to change the homepage
-            res.sendRedirect(req.getContextPath()+"/jsp/homepage.jsp");
+            // login credentials were correct: we redirect the user to the referer page
+            // now the session is active
+            res.sendRedirect(req.getHeader("referer"));
 
-
-        }catch (SQLException e){
-
+        }catch (Exception ex){
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("Failed to connect to database.",
-                    ec.getErrorCode(), "Failed to connect to database while login");
+            Message m = new Message("Failed to login.",
+                    ec.getErrorCode(), ex.getStackTrace().toString());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
-
-        }catch (NamingException e){
-
-            ErrorCode ec = ErrorCode.WRONG_FORMAT;
-            Message m = new Message("Wrong Format.",
-                    ec.getErrorCode(),"The data format is not valid.");
-            res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
-
+            res.sendRedirect("/user/do-login/");
         }
 
     }
