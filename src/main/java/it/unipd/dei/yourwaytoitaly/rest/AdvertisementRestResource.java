@@ -19,6 +19,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -175,10 +176,11 @@ public class AdvertisementRestResource extends RestResource {
             // file upload
             final String UPLOAD_DIRECTORY = "/" + String.valueOf(idAdvertisement);
             List <FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(req);
+            int count = 1;
             for (FileItem item: multiparts) {
                 if (!item.isFormField()) {
                     String name = new File(item.getName()).getName();
-                    String pathName = UPLOAD_DIRECTORY + File.separator + name;
+                    String pathName = UPLOAD_DIRECTORY + File.separator + String.valueOf(count++) + ".jpg";
                     item.write(new File(pathName));
                     Image img = new Image
                             (
@@ -214,34 +216,56 @@ public class AdvertisementRestResource extends RestResource {
      *             if any error occurs
      */
     public void showAdvertisement() throws IOException, ServletException {
-        // TODO: show the average score of the advertisement
+
         try {
             String idAdvertisement = req.getRequestURI();
             idAdvertisement = idAdvertisement.substring(idAdvertisement.lastIndexOf("advertisement") + 14);
             Advertisement advertisement = AdvertisementDAO.searchAdvertisement(Integer.parseInt(idAdvertisement));
 
-            // check if a session is valid
+            req.setAttribute("advertisement", advertisement);
+
+            List<Image> imageList = ImageDAO.searchImageByIdAdvertisement(Integer.parseInt(idAdvertisement));
+
+            if (imageList!=null) {
+                List<String> filepathList = new ArrayList<String>();
+                for (Image image : imageList) {
+                    String filepath = image.getPath();
+                    filepathList.add(filepath);
+                }
+                req.setAttribute("filepath-list", filepathList);
+            } else {
+                req.setAttribute("filepath-list", null);
+            }
+
+            // The owner can see the booking list relative to this advertisement: check if a session is valid
             User u = new SessionCheckServlet(req, res).getUser();
             if (u != null) {
                 // check if the user (company) is the owner of the advertisement
                 String emailSession = u.getEmail();
                 if (emailSession.equals(advertisement.getEmailCompany())) {
                     List<Booking> listBookings = BookingDAO.searchBookingByAdvertisement(Integer.parseInt(idAdvertisement));
-                    req.setAttribute("bookings-list", listBookings);
+                    req.setAttribute("booking-list", listBookings);
+                } else {
+                    req.setAttribute("booking-list", null);
                 }
 
             }
             List<Feedback> feedbackList = FeedbackDAO.searchFeedbackByAdvertisement(Integer.parseInt(idAdvertisement));
             double rate = 0;
-            for (Feedback f: feedbackList) {
-                rate += f.getRate();
+            if (feedbackList!=null) {
+                for (Feedback f: feedbackList) {
+                    rate += f.getRate();
+                }
+                rate/=feedbackList.size();
+                req.setAttribute("feedback-list", feedbackList);
+                req.setAttribute("rate", (int) rate);
+            } else {
+                req.setAttribute("feedback-list", null);
+                req.setAttribute("rate", 0);
             }
-            rate/=feedbackList.size();
 
-            req.setAttribute("feedbackList", feedbackList);
-            req.setAttribute("rate", (int) rate);
-            req.setAttribute("advertisement", advertisement);
             req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
+
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message("Cannot show the advertisement. ",
@@ -339,7 +363,7 @@ public class AdvertisementRestResource extends RestResource {
 
             AdvertisementDAO.editAdvertisement(advertisement);
 
-            req.getRequestDispatcher("/user/profile/").forward(req, res);
+            req.getRequestDispatcher("/user/profile").forward(req, res);
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -369,8 +393,7 @@ public class AdvertisementRestResource extends RestResource {
         try {
 
             switch (op) {
-                case "advertisement/":
-
+                case "advertisement":
                     // list all the advertisements requested by the user
 
                     int idCity;
@@ -388,7 +411,7 @@ public class AdvertisementRestResource extends RestResource {
                                 ec.getErrorCode(), "Input value not valid.");
                         res.setStatus(ec.getHTTPCode());
                         req.setAttribute("message", m);
-                        req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                        req.getRequestDispatcher("/jsp/index.jsp").forward(req, res);
                     }
 
                     idCity = city.getIdCity();
@@ -405,7 +428,7 @@ public class AdvertisementRestResource extends RestResource {
                             ec.getErrorCode(), "Method not allowed");
                     res.setStatus(ec.getHTTPCode());
                     req.setAttribute("message", m);
-                    res.sendRedirect(req.getContextPath() + "/index/");
+                    req.getRequestDispatcher("/jsp/index.jsp").forward(req, res);
                     break;
             }
         } catch (Exception ex) {
@@ -414,7 +437,7 @@ public class AdvertisementRestResource extends RestResource {
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            res.sendRedirect(req.getContextPath() + "/index/");
+            req.getRequestDispatcher("/jsp/index.jsp").forward(req, res);
         }
 
 

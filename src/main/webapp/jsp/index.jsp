@@ -1,6 +1,8 @@
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Advertisement" %>
 <%@ page import="java.util.List" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.City" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.User" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -29,64 +31,61 @@ Since: 1.0
     <meta charset="utf-8">
     <title>Home page</title>
 </head>
-<body>
-
-<a href="index.jsp">Home</a>
-<a href="login.jsp">Login</a>
-<a href="register.jsp">Register</a>
-<a href="index.jsp">Contacts</a>
-
-
-<br>
-<br>
-<br>
-
-<form action="list/advertisement/" method="post">
-
-    <select name="advertisement">
+    <body>
+        <a href="${pageContext.request.contextPath}/index">Home</a>
 
         <%
-            List<Advertisement> listAdvertisement = (List<Advertisement>) request.getAttribute("advertisement_list");
+            User u = new SessionCheckServlet(request, response).getUser();
         %>
+        <c:choose>
+            <c:when test="${u}">
+                <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
+            </c:when>
+            <c:otherwise>
+                <a href="${pageContext.request.contextPath}/user/do-login">Login</a>
+                <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
+            </c:otherwise>
+        </c:choose>
 
-        <c:forEach items="<%=listAdvertisement%>" var="advertisement">
-            <option value="${advertisement.title}">${advertisement.title}</option>
-        </c:forEach>
-    </select>
-    <input name="advertisement" type="text"/>
+        <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
 
-<br>
+        <br>
+        <br>
+        <br>
+        <form id="advertisement-list-form" name="advertisement-list-form"
+              action="list/advertisement" method="get">
 
-    <label for="city">City:</label>
-    <input name="city" type="text"/>
+            <label for="typeAdvertisement">typeAdvertisement:</label>
+            <input type="text" id="typeAdvertisement" name="typeAdvertisement" required
+                   minlength="1" maxlength="15" size="10">
+            <br>
 
-<br>
+            <label for="city">city:</label>
+            <input type="text" id="city" name="city" required
+                   minlength="1" maxlength="25" size="10">
+            <br>
 
-    <fmt:formatDate value="${blah.bla}" pattern="dd/MM/yyyy" var="myDate" >
-        <input name="myDate" type="date"/>
+            <label for="date">Start date:</label>
+            <input type="date" id="date" name="date">
 
-    <br>
-    <br>
-    <button type="submit">Start your journey</button><br/>
-</form>
+            <br>
+            <br>
 
-<br>
-<br>
+            <button type="submit">Start your journey</button><br/>
 
+        </form>
 
-</body>
+        <br>
+        <br>
+
+        <c:choose>
+            <c:when test="${message.error}">
+                <p><c:out value="${message.message}"/></p>
+            </c:when>
+            <c:otherwise>
+
+            </c:otherwise>
+        </c:choose>
+
+    </body>
 </html>
-
-
-        <select name="city">
-
-        <%
-            List<City> listCity = (List<City>) request.getAttribute("city_list");
-        %>
-
-        <c:forEach items="<%=listCity%>" var="city">
-            <option value="${city.title}">${city.title}</option>
-        </c:forEach>
-
-        </select>
-        <input name="city" type="text"/>
