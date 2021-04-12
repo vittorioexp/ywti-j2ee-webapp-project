@@ -5,6 +5,7 @@ import it.unipd.dei.yourwaytoitaly.resource.Company;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
 import it.unipd.dei.yourwaytoitaly.resource.Tourist;
 import it.unipd.dei.yourwaytoitaly.resource.User;
+import it.unipd.dei.yourwaytoitaly.utils.EmailSender;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
 import javax.servlet.ServletException;
@@ -65,7 +66,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
     }
 
     /**
-     * Manages HTTP GET and POST requests for login
+     * Manages HTTP GET and POST requests for register
      * @param req
      *            the request from the client.
      * @param res
@@ -89,7 +90,12 @@ public class RegisterServlet extends AbstractDatabaseServlet {
         }
         else{
                 // the requested operation is unknown
-            sendError(res, ErrorCode.OPERATION_UNKNOWN);
+            ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
+            Message m = new Message("Not Valid Request.", ec.getErrorCode()
+                    ,"You have requested a non existing resource .");
+            res.setStatus(ec.getHTTPCode());
+            req.setAttribute("message", m);
+            res.sendRedirect(req.getContextPath() + "/user/do-register/");
         }
     }
 
@@ -214,11 +220,28 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                 res.sendRedirect(req.getContextPath() + "/user/do-register/");
             }
 
+
+
             HttpSession session = req.getSession();
 
             assert usr != null; // if user for some reason is null it will raise an AssertionException
             session.setAttribute("email", usr.getEmail());
             session.setAttribute("role", usr.getType());
+
+            EmailSender mail= new EmailSender(email);
+
+
+            //send email and check if email is sent correctly
+
+            if (mail.sendConfirmationEmail("YourWayToItaly:Account successfully registered",
+                    "Congratulations, your account has successfully been registered. You can know start your Journey!")){
+                ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+                Message m = new Message("Failed to send confirmation email.",
+                        ec.getErrorCode(), "An error occurred while sending email confirmation");
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                res.sendRedirect(req.getContextPath() + "/user/do-register/");
+            }
 
             // login credentials were correct: we redirect the user to the homepage
             // now the session is active and its data can used to change the homepage
@@ -227,13 +250,15 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
         }catch (Exception ex){
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("Failed to login.",
+            Message m = new Message("Failed to register.",
                     ec.getErrorCode(), ex.getStackTrace().toString());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
             res.sendRedirect(req.getContextPath() + "/user/do-register/");
         }
+
     }
+
 }
 
 

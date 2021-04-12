@@ -86,7 +86,12 @@ public class LoginServlet extends AbstractDatabaseServlet {
         }
         else{
             // the requested operation is unknown
-            sendError(res, ErrorCode.OPERATION_UNKNOWN);
+            ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
+            Message m = new Message("Not Valid Request.", ec.getErrorCode()
+                    ,"You have requested a non existing resource .");
+            res.setStatus(ec.getHTTPCode());
+            req.setAttribute("message", m);
+            res.sendRedirect(req.getContextPath() + "/user/do-login/");
         }
     }
 
