@@ -24,52 +24,79 @@ Since: 1.0
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Create advertisement</title>
+    <title>Create an advertisement</title>
 </head>
 <body>
 
-<form method="post" enctype="multipart/form-data" action="<c:url value="/advertisement-do-create/>"/>">      //aggiungere op InsertAdvertisementServlet
+<div>
+    <a href="${pageContext.request.contextPath}/index">Home</a>
+    <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
+    <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
+</div>
 
-    <label for="title">title:</label>
-    <input name="title" type="text"/><br/><br/>
 
-    <label for="type">type:</label>
-    <input name="type" type="text"/><br/><br/>
-
-    <label for="description">description:</label>
-    <input name="description" type="text"/><br/><br/>
-
-    <label for="price">price:</label>
-    <input name="price" type="number"/><br/><br/>
-
-    <label for="numTotItem">numTotItem:</label>
-    <input name="numTotItem" type="number"/><br/><br/>
-
-    <label for="dateStart">dateStart:</label>
-    <input name="dateStart" type="date"/><br/><br/>
-
-    <label for="dateEnd">dateEnd:</label>
-    <input name="dateEnd" type="date"/><br/><br/>
-
-    <label for="timeStart">timeStart:</label>
-    <input name="timeStart" type="time"/><br/><br/>
-
-    <label for="timeEnd">timeEnd:</label>
-    <input name="timeEnd" type="time"/><br/><br/>
-
-    <label for="image">image:</label>
-    <input name="image" type="file" id="file" multiple/><br/><br/>
-
-    <button type="submit" name="Submit" value="Submit">Create</button><br/>
-
-</form>
+<%
+    int idAdvertisement = (int) request.getAttribute("idAdvertisement");
+%>
 
 <c:choose>
-    <c:when test="${message.error}">
-        <p><c:out value="${message.message}"/></p>
+
+    <c:when test="${idAdvertisement!='0'}">
+
+        <div>
+            <form method="post" action="<c:url value="/advertisement-do-create>"/>">
+
+                <label for="title">title:</label>
+                <input name="title" type="text"/><br/><br/>
+
+                <label for="type">type:</label>
+                <input name="type" type="text"/><br/><br/>
+
+                <label for="description">description:</label>
+                <input name="description" type="text"/><br/><br/>
+
+                <label for="price">price:</label>
+                <input name="price" type="number"/><br/><br/>
+
+                <label for="numTotItem">numTotItem:</label>
+                <input name="numTotItem" type="number"/><br/><br/>
+
+                <label for="dateStart">dateStart:</label>
+                <input name="dateStart" type="date"/><br/><br/>
+
+                <label for="dateEnd">dateEnd:</label>
+                <input name="dateEnd" type="date"/><br/><br/>
+
+                <label for="timeStart">timeStart:</label>
+                <input name="timeStart" type="time"/><br/><br/>
+
+                <label for="timeEnd">timeEnd:</label>
+                <input name="timeEnd" type="time"/><br/><br/>
+
+                <button type="submit" name="Submit" value="Submit">Submit</button><br/>
+
+            </form>
+        </div>
     </c:when>
-    <c:otherwise></c:otherwise>
+    <c:otherwise>
+        <div>
+            <form method="post" enctype="multipart/form-data" action="<c:url value="/advertisement-create>"/>">
+                <label for="image">image:</label>
+                <input name="image" type="file" id="file" multiple/><br/><br/>
+                <button type="submit" name="Submit" value="Submit">Upload</button><br/>
+
+            </form>
+        </div>
+    </c:otherwise>
 </c:choose>
+<div>
+    <c:choose>
+        <c:when test="${message.error}">
+            <p><c:out value="${message.message}"/></p>
+        </c:when>
+        <c:otherwise></c:otherwise>
+    </c:choose>
+</div>
 </body>
 </html>
 
