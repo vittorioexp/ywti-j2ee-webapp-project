@@ -1,4 +1,9 @@
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Advertisement" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Booking" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Feedback" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.User" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet" %>
+<%@ page import="java.util.List" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -29,6 +34,23 @@ Since: 1.0
 </head>
 <body>
 
+<a href="${pageContext.request.contextPath}/index">Home</a>
+
+<%
+    User u = new SessionCheckServlet(request, response).getUser();
+%>
+<c:choose>
+    <c:when test="${u}">
+        <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
+    </c:when>
+    <c:otherwise>
+        <a href="${pageContext.request.contextPath}/user/do-login">Login</a>
+        <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
+    </c:otherwise>
+</c:choose>
+
+<a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
+
 <%
     Advertisement adv = (Advertisement) request.getAttribute("advertisement");
 %>
@@ -58,6 +80,99 @@ Since: 1.0
         <td><%=adv.getScore() %></td>
     </tr>
 </table>
+
+<%
+    int rate = (int) request.getAttribute("rate");
+%>
+<c:choose>
+    <c:when test="${rate}">
+        ${rate}
+    </c:when>
+    <c:otherwise>
+        Not available
+    </c:otherwise>
+</c:choose>
+
+    <%
+        List<String> filepathList = (List) request.getAttribute("filepath-list");
+    %>
+    <c:choose>
+        <c:when test="${filepathList}">
+            <table id="image-list-table" name="image-list-table"
+                   cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
+            <c:forEach items="<%=filepathList%>" var="filepath">
+                <tr>
+                    <td>
+                        <img src="${pageContext.request.contextPath}" + filepath>
+                    </td>
+                </tr>
+            </c:forEach>
+            </table>
+        </c:when>
+        <c:otherwise>
+
+        </c:otherwise>
+    </c:choose>
+
+    <%
+        List<Booking> bookingList = (List) request.getAttribute("booking-list");
+        // TODO: insert form to do a booking
+    %>
+    <c:choose>
+        <c:when test="${bookingList}">
+        <table id="booking-list-table" name="booking-list-table"
+               cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <c:forEach items="<%=bookingList%>" var="booking">
+                <tr>
+                    <td>${booking.emailTourist()}</td>
+                    <td>${booking.date()}</td>
+                    <td>${booking.time()}</td>
+                    <td>${booking.numBooking()}</td>
+                    <td>${booking.state()}</td>
+                </tr>
+            </c:forEach>
+        </c:when>
+        <c:otherwise>
+
+        </c:otherwise>
+    </c:choose>
+
+    <%
+    List<Feedback> feedbackList = (List) request.getAttribute("feedback-list");
+    // TODO: change feedback.emailTourist with the name of the user
+    // TODO: insert form to leave a feedback
+    %>
+    <c:choose>
+    <c:when test="${feedbackList}">
+    <table id="feedback-list-table" name="feedback-list-table"
+    cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
+    <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    </tr>
+    <c:forEach items="<%=feedbackList%>" var="feedback">
+    <tr>
+    <td>${feedback.emailTourist()}</td>
+    <td>${feedback.date()}</td>
+    <td>${feedback.rate()}</td>
+    <td>${feedback.text()}</td>
+    </tr>
+    </c:forEach>
+    </c:when>
+    <c:otherwise>
+
+    </c:otherwise>
+    </c:choose>
+
 </body>
 </html>
 
