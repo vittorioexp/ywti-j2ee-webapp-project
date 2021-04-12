@@ -1,7 +1,14 @@
 package it.unipd.dei.yourwaytoitaly.resource;
 
-import java.sql.Time;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Date;
+import java.sql.Time;
 
 /**
  * Class to define the objects which represents the Advertisement in the DB
@@ -10,7 +17,7 @@ import java.sql.Date;
  * @since 1.0
  */
 
-public final class Advertisement {
+public final class Advertisement extends Resource{
     private final int idAdvertisement;
     private final String title;
     private final String description;
@@ -74,5 +81,94 @@ public final class Advertisement {
     }
     public final int getIdType() {
         return idType;
+    }
+
+    public final void toJSON(final OutputStream out) throws IOException {
+
+        final JsonGenerator jg = JSON_FACTORY.createGenerator(out);
+
+        jg.writeStartObject();
+        jg.writeFieldName("advertisement");
+        jg.writeStartObject();
+        jg.writeNumberField("idAdvertisement", idAdvertisement);
+
+        jg.writeStringField("description", description);
+        jg.writeNumberField("score", score);
+        jg.writeNumberField("price", price);
+        jg.writeNumberField("numTotItem", numTotItem);
+        jg.writeDateField("dateStart", dateStart);
+        jg.writeDateField("dateEnd", dateEnd);
+        jg.writeTimeField("timeStart", timeStart);
+        jg.writeTimeField("timeEnd", timeEnd);
+        jg.writeStringField("emailCompany", emailCompany);
+
+        jg.writeEndObject();
+        jg.writeEndObject();
+        jg.flush();
+    }
+
+    /**
+     * Creates a {@code Advertisement} from its JSON representation.
+     *
+     * @param in the input stream containing the JSON document.
+     *
+     * @return the {@code Employee} created from the JSON representation.
+     *
+     * @throws IOException if something goes wrong while parsing.
+     */
+    public static Advertisement fromJSON(final InputStream in) throws IOException {
+
+        // the fields read from JSON
+        int idAdvertisement=-1;
+        String title=null;
+        String description=null;
+        int score=-1;
+        int price=-1;
+        int numTotItem=-1;
+        Date dateStart=null;
+        Date dateEnd=null;
+        Time timeStart=null;
+        Time timeEnd=null;
+        String emailCompany=null;
+        int idType=-1;
+
+        final JsonParser jp = JSON_FACTORY.createParser(in);
+
+        // while we are not on the start of an element or the element is not
+        // a token element, advance to the next element (if any)
+        while (jp.getCurrentToken() != JsonToken.FIELD_NAME || "employee".equals(jp.getCurrentName()) == false) {
+
+            // there are no more events
+            if (jp.nextToken() == null) {
+                throw new IOException("Unable to parse JSON: no employee object found.");
+            }
+        }
+
+        while (jp.nextToken() != JsonToken.END_OBJECT) {
+
+            if (jp.getCurrentToken() == JsonToken.FIELD_NAME) {
+
+                switch (jp.getCurrentName()) {
+                    case "badge":
+                        jp.nextToken();
+                        jBadge = jp.getIntValue();
+                        break;
+                    case "surname":
+                        jp.nextToken();
+                        jSurname = jp.getText();
+                        break;
+                    case "age":
+                        jp.nextToken();
+                        jAge = jp.getIntValue();
+                        break;
+                    case "salary":
+                        jp.nextToken();
+                        jSalary = jp.getIntValue();
+                        break;
+                }
+            }
+        }
+
+        return new Advertisement(jBadge, jSurname, jAge, jSalary);
     }
 }
