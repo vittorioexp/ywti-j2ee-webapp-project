@@ -61,7 +61,7 @@ public class ShowUserServlet extends AbstractDatabaseServlet {
                             ec.getErrorCode(), ex.getMessage());
                     res.setStatus(ec.getHTTPCode());
                     req.setAttribute("message", m);
-                    req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                    req.getRequestDispatcher("/jsp/include/show-message.jsp").forward(req, res);
                 }
                 break;
             default:
@@ -70,7 +70,7 @@ public class ShowUserServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(), ec.getErrorMessage());
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/jsp/include/show-message.jsp").forward(req, res);
             }
     }
 }

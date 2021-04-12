@@ -90,7 +90,7 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(), "Rate is " + rate);
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/jsp/include/show-message.jsp").forward(req, res);
             }
 
             // creates a new feedback from the request parameters
@@ -113,7 +113,7 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+            req.getRequestDispatcher("/jsp/include/show-message.jsp").forward(req, res);
         }
     }
 }

@@ -72,7 +72,7 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
                         ec.getErrorCode(), "The event is already started!");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/jsp/include/show-message.jsp").forward(req, res);
             }
 
             Booking booking = new Booking(
@@ -115,7 +115,7 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+            req.getRequestDispatcher("/jsp/include/show-message.jsp").forward(req, res);
         }
     }
 }

@@ -45,12 +45,7 @@ Since: 1.0
 </div>
 
 <div>
-<c:choose>
-    <c:when test="${message.error}">
-        <p><c:out value="${message.message}"/></p>
-    </c:when>
-    <c:otherwise></c:otherwise>
-</c:choose>
+    <c:import url="/jsp/include/show-message.jsp"/>
 </div>
 </body>
 </html>
