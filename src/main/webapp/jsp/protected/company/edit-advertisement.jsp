@@ -1,4 +1,5 @@
-
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.User" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet" %>
 
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -9,45 +10,37 @@
     <title>Edit advertisement</title>
 </head>
 <body>
+<div>
+    <a href="${pageContext.request.contextPath}/index">Home</a>
+    <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
+    <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
+</div>
+<div>
 
-<form method="post" action="<c:url value="/adverisement/*"/>">         //aggiungere op in EditAdvertisementServlet
+    <%
+        int idAdvertisement = (int) request.getAttribute("idAdvertisement");
+        String url = "/advertisement/" + String.valueOf(idAdvertisement);
+    %>
 
-    <label for="title">title:</label>
-    <input name="title" type="text"/><br/><br/>
-
-    <label for="type_adv">type_adv:</label>
-    <input name="type_adv" type="text"/><br/><br/>
-
-    <label for="description">description:</label>
-    <input name="description" type="text"/><br/><br/>
+<form method="put" action="<c:url value="${url}"/>">
 
     <label for="price">price:</label>
-    <input name="price" type="text"/><br/><br/>
+    <input id="price" name="price" type="text"/><br/><br/>
 
     <label for="numTotItem">numTotItem:</label>
-    <input name="numTotItem" type="text"/><br/><br/>
-
-    <label for="dateStart">dateStart:</label>
-    <input name="dateStart" type="text"/><br/><br/>
-
-    <label for="dateEnd">dateEnd:</label>
-    <input name="dateEnd" type="text"/><br/><br/>
-
-    <label for="timeStart">timeStart:</label>
-    <input name="timeStart" type="text"/><br/><br/>
-
-    <label for="timeEnd">timeEnd:</label>
-    <input name="timeEnd" type="text"/><br/><br/>
+    <input id="numTotItem" name="numTotItem" type="text"/><br/><br/>
 
     <button type="submit">Edit</button><br/>
 
 </form>
-
-<c:choose>
-    <c:when test="${message.error}">
-        <p><c:out value="${message.message}"/></p>
-    </c:when>
-    <c:otherwise></c:otherwise>
-</c:choose>
+</div>
+    <div>
+    <c:choose>
+        <c:when test="${message.error}">
+            <p><c:out value="${message.message}"/></p>
+        </c:when>
+        <c:otherwise></c:otherwise>
+    </c:choose>
+    <div>
 </body>
 </html>

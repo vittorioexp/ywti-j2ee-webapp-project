@@ -147,7 +147,6 @@ Since: 1.0
 
     <%
     List<Feedback> feedbackList = (List) request.getAttribute("feedback-list");
-    // TODO: change feedback.emailTourist with the name of the user
     // TODO: insert form to leave a feedback
     %>
     <c:choose>
@@ -158,11 +157,9 @@ Since: 1.0
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
     </tr>
     <c:forEach items="<%=feedbackList%>" var="feedback">
     <tr>
-    <td>${feedback.emailTourist()}</td>
     <td>${feedback.date()}</td>
     <td>${feedback.rate()}</td>
     <td>${feedback.text()}</td>
