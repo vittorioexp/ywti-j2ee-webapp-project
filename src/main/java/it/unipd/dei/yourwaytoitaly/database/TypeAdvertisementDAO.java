@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -119,7 +120,7 @@ public class TypeAdvertisementDAO extends AbstractDAO{
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        List<TypeAdvertisement> typeAdvertisementList = null;
+        List<TypeAdvertisement> typeAdvertisementList = new ArrayList<TypeAdvertisement>();
 
         try {
 
