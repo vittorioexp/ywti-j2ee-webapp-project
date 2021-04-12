@@ -28,6 +28,8 @@ Since: 1.0
 </head>
 <body>
 
+<a href="${pageContext.request.contextPath}/index">Home</a>
+
 <c:choose>
     <c:when test="${isTurist eq True}">      <!--aggiungere funzionalità per testare se l'utente loggato è un turist o una company-->
         <form method="POST" action="<c:url value="/user/edit/"/>">

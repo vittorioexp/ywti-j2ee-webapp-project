@@ -28,13 +28,14 @@ Since: 1.0
 </head>
 <body>
 
+<a href="${pageContext.request.contextPath}/index">Home</a>
+
 <form method="POST" action="<c:url value="/user/login/"/>">
     <label for="email">email:</label>
     <input name="email" type="text"/><br/><br/>
     <label for="password">password:</label>
     <input name="password" type="password"/><br/><br/>
     <button type="submit">Submit</button><br/>
-
 </form>
 
 <c:choose>

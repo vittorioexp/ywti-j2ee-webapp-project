@@ -28,24 +28,37 @@ Since: 1.0
 </head>
 <body>
 
+<a href="${pageContext.request.contextPath}/index">Home</a>
+
 <form method="POST" action="<c:url value="/user/register/"/>">
 
+
     <label for="email">email:</label>
-    <input name="email" type="text"/><br/><br/>
-    <label for="name">name:</label>
-    <input name="name" type="text"/><br/><br/>
-    <label for="surname">surname:</label>
-    <input name="surname" type="text"/><br/><br/>
+    <input name="email" type="text" id="email"/><br/><br/>
     <label for="password">password:</label>
-    <input name="password" type="password"/><br/><br/>
+    <input name="password" type="password" id="password"/><br/><br/>
     <label for="rpassword">repeat password:</label>
-    <input name="rpassword" type="password"/><br/><br/>
+    <input name="rpassword" type="password" id="rpassword"/><br/><br/>
+    <label for="name">name:</label>
+    <input name="name" type="text" id="name"/><br/><br/>
+    <label for="surname">surname:</label>
+    <input name="surname" type="text" id="surname"/><br/><br/>
     <label for="address">address:</label>
-    <input name="address" type="text"/><br/><br/>
-    <label for="birth_date">birth_date:</label>
-    <input name="birth_date" type="text"/><br/><br/>
-    <label for="phone_number">phone_number:</label>
-    <input name="phone_number" type="text"/><br/><br/>
+    <input name="address" type="text" id="address"/><br/><br/>
+    <label for="phonenumber">phone number:</label>
+    <input name="phonenumber" type="text" id="phonenumber"/><br/><br/>
+    <label for="city">city:</label>
+    <input name="city" type="text" id="city"/><br/><br/>
+
+
+
+
+    <label for="birthdate">birth date:</label>
+    <input name="birthdate" type="text" id="birthdate"/><br/><br/>
+
+
+    <button type="button" id="userType" name="userType" value="tourist" >I'm a Tourist</button>
+
     <button type="submit">Submit</button><br/>
 
 </form>
