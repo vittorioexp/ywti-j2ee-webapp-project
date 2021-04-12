@@ -1,5 +1,10 @@
 package it.unipd.dei.yourwaytoitaly.resource;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
 /**
  * Class to represents both informative and error messages
  * @author Vittorio Esposito
@@ -7,7 +12,7 @@ package it.unipd.dei.yourwaytoitaly.resource;
  * @since 1.0
  */
 
-public class Message {
+public class Message extends Resource {
     private final String message;
     private final int errorCode;
     private final String errorDetails;
@@ -35,5 +40,25 @@ public class Message {
     }
     public final boolean isError() {
         return isError;
+    }
+
+    @Override
+    public final void toJSON(final OutputStream out) throws IOException {
+
+        final JsonGenerator jg = JSON_FACTORY.createGenerator(out);
+
+        jg.writeStartObject();
+        jg.writeFieldName("message");
+        jg.writeStartObject();
+        jg.writeStringField("message", message);
+        if(errorCode != 0) {
+            jg.writeNumberField("error-code", errorCode);
+        }
+        if(errorDetails != null) {
+            jg.writeStringField("error-details", errorDetails);
+        }
+        jg.writeEndObject();
+        jg.writeEndObject();
+        jg.flush();
     }
 }
