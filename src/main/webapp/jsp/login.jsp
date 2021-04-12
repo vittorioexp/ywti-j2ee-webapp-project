@@ -1,3 +1,5 @@
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.User" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -27,23 +29,43 @@ Since: 1.0
     <title>login</title>
 </head>
 <body>
+<div>
+    <a href="${pageContext.request.contextPath}/index">Home</a>
 
-<a href="${pageContext.request.contextPath}/index">Home</a>
+    <%
+        User u = new SessionCheckServlet(request, response).getUser();
+    %>
+    <c:choose>
+        <c:when test="${u}">
+            <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
+        </c:when>
+        <c:otherwise>
+            <a href="${pageContext.request.contextPath}/user/do-login">Login</a>
+            <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
+        </c:otherwise>
+    </c:choose>
 
-<form method="POST" action="<c:url value="/user/login/"/>">
+    <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
+</div>
+
+<div>
+<form id="login-form" name="login-form" method="POST" action="<c:url value="/user/login"/>">
     <label for="email">email:</label>
-    <input name="email" type="text"/><br/><br/>
+    <input id="email" name="email" type="text"/><br/><br/>
     <label for="password">password:</label>
-    <input name="password" type="password"/><br/><br/>
+    <input id="password" name="password" type="password"/><br/><br/>
     <button type="submit">Submit</button><br/>
 </form>
+</div>
 
+<div>
 <c:choose>
     <c:when test="${message.error}">
         <p><c:out value="${message.message}"/></p>
     </c:when>
     <c:otherwise></c:otherwise>
 </c:choose>
+</div>
 </body>
 </html>
 

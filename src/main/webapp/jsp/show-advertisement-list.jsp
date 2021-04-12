@@ -1,7 +1,9 @@
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Advertisement" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Resource" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.User" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet" %>
 <%@ page import="java.util.List" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.ResourceList" %>
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -29,7 +31,8 @@
     <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
 
     <%
-        List<Advertisement> listAdvertisement = (List<Advertisement>) request.getAttribute("advertisement-list");
+        // TODO : get JSON ResourceList<Advertisement>
+        ResourceList<Advertisement> listAdvertisement = null;
     %>
         <table id="advertisement-list-table" name="advertisement-list-table"
                cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">

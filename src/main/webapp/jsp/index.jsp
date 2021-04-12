@@ -32,6 +32,7 @@ Since: 1.0
     <title>Home page</title>
 </head>
     <body>
+    <div>
         <a href="${pageContext.request.contextPath}/index">Home</a>
 
         <%
@@ -48,10 +49,11 @@ Since: 1.0
         </c:choose>
 
         <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
-
+    </div>
         <br>
         <br>
         <br>
+    <div>
         <form id="advertisement-list-form" name="advertisement-list-form"
               action="list/advertisement" method="get">
 
@@ -74,10 +76,10 @@ Since: 1.0
             <button type="submit">Start your journey</button><br/>
 
         </form>
-
+    </div>
         <br>
         <br>
-
+    <div>
         <c:choose>
             <c:when test="${message.error}">
                 <p><c:out value="${message.message}"/></p>
@@ -86,6 +88,6 @@ Since: 1.0
 
             </c:otherwise>
         </c:choose>
-
+    </div>
     </body>
 </html>

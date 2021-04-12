@@ -4,6 +4,7 @@
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.User" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet" %>
 <%@ page import="java.util.List" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -52,7 +53,7 @@ Since: 1.0
 <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
 
 <%
-    Advertisement adv = (Advertisement) request.getAttribute("advertisement");
+    Advertisement adv = Advertisement.fromJSON(request.getInputStream());
 %>
 <table cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
     <tr>
@@ -86,7 +87,7 @@ Since: 1.0
 %>
 <c:choose>
     <c:when test="${rate}">
-        ${rate}
+        <p><c:out value="${rate}"/></p>
     </c:when>
     <c:otherwise>
         Not available
