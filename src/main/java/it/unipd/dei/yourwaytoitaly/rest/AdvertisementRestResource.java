@@ -64,6 +64,22 @@ public class AdvertisementRestResource extends RestResource {
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
             }
 
+            /*
+            final Advertisement advertisement
+                    = AdvertisementDAO.createAdvertisement(Advertisement.fromJSON(req.getInputStream()));
+
+            if(advertisement != null) {
+                res.setStatus(HttpServletResponse.SC_CREATED);
+                advertisement.toJSON(res.getOutputStream());
+            } else {
+                // it should not happen
+                ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+                Message m = new Message("Cannot create the advertisement: unexpected error.",
+                        ec.getErrorCode(),"INTERNAL_ERROR");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+            }
+            */
             // The user must give these parameters
             String title;
             String type_adv;

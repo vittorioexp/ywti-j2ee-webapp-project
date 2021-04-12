@@ -5,10 +5,8 @@ import it.unipd.dei.yourwaytoitaly.resource.City;
 import it.unipd.dei.yourwaytoitaly.utils.DataSourceProvider;
 
 import javax.naming.NamingException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -122,7 +120,7 @@ public class CityDAO extends AbstractDAO{
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        List<City> cityList = null;
+        List<City> cityList = new ArrayList<City>();
 
         try {
 

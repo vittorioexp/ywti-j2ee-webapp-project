@@ -122,7 +122,8 @@ public class AdvertisementDAO extends AbstractDAO{
      * @throws NamingException
      *             if any error occurs.
      */
-    public static Advertisement searchAdvertisement(int reqIdAdvertisement) throws SQLException, NamingException {
+    public static Advertisement searchAdvertisement(int reqIdAdvertisement) throws SQLException, NamingException
+    {
         final String STATEMENT =
                 "SELECT * " +
                         "FROM ADVERTISEMENT " +
@@ -184,7 +185,7 @@ public class AdvertisementDAO extends AbstractDAO{
         ResultSet rs = null;
 
         // the results of the search
-        List<Advertisement> listAdvertisement=null;
+        List<Advertisement> listAdvertisement=new ArrayList<Advertisement>();
 
         try {
             pstmt = con.prepareStatement(STATEMENT);

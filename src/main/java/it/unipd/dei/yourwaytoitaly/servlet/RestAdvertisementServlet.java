@@ -11,14 +11,16 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
-    // .../show-advertisement/{idAdvertisement}
-    // .../show-advertisement-list/
-    // .../show-user
-    // .../show-bookings
-    // .../login , register
 
-    // servlet > RestAdvertisementServlet.java GET PUT
-    // rest > AdvertisementRestResource.java
+    /**
+     * The JSON MIME media type
+     */
+    private static final String JSON_MEDIA_TYPE = "application/json";
+
+    /**
+     * The JSON UTF-8 MIME media type
+     */
+    private static final String JSON_UTF_8_MEDIA_TYPE = "application/json; charset=utf-8";
 
     /**
      * The any MIME media type
@@ -29,7 +31,7 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
     protected final void service(final HttpServletRequest req, final HttpServletResponse res)
             throws ServletException, IOException {
 
-        //res.setContentType(JSON_UTF_8_MEDIA_TYPE);
+        res.setContentType(JSON_UTF_8_MEDIA_TYPE);
         final OutputStream out = res.getOutputStream();
 
         try {
@@ -49,8 +51,8 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
             final Message m = new Message("Unknown resource requested.",
                     ec.getErrorCode(),String.format("Requested resource is %s.", req.getRequestURI()));
             res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+            res.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            m.toJSON(out);
         } finally {
             // ensure to always flush and close the output stream
             out.flush();
@@ -68,7 +70,7 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
      * @throws IOException if any error occurs in the client/server communication.
      */
     private boolean checkMethodMediaType(final HttpServletRequest req, final HttpServletResponse res)
-            throws IOException, ServletException {
+            throws IOException {
 
         final String method = req.getMethod();
         final String contentType = req.getHeader("Content-Type");
@@ -82,16 +84,16 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
             m = new Message("Unknown resource requested.",
                     ec.getErrorCode(),String.format("Requested resource is %s.", req.getRequestURI()));
             res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
+            m.toJSON(out);
             return false;
         }
 
-        if(!accept.equals(ALL_MEDIA_TYPE)) {
+        if(!accept.contains(JSON_MEDIA_TYPE) && !accept.equals(ALL_MEDIA_TYPE)) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             m = new Message("Unknown resource requested.",
                     ec.getErrorCode(),String.format("Requested resource is %s.", req.getRequestURI()));
             res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
+            m.toJSON(out);
             return false;
         }
 
@@ -107,7 +109,7 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
                 m = new Message("Unknown resource requested.",
                         ec.getErrorCode(),String.format("Requested operation is %s.", method));
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
+                m.toJSON(out);
                 return false;
         }
     }
@@ -122,7 +124,7 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
      *
      * @throws IOException if any error occurs in the client/server communication.
      */
-    private boolean processAdvertisement(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+    private boolean processAdvertisement(HttpServletRequest req, HttpServletResponse res) throws IOException {
 
         final String method = req.getMethod();
         final OutputStream out = res.getOutputStream();
@@ -130,16 +132,41 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
         String path = req.getRequestURI();
         Message m = null;
 
+        // the requested resource was not an advertisement
+        if(path.lastIndexOf("advertisement") <= 0) {
+            return false;
+        }
+
         try {
-            if (path.length() == 0 || path.equals("/")) {
+
+            String tempPath = path.substring(path.lastIndexOf("list") + 5);
+
+            // the requested URI is /list/advertisement
+            // if method GET, list advertisements by search criteria
+            if (tempPath.equals("advertisement")) {
+                switch (method) {
+                    case "GET":
+                        new AdvertisementRestResource(req, res, getDataSource().getConnection()).listAdvertisement();
+                        break;
+                    default:
+                        ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
+                        m = new Message("Unknown resource requested.",
+                                ec.getErrorCode(),String.format("Requested operation is %s.", method));
+                        res.setStatus(ec.getHTTPCode());
+                        m.toJSON(res.getOutputStream());
+                        break;
+                }
+            }
+
+            // the request URI is: /advertisement/{idAdvertisement}
+            // if method GET,  show the advertisement
+            // if method POST, create the advertisement
+            // if method PUT,  edit the advertisement
+            else {
 
                 switch (method) {
                     case "GET":
-                        if (path.contains("list")) {
-                            new AdvertisementRestResource(req, res, getDataSource().getConnection()).listAdvertisement();
-                        } else if (path.contains("advertisement")) {
-                            new AdvertisementRestResource(req, res, getDataSource().getConnection()).showAdvertisement();
-                        }
+                        new AdvertisementRestResource(req, res, getDataSource().getConnection()).showAdvertisement();
                         break;
                     case "POST":
                         new AdvertisementRestResource(req, res, getDataSource().getConnection()).insertAdvertisement();
@@ -152,18 +179,16 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
                         m = new Message("Unknown resource requested.",
                                 ec.getErrorCode(),String.format("Requested operation is %s.", method));
                         res.setStatus(ec.getHTTPCode());
-                        req.setAttribute("message", m);
-                        req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+                        m.toJSON(res.getOutputStream());
                         break;
                 }
             }
         } catch(Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             m = new Message("Generic error",
-                    ec.getErrorCode(),"Cannot create the advertisement.");
+                    ec.getErrorCode(),"Cannot process the advertisement.");
             res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/show-message.jsp").forward(req, res);
+            m.toJSON(res.getOutputStream());
         }
         return true;
     }

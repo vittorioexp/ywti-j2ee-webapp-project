@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -85,7 +86,7 @@ public class ImageDAO extends AbstractDAO{
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         // the results of the creation
-        List<Image> listImages = null;
+        List<Image> listImages = new ArrayList<Image>();
         try {
             pstmt = con.prepareStatement(STATEMENT);
             pstmt.setInt(1, idAdvertisement);

@@ -106,6 +106,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             String userType = req.getParameter("userType");
             String email = req.getParameter("email");
             String password = req.getParameter("password");
+            String rpassword = req.getParameter("rpassword");
             String name = req.getParameter("name");
             String address = req.getParameter("address");
             String phone = req.getParameter("phone");
@@ -130,7 +131,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                 res.sendRedirect(req.getContextPath() + "/user/do-register/");
             }
 
-            if ( password == null || password.equals("")  ) {
+            if ( password == null || password.equals("") || !rpassword.equals(password) ) {
 
                 ErrorCode ec = ErrorCode.PASSWORD_MISSING;
                 Message m = new Message("Input value not valid.",
