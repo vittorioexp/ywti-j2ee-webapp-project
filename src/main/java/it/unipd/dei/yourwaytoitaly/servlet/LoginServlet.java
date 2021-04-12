@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import org.apache.commons.codec.binary.Base64;
+
 
 /**
  * Servlet creating the session after verifying user login and password
@@ -112,6 +115,14 @@ public class LoginServlet extends AbstractDatabaseServlet {
                 res.sendRedirect(req.getContextPath() + "/user/do-login/");
             }
 
+            HttpSession session = req.getSession();
+            if (session != null ){
+                if ( !email.equals(LoginServlet.getUserEmail(req)) ){
+                    session.invalidate();
+                }else
+                    return;
+            }
+
             if ( userType == null ) {
                 ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
                 res.setStatus(ec.getHTTPCode());
@@ -131,18 +142,20 @@ public class LoginServlet extends AbstractDatabaseServlet {
             User usr = UserDAO.searchUserLogin(email, password);
 
             if ( usr == null ){
-                ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
+                ErrorCode ec = ErrorCode.USER_NOT_FOUND;
                 res.setStatus(ec.getHTTPCode());
-                Message m = new Message( "Wrong Format.",
+                Message m = new Message( "User not found.",
                         ec.getErrorCode(),"credentials are wrong");
                 req.setAttribute("message", m);
                 res.sendRedirect(req.getContextPath() + "/user/do-login/");
             }
 
-            HttpSession session = req.getSession();
             assert usr != null; // if user for some reason is null it will raise an AssertionException
-            session.setAttribute("email", usr.getEmail());
-            session.setAttribute("role", usr.getType());
+            String auth = email + ":" + password;
+            byte[] encodedAuth = Base64.encodeBase64(
+                    auth.getBytes(Charset.forName("US-ASCII")) );
+            String authHeader = "Basic " + new String( encodedAuth );
+            session.setAttribute( "Authorization", authHeader );
 
             // login credentials were correct: we redirect the user to the referer page
             // now the session is active
@@ -158,6 +171,30 @@ public class LoginServlet extends AbstractDatabaseServlet {
         }
 
     }
+
+    private static String getPair( HttpServletRequest req ){
+        String a = new String (Base64.decodeBase64( ( (String)req.getAttribute("Authorization") ).substring(6))  );
+        if ( a == null )
+            return new String("");
+        else
+            return a;
+    }
+
+    private static String getUserEmail( HttpServletRequest req ){
+        String[] credentials = getPair(req).split(":");
+        return credentials[0];
+    }
+
+
+    private static String getUserPassword( HttpServletRequest req ){
+        String[] credentials = getPair(req).split(":");
+        return credentials[1];
+    }
+
+    public static boolean checkSessionEmail(HttpServletRequest req, String email){
+        return  email.equals(getUserEmail(req));
+    }
+
 
 }
 
