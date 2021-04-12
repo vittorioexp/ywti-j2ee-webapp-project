@@ -64,154 +64,121 @@ public class AdvertisementRestResource extends RestResource {
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
             }
 
-            /*
-            final Advertisement advertisement
-                    = AdvertisementDAO.createAdvertisement(Advertisement.fromJSON(req.getInputStream()));
+            int idAdvertisement = 0;
+            String title = "";
+            String description = "";
+            int price=0;
+            int numTotItem=0;
+            Date dateStart=null, dateEnd=null;
+            Time timeStart=null, timeEnd=null;
+            int score;
+            String type;
+            int idType;
 
-            if(advertisement != null) {
-                res.setStatus(HttpServletResponse.SC_CREATED);
-                advertisement.toJSON(res.getOutputStream());
-            } else {
-                // it should not happen
-                ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-                Message m = new Message("Cannot create the advertisement: unexpected error.",
-                        ec.getErrorCode(),"INTERNAL_ERROR");
-                res.setStatus(ec.getHTTPCode());
-                m.toJSON(res.getOutputStream());
-            }
-            */
-            // The user must give these parameters
-            String title;
-            String type_adv;
-            String description;
-            int price;
-            int numTotItem;
-            Date dateStart;
-            Date dateEnd;
-            Time timeStart;
-            Time timeEnd;
-
-            int idAdvertisement = 0;    // This is set by the DB
-            String emailCompany = u.getEmail();
-            int idType=0;           // This will be get by inspecting Type_advertisement
-            int score;              // This will be calculated
-
-            Advertisement advertisement  = null;
-
+            // check if the servlet needs to receive images or if a json object (advertisement)
             if (!ServletFileUpload.isMultipartContent(req)) {
-                ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
-                Message m = new Message("Input value not valid.",
-                        ec.getErrorCode(),"Not multipart content.");
-                res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
-            }
 
-            // retrieves the request parameters
-            title = req.getParameter("title");
-            type_adv = req.getParameter("type");
-            description =  req.getParameter("description");
-            price = Integer.parseInt(req.getParameter("price"));
-            numTotItem = Integer.parseInt(req.getParameter("numTotItem"));
-            dateStart = Date.valueOf(req.getParameter("dateStart"));
-            dateEnd = Date.valueOf(req.getParameter("dateEnd"));
-            timeStart = Time.valueOf(req.getParameter("timeStart"));
-            timeEnd = Time.valueOf(req.getParameter("timeEnd"));
+                // receive JSON object
+                Advertisement advertisement = Advertisement.fromJSON(req.getInputStream());
 
-            if(title==null || title.length()<5 || title.length()>100){
-                ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                Message m = new Message("Input value not valid.",
-                        ec.getErrorCode(),"Title of the advertisement not valid.");
-                res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
-            }
-            if(description==null || description.length()<5 || description.length()>10000){
-                ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                Message m = new Message("Input value not valid.",
-                        ec.getErrorCode(),"description of the advertisement not valid.");
-                res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
-            }
-            if(price<0){
-                ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                Message m = new Message("Input value not valid.",
-                        ec.getErrorCode(),"Price not valid");
-                res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
-            }
-            if(numTotItem<=0){
-                ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                Message m = new Message("Input value not valid.",
-                        ec.getErrorCode(),"Total number of item not valid");
-                res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
-            }
-            if(dateEnd.compareTo(dateStart)<0 || timeEnd.compareTo(timeStart)<0){
-                ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                Message m = new Message("Input value not valid.",
-                        ec.getErrorCode(),"Dates entered are not valid.");
-                res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
-            }
+                // control the parameters
+                title = advertisement.getTitle();
+                if(title==null || title.length()<5 || title.length()>100){
+                    ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                    Message m = new Message("Input value not valid.",
+                            ec.getErrorCode(),"Title of the advertisement not valid.");
+                    res.setStatus(ec.getHTTPCode());
+                    req.setAttribute("message", m);
+                    res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
+                }
+                description = advertisement.getDescription();
+                if(description==null || description.length()<5 || description.length()>10000){
+                    ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                    Message m = new Message("Input value not valid.",
+                            ec.getErrorCode(),"description of the advertisement not valid.");
+                    res.setStatus(ec.getHTTPCode());
+                    req.setAttribute("message", m);
+                    res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
+                }
+                price = advertisement.getPrice();
+                if(price<0){
+                    ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                    Message m = new Message("Input value not valid.",
+                            ec.getErrorCode(),"Price not valid");
+                    res.setStatus(ec.getHTTPCode());
+                    req.setAttribute("message", m);
+                    res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
+                }
 
-            score = (int) (price/3.14);
-            idType = TypeAdvertisementDAO.searchTypeAdvertisement(type_adv).getIdType();
+                numTotItem = advertisement.getNumTotItem();
+                if(numTotItem<=0){
+                    ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                    Message m = new Message("Input value not valid.",
+                            ec.getErrorCode(),"Total number of item not valid");
+                    res.setStatus(ec.getHTTPCode());
+                    req.setAttribute("message", m);
+                    res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
+                }
 
-            // creates a new advertisement from the request parameters
-            advertisement = new Advertisement(
-                    0,
-                    title,
-                    description,
-                    score,
-                    price,
-                    numTotItem,
-                    dateStart,
-                    dateEnd,
-                    timeStart,
-                    timeEnd,
-                    emailCompany,
-                    idType
-            );
+                dateStart = advertisement.getDateStart();
+                dateEnd = advertisement.getDateEnd();
+                timeStart = advertisement.getTimeStart();
+                timeEnd = advertisement.getTimeEnd();
+                if(dateEnd.compareTo(dateStart)<0 || timeEnd.compareTo(timeStart)<0){
+                    ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                    Message m = new Message("Input value not valid.",
+                            ec.getErrorCode(),"Dates entered are not valid.");
+                    res.setStatus(ec.getHTTPCode());
+                    req.setAttribute("message", m);
+                    res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
+                }
 
-            advertisement = AdvertisementDAO.createAdvertisement(advertisement);
+                score = (int) (price/3.14);
 
-            if(advertisement==null){
-                ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-                Message m = new Message("Generic error",
-                        ec.getErrorCode(),"Cannot create the advertisement.");
-                res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
-            }
+                // insert JSON inside DB
+                advertisement = AdvertisementDAO.createAdvertisement(advertisement);
 
-            // file upload
-            final String UPLOAD_DIRECTORY = "/" + String.valueOf(idAdvertisement);
-            List <FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(req);
-            int count = 1;
-            for (FileItem item: multiparts) {
-                if (!item.isFormField()) {
-                    String name = new File(item.getName()).getName();
-                    String pathName = UPLOAD_DIRECTORY + File.separator + String.valueOf(count++) + ".jpg";
-                    item.write(new File(pathName));
-                    Image img = new Image
-                            (
-                              0,
-                                  pathName,
-                                  title,
-                                  idAdvertisement
-                            );
-                    ImageDAO.createImage(img);
+                if(advertisement==null){
+                    ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+                    Message m = new Message("Generic error",
+                            ec.getErrorCode(),"Cannot create the advertisement.");
+                    res.setStatus(ec.getHTTPCode());
+                    req.setAttribute("message", m);
+                    res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
+                }
+
+                // set attribute
+                req.setAttribute("idAdvertisement",idAdvertisement);
+
+                // forward to create-advertisement.jsp
+                req.getRequestDispatcher("/jsp/create-advertisement.jsp").forward(req, res);
+
+            } else {
+                // receive Images (if idAdvertisement!=0)
+                idAdvertisement = (int) req.getAttribute("idAdvertisement");
+                if (idAdvertisement!=0) {
+                    final String UPLOAD_DIRECTORY = "/" + String.valueOf(idAdvertisement);
+                    List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(req);
+                    int count = 1;
+                    for (FileItem item : multiparts) {
+                        if (!item.isFormField()) {
+                            //String name = new File(item.getName()).getName();
+                            String pathName = UPLOAD_DIRECTORY + File.separator + String.valueOf(count++) + ".jpg";
+                            item.write(new File(pathName));
+                            Image img = new Image
+                                    (
+                                            0,
+                                            pathName,
+                                            title,
+                                            idAdvertisement
+                                    );
+                            ImageDAO.createImage(img);
+                        }
+                    }
+                    // forward the user to its user profile page
+                    req.getRequestDispatcher("/user/profile").forward(req, res);
                 }
             }
-
-            req.setAttribute("idAdvertisement",idAdvertisement);
-            req.getRequestDispatcher("/advertisement/" + idAdvertisement).forward(req, res);
-            //res.sendRedirect(req.getContextPath() + "/advertisement/" + String.valueOf(idAdvertisement));
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -219,7 +186,8 @@ public class AdvertisementRestResource extends RestResource {
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
+            req.setAttribute("idAdvertisement", 0);
+            req.getRequestDispatcher("/advertisement-do-create").forward(req, res);
         }
     }
 
@@ -234,11 +202,13 @@ public class AdvertisementRestResource extends RestResource {
     public void showAdvertisement() throws IOException, ServletException {
 
         try {
+
             String idAdvertisement = req.getRequestURI();
             idAdvertisement = idAdvertisement.substring(idAdvertisement.lastIndexOf("advertisement") + 14);
             Advertisement advertisement = AdvertisementDAO.searchAdvertisement(Integer.parseInt(idAdvertisement));
 
-            req.setAttribute("advertisement", advertisement);
+            advertisement.toJSON(res.getOutputStream());
+            //req.setAttribute("advertisement", advertisement);
 
             List<Image> imageList = ImageDAO.searchImageByIdAdvertisement(Integer.parseInt(idAdvertisement));
 
@@ -339,8 +309,13 @@ public class AdvertisementRestResource extends RestResource {
             // receive idAdvertisement from the hidden form
             idAdvertisement = Integer.parseInt(op);
 
-            price = Integer.parseInt(req.getParameter("price"));
-            numTotItem = Integer.parseInt(req.getParameter("numTotItem"));
+            advertisement = Advertisement.fromJSON(req.getInputStream());
+
+            price = advertisement.getPrice();
+            numTotItem = advertisement.getNumTotItem();
+
+            //price = Integer.parseInt(req.getParameter("price"));
+            //numTotItem = Integer.parseInt(req.getParameter("numTotItem"));
 
             if(price<0 || price>50000){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
@@ -434,8 +409,9 @@ public class AdvertisementRestResource extends RestResource {
                     idType = typeAdvertisement.getIdType();
 
                     listAdvertisement = AdvertisementDAO.searchAdvertisement(idCity, idType, date);
+                    new ResourceList(listAdvertisement).toJSON(res.getOutputStream());
 
-                    req.setAttribute("advertisement-list", listAdvertisement);
+                    //req.setAttribute("advertisement-list", listAdvertisement);
                     req.getRequestDispatcher("/jsp/show-advertisement-list.jsp").forward(req, res);
                     break;
                 default:

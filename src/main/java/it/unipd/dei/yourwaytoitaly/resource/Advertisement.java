@@ -177,19 +177,19 @@ public final class Advertisement extends Resource{
                         break;
                     case "dateStart":
                         jp.nextToken();
-                        jdateStart = (Date) jp.getValueAsString();
+                        jdateStart = Date.valueOf(jp.getValueAsString());
                         break;
                     case "dateEnd":
                         jp.nextToken();
-                        jdateEnd = (Date) jp.getValueAsString();
+                        jdateEnd = Date.valueOf(jp.getValueAsString());
                         break;
                     case "timeStart":
                         jp.nextToken();
-                        jtimeStart = (Date) jp.getValueAsString();
+                        jtimeStart = Time.valueOf(jp.getValueAsString());
                         break;
                     case "timeEnd":
                         jp.nextToken();
-                        jtimeEnd = (Date) jp.getValueAsString();
+                        jtimeEnd = Time.valueOf(jp.getValueAsString());
                         break;
                     case "emailCompany":
                         jp.nextToken();
