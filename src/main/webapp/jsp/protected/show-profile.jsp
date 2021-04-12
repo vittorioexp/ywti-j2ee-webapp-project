@@ -80,14 +80,9 @@ Since: 1.0
             </c:otherwise>
         </c:choose>
 
-        <c:choose>
-            <c:when test="${message.error}">
-                <p><c:out value="${message.message}"/></p>
-            </c:when>
-            <c:otherwise>
-
-            </c:otherwise>
-        </c:choose>
+ <div>
+     <c:import url="/jsp/include/show-message.jsp"/>
+ </div>
 
     </body>
 </html>

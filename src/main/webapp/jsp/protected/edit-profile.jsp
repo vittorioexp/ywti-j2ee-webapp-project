@@ -1,3 +1,6 @@
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Tourist" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.User" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -27,45 +30,27 @@ Since: 1.0
     <title>Edit profile</title>
 </head>
 <body>
+<div>
+    <a href="${pageContext.request.contextPath}/index">Home</a>
+    <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
+    <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
+</div>
 
-<c:choose>
-    <c:when test="${isTurist eq True}">      <!--aggiungere funzionalità per testare se l'utente loggato è un turist o una company-->
-        <form method="POST" action="<c:url value="/user/edit/"/>">
+<div>
+    <form method="put" action="<c:url value="/user/edit"/>">
 
-            <label for="password">password:</label>
-            <input name="password" type="password"/><br/><br/>
+        <label for="phonenumber">Phone Number:</label>
+        <input id="phonenumber" name="phonenumber" type="text"/><br/><br/>
 
-            <label for="phonenumber">timeEnd:</label>
-            <input name="phonenumber" type="text"/><br/><br/>
-            <!-- value="<c:out value="${requestScope.user.userId}"/>"-->
+        <button type="submit">Edit</button><br/>
 
-            <button type="submit">Edit</button><br/>
-        </form>
-        <br />
-    </c:when>
-    <c:otherwise>
-        <form method="POST" action="<c:url value="/user/edit/"/>">
+    </form>
+    <br />
+</div>
 
-            <label for="password">password:</label>
-            <input name="password" type="password"/><br/><br/>
 
-            <label for="phonenumber">timeEnd:</label>
-            <input name="phonenumber" type="text"/><br/><br/>
-
-            <button type="submit">Edit</button><br/>
-
-        </form>
-        <br />
-    </c:otherwise>
-</c:choose>
-
-<c:choose>
-    <c:when test="${message.error}">
-        <p><c:out value="${message.message}"/></p>
-    </c:when>
-    <c:otherwise>
-
-    </c:otherwise>
-</c:choose>
+<div>
+    <c:import url="/jsp/include/show-message.jsp"/>
+</div>
 </body>
 </html>

@@ -1,3 +1,5 @@
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.User" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -28,46 +30,64 @@ Since: 1.0
 </head>
 <body>
 
-<a href="${pageContext.request.contextPath}/index">Home</a>
+<div>
+    <a href="${pageContext.request.contextPath}/index">Home</a>
+    <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
+</div>
 
-<form method="POST" action="<c:url value="/user/register/"/>">
+<div>
+    <form method="POST" action="<c:url value="/user/register"/>">
+
+        <label for="email">email:</label>
+        <input name="email" type="text" id="email_t"/><br/><br/>
+        <label for="password">password:</label>
+        <input name="password" type="password" id="password_t"/><br/><br/>
+        <label for="rpassword">repeat password:</label>
+        <input name="rpassword" type="password" id="rpassword_t"/><br/><br/>
+        <label for="name">name:</label>
+        <input name="name" type="text" id="name_t"/><br/><br/>
+        <label for="surname">surname:</label>
+        <input name="surname" type="text" id="surname_t"/><br/><br/>
+        <label for="address">address:</label>
+        <input name="address" type="text" id="address_t"/><br/><br/>
+        <label for="phonenumber">phone number:</label>
+        <input name="phonenumber" type="text" id="phonenumber_t"/><br/><br/>
+        <label for="city">city:</label>
+        <input name="city" type="text" id="city_t"/><br/><br/>
+        <label for="birthdate">birth date:</label>
+        <input name="birthdate" type="Date" id="birthdate_t"/><br/><br/>
+
+        <button type="submit">Register</button><br/>
+
+    </form>
+</div>
+
+<div>
+    <form method="POST" action="<c:url value="/user/register"/>">
+
+        <label for="email">email:</label>
+        <input name="email" type="text" id="email_c"/><br/><br/>
+        <label for="password">password:</label>
+        <input name="password" type="password" id="password_c"/><br/><br/>
+        <label for="rpassword">repeat password:</label>
+        <input name="rpassword" type="password" id="rpassword_c"/><br/><br/>
+        <label for="name">name:</label>
+        <input name="name" type="text" id="name_c"/><br/><br/>
+        <label for="address">address:</label>
+        <input name="address" type="text" id="address_c"/><br/><br/>
+        <label for="phonenumber">phone number:</label>
+        <input name="phonenumber" type="text" id="phonenumber_c"/><br/><br/>
+        <label for="city">city:</label>
+        <input name="city" type="text" id="city"/><br/><br/>
+
+        <button type="submit">Register</button><br/>
+
+    </form>
+</div>
 
 
-    <label for="email">email:</label>
-    <input name="email" type="text" id="email"/><br/><br/>
-    <label for="password">password:</label>
-    <input name="password" type="password" id="password"/><br/><br/>
-    <label for="rpassword">repeat password:</label>
-    <input name="rpassword" type="password" id="rpassword"/><br/><br/>
-    <label for="name">name:</label>
-    <input name="name" type="text" id="name"/><br/><br/>
-    <label for="surname">surname:</label>
-    <input name="surname" type="text" id="surname"/><br/><br/>
-    <label for="address">address:</label>
-    <input name="address" type="text" id="address"/><br/><br/>
-    <label for="phonenumber">phone number:</label>
-    <input name="phonenumber" type="text" id="phonenumber"/><br/><br/>
-    <label for="city">city:</label>
-    <input name="city" type="text" id="city"/><br/><br/>
-
-
-
-
-    <label for="birthdate">birth date:</label>
-    <input name="birthdate" type="text" id="birthdate"/><br/><br/>
-
-
-    <button type="button" id="userType" name="userType" value="tourist" >I'm a Tourist</button>
-
-    <button type="submit">Submit</button><br/>
-
-</form>
-
-<c:choose>
-    <c:when test="${message.error}">
-        <p><c:out value="${message.message}"/></p>
-    </c:when>
-    <c:otherwise></c:otherwise>
-</c:choose>
+<div>
+    <c:import url="/jsp/include/show-message.jsp"/>
+</div>
 </body>
 </html>

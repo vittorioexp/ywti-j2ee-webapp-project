@@ -31,20 +31,6 @@ Since: 1.0
 <body>
 <div>
     <a href="${pageContext.request.contextPath}/index">Home</a>
-
-    <%
-        User u = new SessionCheckServlet(request, response).getUser();
-    %>
-    <c:choose>
-        <c:when test="${u}">
-            <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
-        </c:when>
-        <c:otherwise>
-            <a href="${pageContext.request.contextPath}/user/do-login">Login</a>
-            <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
-        </c:otherwise>
-    </c:choose>
-
     <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
 </div>
 
@@ -59,12 +45,7 @@ Since: 1.0
 </div>
 
 <div>
-<c:choose>
-    <c:when test="${message.error}">
-        <p><c:out value="${message.message}"/></p>
-    </c:when>
-    <c:otherwise></c:otherwise>
-</c:choose>
+    <c:import url="/jsp/include/show-message.jsp"/>
 </div>
 </body>
 </html>

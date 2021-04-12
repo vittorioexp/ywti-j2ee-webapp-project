@@ -107,8 +107,8 @@ Since: 1.0
                         <img src="${pageContext.request.contextPath}" + filepath>
                     </td>
                 </tr>
+                </table>
             </c:forEach>
-            </table>
         </c:when>
         <c:otherwise>
 
@@ -139,6 +139,7 @@ Since: 1.0
                     <td>${booking.state()}</td>
                 </tr>
             </c:forEach>
+        </table>
         </c:when>
         <c:otherwise>
 
@@ -147,43 +148,35 @@ Since: 1.0
 
     <%
     List<Feedback> feedbackList = (List) request.getAttribute("feedback-list");
-    // TODO: change feedback.emailTourist with the name of the user
     // TODO: insert form to leave a feedback
     %>
     <c:choose>
     <c:when test="${feedbackList}">
-    <table id="feedback-list-table" name="feedback-list-table"
-    cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
-    <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    </tr>
-    <c:forEach items="<%=feedbackList%>" var="feedback">
-    <tr>
-    <td>${feedback.emailTourist()}</td>
-    <td>${feedback.date()}</td>
-    <td>${feedback.rate()}</td>
-    <td>${feedback.text()}</td>
-    </tr>
-    </c:forEach>
+        <table id="feedback-list-table" name="feedback-list-table"
+            cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
+            <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            </tr>
+            <c:forEach items="<%=feedbackList%>" var="feedback">
+                <tr>
+                <td>${feedback.date()}</td>
+                <td>${feedback.rate()}</td>
+                <td>${feedback.text()}</td>
+                </tr>
+            </c:forEach>
+        </table>
     </c:when>
     <c:otherwise>
 
     </c:otherwise>
     </c:choose>
 
+        <div>
+            <c:import url="/jsp/include/show-message.jsp"/>
+        </div>
 </body>
 </html>
-
-<c:choose>
-    <c:when test="${message.error}">
-        <p><c:out value="${message.message}"/></p>
-    </c:when>
-    <c:otherwise>
-
-    </c:otherwise>
-</c:choose>
 </body>
 </html>
