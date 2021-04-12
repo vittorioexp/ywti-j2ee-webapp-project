@@ -90,17 +90,19 @@ public final class Advertisement extends Resource{
         jg.writeStartObject();
         jg.writeFieldName("advertisement");
         jg.writeStartObject();
-        jg.writeNumberField("idAdvertisement", idAdvertisement);
 
+        jg.writeNumberField("idAdvertisement", idAdvertisement);
+        jg.writeStringField("title", title);
         jg.writeStringField("description", description);
         jg.writeNumberField("score", score);
         jg.writeNumberField("price", price);
         jg.writeNumberField("numTotItem", numTotItem);
-        jg.writeDateField("dateStart", dateStart);
-        jg.writeDateField("dateEnd", dateEnd);
-        jg.writeTimeField("timeStart", timeStart);
-        jg.writeTimeField("timeEnd", timeEnd);
+        jg.writeStringField("dateStart", dateStart.toString());
+        jg.writeStringField("dateEnd", dateEnd.toString());
+        jg.writeStringField("timeStart", timeStart.toString());
+        jg.writeStringField("timeEnd", timeEnd.toString());
         jg.writeStringField("emailCompany", emailCompany);
+        jg.writeNumberField("idType", idType);
 
         jg.writeEndObject();
         jg.writeEndObject();
@@ -136,11 +138,11 @@ public final class Advertisement extends Resource{
 
         // while we are not on the start of an element or the element is not
         // a token element, advance to the next element (if any)
-        while (jp.getCurrentToken() != JsonToken.FIELD_NAME || "employee".equals(jp.getCurrentName()) == false) {
+        while (jp.getCurrentToken() != JsonToken.FIELD_NAME || "advertisement".equals(jp.getCurrentName()) == false) {
 
             // there are no more events
             if (jp.nextToken() == null) {
-                throw new IOException("Unable to parse JSON: no employee object found.");
+                throw new IOException("Unable to parse JSON: no advertisement object found.");
             }
         }
 
@@ -149,26 +151,59 @@ public final class Advertisement extends Resource{
             if (jp.getCurrentToken() == JsonToken.FIELD_NAME) {
 
                 switch (jp.getCurrentName()) {
-                    case "badge":
+                    case "idAdvertisement":
                         jp.nextToken();
-                        jBadge = jp.getIntValue();
+                        jidAdvertisement = jp.getIntValue();
                         break;
-                    case "surname":
+                    case "title":
                         jp.nextToken();
-                        jSurname = jp.getText();
+                        jtitle = jp.getText();
                         break;
-                    case "age":
+                    case "description":
                         jp.nextToken();
-                        jAge = jp.getIntValue();
+                        jdescription = jp.getValueAsString();
                         break;
-                    case "salary":
+                    case "score":
                         jp.nextToken();
-                        jSalary = jp.getIntValue();
+                        jscore = jp.getIntValue();
                         break;
+                    case "price":
+                        jp.nextToken();
+                        jprice = jp.getIntValue();
+                        break;
+                    case "numTotItem":
+                        jp.nextToken();
+                        jnumTotItem = jp.getIntValue();
+                        break;
+                    case "dateStart":
+                        jp.nextToken();
+                        jdateStart = (Date) jp.getValueAsString();
+                        break;
+                    case "dateEnd":
+                        jp.nextToken();
+                        jdateEnd = (Date) jp.getValueAsString();
+                        break;
+                    case "timeStart":
+                        jp.nextToken();
+                        jtimeStart = (Date) jp.getValueAsString();
+                        break;
+                    case "timeEnd":
+                        jp.nextToken();
+                        jtimeEnd = (Date) jp.getValueAsString();
+                        break;
+                    case "emailCompany":
+                        jp.nextToken();
+                        jemailCompany = jp.getValueAsString();
+                        break;
+                    case "idType":
+                        jp.nextToken();
+                        jidType = jp.getIntValue();
+                        break;
+
                 }
             }
         }
 
-        return new Advertisement(jBadge, jSurname, jAge, jSalary);
+        return new Advertisement(jidAdvertisement, jtitle, jdescription, jscore,jprice,jnumTotItem,jdateStart,jdateEnd,jtimeStart,jtimeEnd,jemailCompany,jidType);
     }
 }
