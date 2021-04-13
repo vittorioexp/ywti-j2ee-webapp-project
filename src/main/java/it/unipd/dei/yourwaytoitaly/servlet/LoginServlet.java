@@ -93,8 +93,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
             Message m = new Message("Not Valid Request.", ec.getErrorCode()
                     ,"You have requested a non existing resource .");
             res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
-            res.sendRedirect(req.getContextPath() + "/user/do-login");
+            m.toJSON(res.getOutputStream());
         }
     }
 
@@ -105,17 +104,16 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
             String email = req.getParameter("email");
             String password = req.getParameter("password");
-            String userType = req.getParameter("userType");
 
             if ( email == null || email.equals( "" ) ) {
                 ErrorCode ec = ErrorCode.EMAIL_MISSING;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"Email not inserted or not valid.");
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", new Message("Input not valid",
-                        ec.getErrorCode(), ec.getErrorMessage()));
-                res.sendRedirect(req.getContextPath() + "/user/do-login");
+                m.toJSON(res.getOutputStream());
             }
 
-            HttpSession session = req.getSession();
+            HttpSession session = req.getSession(false);
             if (session != null ){
                 if ( !email.equals(LoginServlet.getUserEmail(req)) ){
                     session.invalidate();
@@ -123,20 +121,12 @@ public class LoginServlet extends AbstractDatabaseServlet {
                     return;
             }
 
-            if ( userType == null ) {
-                ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
-                res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", new Message( "Input not valid.",
-                        ec.getErrorCode(), "User type not selected"));
-                res.sendRedirect(req.getContextPath() + "/user/do-login");
-            }
-
             if ( password == null || password.equals( "" ) ) {
                 ErrorCode ec = ErrorCode.PASSWORD_MISSING;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"Password not valid.");
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", new Message("Input not valid.",
-                        ec.getErrorCode(), ec.getErrorMessage()));
-                res.sendRedirect(req.getContextPath() + "/user/do-login");
+                m.toJSON(res.getOutputStream());
             }
 
             User usr = UserDAO.searchUserLogin(email, password);
@@ -146,8 +136,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
                 res.setStatus(ec.getHTTPCode());
                 Message m = new Message( "User not found.",
                         ec.getErrorCode(),"credentials are wrong");
-                req.setAttribute("message", m);
-                res.sendRedirect(req.getContextPath() + "/user/do-login");
+                m.toJSON(res.getOutputStream());
             }
 
             assert usr != null; // if user for some reason is null it will raise an AssertionException
@@ -159,6 +148,11 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
             // login credentials were correct: we redirect the user to the referer page
             // now the session is active
+
+            Message m = new Message( "tutto ok",
+                    111,"utente loggato!");
+            m.toJSON(res.getOutputStream());
+
             res.sendRedirect(req.getHeader("referer"));
 
         }catch (Exception ex){
@@ -166,8 +160,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
             Message m = new Message("Failed to login.",
                     ec.getErrorCode(), ex.getStackTrace().toString());
             res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
-            res.sendRedirect(req.getContextPath() + "/user/do-login");
+            m.toJSON(res.getOutputStream());
         }
 
     }
