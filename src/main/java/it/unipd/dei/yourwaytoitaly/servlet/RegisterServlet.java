@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.sql.Date;
+import java.util.Base64;
 
 import static java.lang.Integer.parseInt;
 
@@ -226,8 +228,11 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             HttpSession session = req.getSession();
 
             assert usr != null; // if user for some reason is null it will raise an AssertionException
-            session.setAttribute("email", usr.getEmail());
-            session.setAttribute("role", usr.getType());
+            String auth = email + ":" + password;
+            byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes(Charset.forName("US-ASCII")) );
+
+            String authHeader = "Basic " + new String( encodedAuth );
+            session.setAttribute( "Authorization", authHeader );
 
             EmailSender mail= new EmailSender(email);
 
