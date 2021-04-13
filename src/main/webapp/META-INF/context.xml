@@ -24,7 +24,7 @@
 <!-- The contents of this file will be loaded for each web application -->
 <Context>
 
-   <Resource name="jdbc/ywtiDb"
+   <Resource name="jdbc/YWTI"
           auth="Container"
           type="javax.sql.DataSource"
           factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"

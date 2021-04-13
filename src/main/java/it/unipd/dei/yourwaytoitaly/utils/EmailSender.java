@@ -1,5 +1,6 @@
 package it.unipd.dei.yourwaytoitaly.utils;
 
+import it.unipd.dei.yourwaytoitaly.resource.Message;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.MultiPartEmail;
 
@@ -26,8 +27,10 @@ public class EmailSender {
 
         try {
             String email_from = "yourwaytoitalywebapp@gmail.com";
-            String email_password = "ywtiwa2021";
+            String email_password = "waywti2021";
             MultiPartEmail mail = new MultiPartEmail();
+            mail.setSSLOnConnect(true);
+            mail.setSmtpPort(465);
             mail.setHostName("smtp.gmail.com");
             mail.addTo(email_to);
             mail.setFrom(email_from);
@@ -36,7 +39,12 @@ public class EmailSender {
             mail.setMsg(message);
             mail.send();
             return true;
-        }catch(EmailException e){
+        }catch(EmailException ex){
+            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("Failed to register.",
+                    ec.getErrorCode(), ex.toString());
+            System.out.println(ex.getMessage());
+            System.out.println(email_to);
             return false;
         }
     }

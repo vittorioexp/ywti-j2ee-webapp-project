@@ -244,7 +244,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             assert usr != null; // if user for some reason is null it will raise an AssertionException
             String auth = email + ":" + password;
             byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes(Charset.forName("US-ASCII")) );
-
+            session = req.getSession(true);
             String authHeader = "Basic " + new String( encodedAuth );
             session.setAttribute( "Authorization", authHeader );
 
@@ -252,28 +252,23 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
 
             //send email and check if email is sent correctly
-            /*
             if (!mail.sendConfirmationEmail("YourWayToItaly:Account successfully registered",
                     "Congratulations, your account has successfully been registered. You can know start your Journey!")){
                 ErrorCode ec = ErrorCode.INTERNAL_ERROR;
                 Message m = new Message("Failed to send confirmation email.",
                         ec.getErrorCode(), "An error occurred while sending email confirmation");
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                res.sendRedirect(req.getContextPath() + "/user/do-register");
+                m.toJSON(res.getOutputStream());
+//                req.setAttribute("message", m);
+//                res.sendRedirect(req.getContextPath() + "/user/do-register");
+
+
             }
-            */
             // login credentials were correct: we redirect the user to the homepage
             // now the session is active and its data can used to change the homepage
             //res.sendRedirect(req.getContextPath()+"/jsp/homepage.jsp");
 
-            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("bravo.",
-                    ec.getErrorCode(),"Something went wrong creating user account.");
-            res.setStatus(ec.getHTTPCode());
-            m.toJSON(res.getOutputStream());
-
-            //res.sendRedirect(req.getContextPath() + "/index/");
+            res.sendRedirect(req.getContextPath() + "/index");
 
         }catch (Exception ex){
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
