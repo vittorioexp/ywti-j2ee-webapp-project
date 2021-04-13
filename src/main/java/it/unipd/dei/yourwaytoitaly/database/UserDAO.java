@@ -43,12 +43,12 @@ public class UserDAO extends AbstractDAO{
     public static User createUser(User user) throws SQLException, NamingException {
         final String STATEMENT_TOURIST =
                 "INSERT INTO Tourist (email_t, surname, name, birth_date, phone_number, address, password, ID_city)\n" +
-                        "VALUES (?, ?, ?, ?, ?, ?, MD5(?), (SELECT ID_city FROM CITY WHERE CITY.name = ?)) RETURNING *;\n";
+                        "VALUES (?, ?, ?, ?, ?, ?, MD5(?), ?) RETURNING *;\n";
 
 
         final String STATEMENT_COMPANY =
                 "INSERT INTO Company (email_c, name_c, phone_number, address, password, ID_city)\n" +
-                        "VALUES (?, ?, ?, ?, MD5(?), (SELECT ID_city FROM CITY WHERE CITY.name = ?)) RETURNING *;";
+                        "VALUES (?, ?, ?, ?, MD5(?), ?) RETURNING *;";
 
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
@@ -66,6 +66,7 @@ public class UserDAO extends AbstractDAO{
                 pstmt.setString(5, ((Tourist) user).getPhoneNumber());
                 pstmt.setString(6, ((Tourist) user).getAddress());
                 pstmt.setString(7, ((Tourist) user).getPassword());
+                pstmt.setInt(8, ((Tourist) user).getIdCity());
 
                 rs = pstmt.executeQuery();
 

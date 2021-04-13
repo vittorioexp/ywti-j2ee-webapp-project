@@ -31,6 +31,17 @@ Since: 1.0
 <body>
 <div>
     <a href="${pageContext.request.contextPath}/index">Home</a>
+
+    <c:choose>
+        <c:when test="${empty sessionScope.user}">
+            <a href="${pageContext.request.contextPath}/user/do-login">Login</a>
+            <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
+        </c:when>
+        <c:otherwise>
+            <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
+        </c:otherwise>
+    </c:choose>
+
     <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
 </div>
 
