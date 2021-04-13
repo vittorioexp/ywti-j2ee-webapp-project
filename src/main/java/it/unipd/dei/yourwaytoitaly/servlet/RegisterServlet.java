@@ -84,7 +84,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
         String op = req.getRequestURI();
         op = op.substring(op.lastIndexOf("user") + 5);
 
-        if (op.equals ("register/")) {
+        if (op.equals ("register")) {
             // the requested operation is register
             register(req, res);
         }
@@ -95,7 +95,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                     ,"You have requested a non existing resource .");
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            res.sendRedirect(req.getContextPath() + "/user/do-register/");
+            res.sendRedirect(req.getContextPath() + "/user/do-register");
         }
     }
 
@@ -118,7 +118,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Email not inserted or not valid.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                res.sendRedirect(req.getContextPath() + "/user/do-register/");
+                res.sendRedirect(req.getContextPath() + "/user/do-register");
             }
 
 
@@ -128,7 +128,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ,"User type not selected.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                res.sendRedirect(req.getContextPath() + "/user/do-register/");
+                res.sendRedirect(req.getContextPath() + "/user/do-register");
             }
 
             if ( password == null || password.equals("") || !rpassword.equals(password) ) {
@@ -138,7 +138,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Password not valid.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                res.sendRedirect(req.getContextPath() + "/user/do-register/");
+                res.sendRedirect(req.getContextPath() + "/user/do-register");
             }
 
             if ( name == null || name.equals("")  ) {
@@ -148,7 +148,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Name not present.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                res.sendRedirect(req.getContextPath() + "/user/do-register/");
+                res.sendRedirect(req.getContextPath() + "/user/do-register");
             }
 
             if ( address == null || address.equals("") ) {
@@ -158,7 +158,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Address not present.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                res.sendRedirect(req.getContextPath() + "/user/do-register/");
+                res.sendRedirect(req.getContextPath() + "/user/do-register");
             }
 
             if ( phone == null || phone.equals( "" ) ){
@@ -168,7 +168,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Phone number not present.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                res.sendRedirect(req.getContextPath() + "/user/do-register/");
+                res.sendRedirect(req.getContextPath() + "/user/do-register");
             }
 
             User usr;
@@ -188,7 +188,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                             ec.getErrorCode(),"Date not valid.");
                     res.setStatus(ec.getHTTPCode());
                     req.setAttribute("message", m);
-                    res.sendRedirect(req.getContextPath() + "/user/do-register/");
+                    res.sendRedirect(req.getContextPath() + "/user/do-register");
                 }
 
                 String surname = req.getParameter("surname");
@@ -200,7 +200,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                             ec.getErrorCode(),"Surname not present.");
                     res.setStatus(ec.getHTTPCode());
                     req.setAttribute("message", m);
-                    res.sendRedirect(req.getContextPath() + "/user/do-register/");
+                    res.sendRedirect(req.getContextPath() + "/user/do-register");
                 }
                 assert birthDateFormatted != null;
                 Tourist t = new Tourist(email, password , name , address , phone , idCity , surname , birthDateFormatted);
@@ -218,7 +218,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Something went wrong creating user account.");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                res.sendRedirect(req.getContextPath() + "/user/do-register/");
+                res.sendRedirect(req.getContextPath() + "/user/do-register");
             }
 
 
@@ -241,7 +241,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(), "An error occurred while sending email confirmation");
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                res.sendRedirect(req.getContextPath() + "/user/do-register/");
+                res.sendRedirect(req.getContextPath() + "/user/do-register");
             }
 
             // login credentials were correct: we redirect the user to the homepage
@@ -255,7 +255,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                     ec.getErrorCode(), ex.getStackTrace().toString());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            res.sendRedirect(req.getContextPath() + "/user/do-register/");
+            res.sendRedirect(req.getContextPath() + "/user/do-register");
         }
 
     }

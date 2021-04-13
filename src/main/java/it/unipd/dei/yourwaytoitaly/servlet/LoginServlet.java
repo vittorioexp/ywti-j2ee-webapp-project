@@ -83,7 +83,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
         String op = req.getRequestURI();
         op = op.substring(op.lastIndexOf("user") + 5);
 
-        if (op.equals ("login/")) {
+        if (op.equals ("login")) {
             // the requested operation is register
             login(req, res);
         }
@@ -94,7 +94,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
                     ,"You have requested a non existing resource .");
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            res.sendRedirect(req.getContextPath() + "/user/do-login/");
+            res.sendRedirect(req.getContextPath() + "/user/do-login");
         }
     }
 
@@ -112,7 +112,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", new Message("Input not valid",
                         ec.getErrorCode(), ec.getErrorMessage()));
-                res.sendRedirect(req.getContextPath() + "/user/do-login/");
+                res.sendRedirect(req.getContextPath() + "/user/do-login");
             }
 
             HttpSession session = req.getSession();
@@ -128,7 +128,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", new Message( "Input not valid.",
                         ec.getErrorCode(), "User type not selected"));
-                res.sendRedirect(req.getContextPath() + "/user/do-login/");
+                res.sendRedirect(req.getContextPath() + "/user/do-login");
             }
 
             if ( password == null || password.equals( "" ) ) {
@@ -136,7 +136,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", new Message("Input not valid.",
                         ec.getErrorCode(), ec.getErrorMessage()));
-                res.sendRedirect(req.getContextPath() + "/user/do-login/");
+                res.sendRedirect(req.getContextPath() + "/user/do-login");
             }
 
             User usr = UserDAO.searchUserLogin(email, password);
@@ -147,7 +147,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
                 Message m = new Message( "User not found.",
                         ec.getErrorCode(),"credentials are wrong");
                 req.setAttribute("message", m);
-                res.sendRedirect(req.getContextPath() + "/user/do-login/");
+                res.sendRedirect(req.getContextPath() + "/user/do-login");
             }
 
             assert usr != null; // if user for some reason is null it will raise an AssertionException
@@ -167,7 +167,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
                     ec.getErrorCode(), ex.getStackTrace().toString());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            res.sendRedirect(req.getContextPath() + "/user/do-login/");
+            res.sendRedirect(req.getContextPath() + "/user/do-login");
         }
 
     }
