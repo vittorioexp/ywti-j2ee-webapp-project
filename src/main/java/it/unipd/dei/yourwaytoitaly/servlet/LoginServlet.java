@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import org.apache.commons.codec.binary.Base64;
+import java.util.Base64;
 
 
 /**
@@ -152,8 +152,8 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
             assert usr != null; // if user for some reason is null it will raise an AssertionException
             String auth = email + ":" + password;
-            byte[] encodedAuth = Base64.encodeBase64(
-                    auth.getBytes(Charset.forName("US-ASCII")) );
+            byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes(Charset.forName("US-ASCII")) );
+
             String authHeader = "Basic " + new String( encodedAuth );
             session.setAttribute( "Authorization", authHeader );
 
@@ -173,7 +173,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
     }
 
     private static String getPair( HttpServletRequest req ){
-        String a = new String (Base64.decodeBase64( ( (String)req.getAttribute("Authorization") ).substring(6))  );
+        String a = new String (Base64.getDecoder().decode(((String)req.getAttribute("Authorization") ).substring(6)));
         if ( a == null )
             return new String("");
         else
