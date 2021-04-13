@@ -70,7 +70,6 @@
 
         <!-- configuration of the plugins for the different goals -->
         <plugins>
-
             <!-- compiler plugin: source and target code is for Java 1.8 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
