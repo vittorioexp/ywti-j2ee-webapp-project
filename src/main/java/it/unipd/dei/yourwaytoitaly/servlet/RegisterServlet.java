@@ -224,8 +224,10 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             }
 
 
-
             HttpSession session = req.getSession();
+            if (session != null ){
+                    session.invalidate();
+            }
 
             assert usr != null; // if user for some reason is null it will raise an AssertionException
             String auth = email + ":" + password;
