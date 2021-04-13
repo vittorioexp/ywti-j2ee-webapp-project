@@ -15,8 +15,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  
- Author: Giurisato Francesco (francesco.giurisato@studenti.unipd.it)
+ Author: Francesco Giurisato (francesco.giurisato@studenti.unipd.it)
  Author: Vittorio Esposito
+ Author: Marco Basso
  Version: 1.0
  Since: 1.0
 -->
@@ -66,7 +67,7 @@
 
 	<servlet>
 		<servlet-name>EditUserJSP</servlet-name>
-		<jsp-file>jsp/edit-profile.jsp</jsp-file>
+		<jsp-file>jsp/protected/edit-profile.jsp</jsp-file>
 	</servlet>
 
 	<servlet>
@@ -81,12 +82,12 @@
 
 	<servlet>
 		<servlet-name>CreateAdvertisementJSP</servlet-name>
-		<jsp-file>jsp/create-advertisement.jsp</jsp-file>
+		<jsp-file>jsp/protected/company/create-advertisement.jsp</jsp-file>
 	</servlet>
 
 	<servlet>
 		<servlet-name>EditAdvertisementJSP</servlet-name>
-		<jsp-file>jsp/edit-advertisement.jsp</jsp-file>
+		<jsp-file>jsp/protected/company/edit-advertisement.jsp</jsp-file>
 	</servlet>
 
 	<servlet>
