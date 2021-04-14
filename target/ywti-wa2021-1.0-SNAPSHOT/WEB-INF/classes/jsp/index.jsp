@@ -58,20 +58,15 @@ Since: 1.0
               action="list/advertisement" method="get">
 
             <label for="typeAdvertisement">typeAdvertisement:</label>
-            <input type="text" id="typeAdvertisement" name="typeAdvertisement" required
-                   minlength="1" maxlength="15" size="10">
-            <br>
+            <input type="number" id="typeAdvertisement" name="typeAdvertisement" required
+                   size="10">
 
             <label for="city">city:</label>
-            <input type="text" id="city" name="city" required
-                   minlength="1" maxlength="25" size="10">
-            <br>
+            <input type="number" id="city" name="city" required
+                   size="10">
 
             <label for="date">Start date:</label>
-            <input type="date" id="date" name="date">
-
-            <br>
-            <br>
+            <input type="date" id="date" name="date" required>
 
             <button type="submit">Start your journey</button><br/>
 

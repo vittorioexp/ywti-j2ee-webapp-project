@@ -391,49 +391,61 @@ public class AdvertisementRestResource extends RestResource {
                     Date date = null;
                     int idType;
 
-                    date = Date.valueOf(req.getParameter("date").toString());
-                    City city = CityDAO.searchCity(req.getParameter("city"));
-                    TypeAdvertisement typeAdvertisement =
-                            TypeAdvertisementDAO.searchTypeAdvertisement(req.getParameter("typeAdvertisement"));
+                    String d = req.getParameter("date").toString();
+                    String c = req.getParameter("city");
+                    String t = req.getParameter("typeAdvertisement");
 
-                    if (date == null || city == null || typeAdvertisement == null) {
+                    if (d == null || c == null || t == null) {
                         ErrorCode ec = ErrorCode.WRONG_FORMAT;
                         Message m = new Message("Input value not valid.",
                                 ec.getErrorCode(), "Input value not valid.");
                         res.setStatus(ec.getHTTPCode());
-                        req.setAttribute("message", m);
-                        req.getRequestDispatcher("/jsp/index.jsp").forward(req, res);
+                        m.toJSON(res.getOutputStream());
+                        return;
                     }
 
-                    idCity = city.getIdCity();
-                    idType = typeAdvertisement.getIdType();
+                    idCity = Integer.parseInt(c);
+                    idType = Integer.parseInt(t);
+                    date = Date.valueOf(d);
 
                     listAdvertisement = AdvertisementDAO.searchAdvertisement(idCity, idType, date);
+
+                    if (listAdvertisement.size()==0) {
+                        ErrorCode ec = ErrorCode.EMPTY_LIST;
+                        Message m = new Message("Empty list of advertisements",
+                                ec.getErrorCode(), "");
+                        res.setStatus(ec.getHTTPCode());
+                        m.toJSON(res.getOutputStream());
+                        return;
+                    }
+
                     new ResourceList(listAdvertisement).toJSON(res.getOutputStream());
 
-                    //req.setAttribute("advertisement-list", listAdvertisement);
-                    req.getRequestDispatcher("/jsp/show-advertisement-list.jsp").forward(req, res);
                     break;
                 default:
                     ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
-                    Message m = new Message("Cannot show the advertisement. ",
+                    Message m = new Message("Cannot show the advertisement. Method not allowed.",
                             ec.getErrorCode(), "Method not allowed");
                     res.setStatus(ec.getHTTPCode());
-                    req.setAttribute("message", m);
-                    req.getRequestDispatcher("/jsp/index.jsp").forward(req, res);
-                    break;
+                    m.toJSON(res.getOutputStream());
+                    return;
             }
+        } catch (SQLException ex) {
+            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("SQL Cannot show the advertisement. ",
+                    ec.getErrorCode(), ex.getMessage());
+            res.setStatus(ec.getHTTPCode());
+            req.setAttribute("message", m);
+            m.toJSON(res.getOutputStream());
+            return;
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message("Cannot show the advertisement. ",
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/index.jsp").forward(req, res);
+            m.toJSON(res.getOutputStream());
+            return;
         }
-
-
     }
-
-
 }

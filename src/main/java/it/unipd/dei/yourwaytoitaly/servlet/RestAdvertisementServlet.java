@@ -8,7 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
 
 public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
 
@@ -32,7 +31,6 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
             throws ServletException, IOException {
 
         res.setContentType(JSON_UTF_8_MEDIA_TYPE);
-        final OutputStream out = res.getOutputStream();
 
         try {
             // if the request method and/or the MIME media type are not allowed, return.
@@ -49,14 +47,17 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
             // if none of the above process methods succeeds, it means an unknown resource has been requested
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             final Message m = new Message("Unknown resource requested.",
-                    ec.getErrorCode(),String.format("Requested resource is %s.", req.getRequestURI()));
+                    ec.getErrorCode(),String.format("A.Requested resource is %s.", req.getRequestURI()));
             res.setStatus(ec.getHTTPCode());
             res.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            m.toJSON(out);
-        } finally {
-            // ensure to always flush and close the output stream
-            out.flush();
-            out.close();
+            m.toJSON(res.getOutputStream());
+
+        } catch(Exception ex) {
+            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("Generic error",
+                    ec.getErrorCode(),ex.toString());
+            res.setStatus(ec.getHTTPCode());
+            m.toJSON(res.getOutputStream());
         }
     }
 
@@ -75,25 +76,15 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
         final String method = req.getMethod();
         final String contentType = req.getHeader("Content-Type");
         final String accept = req.getHeader("Accept");
-        final OutputStream out = res.getOutputStream();
 
         Message m = null;
 
         if(accept == null) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             m = new Message("Unknown resource requested.",
-                    ec.getErrorCode(),String.format("Requested resource is %s.", req.getRequestURI()));
+                    ec.getErrorCode(),String.format("B.Requested resource is %s.", req.getRequestURI()));
             res.setStatus(ec.getHTTPCode());
-            m.toJSON(out);
-            return false;
-        }
-
-        if(!accept.contains(JSON_MEDIA_TYPE) && !accept.equals(ALL_MEDIA_TYPE)) {
-            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            m = new Message("Unknown resource requested.",
-                    ec.getErrorCode(),String.format("Requested resource is %s.", req.getRequestURI()));
-            res.setStatus(ec.getHTTPCode());
-            m.toJSON(out);
+            m.toJSON(res.getOutputStream());
             return false;
         }
 
@@ -109,7 +100,7 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
                 m = new Message("Unknown resource requested.",
                         ec.getErrorCode(),String.format("Requested operation is %s.", method));
                 res.setStatus(ec.getHTTPCode());
-                m.toJSON(out);
+                m.toJSON(res.getOutputStream());
                 return false;
         }
     }
@@ -124,71 +115,61 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
      *
      * @throws IOException if any error occurs in the client/server communication.
      */
-    private boolean processAdvertisement(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    private boolean processAdvertisement(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
         final String method = req.getMethod();
-        final OutputStream out = res.getOutputStream();
 
         String path = req.getRequestURI();
         Message m = null;
 
         // the requested resource was not an advertisement
-        if(path.lastIndexOf("advertisement") <= 0) {
+        if (path.lastIndexOf("advertisement") <= 0) {
             return false;
         }
 
-        try {
+        String tempPath = path.substring(path.lastIndexOf("list") + 5);
 
-            String tempPath = path.substring(path.lastIndexOf("list") + 5);
-
-            // the requested URI is /list/advertisement
-            // if method GET, list advertisements by search criteria
-            if (tempPath.equals("advertisement")) {
-                switch (method) {
-                    case "GET":
-                        new AdvertisementRestResource(req, res, getDataSource().getConnection()).listAdvertisement();
-                        break;
-                    default:
-                        ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
-                        m = new Message("Unknown resource requested.",
-                                ec.getErrorCode(),String.format("Requested operation is %s.", method));
-                        res.setStatus(ec.getHTTPCode());
-                        m.toJSON(res.getOutputStream());
-                        break;
-                }
+        // the requested URI is /list/advertisement
+        // if method GET, list advertisements by search criteria
+        if (tempPath.equals("advertisement")) {
+            switch (method) {
+                case "GET":
+                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).listAdvertisement();
+                    break;
+                default:
+                    ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
+                    m = new Message("Unknown resource requested.",
+                            ec.getErrorCode(), String.format("Requested operation is %s.", method));
+                    res.setStatus(ec.getHTTPCode());
+                    m.toJSON(res.getOutputStream());
+                    break;
             }
+        }
 
-            // the request URI is: /advertisement/{idAdvertisement}
-            // if method GET,  show the advertisement
-            // if method POST, create the advertisement
-            // if method PUT,  edit the advertisement
-            else {
+        // the request URI is: /advertisement/{idAdvertisement}
+        // if method GET,  show the advertisement
+        // if method POST, create the advertisement
+        // if method PUT,  edit the advertisement
+        else {
 
-                switch (method) {
-                    case "GET":
-                        new AdvertisementRestResource(req, res, getDataSource().getConnection()).showAdvertisement();
-                        break;
-                    case "POST":
-                        new AdvertisementRestResource(req, res, getDataSource().getConnection()).insertAdvertisement();
-                        break;
-                    case "PUT":
-                        new AdvertisementRestResource(req, res, getDataSource().getConnection()).editAdvertisement();
-                        break;
-                    default:
-                        ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
-                        m = new Message("Unknown resource requested.",
-                                ec.getErrorCode(),String.format("Requested operation is %s.", method));
-                        res.setStatus(ec.getHTTPCode());
-                        m.toJSON(res.getOutputStream());
-                        break;
-                }
+            switch (method) {
+                case "GET":
+                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).showAdvertisement();
+                    break;
+                case "POST":
+                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).insertAdvertisement();
+                    break;
+                case "PUT":
+                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).editAdvertisement();
+                    break;
+                default:
+                    ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
+                    m = new Message("Unknown resource requested.",
+                            ec.getErrorCode(), String.format("Requested operation is %s.", method));
+                    res.setStatus(ec.getHTTPCode());
+                    m.toJSON(res.getOutputStream());
+                    break;
             }
-        } catch(Exception ex) {
-            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            m = new Message("Generic error",
-                    ec.getErrorCode(),"Cannot process the advertisement.");
-            res.setStatus(ec.getHTTPCode());
-            m.toJSON(res.getOutputStream());
         }
         return true;
     }
