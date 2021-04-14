@@ -177,6 +177,7 @@ public class UserDAO extends AbstractDAO{
         User user = null;
 
         try {
+
             pstmt = con.prepareStatement(STATEMENT_T);
             pstmt.setString(1, reqEmail);
             pstmt.setString(2, reqPassword);
@@ -194,20 +195,15 @@ public class UserDAO extends AbstractDAO{
                         rs.getString("surname"),
                         rs.getDate("birth_date"));
             }
-        } finally {
-            //close all the possible resources
-            cleaningOperations(pstmt, rs, con);
-        }
 
-        if (user == null ) {
-            final String STATEMENT_C =
-                    "SELECT email_c, name_c, phone_number, address, password, ID_city " +
-                            "FROM COMPANY " +
-                            "WHERE email_c = ? AND password = MD5(?);";
+            if (user == null ) {
+                final String STATEMENT_C =
+                        "SELECT email_c, name_c, phone_number, address, password, ID_city " +
+                                "FROM COMPANY " +
+                                "WHERE email_c = ? AND password = MD5(?);";
 
-            // the results of the search
+                // the results of the search
 
-            try {
                 pstmt = con.prepareStatement(STATEMENT_C);
                 pstmt.setString(1, reqEmail);
                 pstmt.setString(2, reqPassword);
@@ -223,14 +219,90 @@ public class UserDAO extends AbstractDAO{
                             rs.getInt("ID_city"),
                             rs.getString("name_c"));
                 }
-            } finally {
-                //close all the possible resources
-                cleaningOperations(pstmt, rs, con);
             }
+        } finally {
+            //close all the possible resources
+            cleaningOperations(pstmt, rs, con);
         }
+
+
 
         return user; // if search doesn't give result user=null
     }
+
+    /**
+     * Searches user by email and password
+     *
+     * @return a user objects matching the parameter.
+     *
+     * @throws SQLException
+     *             if any error occurs while searching.
+     */
+    public static User searchUserByEmail(final String reqEmail) throws SQLException, NamingException {
+        final String STATEMENT_T =
+                "SELECT email_t, surname, name, birth_date, phone_number, address, password, ID_city " +
+                        "FROM TOURIST " +
+                        "WHERE email_t = ?;";
+
+        Connection con = DataSourceProvider.getDataSource().getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        // the results of the search
+        User user = null;
+
+        try {
+
+            pstmt = con.prepareStatement(STATEMENT_T);
+            pstmt.setString(1, reqEmail);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                user = new Tourist(
+                        rs.getString("email_t"),
+                        rs.getString("password"),
+                        rs.getString("name"),
+                        rs.getString("address"),
+                        rs.getString("phone_number"),
+                        rs.getInt("ID_city"),
+                        rs.getString("surname"),
+                        rs.getDate("birth_date"));
+            }
+
+            if (user == null ) {
+                final String STATEMENT_C =
+                        "SELECT email_c, name_c, phone_number, address, password, ID_city " +
+                                "FROM COMPANY " +
+                                "WHERE email_c = ?;";
+
+                // the results of the search
+
+                pstmt = con.prepareStatement(STATEMENT_C);
+                pstmt.setString(1, reqEmail);
+
+                rs = pstmt.executeQuery();
+
+                while (rs.next()) {
+                    user = new Company(
+                            rs.getString("email_c"),
+                            rs.getString("password"),
+                            rs.getString("address"),
+                            rs.getString("phone_number"),
+                            rs.getInt("ID_city"),
+                            rs.getString("name_c"));
+                }
+            }
+        } finally {
+            //close all the possible resources
+            cleaningOperations(pstmt, rs, con);
+        }
+
+
+
+        return user; // if search doesn't give result user=null
+    }
+
 
     /**
      * Searches the user score.

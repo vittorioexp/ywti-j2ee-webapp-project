@@ -32,14 +32,14 @@ Since: 1.0
     <title>Home page</title>
 </head>
     <body>
-    <div>
-        /jsp/index.jsp at /index
-    </div>
-    <div>
+    <header>
+        <h1>Your Way To Italy</h1>
+    </header>
+    <nav>
         <a href="${pageContext.request.contextPath}/index">Home</a>
 
         <c:choose>
-            <c:when test="${empty sessionScope.user}">
+            <c:when test="${empty sessionScope.Authorization}">
                 <a href="${pageContext.request.contextPath}/user/do-login">Login</a>
                 <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
             </c:when>
@@ -49,7 +49,7 @@ Since: 1.0
         </c:choose>
 
         <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
-    </div>
+    </nav>
         <br>
         <br>
         <br>

@@ -23,7 +23,7 @@ import java.util.Base64;
 
 public class LoginServlet extends AbstractDatabaseServlet {
 
-
+    private static final String JSON_UTF_8_MEDIA_TYPE = "application/json; charset=utf-8";
 
     /**
      * Manages HTTP GET requests for login
@@ -80,6 +80,8 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
     public void handleRequest(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
+        res.setContentType(JSON_UTF_8_MEDIA_TYPE);
+
         String op = req.getRequestURI();
         op = op.substring(op.lastIndexOf("user") + 5);
 
@@ -90,10 +92,11 @@ public class LoginServlet extends AbstractDatabaseServlet {
         else{
             // the requested operation is unknown
             ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
-            Message m = new Message("Not Failed to loginValid Request.", ec.getErrorCode()
+            Message m = new Message("Not Valid Request.", ec.getErrorCode()
                     ,"You have requested a non existing resource .");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
+            return;
         }
     }
 
@@ -101,78 +104,76 @@ public class LoginServlet extends AbstractDatabaseServlet {
     public void login (HttpServletRequest req, HttpServletResponse res)  throws IOException ,ServletException {
 
         try {
-
             String email = req.getParameter("email");
             String password = req.getParameter("password");
 
-            if ( email == null || email.equals( "" ) ) {
+            // esposito.vittorio.1998@gmail.com
+
+            if (email == null || email.equals("")) {
                 ErrorCode ec = ErrorCode.EMAIL_MISSING;
-                Message m = new Message("Input value not valid.",
+                Message m = new Message("Email not valid.",
                         ec.getErrorCode(),"Email not inserted or not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
+                return;
             }
 
             HttpSession session = req.getSession(false);
-
-            Message mes = new Message("email:.",
-                    1,LoginServlet.getUserEmail(req));
-            res.setStatus(200);
-            mes.toJSON(res.getOutputStream());
-
             if (session != null ){
-                if ( !email.equals(LoginServlet.getUserEmail(req)) ){
-                    session.invalidate();
+                if ( email.equals(LoginServlet.getUserEmail(req)) ){
+                    // User is already properly logged in
+                    req.getRequestDispatcher("/jsp/index.jsp").forward(req, res);
                 }else
-                    res.sendRedirect(req.getHeader("referer"));
+                    // invalidate session
+                    session.invalidate();
             }
 
-            if ( password == null || password.equals( "" ) ) {
+            if (password == null || password.equals( "" )) {
                 ErrorCode ec = ErrorCode.PASSWORD_MISSING;
-                Message m = new Message("Input value not valid.",
-                        ec.getErrorCode(),"Password not valid.");
+                Message m = new Message("Password not valid.",
+                        ec.getErrorCode(),"Password not inserted or not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
+                return;
             }
 
             User usr = UserDAO.searchUserLogin(email, password);
 
-            if ( usr == null ){
+            if (usr == null){
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
                 res.setStatus(ec.getHTTPCode());
                 Message m = new Message( "User not found.",
-                        ec.getErrorCode(),"credentials are wrong");
+                        ec.getErrorCode(),"Credentials are wrong");
                 m.toJSON(res.getOutputStream());
+                return;
             }
 
-            assert usr != null; // if user for some reason is null it will raise an AssertionException
             String auth = email + ":" + password;
             byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes(Charset.forName("US-ASCII")) );
 
             String authHeader = "Basic " + new String( encodedAuth );
+            session = req.getSession(true);
             session.setAttribute( "Authorization", authHeader );
 
-            // login credentials were correct: we redirect the user to the referer page
-            // now the session is active
-
-            Message m = new Message( "tutto ok",
-                    111,"utente loggato!");
-            m.toJSON(res.getOutputStream());
-
-            res.sendRedirect(req.getHeader("referer"));
+            Message success = new Message("Successful login!");
+            req.setAttribute("message", success);
+            res.setStatus(HttpServletResponse.SC_OK);
+            res.sendRedirect("/index");
 
         }catch (Exception ex){
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message("Failed to login.",
-                    ec.getErrorCode(), ex.getStackTrace().toString());
+                    ec.getErrorCode(), ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
+           return;
         }
-
     }
 
     private static String getPair( HttpServletRequest req ){
-        String a = new String (Base64.getDecoder().decode(((String)req.getAttribute("Authorization") ).substring(6)));
+        String authorization = (String)req.getAttribute("Authorization");
+        if (authorization==null) return "";
+        String a = new String (Base64.getDecoder().decode(authorization.substring(6)));
         if ( a == null )
             return new String("");
         else

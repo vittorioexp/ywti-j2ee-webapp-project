@@ -13,23 +13,24 @@
     <title>show advertisement list</title>
 </head>
     <body>
-    <a href="${pageContext.request.contextPath}/index">Home</a>
+    <header>
+        <h1>Show Advertisement List</h1>
+    </header>
+    <nav>
+        <a href="${pageContext.request.contextPath}/index">Home</a>
 
-    <%
-        User u = new SessionCheckServlet(request, response).getUser();
-    %>
-    <c:choose>
-        <c:when test="${u}">
-            <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
-        </c:when>
-        <c:otherwise>
-            <a href="${pageContext.request.contextPath}/user/do-login">Login</a>
-            <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
-        </c:otherwise>
-    </c:choose>
+        <c:choose>
+            <c:when test="${empty sessionScope.Authorization}">
+                <a href="${pageContext.request.contextPath}/user/do-login">Login</a>
+                <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
+            </c:when>
+            <c:otherwise>
+                <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
+            </c:otherwise>
+        </c:choose>
 
-    <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
-
+        <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
+    </nav>
     <%
         // TODO : get JSON ResourceList<Advertisement>
         ResourceList<Advertisement> listAdvertisement = null;

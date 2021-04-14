@@ -123,10 +123,8 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(),"Email not inserted or not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
-                //req.setAttribute("message", m);
-                //res.sendRedirect(req.getContextPath() + "/user/do-register");
+                return;
             }
-
 
             if ( userType == null ) {
                 ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
@@ -134,51 +132,42 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ,"User type not selected.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
-                //req.setAttribute("message", m);
-                //res.sendRedirect(req.getContextPath() + "/user/do-register");
+                return;
             }
 
             if ( password == null || password.equals("") || !rpassword.equals(password) ) {
-
                 ErrorCode ec = ErrorCode.PASSWORD_MISSING;
                 Message m = new Message("Input value not valid.",
                         ec.getErrorCode(),"Password not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
-                //req.setAttribute("message", m);
-                //res.sendRedirect(req.getContextPath() + "/user/do-register");
+                return;
             }
 
             if ( name == null || name.equals("")  ) {
-
                 ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
                 Message m = new Message("Input value not valid.",
                         ec.getErrorCode(),"Name not present.");
                 m.toJSON(res.getOutputStream());
-                //req.setAttribute("message", m);
-                //res.sendRedirect(req.getContextPath() + "/user/do-register");
+                return;
             }
 
             if ( address == null || address.equals("") ) {
-
                 ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
                 Message m = new Message("Input value not valid.",
                         ec.getErrorCode(),"Address not present.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
-                //req.setAttribute("message", m);
-                //res.sendRedirect(req.getContextPath() + "/user/do-register");
+                return;
             }
 
             if ( phone == null || phone.equals( "" ) ){
-
                 ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
                 Message m = new Message("Input value not valid.",
                         ec.getErrorCode(),"Phone number not present.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
-                //req.setAttribute("message", m);
-                //res.sendRedirect(req.getContextPath() + "/user/do-register");
+                return;
             }
 
             User usr;
@@ -197,44 +186,60 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                     Message m = new Message("Input value not valid.",
                             ec.getErrorCode(),"Date not valid.");
                     m.toJSON(res.getOutputStream());
-                    //req.setAttribute("message", m);
-                    //res.sendRedirect(req.getContextPath() + "/user/do-register");
+                    return;
                 }
 
                 String surname = req.getParameter("surname");
 
                 if ( surname == null || surname.equals( "" )) {
-                    
                     ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
                     Message m = new Message("Input value not valid.",
                             ec.getErrorCode(),"Surname not present.");
                     res.setStatus(ec.getHTTPCode());
                     m.toJSON(res.getOutputStream());
-                    //req.setAttribute("message", m);
-                    //res.sendRedirect(req.getContextPath() + "/user/do-register");
+                    return;
                 }
                 //assert birthDateFormatted != null;
-                Tourist t = new Tourist(email, password , name , address , phone , idCity , surname , birthDateFormatted);
 
+                usr = UserDAO.searchUserByEmail(email);
+
+                if (usr!=null) {
+                    // the user is already registered
+                    ErrorCode ec = ErrorCode.MAIL_ALREADY_USED;
+                    Message m = new Message("Mail already used.",
+                            ec.getErrorCode(),"The user is already registered");
+                    res.setStatus(ec.getHTTPCode());
+                    m.toJSON(res.getOutputStream());
+                    return;
+                }
+
+                Tourist t = new Tourist(email, password , name , address , phone , idCity , surname , birthDateFormatted);
                 usr = (Tourist) UserDAO.createUser(t);
 
             }else {
+                usr = UserDAO.searchUserByEmail(email);
 
+                if (usr!=null) {
+                    // the user is already registered
+                    ErrorCode ec = ErrorCode.MAIL_ALREADY_USED;
+                    Message m = new Message("Mail already used.",
+                            ec.getErrorCode(),"The user is already registered");
+                    res.setStatus(ec.getHTTPCode());
+                    m.toJSON(res.getOutputStream());
+                    return;
+                }
                 Company c = new Company( email, password , address , phone , idCity , name);
                 usr = (Company) UserDAO.createUser(c);
             }
 
             if ( usr == null ){
-                
                 ErrorCode ec = ErrorCode.INTERNAL_ERROR;
                 Message m = new Message("Failed creating user account.",
                         ec.getErrorCode(),"Something went wrong creating user account.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
-                //req.setAttribute("message", m);
-                //res.sendRedirect(req.getContextPath() + "/user/do-register");
+                return;
             }
-
 
             HttpSession session = req.getSession(false);
             if (session != null ){
@@ -250,7 +255,6 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
             EmailSender mail= new EmailSender(email);
 
-
             //send email and check if email is sent correctly
             if (!mail.sendConfirmationEmail("YourWayToItaly:Account successfully registered",
                     "Congratulations, your account has successfully been registered. " +
@@ -260,16 +264,17 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(), "An error occurred while sending email confirmation");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
-//                req.setAttribute("message", m);
-//                res.sendRedirect(req.getContextPath() + "/user/do-register");
-
-
+                return;
             }
+
             // login credentials were correct: we redirect the user to the homepage
             // now the session is active and its data can used to change the homepage
             //res.sendRedirect(req.getContextPath()+"/jsp/homepage.jsp");
 
-            res.sendRedirect(req.getContextPath() + "/index");
+            Message success = new Message("Successful registration!");
+            req.setAttribute("message", success);
+            res.setStatus(HttpServletResponse.SC_OK);
+            res.sendRedirect("/index");
 
         }catch (Exception ex){
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

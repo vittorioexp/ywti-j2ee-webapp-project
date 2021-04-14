@@ -29,11 +29,14 @@ Since: 1.0
     <title>login</title>
 </head>
 <body>
-<div>
+<header>
+    <h1>Login</h1>
+</header>
+<nav>
     <a href="${pageContext.request.contextPath}/index">Home</a>
 
     <c:choose>
-        <c:when test="${empty sessionScope.user}">
+        <c:when test="${empty sessionScope.Authorization}">
             <a href="${pageContext.request.contextPath}/user/do-login">Login</a>
             <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
         </c:when>
@@ -43,14 +46,14 @@ Since: 1.0
     </c:choose>
 
     <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
-</div>
+</nav>
 
 <div>
 <form id="login-form" name="login-form" method="POST" action="<c:url value="/user/login"/>">
     <label for="email">email:</label>
-    <input id="email" name="email" type="text"/><br/><br/>
+    <input id="email" name="email" type="text" required/><br/><br/>
     <label for="password">password:</label>
-    <input id="password" name="password" type="password"/><br/><br/>
+    <input id="password" name="password" type="password" required/><br/><br/>
     <button type="submit">Submit</button><br/>
 </form>
 </div>

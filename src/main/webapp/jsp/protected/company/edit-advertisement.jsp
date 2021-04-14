@@ -11,12 +11,16 @@
 </head>
 <body>
 
-<div>
+<header>
+    <h1>Edit Advertisement</h1>
+</header>
+<nav>
     <a href="${pageContext.request.contextPath}/index">Home</a>
 
     <c:choose>
-        <c:when test="${empty sessionScope.user}">
-
+        <c:when test="${empty sessionScope.Authorization}">
+            <a href="${pageContext.request.contextPath}/user/do-login">Login</a>
+            <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
         </c:when>
         <c:otherwise>
             <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
@@ -24,7 +28,7 @@
     </c:choose>
 
     <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
-</div>
+</nav>
 
 <div>
 

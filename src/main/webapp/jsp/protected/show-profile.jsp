@@ -30,6 +30,24 @@ Since: 1.0
         <title>show profile</title>
     </head>
     <body>
+    <header>
+        <h1>Show profile</h1>
+    </header>
+    <nav>
+        <a href="${pageContext.request.contextPath}/index">Home</a>
+
+        <c:choose>
+            <c:when test="${empty sessionScope.Authorization}">
+                <a href="${pageContext.request.contextPath}/user/do-login">Login</a>
+                <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
+            </c:when>
+            <c:otherwise>
+                <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
+            </c:otherwise>
+        </c:choose>
+
+        <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
+    </nav>
         <c:choose>
             <c:when test="${isTurist eq True}">      <!--aggiungere funzionalità per testare se l'utente loggato è un turist o una company-->
                 <%
