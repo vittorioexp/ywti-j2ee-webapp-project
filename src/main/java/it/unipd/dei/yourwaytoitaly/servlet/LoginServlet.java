@@ -90,7 +90,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
         else{
             // the requested operation is unknown
             ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
-            Message m = new Message("Not Valid Request.", ec.getErrorCode()
+            Message m = new Message("Not Failed to loginValid Request.", ec.getErrorCode()
                     ,"You have requested a non existing resource .");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
@@ -114,11 +114,17 @@ public class LoginServlet extends AbstractDatabaseServlet {
             }
 
             HttpSession session = req.getSession(false);
+
+            Message mes = new Message("email:.",
+                    1,LoginServlet.getUserEmail(req));
+            res.setStatus(200);
+            mes.toJSON(res.getOutputStream());
+
             if (session != null ){
                 if ( !email.equals(LoginServlet.getUserEmail(req)) ){
                     session.invalidate();
                 }else
-                    return;
+                    res.sendRedirect(req.getHeader("referer"));
             }
 
             if ( password == null || password.equals( "" ) ) {

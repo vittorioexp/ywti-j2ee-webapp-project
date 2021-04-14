@@ -253,7 +253,8 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
             //send email and check if email is sent correctly
             if (!mail.sendConfirmationEmail("YourWayToItaly:Account successfully registered",
-                    "Congratulations, your account has successfully been registered. You can know start your Journey!")){
+                    "Congratulations, your account has successfully been registered. " +
+                            "You can now start your Journey!")){
                 ErrorCode ec = ErrorCode.INTERNAL_ERROR;
                 Message m = new Message("Failed to send confirmation email.",
                         ec.getErrorCode(), "An error occurred while sending email confirmation");
