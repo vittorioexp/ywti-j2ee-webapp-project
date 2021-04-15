@@ -1,8 +1,12 @@
 package it.unipd.dei.yourwaytoitaly.rest;
 
 
-import it.unipd.dei.yourwaytoitaly.database.*;
+import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
+import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
+import it.unipd.dei.yourwaytoitaly.database.FeedbackDAO;
+import it.unipd.dei.yourwaytoitaly.database.ImageDAO;
 import it.unipd.dei.yourwaytoitaly.resource.*;
+import it.unipd.dei.yourwaytoitaly.servlet.LoginServlet;
 import it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 import org.apache.commons.fileupload.FileItem;
@@ -207,8 +211,8 @@ public class AdvertisementRestResource extends RestResource {
             idAdvertisement = idAdvertisement.substring(idAdvertisement.lastIndexOf("advertisement") + 14);
             Advertisement advertisement = AdvertisementDAO.searchAdvertisement(Integer.parseInt(idAdvertisement));
 
-            advertisement.toJSON(res.getOutputStream());
-            //req.setAttribute("advertisement", advertisement);
+            //advertisement.toJSON(res.getOutputStream());
+            req.setAttribute("advertisement", advertisement.toJSON());
 
             List<Image> imageList = ImageDAO.searchImageByIdAdvertisement(Integer.parseInt(idAdvertisement));
 
@@ -224,18 +228,13 @@ public class AdvertisementRestResource extends RestResource {
             }
 
             // The owner can see the booking list relative to this advertisement: check if a session is valid
-            User u = new SessionCheckServlet(req, res).getUser();
-            if (u != null) {
-                // check if the user (company) is the owner of the advertisement
-                String emailSession = u.getEmail();
-                if (emailSession.equals(advertisement.getEmailCompany())) {
-                    List<Booking> listBookings = BookingDAO.searchBookingByAdvertisement(Integer.parseInt(idAdvertisement));
-                    req.setAttribute("booking-list", listBookings);
-                } else {
-                    req.setAttribute("booking-list", null);
-                }
-
+            if (LoginServlet.checkSessionEmail(req, advertisement.getEmailCompany())) {
+                List<Booking> listBookings = BookingDAO.searchBookingByAdvertisement(Integer.parseInt(idAdvertisement));
+                req.setAttribute("booking-list", listBookings);
+            } else {
+                req.setAttribute("booking-list", null);
             }
+
             List<Feedback> feedbackList = FeedbackDAO.searchFeedbackByAdvertisement(Integer.parseInt(idAdvertisement));
             double rate = 0;
             if (feedbackList!=null) {
@@ -250,6 +249,9 @@ public class AdvertisementRestResource extends RestResource {
                 req.setAttribute("rate", 0);
             }
 
+            Message success = new Message("Successful show of the advertisement!");
+            req.setAttribute("message", success);
+            //res.setStatus(HttpServletResponse.SC_OK);
             req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
 
         } catch (Exception ex) {
@@ -257,8 +259,8 @@ public class AdvertisementRestResource extends RestResource {
             Message m = new Message("Cannot show the advertisement. ",
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
-            res.sendRedirect(req.getContextPath() + "/index/");
+            m.toJSON(res.getOutputStream());
+            return;
         }
 
     }

@@ -1,21 +1,13 @@
 package it.unipd.dei.yourwaytoitaly.filter;
 
-import it.unipd.dei.yourwaytoitaly.database.UserDAO;
-import it.unipd.dei.yourwaytoitaly.resource.Message;
-import it.unipd.dei.yourwaytoitaly.resource.User;
-import it.unipd.dei.yourwaytoitaly.servlet.AbstractDatabaseServlet;
 import it.unipd.dei.yourwaytoitaly.servlet.LoginServlet;
-import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Base64;
 
 /**
@@ -43,18 +35,6 @@ public class AuthenticationCheck implements Filter {
      * The connection to the database
      * */
     private DataSource ds;
-
-//    public AuthenticationCheck (HttpServletRequest req , HttpServletResponse res) throws ServletException, IOException {
-//        this.session = req.getSession(false);
-//        if (session == null || session.getAttribute("email") == null) {
-//            session.invalidate();
-//            req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
-//        }
-//    }
-//
-//    public String getEmail(){ return session.getAttribute("email").toString();}
-//    public String getPassword() {return  session.getAttribute("password").toString();}
-//    public User getUser() throws SQLException, NamingException { return UserDAO.searchUserLogin(getEmail(), getPassword());    }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

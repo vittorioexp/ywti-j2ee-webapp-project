@@ -1,10 +1,10 @@
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Advertisement" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Booking" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Feedback" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.resource.User" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet" %>
+<%@ page import="org.json.JSONObject" %>
+<%@ page import="java.sql.Date" %>
+<%@ page import="java.sql.Time" %>
 <%@ page import="java.util.List" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -53,8 +53,28 @@ Since: 1.0
     <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
 </nav>
 
+<div>
+
+</div>
+
 <%
-    Advertisement adv = Advertisement.fromJSON(request.getInputStream());
+    JSONObject jo = (JSONObject) request.getAttribute("advertisement");
+
+    Advertisement adv = new Advertisement(
+                    0,
+                    String.valueOf(jo.get("title")),
+                    String.valueOf(jo.get("description")),
+                    (Integer) jo.get("score"),
+                    (Integer) jo.get("price"),
+                    0,
+                    Date.valueOf((String) jo.get("dateStart")),
+                    Date.valueOf((String) jo.get("dateEnd")),
+                    Time.valueOf((String) jo.get("timeStart")),
+                    Time.valueOf((String) jo.get("timeEnd")),
+                    "",
+                    0
+                    );
+
 %>
 <table cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
     <tr>
@@ -64,8 +84,6 @@ Since: 1.0
         <td>Date End</td>
         <td>Time Start</td>
         <td>Time End</td>
-        <td>Email company</td>
-        <td>Num Tot Item</td>
         <td>Price</td>
         <td>Score</td>
     </tr>
@@ -76,18 +94,17 @@ Since: 1.0
         <td><%=adv.getDateEnd() %></td>
         <td><%=adv.getTimeStart() %></td>
         <td><%=adv.getTimeEnd() %></td>
-        <td><%=adv.getEmailCompany()%></td>
-        <td><%=adv.getNumTotItem() %></td>
         <td><%=adv.getPrice() %></td>
         <td><%=adv.getScore() %></td>
     </tr>
 </table>
 
 <%
-    int rate = (int) request.getAttribute("rate");
+    //int rate = Integer.parseInt((String) request.getAttribute("rate"));
+    int rate = 5;
 %>
 <c:choose>
-    <c:when test="${rate}">
+    <c:when test="${attribute.rate>0}">
         <p><c:out value="${rate}"/></p>
     </c:when>
     <c:otherwise>

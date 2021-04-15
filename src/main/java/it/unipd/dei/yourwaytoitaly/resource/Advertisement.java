@@ -3,6 +3,7 @@ package it.unipd.dei.yourwaytoitaly.resource;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -82,6 +83,27 @@ public final class Advertisement extends Resource{
     public final int getIdType() {
         return idType;
     }
+
+    public final JSONObject toJSON() throws IOException {
+        //final JsonGenerator jg = JSON_FACTORY.createGenerator(out);
+        JSONObject jg = new JSONObject();
+
+        jg.put("idAdvertisement", idAdvertisement);
+        jg.put("title", title);
+        jg.put("description", description);
+        jg.put("score", score);
+        jg.put("price", price);
+        jg.put("numTotItem", numTotItem);
+        jg.put("dateStart", dateStart.toString());
+        jg.put("dateEnd", dateEnd.toString());
+        jg.put("timeStart", timeStart.toString());
+        jg.put("timeEnd", timeEnd.toString());
+        jg.put("emailCompany", emailCompany);
+        jg.put("idType", idType);
+
+        return jg;
+    }
+
 
     public final void toJSON(final OutputStream out) throws IOException {
 
@@ -206,4 +228,8 @@ public final class Advertisement extends Resource{
 
         return new Advertisement(jidAdvertisement, jtitle, jdescription, jscore,jprice,jnumTotItem,jdateStart,jdateEnd,jtimeStart,jtimeEnd,jemailCompany,jidType);
     }
+
+
+
+
 }
