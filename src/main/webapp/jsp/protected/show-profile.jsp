@@ -40,7 +40,7 @@ Since: 1.0
         <h1>Show profile</h1>
     </header>
     <nav>
-        <a href="${pageContext.request.contextPath}/protected/edit-profile.jsp">Home</a>
+        <a href="${pageContext.request.contextPath}/index">Home</a>
 
         <%!
         %><c:choose>
@@ -48,6 +48,7 @@ Since: 1.0
             </c:when>
             <c:otherwise>
                 <a href="${pageContext.request.contextPath}/user/do-logout">Logout</a>
+                <a href="${pageContext.request.contextPath}/user/do-edit">Edit profile</a>
             </c:otherwise>
         </c:choose>
 

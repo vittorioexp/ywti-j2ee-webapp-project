@@ -50,8 +50,8 @@ Since: 1.0
 
 <%
     int idAdvertisement = 0;
-    String tmp = String.valueOf(request.getAttribute("idAdvertisement"));
-    if (tmp!=null) {idAdvertisement = Integer.parseInt(tmp);}
+//    String tmp = String.valueOf(request.getAttribute("idAdvertisement"));
+//    if (tmp!=null) {idAdvertisement = Integer.parseInt(tmp);}
 %>
 
 <c:choose>

@@ -117,7 +117,7 @@ public class UserDAO extends AbstractDAO{
      * @throws SQLException
      *             if any error occurs while creating users.
      */
-    public static void editUser(User user) throws SQLException, NamingException {
+    public static void editUserPhoneNumber(User user, String password) throws SQLException, NamingException {
         final String STATEMENT_TOURIST_EDIT =
                 "UPDATE TOURIST SET password = MD5(?) , phone_number = ? WHERE email_t = ? RETURNING *;";
 
@@ -134,14 +134,14 @@ public class UserDAO extends AbstractDAO{
         try {
             if (user instanceof Tourist) {
                 pstmt = con.prepareStatement(STATEMENT_TOURIST_EDIT);
-                pstmt.setString(1, ((Tourist) user).getPassword());
+                pstmt.setString(1, password);
                 pstmt.setString(2, ((Tourist) user).getPhoneNumber());
                 pstmt.setString(3, ((Tourist) user).getEmail());
                 rs = pstmt.executeQuery();
 
             } else if (user instanceof Company) {
                 pstmt = con.prepareStatement(STATEMENT_COMPANY_EDIT);
-                pstmt.setString(1, ((Company) user).getPassword());
+                pstmt.setString(1, (password));
                 pstmt.setString(2, ((Company) user).getPhoneNumber());
                 pstmt.setString(3, ((Company) user).getEmail());
                 rs = pstmt.executeQuery();

@@ -73,9 +73,15 @@ public class CompanyAuthenticationCheck implements Filter {
             try {
                 String email = LoginServlet.getUserEmail(req);
                 if (!(UserDAO.searchUserByEmail(email) instanceof Company)) {
-                    res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    res.sendRedirect(req.getContextPath() + "/index");
+                    ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
+                    Message m = new Message("Not a company.",
+                            ec.getErrorCode(),"The user is already registered");
+                    res.setStatus(ec.getHTTPCode());
+                    m.toJSON(res.getOutputStream());
                     return;
+//                    res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//                    res.sendRedirect(req.getContextPath() + "/index");
+//                    return;
                 }
             }catch(SQLException | NamingException e){
                 session.invalidate();

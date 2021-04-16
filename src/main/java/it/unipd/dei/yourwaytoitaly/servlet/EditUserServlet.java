@@ -55,11 +55,11 @@ public class EditUserServlet extends AbstractDatabaseServlet {
                 return;
             }
             email = u.getEmail();
-            password = u.getPassword();
 
             // at this point the user exists so it is authorized to edit his own profile
 
             phoneNumber = req.getParameter("phonenumber");
+            password = req.getParameter("password");
 
             if (phoneNumber==null || phoneNumber.length()<10 || phoneNumber.length()>15) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
@@ -74,7 +74,7 @@ public class EditUserServlet extends AbstractDatabaseServlet {
 
                 u = new Tourist(
                         email,
-                        password,
+                        null,
                         null,
                         null,
                         phoneNumber,
@@ -83,7 +83,7 @@ public class EditUserServlet extends AbstractDatabaseServlet {
                         null
                 );
 
-                UserDAO.editUser(u);
+                UserDAO.editUserPhoneNumber(u , password);
 
             } else if (u instanceof Company) {
 
@@ -96,11 +96,11 @@ public class EditUserServlet extends AbstractDatabaseServlet {
                         null
                 );
 
-                UserDAO.editUser(u);
+                UserDAO.editUserPhoneNumber(u , password);
 
             }
             res.setStatus(HttpServletResponse.SC_OK);
-            res.sendRedirect(req.getContextPath()+"/user/profile/");
+            res.sendRedirect(req.getContextPath()+"/user/profile");
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
