@@ -1,5 +1,7 @@
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Tourist" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Company" %>
+<%@ page import="java.util.List" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Booking" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -15,7 +17,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+Author: Marco Basso
 Author: Vittorio Esposito
+Author: Francesco Giurisato
+Author: Matteo Piva
 Version: 1.0
 Since: 1.0
 -->
@@ -34,74 +39,118 @@ Since: 1.0
         <h1>Show profile</h1>
     </header>
     <nav>
-        <a href="${pageContext.request.contextPath}/index">Home</a>
+        <a href="${pageContext.request.contextPath}/protected/edit-profile.jsp">Home</a>
 
-        <c:choose>
+        <%!
+        %><c:choose>
             <c:when test="${empty sessionScope.Authorization}">
-                <a href="${pageContext.request.contextPath}/user/do-login">Login</a>
-                <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
             </c:when>
             <c:otherwise>
-                <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
                 <a href="${pageContext.request.contextPath}/user/do-logout">Logout</a>
             </c:otherwise>
         </c:choose>
 
         <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
-    </nav>
-        <c:choose>
-            <c:when test="${isTurist eq True}">      <!--aggiungere funzionalità per testare se l'utente loggato è un turist o una company-->
-                <%
-                    Tourist tourist = (Tourist) request.getAttribute("tourist");
-                %>
-                <table cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
-                    <tr>
-                        <td>Name</td>
-                        <td>Surname</td>
-                        <td>Address</td>
-                        <td>Email</td>
-                        <td>Birthdate</td>
-                        <td>IDCity</td>
-                        <td>PhoneNumber</td>
-                    </tr>
-                    <tr>
-                        <td><%=tourist.getName() %></td>
-                        <td><%=tourist.getSurname()%></td>
-                        <td><%=tourist.getAddress() %></td>
-                        <td><%=tourist.getEmail() %></td>
-                        <td><%=tourist.getBirthDate() %></td>
-                        <td><%=tourist.getIdCity()%></td>
-                        <td><%=tourist.getPhoneNumber()%></td>
-                    </tr>
-                </table>
-            </c:when>
-            <c:otherwise>
-                <%
-                    Company company = (Company) request.getAttribute("company");
-                %>
-                <table cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
-                    <tr>
-                        <td>Name</td>
-                        <td>Address</td>
-                        <td>Email</td>
-                        <td>IDCity</td>
-                        <td>PhoneNumber</td>
-                    </tr>
-                    <tr>
-                        <td><%=company.getName() %></td>
-                        <td><%=company.getAddress()%></td>
-                        <td><%=company.getEmail() %></td>
-                        <td><%=company.getIdCity()%></td>
-                        <td><%=company.getPhoneNumber()%></td>
-                    </tr>
-                </table>
-                <br />
-            </c:otherwise>
-        </c:choose>
 
- <div>
-     <c:import url="/jsp/include/show-message.jsp"/>
- </div>
+    </nav>
+
+
+    <c:choose>
+        <c:when test="${userType}">
+            // User = Tourist
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td>Surname</td>
+                    <td>Phone number</td>
+                    <td>Address</td>
+                    <td>Email</td>
+                    <td>City</td>
+                    <td>Birthdate</td>
+                </tr>
+                <tr>
+                    <td><c:out value="${user.name}"/></td>
+                    <td><c:out value="${user.surname}"/></td>
+                    <td><c:out value="${user.phoneNumber}"/></td>
+                    <td><c:out value="${user.address}"/></td>
+                    <td><c:out value="${user.email}"/></td>
+                    <td><c:out value="${user.idCity}"/></td>
+                    <td><c:out value="${user.birthDate}"/></td>
+                </tr>
+            </table>
+
+            <button type="submit" formaction="/user/do-edit" method="PUT">Delete</button>
+
+            <table>
+                <tr>
+                    <td>Booking date</td>
+                    <td>Item booked</td>
+                    <td>Booking state</td>
+                </tr>
+            </table>
+            <%
+                List<Booking> bookingslist = (List) request.getAttribute("bookings-list");
+            %>
+
+            <c:forEach items="${bookingslist}" var="booking">
+                <table>
+                    <tr>
+                        <td>${booking.date}</td>
+                        <td>${booking.numBooking}</td>
+                        <td>${booking.state}</td>
+                        <td><input type="hidden" id="idAdvertisement" name="idAdvertisement" value="${booking.idAdvertisement}"/>
+                            <button type="submit" formaction="/booking-delete" method="PUT">Delete</button><br/>
+                        </td>
+                    </tr>
+                </table>
+            </c:forEach>
+        </c:when>
+        <c:otherwise>
+            // User = Company
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td>Phone number</td>
+                    <td>Address</td>
+                    <td>City</td>
+                </tr>
+                <tr>
+                    <td><c:out value="${user.name}"/></td>
+                    <td><c:out value="${user.email}"/><</td>
+                    <td><c:out value="${user.phoneNumber}"/><</td>
+                    <td><c:out value="${user.address}"/><</td>
+                    <td><c:out value="${user.idCity}"/><</td>
+                </tr>
+            </table>
+            <!-- TODO: Create the advertisement-create.jsp -->
+            <button type="submit" formaction="/advertisement-create">Inset new advertisement</button>
+
+            <table>
+                <tr>
+                    <td>Title</td>
+                    <!-- TODO:insert the ield for the image -->
+                    <td>Edit</td>
+                    <td>Info</td>
+                </tr>
+            </table>
+
+            <c:forEach items="${advertisement-list}" var="advertisement">
+                <table>
+                    <tr>
+                        <td>${advertisement.title}</td>
+                        <!-- TODO: inserire la lista delle immagini -->
+                        <td><button type="submit" formaction="/advertisement-edit">Edit</button><br /></td>
+                        <td><button type="submit" formaction="/advertisement${advertisement.idAdvertisement}">Info</button><br/></td>
+                    </tr>
+                </table>
+            </c:forEach>
+        </c:otherwise>
+    </c:choose>
+
+     <div>
+         <c:import url="/jsp/include/show-message.jsp"/>
+     </div>
 
     </body>
 </html>

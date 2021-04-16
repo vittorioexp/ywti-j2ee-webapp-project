@@ -41,6 +41,7 @@ Since: 1.0
         </c:when>
         <c:otherwise>
             <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
+            <a href="${pageContext.request.contextPath}/user/do-logout">Logout</a>
         </c:otherwise>
     </c:choose>
 
@@ -48,53 +49,68 @@ Since: 1.0
 </nav>
 
 <%
-    int idAdvertisement = (int) request.getAttribute("idAdvertisement");
+    int idAdvertisement = 0;
+    String tmp = String.valueOf(request.getAttribute("idAdvertisement"));
+    if (tmp!=null) {idAdvertisement = Integer.parseInt(tmp);}
 %>
 
 <c:choose>
 
-    <c:when test="${idAdvertisement!='0'}">
+    <c:when test="${idAdvertisement==0}">
 
         <div>
-            <form method="post" action="<c:url value="/advertisement-do-create>"/>">
+            <form id="create-advertisement-form" name="create-advertisement-form" method="POST"
+                  action="<c:url value="/advertisement-create" />" >
 
                 <label for="title">title:</label>
-                <input name="title" type="text"/><br/><br/>
+                <input id="title" name="title" type="text" required/><br/><br/>
 
                 <label for="type">type:</label>
-                <input name="type" type="text"/><br/><br/>
+                <input id="type" name="type" type="text" required/><br/><br/>
 
                 <label for="description">description:</label>
-                <input name="description" type="text"/><br/><br/>
+                <input id="description" name="description" type="text" required/><br/><br/>
 
                 <label for="price">price:</label>
-                <input name="price" type="number"/><br/><br/>
+                <input id="price" name="price" type="number" required/><br/><br/>
 
                 <label for="numTotItem">numTotItem:</label>
-                <input name="numTotItem" type="number"/><br/><br/>
+                <input id="numTotItem" name="numTotItem" type="number" required/><br/><br/>
 
                 <label for="dateStart">dateStart:</label>
-                <input name="dateStart" type="date"/><br/><br/>
+                <input id="dateStart" name="dateStart" type="date" required/><br/><br/>
 
                 <label for="dateEnd">dateEnd:</label>
-                <input name="dateEnd" type="date"/><br/><br/>
+                <input id="dateEnd" name="dateEnd" type="date" required/><br/><br/>
 
                 <label for="timeStart">timeStart:</label>
-                <input name="timeStart" type="time"/><br/><br/>
+                <input id="timeStart" name="timeStart" type="time" required/><br/><br/>
 
                 <label for="timeEnd">timeEnd:</label>
-                <input name="timeEnd" type="time"/><br/><br/>
+                <input id="timeEnd" name="timeEnd" type="time" required/><br/><br/>
 
                 <button type="submit" name="Submit" value="Submit">Submit</button><br/>
 
             </form>
+
+            <script>
+                function handleSubmit(event) {
+                    event.preventDefault();
+                    const data = new FormData(event.target);
+                    const value = Object.fromEntries(data.entries());
+                    console.log({ value });
+                }
+                const form = document.querySelector('form');
+                form.addEventListener('submit', handleSubmit);
+            </script>
+
         </div>
     </c:when>
     <c:otherwise>
         <div>
-            <form method="post" enctype="multipart/form-data" action="<c:url value="/advertisement-create>"/>">
+            <form id="upload-images-form" method="post" enctype="multipart/form-data" action="/advertisement-create">
                 <label for="image">image:</label>
-                <input name="image" type="file" id="file" multiple/><br/><br/>
+                <input id="image" name="image" type="file" id="file" multiple/><br/><br/>
                 <button type="submit" name="Submit" value="Submit">Upload</button><br/>
 
             </form>

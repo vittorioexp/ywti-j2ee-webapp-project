@@ -57,13 +57,18 @@
 	</servlet>
 
 	<servlet>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.LogoutServlet</servlet-class>
+	</servlet>
+
+	<servlet>
 		<servlet-name>RegisterServlet</servlet-name>
 		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.RegisterServlet</servlet-class>
 	</servlet>
 
 	<servlet>
-		<servlet-name>ShowUserServlet</servlet-name>
-		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.ShowUserServlet</servlet-class>
+		<servlet-name>ShowProfileServlet</servlet-name>
+		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.ShowProfileServlet</servlet-class>
 	</servlet>
 
 	<servlet>
@@ -102,27 +107,42 @@
 	</servlet>
 
 	<servlet>
-		<servlet-name>LogoutServlet</servlet-name>
-		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.LogoutServlet</servlet-class>
-	</servlet>
-
-	<servlet>
 		<servlet-name>InsertFeedbackServlet</servlet-name>
 		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.InsertFeedbackServlet</servlet-class>
 	</servlet>
 
+	<!-- Mapping filters -->
+
+	<filter-mapping>
+		<filter-name>AuthenticationCheck</filter-name>
+		<url-pattern>/user/do-logout</url-pattern>
+		<url-pattern>/user/edit</url-pattern>
+		<url-pattern>/user/profile</url-pattern>
+		<url-pattern>/booking-delete</url-pattern>
+		<url-pattern>/booking-create</url-pattern>
+		<url-pattern>/feedback-create</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>CompanyAuthenticationCheck</filter-name>
+		<url-pattern>/advertisement-do-create</url-pattern>
+		<url-pattern>/advertisement-edit</url-pattern>
+		<url-pattern>/advertisement-create</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>CompanyAuthenticationCheck</filter-name>
+		<filter-class>it.unipd.dei.yourwaytoitaly.filter.CompanyAuthenticationCheck</filter-class>
+	</filter>
+
+	<filter>
+		<filter-name>AuthenticationCheck</filter-name>
+		<filter-class>it.unipd.dei.yourwaytoitaly.filter.AuthenticationCheck</filter-class>
+	</filter>
+
+
 
 	<!-- Mapping between servlets and URIs -->
-
-	<servlet-mapping>
-		<servlet-name>InsertFeedbackServlet</servlet-name>
-		<url-pattern>/feedback-create</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>LogoutServlet</servlet-name>
-		<url-pattern>/user/do-logout</url-pattern>
-	</servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>IndexPageJSP</servlet-name>
@@ -140,6 +160,11 @@
 	</servlet-mapping>
 
 	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/user/do-logout</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
 		<servlet-name>LoginServlet</servlet-name>
 		<url-pattern>/user/login</url-pattern>
 	</servlet-mapping>
@@ -150,7 +175,7 @@
 	</servlet-mapping>
 
 	<servlet-mapping>
-		<servlet-name>ShowUserServlet</servlet-name>
+		<servlet-name>ShowProfileServlet</servlet-name>
 		<url-pattern>/user/profile</url-pattern>
 	</servlet-mapping>
 
@@ -197,6 +222,11 @@
 	<servlet-mapping>
 		<servlet-name>InsertBookingServlet</servlet-name>
 		<url-pattern>/booking-create</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>InsertFeedbackServlet</servlet-name>
+		<url-pattern>/feedback-create</url-pattern>
 	</servlet-mapping>
 
 	<resource-ref>

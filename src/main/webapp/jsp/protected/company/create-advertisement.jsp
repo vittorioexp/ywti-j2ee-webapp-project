@@ -41,6 +41,7 @@ Since: 1.0
         </c:when>
         <c:otherwise>
             <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
+            <a href="${pageContext.request.contextPath}/user/do-logout">Logout</a>
         </c:otherwise>
     </c:choose>
 
@@ -48,53 +49,91 @@ Since: 1.0
 </nav>
 
 <%
-    int idAdvertisement = (int) request.getAttribute("idAdvertisement");
+    int idAdvertisement = 0;
+    String tmp = String.valueOf(request.getAttribute("idAdvertisement"));
+    if (tmp!=null) {idAdvertisement = Integer.parseInt(tmp);}
 %>
 
 <c:choose>
 
-    <c:when test="${idAdvertisement!='0'}">
+    <c:when test="${idAdvertisement==0}">
 
         <div>
-            <form method="post" action="<c:url value="/advertisement-do-create>"/>">
+            <form id="createAdvertisementForm" name="createAdvertisementForm" method="POST"
+                  action="<c:url value="/advertisement-create" />" >
 
                 <label for="title">title:</label>
-                <input name="title" type="text"/><br/><br/>
+                <input id="title" name="title" type="text" required/><br/><br/>
 
-                <label for="type">type:</label>
-                <input name="type" type="text"/><br/><br/>
+                <label for="idType">type:</label>
+                <input id="idType" name="idType" type="number" required/><br/><br/>
 
                 <label for="description">description:</label>
-                <input name="description" type="text"/><br/><br/>
+                <input id="description" name="description" type="text" required/><br/><br/>
 
                 <label for="price">price:</label>
-                <input name="price" type="number"/><br/><br/>
+                <input id="price" name="price" type="number" required/><br/><br/>
 
                 <label for="numTotItem">numTotItem:</label>
-                <input name="numTotItem" type="number"/><br/><br/>
+                <input id="numTotItem" name="numTotItem" type="number" required/><br/><br/>
 
                 <label for="dateStart">dateStart:</label>
-                <input name="dateStart" type="date"/><br/><br/>
+                <input id="dateStart" name="dateStart" type="date" required/><br/><br/>
 
                 <label for="dateEnd">dateEnd:</label>
-                <input name="dateEnd" type="date"/><br/><br/>
+                <input id="dateEnd" name="dateEnd" type="date" required/><br/><br/>
 
                 <label for="timeStart">timeStart:</label>
-                <input name="timeStart" type="time"/><br/><br/>
+                <input id="timeStart" name="timeStart" type="time" required/><br/><br/>
 
                 <label for="timeEnd">timeEnd:</label>
-                <input name="timeEnd" type="time"/><br/><br/>
+                <input id="timeEnd" name="timeEnd" type="time" required/><br/><br/>
 
                 <button type="submit" name="Submit" value="Submit">Submit</button><br/>
 
             </form>
+            <div id="decoded"></div>
+
+            <script>
+                createAdvertisementForm.onsubmit = async (e) => {
+                    e.preventDefault();
+                    var form = document.querySelector("#create-advertisement-form");
+
+                    data = {
+                        idAdvertisement : 0,
+                        title : form.querySelector('input[name="title"]').value,
+                        description : form.querySelector('input[name="description"]').value,
+                        score : 0,
+                        price : form.querySelector('input[name="price"]').value,
+                        numTotItem : form.querySelector('input[name="numTotItem"]').value,
+                        dateStart : form.querySelector('input[name="dateStart"]').value,
+                        dateEnd : form.querySelector('input[name="dateEnd"]').value,
+                        timeStart : form.querySelector('input[name="timeStart"]').value,
+                        timeEnd : form.querySelector('input[name="timeEnd"]').value,
+                        emailCompany : "",
+                        idType : form.querySelector('input[name="idType"]').value,
+                    }
+
+                    let response = await fetch('http://localhost:8080/ywti_wa2021_war/advertisement-create', {
+                        method: 'POST', // or 'PUT'
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data),
+                    })
+
+                    let text = await response.text(); // read response body as text
+                    document.querySelector("#decoded").innerHTML = text;
+                };
+            </script>
+
         </div>
     </c:when>
     <c:otherwise>
         <div>
-            <form method="post" enctype="multipart/form-data" action="<c:url value="/advertisement-create>"/>">
+            <form id="upload-images-form" method="post" enctype="multipart/form-data" action="/advertisement-create">
                 <label for="image">image:</label>
-                <input name="image" type="file" id="file" multiple/><br/><br/>
+                <input id="image" name="image" type="file" id="file" multiple/><br/><br/>
                 <button type="submit" name="Submit" value="Submit">Upload</button><br/>
 
             </form>

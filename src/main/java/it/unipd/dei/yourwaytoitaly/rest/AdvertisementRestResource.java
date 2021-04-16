@@ -58,14 +58,14 @@ public class AdvertisementRestResource extends RestResource {
 
         try{
             // check if a session is valid
-            User u = new SessionCheckServlet(req, res).getUser();
-            if (u == null) {
+            String email = LoginServlet.getUserEmail(req);
+            if (email.equals("")) {
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
                 Message m = new Message("User not found.",
                         ec.getErrorCode(),"User not found.");
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+                m.toJSON(res.getOutputStream());
+                return;
             }
 
             int idAdvertisement = 0;
@@ -92,8 +92,8 @@ public class AdvertisementRestResource extends RestResource {
                     Message m = new Message("Input value not valid.",
                             ec.getErrorCode(),"Title of the advertisement not valid.");
                     res.setStatus(ec.getHTTPCode());
-                    req.setAttribute("message", m);
-                    res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
+                    m.toJSON(res.getOutputStream());
+                    return;
                 }
                 description = advertisement.getDescription();
                 if(description==null || description.length()<5 || description.length()>10000){
@@ -101,8 +101,8 @@ public class AdvertisementRestResource extends RestResource {
                     Message m = new Message("Input value not valid.",
                             ec.getErrorCode(),"description of the advertisement not valid.");
                     res.setStatus(ec.getHTTPCode());
-                    req.setAttribute("message", m);
-                    res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
+                    m.toJSON(res.getOutputStream());
+                    return;
                 }
                 price = advertisement.getPrice();
                 if(price<0){
@@ -110,8 +110,8 @@ public class AdvertisementRestResource extends RestResource {
                     Message m = new Message("Input value not valid.",
                             ec.getErrorCode(),"Price not valid");
                     res.setStatus(ec.getHTTPCode());
-                    req.setAttribute("message", m);
-                    res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
+                    m.toJSON(res.getOutputStream());
+                    return;
                 }
 
                 numTotItem = advertisement.getNumTotItem();
@@ -120,8 +120,8 @@ public class AdvertisementRestResource extends RestResource {
                     Message m = new Message("Input value not valid.",
                             ec.getErrorCode(),"Total number of item not valid");
                     res.setStatus(ec.getHTTPCode());
-                    req.setAttribute("message", m);
-                    res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
+                    m.toJSON(res.getOutputStream());
+                    return;
                 }
 
                 dateStart = advertisement.getDateStart();
@@ -133,11 +133,11 @@ public class AdvertisementRestResource extends RestResource {
                     Message m = new Message("Input value not valid.",
                             ec.getErrorCode(),"Dates entered are not valid.");
                     res.setStatus(ec.getHTTPCode());
-                    req.setAttribute("message", m);
-                    res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
+                    m.toJSON(res.getOutputStream());
+                    return;
                 }
 
-                score = (int) (price/3.14);
+                score = (int) Math.floor(price/3.14);
 
                 // insert JSON inside DB
                 advertisement = AdvertisementDAO.createAdvertisement(advertisement);
@@ -147,8 +147,8 @@ public class AdvertisementRestResource extends RestResource {
                     Message m = new Message("Generic error",
                             ec.getErrorCode(),"Cannot create the advertisement.");
                     res.setStatus(ec.getHTTPCode());
-                    req.setAttribute("message", m);
-                    res.sendRedirect(req.getContextPath() + "/advertisement-do-create/");
+                    m.toJSON(res.getOutputStream());
+                    return;
                 }
 
                 // set attribute
@@ -191,7 +191,8 @@ public class AdvertisementRestResource extends RestResource {
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
             req.setAttribute("idAdvertisement", 0);
-            req.getRequestDispatcher("/advertisement-do-create").forward(req, res);
+            m.toJSON(res.getOutputStream());
+            return;
         }
     }
 
@@ -206,7 +207,7 @@ public class AdvertisementRestResource extends RestResource {
     public void showAdvertisement() throws IOException, ServletException {
 
         try {
-
+            // TODO: tell the JSP if the user is a tourist or a company to show properly booking/feedback forms
             String idAdvertisement = req.getRequestURI();
             idAdvertisement = idAdvertisement.substring(idAdvertisement.lastIndexOf("advertisement") + 14);
             Advertisement advertisement = AdvertisementDAO.searchAdvertisement(Integer.parseInt(idAdvertisement));
