@@ -115,8 +115,25 @@
 
 	<filter-mapping>
 		<filter-name>AuthenticationCheck</filter-name>
-		<url-pattern>/protected/*</url-pattern>
+		<url-pattern>/user/do-logout</url-pattern>
+		<url-pattern>/user/edit</url-pattern>
+		<url-pattern>/user/profile</url-pattern>
+		<url-pattern>/booking-delete</url-pattern>
+		<url-pattern>/booking-create</url-pattern>
+		<url-pattern>/feedback-create</url-pattern>
 	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>CompanyAuthenticationCheck</filter-name>
+		<url-pattern>/advertisement-do-create</url-pattern>
+		<url-pattern>/advertisement-edit</url-pattern>
+		<url-pattern>/advertisement-create</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>CompanyAuthenticationCheck</filter-name>
+		<filter-class>it.unipd.dei.yourwaytoitaly.filter.CompanyAuthenticationCheck</filter-class>
+	</filter>
 
 	<filter>
 		<filter-name>AuthenticationCheck</filter-name>

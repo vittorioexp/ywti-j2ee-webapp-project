@@ -1,6 +1,8 @@
 package it.unipd.dei.yourwaytoitaly.filter;
 
+import it.unipd.dei.yourwaytoitaly.resource.Message;
 import it.unipd.dei.yourwaytoitaly.servlet.LoginServlet;
+import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +48,7 @@ public class AuthenticationCheck implements Filter {
 
     @Override
     public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
+
         if (!(servletRequest instanceof HttpServletRequest) || !(servletResponse instanceof HttpServletResponse)){
             throw new ServletException("Only HTTP requests or response are accepted");
         }
@@ -59,10 +62,18 @@ public class AuthenticationCheck implements Filter {
             return;
         }
         else{
-            if (session.getAttribute("Authentication") == null || LoginServlet.checkSessionEmail(req, "") ) {
-                session.invalidate();
-                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+            if ( LoginServlet.checkSessionEmail(req, "") ) {
+
+                ErrorCode ec = ErrorCode.USER_NOT_FOUND;
+                Message m = new Message("User not found.",
+                        ec.getErrorCode(), "");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
                 return;
+
+//                session.invalidate();
+//                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+//                return;
             }
 
         }

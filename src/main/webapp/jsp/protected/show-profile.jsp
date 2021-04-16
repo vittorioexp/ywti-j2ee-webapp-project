@@ -1,5 +1,7 @@
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Tourist" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Company" %>
+<%@ page import="java.util.List" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Booking" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -68,12 +70,12 @@ Since: 1.0
                 </tr>
                 <tr>
                     <td><c:out value="${user.name}"/></td>
-                    <td><c:out value="${user.surname}"/><</td>
-                    <td><c:out value="${user.phoneNumber}"/><</td>
-                    <td><c:out value="${user.address}"/><</td>
-                    <td><c:out value="${user.email}"/><</td>
-                    <td><c:out value="${user.idCity}"/><</td>
-                    <td><c:out value="${user.birthDate}"/><</td>
+                    <td><c:out value="${user.surname}"/></td>
+                    <td><c:out value="${user.phoneNumber}"/></td>
+                    <td><c:out value="${user.address}"/></td>
+                    <td><c:out value="${user.email}"/></td>
+                    <td><c:out value="${user.idCity}"/></td>
+                    <td><c:out value="${user.birthDate}"/></td>
                 </tr>
             </table>
 
@@ -86,15 +88,19 @@ Since: 1.0
                     <td>Booking state</td>
                 </tr>
             </table>
+            <%
+                List<Booking> bookingslist = (List) request.getAttribute("bookings-list");
+            %>
 
-            <c:forEach items="${bookings-list}" var="booking">
+            <c:forEach items="${bookingslist}" var="booking">
                 <table>
                     <tr>
                         <td>${booking.date}</td>
                         <td>${booking.numBooking}</td>
                         <td>${booking.state}</td>
-                        <input type="hidden" id="idAdvertisement" name="idAdvertisement" value="${booking.idAdvertisement}">
-                        <td><button type="submit" formaction="/booking-delete" method="PUT">Delete</button><br/></td>
+                        <td><input type="hidden" id="idAdvertisement" name="idAdvertisement" value="${booking.idAdvertisement}"/>
+                            <button type="submit" formaction="/booking-delete" method="PUT">Delete</button><br/>
+                        </td>
                     </tr>
                 </table>
             </c:forEach>

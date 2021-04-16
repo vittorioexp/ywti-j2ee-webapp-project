@@ -3,6 +3,7 @@ package it.unipd.dei.yourwaytoitaly.servlet;
 
 import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
 import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
+import it.unipd.dei.yourwaytoitaly.database.UserDAO;
 import it.unipd.dei.yourwaytoitaly.resource.*;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
@@ -28,10 +29,10 @@ public class ShowProfileServlet extends AbstractDatabaseServlet {
         boolean isTourist = false;
 
         switch (op){
-            case "profile/":
+            case "profile":
                 try {
 
-                    User u = new SessionCheckServlet(req, res).getUser();
+                    User u = UserDAO.searchUserByEmail(LoginServlet.getUserEmail(req));
 
                     if (u == null) {
                         ErrorCode ec = ErrorCode.USER_NOT_FOUND;
@@ -56,8 +57,8 @@ public class ShowProfileServlet extends AbstractDatabaseServlet {
                         List<Advertisement> listAdvertisement = AdvertisementDAO.searchAdvertisement(emailCompany);
                         req.setAttribute("advertisement-list", listAdvertisement);
                     }
-
-                    req.getRequestDispatcher("/jsp/show-profile.jsp").forward(req, res);
+                    req.getRequestDispatcher("/jsp/protected/show-profile.jsp").forward(req, res);
+//                    res.sendRedirect(req.getContextPath() + "/jsp/protected/show-profile.jsp");
 
                 } catch (Exception ex) {
                     ErrorCode ec = ErrorCode.INTERNAL_ERROR;

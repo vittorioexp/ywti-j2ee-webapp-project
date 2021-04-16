@@ -65,7 +65,7 @@ public class CompanyAuthenticationCheck implements Filter {
             return;
         }
         else{
-            if (session.getAttribute("Authentication") == null || LoginServlet.checkSessionEmail(req, "") ) {
+            if (LoginServlet.checkSessionEmail(req, "") ) {
                 session.invalidate();
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
                 return;
