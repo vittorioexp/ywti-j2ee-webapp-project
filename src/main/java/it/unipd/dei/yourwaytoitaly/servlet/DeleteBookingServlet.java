@@ -42,7 +42,7 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
      *             if any error occurs in the client/server communication.
      */
 
-    public void doPut(HttpServletRequest req, HttpServletResponse res)
+    public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
         int idAdvertisement = 0;
@@ -50,6 +50,7 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
         Time time = null;
         String state = null;
         int numBooking=0;
+        String mex="";
 
         try{
 
@@ -57,8 +58,9 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
 
             // receive idAdvertisement from the hidden form
             idAdvertisement = Integer.parseInt(req.getParameter("idAdvertisement"));
-            Advertisement advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
 
+            Advertisement advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
+            mex = " 1";
             if ( advertisement == null ){
                 ErrorCode ec = ErrorCode.AD_NOT_FOUND;
                 Message m = new Message("Cannot delete.",
@@ -67,9 +69,9 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
                 m.toJSON(res.getOutputStream());
                 return;
             }
-
+            mex = " 2";
             Booking booking = BookingDAO.searchBooking(emailTourist, idAdvertisement);
-
+            mex = " 3";
             if ( booking == null ){
                 ErrorCode ec = ErrorCode.AD_NOT_FOUND;
                 Message m = new Message("Cannot delete.",
@@ -78,7 +80,7 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
                 m.toJSON(res.getOutputStream());
                 return;
             }
-
+            mex = " 4";
             numBooking = booking.getNumBooking();
 
 
@@ -93,6 +95,7 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
                 m.toJSON(res.getOutputStream());
                 return;
             }
+            mex = " 5";
 
             booking = new Booking(
                     emailTourist,
@@ -105,7 +108,7 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
 
             // delete the booking
             BookingDAO.deleteBooking(booking);
-
+            mex = " 6";
             // numTotItem+=numBooking in the Advertisement relative to the deleted booking
 
 
@@ -125,13 +128,14 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
             );
 
             AdvertisementDAO.editAdvertisement(advertisement);
+            mex = " 7";
 
             res.setStatus(HttpServletResponse.SC_OK);
             res.sendRedirect(req.getContextPath()+"/user/profile/");
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("Cannot edit the booking. ",
+            Message m = new Message("Cannot delete the booking. " + mex,
                     ec.getErrorCode(), ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());

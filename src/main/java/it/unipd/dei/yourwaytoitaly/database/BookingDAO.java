@@ -97,7 +97,7 @@ public class BookingDAO extends AbstractDAO{
             pstmt.setString(1, booking.getEmailTourist());
             pstmt.setInt(2, booking.getIdAdvertisement());
 
-            rs = pstmt.executeQuery();
+            pstmt.executeQuery();
 
         } finally {
             //close all the possible resources
@@ -186,7 +186,7 @@ public class BookingDAO extends AbstractDAO{
      *
      */
     public static List<Booking> searchBookingByUser(String reqEmailTourist) throws SQLException, NamingException {
-        final String STATEMENT = "SELECT DATE_B, TIME_B, num_booking, state, ID_advertisement " +
+        final String STATEMENT = "SELECT email_t , DATE_B, TIME_B, num_booking, state, ID_advertisement " +
                 "FROM BOOKING " +
                 "WHERE email_t = ? ;";
         Connection con = DataSourceProvider.getDataSource().getConnection();

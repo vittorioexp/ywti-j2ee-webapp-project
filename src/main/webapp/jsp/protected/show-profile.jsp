@@ -79,8 +79,6 @@ Since: 1.0
                 </tr>
             </table>
 
-            <button type="submit" formaction="/user/do-edit" method="PUT">Delete</button>
-
             <table>
                 <tr>
                     <td>Booking date</td>
@@ -92,14 +90,17 @@ Since: 1.0
                 List<Booking> bookingslist = (List) request.getAttribute("bookings-list");
             %>
 
-            <c:forEach items="${bookingslist}" var="booking">
+            <c:forEach items="<%=bookingslist%>" var="booking">
                 <table>
                     <tr>
                         <td>${booking.date}</td>
                         <td>${booking.numBooking}</td>
                         <td>${booking.state}</td>
-                        <td><input type="hidden" id="idAdvertisement" name="idAdvertisement" value="${booking.idAdvertisement}"/>
-                            <button type="submit" formaction="/booking-delete" method="PUT">Delete</button><br/>
+                        <td>
+                            <form id="delete booking-form" name="delete booking-form" action = "<c:url value="/booking-delete"/>" method="POST">
+                                <input type="hidden" id="idAdvertisement" name="idAdvertisement" value="${booking.idAdvertisement}"/>
+                                <button type="submit" >Delete</button><br/>
+                            </form>
                         </td>
                     </tr>
                 </table>
