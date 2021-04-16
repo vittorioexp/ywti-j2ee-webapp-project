@@ -51,6 +51,16 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
 
         try{
             emailTourist = LoginServlet.getUserEmail(req);
+
+            if (emailTourist.equals("")) {
+                ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
+                Message m = new Message("Method not allowed: User not logged in.",
+                        ec.getErrorCode(),"User must be logged in to create a booking");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
+
             idAdvertisement = Integer.parseInt(req.getParameter("idAdvertisement"));
 
             // check if the user already left a feedback for this advertisement

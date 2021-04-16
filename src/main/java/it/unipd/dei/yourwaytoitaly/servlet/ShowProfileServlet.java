@@ -20,7 +20,7 @@ import java.util.List;
  * @since 1.0
  */
 
-public class ShowUserServlet extends AbstractDatabaseServlet {
+public class ShowProfileServlet extends AbstractDatabaseServlet {
 
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         String op = req.getRequestURI();
