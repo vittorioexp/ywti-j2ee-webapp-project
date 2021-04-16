@@ -105,7 +105,7 @@ public class EditUserServlet extends AbstractDatabaseServlet {
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message("Cannot edit the user profile. ",
-                    ec.getErrorCode(), ex.getMessage());
+                    ec.getErrorCode(), ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;

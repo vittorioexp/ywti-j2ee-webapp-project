@@ -42,7 +42,7 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
      *             if any error occurs in the client/server communication.
      */
 
-    public void doPost(HttpServletRequest req, HttpServletResponse res)
+    public void doPut(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
         int idAdvertisement = 0;
@@ -53,16 +53,35 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
 
         try{
 
-            User u = new SessionCheckServlet(req , res).getUser();
-
-            String emailTourist = u.getEmail();
-            String password = u.getPassword();
+            String emailTourist = LoginServlet.getUserEmail(req);
 
             // receive idAdvertisement from the hidden form
             idAdvertisement = Integer.parseInt(req.getParameter("idAdvertisement"));
             Advertisement advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
 
-            numBooking = BookingDAO.searchBooking(emailTourist, idAdvertisement).getNumBooking();
+            if ( advertisement == null ){
+                ErrorCode ec = ErrorCode.AD_NOT_FOUND;
+                Message m = new Message("Cannot delete.",
+                        ec.getErrorCode(), "Cannot delete because advertisement doesn't exist!");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
+
+            Booking booking = BookingDAO.searchBooking(emailTourist, idAdvertisement);
+
+            if ( booking == null ){
+                ErrorCode ec = ErrorCode.AD_NOT_FOUND;
+                Message m = new Message("Cannot delete.",
+                        ec.getErrorCode(), "Cannot delete because booking doesn't exist!");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
+
+            numBooking = booking.getNumBooking();
+
+
 
             // if the event is already started (or ended), user is not allowed to delete the booking
             Date today = new Date(Calendar.getInstance().getTime().getTime());
@@ -71,11 +90,11 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
                 Message m = new Message("Cannot delete the booking. ",
                         ec.getErrorCode(), "The event is already started!");
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/include/show-message.jsp").forward(req, res);
+                m.toJSON(res.getOutputStream());
+                return;
             }
 
-            Booking booking = new Booking(
+            booking = new Booking(
                     emailTourist,
                     idAdvertisement,
                     date,
@@ -107,15 +126,16 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
 
             AdvertisementDAO.editAdvertisement(advertisement);
 
-            req.getRequestDispatcher("/user/profile/").forward(req, res);
+            res.setStatus(HttpServletResponse.SC_OK);
+            res.sendRedirect(req.getContextPath()+"/user/profile/");
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message("Cannot edit the booking. ",
-                    ec.getErrorCode(), ex.getMessage());
+                    ec.getErrorCode(), ex.toString());
             res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/include/show-message.jsp").forward(req, res);
+            m.toJSON(res.getOutputStream());
+            return;
         }
     }
 }

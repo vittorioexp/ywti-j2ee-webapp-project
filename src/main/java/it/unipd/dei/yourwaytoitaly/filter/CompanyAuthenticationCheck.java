@@ -1,13 +1,19 @@
 package it.unipd.dei.yourwaytoitaly.filter;
 
+import it.unipd.dei.yourwaytoitaly.database.UserDAO;
+import it.unipd.dei.yourwaytoitaly.resource.Company;
+import it.unipd.dei.yourwaytoitaly.resource.Message;
 import it.unipd.dei.yourwaytoitaly.servlet.LoginServlet;
+import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
+import javax.naming.NamingException;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Base64;
 
 /**
@@ -17,11 +23,11 @@ import java.util.Base64;
  * @since 1.0
  */
 
-public class AuthenticationCheck implements Filter {
+public class CompanyAuthenticationCheck implements Filter {
 
     /*
-    * Base 64 Decoder
-    * */
+     * Base 64 Decoder
+     * */
     private static final Base64.Decoder DECODER = Base64.getDecoder();
     /*
      * The name of the user attribute in the session
@@ -60,6 +66,18 @@ public class AuthenticationCheck implements Filter {
         }
         else{
             if (session.getAttribute("Authentication") == null || LoginServlet.checkSessionEmail(req, "") ) {
+                session.invalidate();
+                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+                return;
+            }
+            try {
+                String email = LoginServlet.getUserEmail(req);
+                if (!(UserDAO.searchUserByEmail(email) instanceof Company)) {
+                    res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    res.sendRedirect(req.getContextPath() + "/index");
+                    return;
+                }
+            }catch(SQLException | NamingException e){
                 session.invalidate();
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
                 return;
