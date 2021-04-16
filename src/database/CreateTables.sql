@@ -6,7 +6,7 @@ CREATE TABLE City (
 
 CREATE TABLE Type_advertisement (
  ID_type SERIAL PRIMARY KEY,
- type VARCHAR(100) 
+ type VARCHAR(100) NOT NULL
 );
 
 
@@ -42,9 +42,9 @@ CREATE TABLE Advertisement (
  price INT NOT NULL,
  num_tot_item INT NOT NULL,
  date_start DATE NOT NULL,
- date_end DATE,
- time_start TIME,
- time_end TIME,
+ date_end DATE NOT NULL,
+ time_start TIME NOT NULL,
+ time_end TIME NOT NULL,
  email_c VARCHAR(100) NOT NULL,
  ID_type INT NOT NULL,
  FOREIGN KEY (email_c) REFERENCES Company (email_c),
@@ -55,7 +55,7 @@ CREATE TABLE Advertisement (
 CREATE TABLE Booking (
  PRIMARY KEY (email_t,ID_advertisement),
  date_b DATE NOT NULL,
- time_b TIME,
+ time_b TIME NOT NULL,
  num_booking INT NOT NULL,
  state VARCHAR(30) NOT NULL,
  email_t VARCHAR(100) NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE Booking (
 CREATE TABLE FeedBack (
  PRIMARY KEY (email_t,ID_advertisement),
  rate INT NOT NULL,
- text_f VARCHAR(10000),
+ text_f VARCHAR(10000) NOT NULL,
  date_f DATE NOT NULL,
  email_t VARCHAR(100) NOT NULL,
  ID_advertisement INT  NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE FeedBack (
 CREATE TABLE Image (
  ID_image SERIAL PRIMARY KEY,
  path_i VARCHAR(10000) NOT NULL,
- description_i VARCHAR(100),
+ description_i VARCHAR(100) NOT NULL,
  ID_advertisement INT  NOT NULL,
  FOREIGN KEY (ID_advertisement) REFERENCES Advertisement (ID_advertisement)
 );
