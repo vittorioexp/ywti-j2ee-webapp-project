@@ -111,6 +111,20 @@
 		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.InsertFeedbackServlet</servlet-class>
 	</servlet>
 
+	<!-- Mapping filters -->
+
+	<filter-mapping>
+		<filter-name>AuthenticationCheck</filter-name>
+		<url-pattern>/protected/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>AuthenticationCheck</filter-name>
+		<filter-class>it.unipd.dei.yourwaytoitaly.filter.AuthenticationCheck</filter-class>
+	</filter>
+
+
+
 	<!-- Mapping between servlets and URIs -->
 
 	<servlet-mapping>

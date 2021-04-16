@@ -45,14 +45,14 @@ public class EditUserServlet extends AbstractDatabaseServlet {
 
         try{
 
-            User u = new SessionCheckServlet(req,res).getUser();
+            User u = UserDAO.searchUserByEmail(LoginServlet.getUserEmail(req));
             if (u==null) {
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
                 Message m = new Message("User not found.",
                         ec.getErrorCode(),"User not found.");
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/register.jsp").forward(req, res);
+                m.toJSON(res.getOutputStream());
+                return;
             }
             email = u.getEmail();
             password = u.getPassword();
@@ -66,8 +66,8 @@ public class EditUserServlet extends AbstractDatabaseServlet {
                 Message m = new Message("Input phone number is not valid. ",
                         ec.getErrorCode(), "Input phone number is not valid. " + phoneNumber);
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/edit-profile.jsp").forward(req, res);
+                m.toJSON(res.getOutputStream());
+                return;
             }
 
             if (u instanceof Tourist) {
@@ -99,16 +99,16 @@ public class EditUserServlet extends AbstractDatabaseServlet {
                 UserDAO.editUser(u);
 
             }
-
-            req.getRequestDispatcher("/user/profile/").forward(req, res);
+            res.setStatus(HttpServletResponse.SC_OK);
+            res.sendRedirect(req.getContextPath()+"/user/profile/");
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message("Cannot edit the user profile. ",
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
-            req.getRequestDispatcher("/user/profile/").forward(req, res);
+            m.toJSON(res.getOutputStream());
+            return;
         }
     }
 }
