@@ -64,9 +64,9 @@ Since: 1.0
                     0,
                     String.valueOf(jo.get("title")),
                     String.valueOf(jo.get("description")),
-                    0,
-                    (Integer) jo.get("price"),
                     (Integer) jo.get("score"),
+                    (Integer) jo.get("price"),
+                    0,
                     Date.valueOf((String) jo.get("dateStart")),
                     Date.valueOf((String) jo.get("dateEnd")),
                     Time.valueOf((String) jo.get("timeStart")),
@@ -99,101 +99,60 @@ Since: 1.0
     </tr>
 </table>
 
-<%
-    //int rate = Integer.parseInt((String) request.getAttribute("rate"));
-    int rate = 5;
-%>
-<c:choose>
-    <c:when test="${rate!=0}">
-        <p><c:out value="${rate}"/></p>
-    </c:when>
-    <c:otherwise>
-        Not available
-    </c:otherwise>
-</c:choose>
+<p>
+    <br>
+    Rate is: <%=request.getAttribute("rate") %>
+</p>
 
     <%
         List<String> filepathList = (List) request.getAttribute("filepath-list");
     %>
-    <c:choose>
-        <c:when test="${filepathList}">
-            <table id="image-list-table" name="image-list-table"
-                   cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
-            <c:forEach items="<%=filepathList%>" var="filepath">
-                <tr>
-                    <td>
-                        <img src="${pageContext.request.contextPath}" + filepath>
-                    </td>
-                </tr>
-                </table>
-            </c:forEach>
-        </c:when>
-        <c:otherwise>
-
-        </c:otherwise>
-    </c:choose>
+    <table id="image-list-table" name="image-list-table"
+           cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
+    <c:forEach items="<%=filepathList%>" var="filepath">
+        <tr>
+            <td>
+                <img src="${pageContext.request.contextPath}" + filepath>
+            </td>
+        </tr>
+        </table>
+    </c:forEach>
 
     <%
         List<Booking> bookingList = (List) request.getAttribute("booking-list");
         // TODO: insert form to do a booking
     %>
-    <c:choose>
-        <c:when test="${bookingList}">
-        <table id="booking-list-table" name="booking-list-table"
-               cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
+    <table id="booking-list-table" name="booking-list-table"
+           cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
+        <c:forEach items="<%=bookingList%>" var="booking">
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>${booking.getEmailTourist()}</td>
+                <td>${booking.getDate()}</td>
+                <td>${booking.getTime()}</td>
+                <td>${booking.getNumBooking()}</td>
+                <td>${booking.getState()}</td>
             </tr>
-            <c:forEach items="<%=bookingList%>" var="booking">
-                <tr>
-                    <td>${booking.emailTourist()}</td>
-                    <td>${booking.date()}</td>
-                    <td>${booking.time()}</td>
-                    <td>${booking.numBooking()}</td>
-                    <td>${booking.state()}</td>
-                </tr>
-            </c:forEach>
-        </table>
-        </c:when>
-        <c:otherwise>
-
-        </c:otherwise>
-    </c:choose>
+        </c:forEach>
+    </table>
 
     <%
     List<Feedback> feedbackList = (List) request.getAttribute("feedback-list");
     // TODO: insert form to leave a feedback
     %>
-    <c:choose>
-    <c:when test="${feedbackList}">
-        <table id="feedback-list-table" name="feedback-list-table"
-            cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
+    <table id="feedback-list-table" name="feedback-list-table"
+        cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
+        <c:forEach items="<%=feedbackList%>" var="feedback">
             <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>${feedback.getDate()}</td>
+            <td>${feedback.getRate()}</td>
+            <td>${feedback.getText()}</td>
             </tr>
-            <c:forEach items="<%=feedbackList%>" var="feedback">
-                <tr>
-                <td>${feedback.date()}</td>
-                <td>${feedback.rate()}</td>
-                <td>${feedback.text()}</td>
-                </tr>
-            </c:forEach>
-        </table>
-    </c:when>
-    <c:otherwise>
+        </c:forEach>
+    </table>
 
-    </c:otherwise>
-    </c:choose>
-
-        <div>
-            <c:import url="/jsp/include/show-message.jsp"/>
-        </div>
+    <div>
+        <c:import url="/jsp/include/show-message.jsp"/>
+    </div>
 </body>
 </html>
 </body>

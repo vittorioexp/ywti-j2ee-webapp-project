@@ -58,7 +58,7 @@ public class ImageDAO extends AbstractDAO{
                         rs.getInt("ID_image"),
                         rs.getString("path_i"),
                         rs.getString("description_i"),
-                        rs.getInt("ID_advertisement"));
+                        rs.getInt("ID_Advertisement"));
             }
         } finally {
             //close all the possible resources
@@ -79,9 +79,7 @@ public class ImageDAO extends AbstractDAO{
      */
     public static List<Image> searchImageByIdAdvertisement(int idAdvertisement) throws SQLException, NamingException {
         final String STATEMENT =
-                "SELECT *\n" +
-                        "FROM IMAGE\n" +
-                        "WHERE ID_Advertisement = ?;";
+                "SELECT * FROM IMAGE WHERE ID_Advertisement = ?;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -98,7 +96,7 @@ public class ImageDAO extends AbstractDAO{
                         rs.getInt("ID_image"),
                         rs.getString("path_i"),
                         rs.getString("description_i"),
-                        rs.getInt("ID_advertisement")));
+                        rs.getInt("ID_Advertisement")));
             }
         } finally {
             //close all the possible resources

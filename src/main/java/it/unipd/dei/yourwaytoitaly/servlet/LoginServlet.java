@@ -171,7 +171,8 @@ public class LoginServlet extends AbstractDatabaseServlet {
     }
 
     private static String getPair( HttpServletRequest req ){
-        String authorization = (String)req.getAttribute("Authorization");
+        HttpSession session = req.getSession();
+        String authorization = (String)session.getAttribute("Authorization");
         if (authorization==null) return "";
         String a = new String (Base64.getDecoder().decode(authorization.substring(6)));
         if ( a == null )

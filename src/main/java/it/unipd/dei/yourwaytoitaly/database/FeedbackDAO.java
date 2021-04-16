@@ -84,8 +84,7 @@ public class FeedbackDAO extends AbstractDAO{
      */
     public static List<Feedback> searchFeedbackByAdvertisement(int reqIdAdvertisement) throws SQLException, NamingException {
         final String STATEMENT =
-                "SELECT RATE, TEXT_F, DATE_F, email_t " +
-                        "FROM FEEDBACK WHERE ID_ADVERTISEMENT = ?;";
+                "SELECT * FROM FEEDBACK WHERE id_advertisement = ?;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -102,7 +101,7 @@ public class FeedbackDAO extends AbstractDAO{
             while (rs.next()) {
                 feedback.add(new Feedback(
                         rs.getString("email_t"),
-                        rs.getInt("ID_advertisement"),
+                        rs.getInt("id_advertisement"),
                         rs.getInt("rate"),
                         rs.getString("text_f"),
                         rs.getDate("date_f")));

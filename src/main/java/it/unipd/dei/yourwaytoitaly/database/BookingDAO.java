@@ -141,9 +141,7 @@ public class BookingDAO extends AbstractDAO{
     public static List<Booking> searchBookingByAdvertisement(int reqIdAdvertisement)
             throws SQLException, NamingException {
         final String STATEMENT =
-                "SELECT DATE_B, TIME_B, num_booking, state, email_t " +
-                        "FROM BOOKING\n" +
-                        "WHERE ID_advertisement = ? ;";
+                "SELECT * FROM BOOKING WHERE id_Advertisement = ? ;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -161,7 +159,7 @@ public class BookingDAO extends AbstractDAO{
 
                 bookings.add(new Booking(
                         rs.getString("email_t"),
-                        rs.getInt("ID_advertisement"),
+                        rs.getInt("id_Advertisement"),
                         rs.getDate("date_b"),
                         rs.getTime("time_b"),
                         rs.getInt("num_booking"),

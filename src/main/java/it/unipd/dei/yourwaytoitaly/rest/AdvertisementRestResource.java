@@ -216,7 +216,7 @@ public class AdvertisementRestResource extends RestResource {
 
             List<Image> imageList = ImageDAO.searchImageByIdAdvertisement(Integer.parseInt(idAdvertisement));
 
-            if (imageList!=null) {
+            if (imageList.size()!=0) {
                 List<String> filepathList = new ArrayList<String>();
                 for (Image image : imageList) {
                     String filepath = image.getPath();
@@ -224,33 +224,38 @@ public class AdvertisementRestResource extends RestResource {
                 }
                 req.setAttribute("filepath-list", filepathList);
             } else {
-                req.setAttribute("filepath-list", null);
+                req.setAttribute("filepath-list", new ArrayList<String>());
             }
 
             // The owner can see the booking list relative to this advertisement: check if a session is valid
             if (LoginServlet.checkSessionEmail(req, advertisement.getEmailCompany())) {
                 List<Booking> listBookings = BookingDAO.searchBookingByAdvertisement(Integer.parseInt(idAdvertisement));
                 req.setAttribute("booking-list", listBookings);
+                Message success = new Message("email ok");
+                req.setAttribute("message", success);
             } else {
-                req.setAttribute("booking-list", null);
+                req.setAttribute("booking-list", new ArrayList<Booking>());
+                Message success = new Message("email non ok: " + advertisement.getEmailCompany());
+                req.setAttribute("message", success);
             }
 
             List<Feedback> feedbackList = FeedbackDAO.searchFeedbackByAdvertisement(Integer.parseInt(idAdvertisement));
             double rate = 0;
-            if (feedbackList!=null) {
+            if (feedbackList.size()!=0) {
                 for (Feedback f: feedbackList) {
                     rate += f.getRate();
                 }
                 rate/=feedbackList.size();
                 req.setAttribute("feedback-list", feedbackList);
                 req.setAttribute("rate", (int) rate);
+
             } else {
-                req.setAttribute("feedback-list", null);
+                req.setAttribute("feedback-list", new ArrayList<Feedback>());
                 req.setAttribute("rate", 0);
             }
 
-            Message success = new Message("Successful show of the advertisement!");
-            req.setAttribute("message", success);
+            //Message success = new Message("Successful show of the advertisement!");
+            //req.setAttribute("message", success);
             //res.setStatus(HttpServletResponse.SC_OK);
             req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
 
