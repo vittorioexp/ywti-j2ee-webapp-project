@@ -63,17 +63,9 @@ public class AuthenticationCheck implements Filter {
         }
         else{
             if ( LoginServlet.checkSessionEmail(req, "") ) {
-
-                ErrorCode ec = ErrorCode.USER_NOT_FOUND;
-                Message m = new Message("User not found.",
-                        ec.getErrorCode(), "");
-                res.setStatus(ec.getHTTPCode());
-                m.toJSON(res.getOutputStream());
+                session.invalidate();
+                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
                 return;
-
-//                session.invalidate();
-//                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
-//                return;
             }
 
         }
