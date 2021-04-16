@@ -37,7 +37,6 @@ Since: 1.0
 
     <c:choose>
         <c:when test="${empty sessionScope.Authorization}">
-            <a href="${pageContext.request.contextPath}/user/do-login">Login</a>
             <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
         </c:when>
         <c:otherwise>
