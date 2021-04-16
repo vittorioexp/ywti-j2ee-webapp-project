@@ -101,7 +101,20 @@
 		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.DeleteBookingServlet</servlet-class>
 	</servlet>
 
+	<servlet>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.LogoutServlet</servlet-class>
+	</servlet>
+
+
+
+
 	<!-- Mapping between servlets and URIs -->
+
+	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/user/do-logout</url-pattern>
+	</servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>IndexPageJSP</servlet-name>
