@@ -47,21 +47,19 @@ Since: 1.0
         </c:when>
         <c:otherwise>
             <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
+            <a href="${pageContext.request.contextPath}/user/do-logout">Logout</a>
         </c:otherwise>
     </c:choose>
 
     <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
 </nav>
-
-<div>
-
-</div>
+</br>
 
 <%
     JSONObject jo = (JSONObject) request.getAttribute("advertisement");
 
     Advertisement adv = new Advertisement(
-                    0,
+                    (Integer) jo.get("idAdvertisement"),
                     String.valueOf(jo.get("title")),
                     String.valueOf(jo.get("description")),
                     (Integer) jo.get("score"),
@@ -74,6 +72,7 @@ Since: 1.0
                     "",
                     0
                     );
+    int idAdvertisement = (Integer) jo.get("idAdvertisement");
 
 %>
 <table cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
@@ -98,12 +97,11 @@ Since: 1.0
         <td><%=adv.getScore() %></td>
     </tr>
 </table>
-
+</br>
 <p>
-    <br>
     Rate is: <%=request.getAttribute("rate") %>
 </p>
-
+</br>
     <%
         List<String> filepathList = (List) request.getAttribute("filepath-list");
     %>
@@ -117,10 +115,9 @@ Since: 1.0
         </tr>
         </table>
     </c:forEach>
-
+</br>
     <%
         List<Booking> bookingList = (List) request.getAttribute("booking-list");
-        // TODO: insert form to do a booking
     %>
     <table id="booking-list-table" name="booking-list-table"
            cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
@@ -134,10 +131,18 @@ Since: 1.0
             </tr>
         </c:forEach>
     </table>
-
+</br>
+    <div>
+        <form id="booking-form" name="booking-form" method="POST" action="<c:url value="/booking-create"/>">
+            <label for="numBooking">numBooking:</label>
+            <input id="numBooking" name="numBooking" type="number" required/><br/><br/>
+            <input type="hidden" id="idAdvertisement" name="idAdvertisement" value="<%=idAdvertisement %>" />
+            <button type="submit">Book your journey</button><br/>
+        </form>
+    </div>
+</br>
     <%
     List<Feedback> feedbackList = (List) request.getAttribute("feedback-list");
-    // TODO: insert form to leave a feedback
     %>
     <table id="feedback-list-table" name="feedback-list-table"
         cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
@@ -149,11 +154,20 @@ Since: 1.0
             </tr>
         </c:forEach>
     </table>
-
+    </br>
+    <div>
+    <form id="feedback-form" name="feedback-form" method="POST" action="<c:url value="/feedback-create"/>">
+    <label for="rate">rate:</label>
+    <input id="rate" name="rate" type="number" min="1" max="5" step="1" required/>
+    <label for="text_f">text::</label>
+    <input id="text_f" name="text_f" type="text"/>
+    <input type="hidden" name="idAdvertisement" value="<%=idAdvertisement %>" />
+        <button type="submit">Leave a feedback</button><br/>
+        </form>
+        </div>
+</br>
     <div>
         <c:import url="/jsp/include/show-message.jsp"/>
     </div>
-</body>
-</html>
 </body>
 </html>

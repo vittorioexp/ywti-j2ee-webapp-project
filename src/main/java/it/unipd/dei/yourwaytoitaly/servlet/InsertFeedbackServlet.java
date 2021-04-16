@@ -49,25 +49,23 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
         int rate;
         String text="";
 
-        Feedback feedback  = null;
-
         try{
-            // check if a session is valid
-            User u = new SessionCheckServlet(req, res).getUser();
-            if (u == null) {
-                ErrorCode ec = ErrorCode.USER_NOT_FOUND;
-                Message m = new Message("User not found.",
-                        ec.getErrorCode(),"User not found.");
+            emailTourist = LoginServlet.getUserEmail(req);
+            idAdvertisement = Integer.parseInt(req.getParameter("idAdvertisement"));
+
+            // check if the user already left a feedback for this advertisement
+            Feedback feedback = FeedbackDAO.searchFeedback(emailTourist,idAdvertisement);
+            if (feedback!=null) {
+                ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
+                Message m = new Message("User cannot insert a feedback.",
+                        ec.getErrorCode(),"Feedback already inserted.");
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+                m.toJSON(res.getOutputStream());
+                return;
             }
 
-            emailTourist = u.getEmail();
-            idAdvertisement = Integer.parseInt(req.getParameter("idAdvertisement"));
             Advertisement  advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
             Booking booking = BookingDAO.searchBooking(emailTourist, idAdvertisement);
-
             Date currentDate = new Date(Calendar.getInstance().getTime().getTime());
 
             // check if the user booked this advertisement and
@@ -77,8 +75,8 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
                 Message m = new Message("User cannot insert a feedback.",
                         ec.getErrorCode(),"User cannot insert a feedback about this booking.");
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/advertisement/" + idAdvertisement).forward(req, res);
+                m.toJSON(res.getOutputStream());
+                return;
             }
 
             rate = Integer.parseInt(req.getParameter("rate"));
@@ -89,14 +87,18 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
                 Message m = new Message("Input rate is not valid. ",
                         ec.getErrorCode(), "Rate is " + rate);
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/include/show-message.jsp").forward(req, res);
+                m.toJSON(res.getOutputStream());
+                return;
+            }
+
+            if (text==null) {
+                text="";
             }
 
             // creates a new feedback from the request parameters
             feedback = new Feedback(
                     emailTourist,
-                    0,
+                    idAdvertisement,
                     rate,
                     text,
                     date
@@ -104,16 +106,19 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
 
             feedback = FeedbackDAO.createFeedback(feedback);
 
-            // Show the advertisement
-            req.getRequestDispatcher("/advertisement/"+idAdvertisement).forward(req, res);
+
+            Message success = new Message("Successfully left a feedback!");
+            req.setAttribute("message", success);
+            res.setStatus(HttpServletResponse.SC_OK);
+            res.sendRedirect(req.getContextPath() + "/advertisement/" + idAdvertisement);
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message("Cannot create the feedback. ",
-                    ec.getErrorCode(), ex.getMessage());
+                    ec.getErrorCode(), ex.toString());
             res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/include/show-message.jsp").forward(req, res);
+            m.toJSON(res.getOutputStream());
+            return;
         }
     }
 }

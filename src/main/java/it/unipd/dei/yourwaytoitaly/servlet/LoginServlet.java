@@ -171,17 +171,16 @@ public class LoginServlet extends AbstractDatabaseServlet {
     }
 
     private static String getPair( HttpServletRequest req ){
-        HttpSession session = req.getSession();
+        HttpSession session = req.getSession(false);
+        if (session==null) return "";
         String authorization = (String)session.getAttribute("Authorization");
         if (authorization==null) return "";
         String a = new String (Base64.getDecoder().decode(authorization.substring(6)));
-        if ( a == null )
-            return new String("");
-        else
-            return a;
+        if ( a == null ) return "";
+        return a;
     }
 
-    private static String getUserEmail( HttpServletRequest req ){
+    public static String getUserEmail( HttpServletRequest req ){
         String[] credentials = getPair(req).split(":");
         return credentials[0];
     }

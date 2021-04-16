@@ -231,12 +231,8 @@ public class AdvertisementRestResource extends RestResource {
             if (LoginServlet.checkSessionEmail(req, advertisement.getEmailCompany())) {
                 List<Booking> listBookings = BookingDAO.searchBookingByAdvertisement(Integer.parseInt(idAdvertisement));
                 req.setAttribute("booking-list", listBookings);
-                Message success = new Message("email ok");
-                req.setAttribute("message", success);
             } else {
                 req.setAttribute("booking-list", new ArrayList<Booking>());
-                Message success = new Message("email non ok: " + advertisement.getEmailCompany());
-                req.setAttribute("message", success);
             }
 
             List<Feedback> feedbackList = FeedbackDAO.searchFeedbackByAdvertisement(Integer.parseInt(idAdvertisement));
@@ -254,8 +250,8 @@ public class AdvertisementRestResource extends RestResource {
                 req.setAttribute("rate", 0);
             }
 
-            //Message success = new Message("Successful show of the advertisement!");
-            //req.setAttribute("message", success);
+            Message success = new Message("Successful show of the advertisement!");
+            req.setAttribute("message", success);
             //res.setStatus(HttpServletResponse.SC_OK);
             req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
 
@@ -342,7 +338,7 @@ public class AdvertisementRestResource extends RestResource {
                 req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
             }
 
-            score = (int) (price/3.14);
+            score = (int) Math.floor(price/3.14);
 
             advertisement = new Advertisement(
                     idAdvertisement,

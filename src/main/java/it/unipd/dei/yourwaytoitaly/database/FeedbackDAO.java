@@ -73,6 +73,29 @@ public class FeedbackDAO extends AbstractDAO{
     }
 
     /**
+     * searches and returns a Feedback both by EMAIL_T and ID_ADVERTISEMENT
+     *
+     * @return a Booking objects matching with the criteria
+     *
+     * @throws SQLException
+     *             if any error occurs.
+     * @throws NamingException
+     *             if any error occurs.
+     *
+     */
+    public static Feedback searchFeedback(String emailTourist, int idAdvertisement)
+            throws SQLException, NamingException {
+        List<Feedback> feedback = searchFeedbackByAdvertisement(idAdvertisement);
+        for (Feedback f : feedback) {
+            if (f.getEmailTourist().equals(emailTourist)) {
+                return f;
+            }
+        }
+        return null;
+    }
+
+
+    /**
      * searches and returns some Feedback by ID_ADVERTISEMENT
      *
      * @return a list of {@code Feedback} objects matching the parameter.

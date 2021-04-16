@@ -5,7 +5,6 @@ import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
 import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
 import it.unipd.dei.yourwaytoitaly.resource.Booking;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
-import it.unipd.dei.yourwaytoitaly.resource.User;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
 import javax.servlet.ServletException;
@@ -56,50 +55,53 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
         String state = "PROCESSING";
         int numTotItem=0;
 
-        Booking booking  = null;
-
         try{
+            // TODO: check if the email is of a tourist
+            emailTourist = LoginServlet.getUserEmail(req);
 
-            // check if a session is valid
-            User u = new SessionCheckServlet(req, res).getUser();
-            if (u == null) {
-                ErrorCode ec = ErrorCode.USER_NOT_FOUND;
-                Message m = new Message("User not found.",
-                        ec.getErrorCode(),"User not found.");
+            if (emailTourist.equals("")) {
+                ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
+                Message m = new Message("Method not allowed: User not logged in.",
+                        ec.getErrorCode(),"User must be logged in to create a booking");
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+                m.toJSON(res.getOutputStream());
+                return;
             }
-
-            // check if the email of the session is equal to emailCompany
-            emailTourist = u.getEmail();
 
             idAdvertisement = Integer.parseInt(req.getParameter("idAdvertisement"));
 
+            // check if the tourist already booked
+            Booking booking = BookingDAO.searchBooking(emailTourist, idAdvertisement);
+            if (booking!=null) {
+                ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
+                Message m = new Message("Method not allowed: User already booked.",
+                        ec.getErrorCode(),"User already booked!");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
+
             // Get how many items the user wants to book
             numBooking = Integer.parseInt(req.getParameter("numBooking"));
-
-            // Get the booking date
-            Date bDate = Date.valueOf(req.getParameter("numBooking"));
 
             if(numBooking<=0) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message("Input value not valid.",
                         ec.getErrorCode(),"The number of item is not valid");
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/advertisement/" + idAdvertisement).forward(req, res);
+                m.toJSON(res.getOutputStream());
+                return;
             }
 
-            // Check if dateStart <= bookingDate <= dateEnd
+            // Check if bookingDate <= dateEnd
             Advertisement adv = AdvertisementDAO.searchAdvertisement(idAdvertisement);
-            if (adv.getDateEnd().compareTo(bDate)<0 || bDate.compareTo(adv.getDateStart())<0) {
+            if (adv.getDateEnd().compareTo(date)<0) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                Message m = new Message("Input value not valid.",
-                        ec.getErrorCode(),"The booking date is not valid");
+                Message m = new Message("The advertisement is expired.",
+                        ec.getErrorCode(),"You cannot book an advertisement which is expired");
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/advertisement/" + idAdvertisement).forward(req, res);
+                m.toJSON(res.getOutputStream());
+                return;
             }
 
             // Get the number of items available
@@ -119,8 +121,8 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
                 Message m = new Message("Input value not valid.",
                         ec.getErrorCode(),"The number of item is too big!");
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/advertisement/" + idAdvertisement).forward(req, res);
+                m.toJSON(res.getOutputStream());
+                return;
             }
 
             state="SUCCESSFUL";
@@ -128,7 +130,7 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             // creates a new booking from the request parameters
             booking = new Booking(
                     emailTourist,
-                    0,
+                    idAdvertisement,
                     date,
                     time,
                     numBooking,
@@ -137,16 +139,18 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
 
             booking = BookingDAO.createBooking(booking);
 
-            // Show the booking just created in a web page
-            req.getRequestDispatcher("/user/profile/").forward(req, res);
+            Message success = new Message("Successfully booked!");
+            req.setAttribute("message", success);
+            res.setStatus(HttpServletResponse.SC_OK);
+            res.sendRedirect(req.getContextPath() + "/user/profile");
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message("Cannot create the booking. ",
-                    ec.getErrorCode(), ex.getMessage());
+                    ec.getErrorCode(), ex.toString());
             res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/homepage.jsp").forward(req, res);
+            m.toJSON(res.getOutputStream());
+            return;
         }
     }
 }

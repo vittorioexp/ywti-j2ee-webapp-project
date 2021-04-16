@@ -24,6 +24,7 @@
         </c:when>
         <c:otherwise>
             <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
+            <a href="${pageContext.request.contextPath}/user/do-logout">Logout</a>
         </c:otherwise>
     </c:choose>
 
