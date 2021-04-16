@@ -59,14 +59,14 @@ Since: 1.0
     <c:when test="${idAdvertisement==0}">
 
         <div>
-            <form id="create-advertisement-form" name="create-advertisement-form" method="POST"
+            <form id="createAdvertisementForm" name="createAdvertisementForm" method="POST"
                   action="<c:url value="/advertisement-create" />" >
 
                 <label for="title">title:</label>
                 <input id="title" name="title" type="text" required/><br/><br/>
 
-                <label for="type">type:</label>
-                <input id="type" name="type" type="text" required/><br/><br/>
+                <label for="idType">type:</label>
+                <input id="idType" name="idType" type="number" required/><br/><br/>
 
                 <label for="description">description:</label>
                 <input id="description" name="description" type="text" required/><br/><br/>
@@ -92,16 +92,39 @@ Since: 1.0
                 <button type="submit" name="Submit" value="Submit">Submit</button><br/>
 
             </form>
+            <div id="decoded"></div>
 
             <script>
-                function handleSubmit(event) {
-                    event.preventDefault();
-                    const data = new FormData(event.target);
-                    const value = Object.fromEntries(data.entries());
-                    console.log({ value });
-                }
-                const form = document.querySelector('form');
-                form.addEventListener('submit', handleSubmit);
+                createAdvertisementForm.onsubmit = async (e) => {
+                    e.preventDefault();
+                    var form = document.querySelector("#create-advertisement-form");
+
+                    data = {
+                        idAdvertisement : 0,
+                        title : form.querySelector('input[name="title"]').value,
+                        description : form.querySelector('input[name="description"]').value,
+                        score : 0,
+                        price : form.querySelector('input[name="price"]').value,
+                        numTotItem : form.querySelector('input[name="numTotItem"]').value,
+                        dateStart : form.querySelector('input[name="dateStart"]').value,
+                        dateEnd : form.querySelector('input[name="dateEnd"]').value,
+                        timeStart : form.querySelector('input[name="timeStart"]').value,
+                        timeEnd : form.querySelector('input[name="timeEnd"]').value,
+                        emailCompany : "",
+                        idType : form.querySelector('input[name="idType"]').value,
+                    }
+
+                    let response = await fetch('http://localhost:8080/ywti_wa2021_war/advertisement-create', {
+                        method: 'POST', // or 'PUT'
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data),
+                    })
+
+                    let text = await response.text(); // read response body as text
+                    document.querySelector("#decoded").innerHTML = text;
+                };
             </script>
 
         </div>

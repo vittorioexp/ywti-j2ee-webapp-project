@@ -119,14 +119,14 @@ public class UserDAO extends AbstractDAO{
      */
     public static void editUser(User user) throws SQLException, NamingException {
         final String STATEMENT_TOURIST_EDIT =
-                "UPDATE TOURIST SET password = MD5(?) , phone_number = ? WHERE email_t = ?;";
+                "UPDATE TOURIST SET password = MD5(?) , phone_number = ? WHERE email_t = ? RETURNING *;";
 
 
         /**
          * The SQL statement to be executed
          */
         final String STATEMENT_COMPANY_EDIT =
-                "UPDATE COMPANY SET password = MD5(?) , phone_number = ? WHERE email_c = ?;";
+                "UPDATE COMPANY SET password = MD5(?) , phone_number = ? WHERE email_c = ? RETURNING *;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;

@@ -2,6 +2,7 @@
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Company" %>
 <%@ page import="java.util.List" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Booking" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Advertisement" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -57,7 +58,6 @@ Since: 1.0
 
     <c:choose>
         <c:when test="${userType}">
-            // User = Tourist
             <table>
                 <tr>
                     <td>Name</td>
@@ -79,8 +79,6 @@ Since: 1.0
                 </tr>
             </table>
 
-            <button type="submit" formaction="/user/do-edit" method="PUT">Delete</button>
-
             <table>
                 <tr>
                     <td>Booking date</td>
@@ -91,22 +89,23 @@ Since: 1.0
             <%
                 List<Booking> bookingslist = (List) request.getAttribute("bookings-list");
             %>
-
-            <c:forEach items="${bookingslist}" var="booking">
-                <table>
+            <table>
+            <c:forEach items="<%=bookingslist%>" var="booking">
                     <tr>
                         <td>${booking.date}</td>
                         <td>${booking.numBooking}</td>
                         <td>${booking.state}</td>
-                        <td><input type="hidden" id="idAdvertisement" name="idAdvertisement" value="${booking.idAdvertisement}"/>
-                            <button type="submit" formaction="/booking-delete" method="PUT">Delete</button><br/>
+                        <td>
+                            <form id="delete booking-form" name="delete booking-form" action = "<c:url value="/booking-delete"/>" method="POST">
+                                <input type="hidden" id="idAdvertisement" name="idAdvertisement" value="${booking.idAdvertisement}"/>
+                                <button type="submit" >Delete</button><br/>
+                            </form>
                         </td>
                     </tr>
-                </table>
             </c:forEach>
+            </table>
         </c:when>
         <c:otherwise>
-            // User = Company
             <table>
                 <tr>
                     <td>Name</td>
@@ -117,34 +116,40 @@ Since: 1.0
                 </tr>
                 <tr>
                     <td><c:out value="${user.name}"/></td>
-                    <td><c:out value="${user.email}"/><</td>
-                    <td><c:out value="${user.phoneNumber}"/><</td>
-                    <td><c:out value="${user.address}"/><</td>
-                    <td><c:out value="${user.idCity}"/><</td>
+                    <td><c:out value="${user.email}"/></td>
+                    <td><c:out value="${user.phoneNumber}"/></td>
+                    <td><c:out value="${user.address}"/></td>
+                    <td><c:out value="${user.idCity}"/></td>
                 </tr>
             </table>
             <!-- TODO: Create the advertisement-create.jsp -->
-            <button type="submit" formaction="/advertisement-create">Inset new advertisement</button>
-
+            <form method="get" action="<c:url value="/advertisement-do-create"/>">
+                <button type="submit">New advertisement</button>
+            </form>
+            <%
+                // TODO : get JSON ResourceList<Advertisement>
+                List<Advertisement> advertisementList = null;
+            %>
             <table>
-                <tr>
-                    <td>Title</td>
-                    <!-- TODO:insert the ield for the image -->
-                    <td>Edit</td>
-                    <td>Info</td>
-                </tr>
-            </table>
-
-            <c:forEach items="${advertisement-list}" var="advertisement">
-                <table>
+            <c:forEach items="${advertisementList}" var="adv">
                     <tr>
-                        <td>${advertisement.title}</td>
+                        <td>${adv.title}</td>
+                        <td>${adv.dateStart}</td>
+                        <td>${adv.dateEnd}</td>
+                        <td>${adv.numTotItem}</td>
+                        <td>${adv.price}</td>
                         <!-- TODO: inserire la lista delle immagini -->
-                        <td><button type="submit" formaction="/advertisement-edit">Edit</button><br /></td>
-                        <td><button type="submit" formaction="/advertisement${advertisement.idAdvertisement}">Info</button><br/></td>
+                        <td>
+                            <form id="gotoEditAdvertisementForm" name="gotoEditAdvertisementForm" method="GET"
+                                  action="<c:url value="/advertisement-edit"/>">
+                                <input type="hidden" name="idAdvertisement" value="${adv.idAdvertisement}">
+                                <button type="submit">Edit</button><br/>
+                            </form>
+                        </td>
+                        <td><button type="submit" formaction="/advertisement/ + ${adv.idAdvertisement}">Info</button></td>
                     </tr>
-                </table>
             </c:forEach>
+            </table>
         </c:otherwise>
     </c:choose>
 

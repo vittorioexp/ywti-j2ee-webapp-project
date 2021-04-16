@@ -87,7 +87,7 @@ public class BookingDAO extends AbstractDAO{
      */
     public static void deleteBooking(Booking booking) throws SQLException, NamingException {
         final String STATEMENT =
-                "UPDATE BOOKING SET state = 'DELETED' WHERE email_t = ? AND ID_advertisement = ?;";
+                "UPDATE BOOKING SET state = 'DELETED' WHERE email_t = ? AND ID_advertisement = ? RETURNING *;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -97,7 +97,7 @@ public class BookingDAO extends AbstractDAO{
             pstmt.setString(1, booking.getEmailTourist());
             pstmt.setInt(2, booking.getIdAdvertisement());
 
-            pstmt.executeQuery();
+            rs = pstmt.executeQuery();
 
         } finally {
             //close all the possible resources

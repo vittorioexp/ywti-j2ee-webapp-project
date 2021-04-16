@@ -38,22 +38,20 @@
     %>
         <table id="advertisement-list-table" name="advertisement-list-table"
                cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
-            <tr>
-                <td>Title</td>
-                <td></td>
-            </tr>
-            <!-- Modificare attibute advertisement-list con advertisement_list-->
-            <c:forEach items="<%=listAdvertisement%>" var="advertisment">
+            <c:forEach items="<%=listAdvertisement%>" var="adv">
                 <tr>
-                    <td>${advertisment.title()}</td>
+                    <td>${adv.title}</td>
+                    <td>${adv.dateStart}</td>
+                    <td>${adv.dateEnd}</td>
+                    <td>${adv.numTotItem}</td>
+                    <td>${adv.price}</td>
                     <td>
                         <a href="${pageContext.request.contextPath}/advertisement/" +
-                            ${advertisment.idAdvertisement()}>info</a>
+                            ${advertisment.idAdvertisement}>info</a>
                     </td>
                 </tr>
             </c:forEach>
         </table>
-
 <div>
     <c:import url="/jsp/include/show-message.jsp"/>
 </div>

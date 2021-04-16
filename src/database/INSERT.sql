@@ -137,8 +137,8 @@ VALUES ('mariorossi@gmail.com', 'Rossi', 'Mario', '1998-03-10', '3287888901', 'V
 INSERT INTO COMPANY (email_c, name_c, phone_number, address, password, ID_city) 
 VALUES ('hotelcentrale@gmail.com', 'Hotel centrale', '0495341234', 'Via Venezia 48', MD5('prova_c'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
 
-INSERT INTO Advertisement (title, DESCRIPTION, SCORE, PRICE, NUM_TOT_ITEM, DATE_START, email_c, ID_TYPE) 
-VALUES ('Capodanno sulle dolomiti', 'Sette giorni di relax in mezzo alla neve delle dolomiti in Trentino alto adige a capodanno', 100,  800, 20, '2021-12-27', 'hotelcentrale@gmail.com', (SELECT ID_TYPE FROM Type_advertisement WHERE Type_advertisement.type = 'Hotel'));
+INSERT INTO Advertisement (title, DESCRIPTION, SCORE, PRICE, NUM_TOT_ITEM, DATE_START, DATE_END, TIME_START, TIME_END, email_c, ID_TYPE)
+VALUES ('Capodanno sulle dolomiti', 'Sette giorni di relax in mezzo alla neve delle dolomiti in Trentino alto adige a capodanno', 100,  800, 20, '2021-05-1','2021-05-1','14:15:16','14:15:19', 'hotelcentrale@gmail.com', (SELECT ID_TYPE FROM Type_advertisement WHERE Type_advertisement.type = 'Dance club'));
 
 INSERT INTO IMAGE (path_i, description_i, ID_Advertisement) 
 VALUES ('/image/image1.jpg', 'hotel', 1);

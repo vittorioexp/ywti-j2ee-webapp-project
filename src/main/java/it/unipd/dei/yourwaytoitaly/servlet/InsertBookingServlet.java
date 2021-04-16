@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * Servlet class to create a new booking
@@ -107,16 +106,7 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             // Get the number of items available
             numTotItem = adv.getNumTotItem();
 
-            // Get the bookings relative to this advertisement
-            List<Booking> bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
-
-            // Get the number of items already booked
-            int itemBooked=0;
-            for(Booking b: bookingList){
-                itemBooked += b.getNumBooking();
-            }
-
-            if(numBooking > numTotItem - itemBooked){
+            if(numBooking > numTotItem){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message("Input value not valid.",
                         ec.getErrorCode(),"The number of item is too big!");
@@ -138,6 +128,23 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             );
 
             booking = BookingDAO.createBooking(booking);
+
+            adv = new Advertisement(
+                    idAdvertisement,
+                    null,
+                    null,
+                    adv.getScore(),
+                    adv.getPrice(),
+                    adv.getNumTotItem()-numBooking,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    0
+            );
+
+            AdvertisementDAO.editAdvertisement(adv);
 
             Message success = new Message("Successfully booked!");
             req.setAttribute("message", success);

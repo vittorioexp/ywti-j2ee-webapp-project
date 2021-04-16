@@ -64,13 +64,13 @@ Since: 1.0
                     String.valueOf(jo.get("description")),
                     (Integer) jo.get("score"),
                     (Integer) jo.get("price"),
-                    0,
+                    (Integer) jo.get("numTotItem"),
                     Date.valueOf((String) jo.get("dateStart")),
                     Date.valueOf((String) jo.get("dateEnd")),
                     Time.valueOf((String) jo.get("timeStart")),
                     Time.valueOf((String) jo.get("timeEnd")),
-                    "",
-                    0
+                    String.valueOf(jo.get("emailCompany")),
+                    (Integer) jo.get("idType")
                     );
     int idAdvertisement = (Integer) jo.get("idAdvertisement");
 
@@ -83,6 +83,7 @@ Since: 1.0
         <td>Date End</td>
         <td>Time Start</td>
         <td>Time End</td>
+        <td>Items available</td>
         <td>Price</td>
         <td>Score</td>
     </tr>
@@ -93,6 +94,7 @@ Since: 1.0
         <td><%=adv.getDateEnd() %></td>
         <td><%=adv.getTimeStart() %></td>
         <td><%=adv.getTimeEnd() %></td>
+        <td><%=adv.getNumTotItem() %></td>
         <td><%=adv.getPrice() %></td>
         <td><%=adv.getScore() %></td>
     </tr>
