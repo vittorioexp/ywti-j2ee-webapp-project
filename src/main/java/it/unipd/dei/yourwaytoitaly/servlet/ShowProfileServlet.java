@@ -25,6 +25,7 @@ public class ShowProfileServlet extends AbstractDatabaseServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         String op = req.getRequestURI();
         op = op.substring(op.lastIndexOf("user") + 5);
+        boolean isTourist = false;
 
         switch (op){
             case "profile/":
@@ -42,12 +43,15 @@ public class ShowProfileServlet extends AbstractDatabaseServlet {
                     }
 
                     if (u instanceof Tourist) {
-                        req.setAttribute("tourist",(Tourist) u);
+                        isTourist = true;
+                        req.setAttribute("userType",(Boolean) isTourist);
+                        req.setAttribute("user",(Tourist) u);
                         String emailTourist = u.getEmail();
                         List<Booking> listBookings = BookingDAO.searchBookingByUser(emailTourist);
                         req.setAttribute("bookings-list", listBookings);
                     } else if (u instanceof Company) {
-                        req.setAttribute("company",(Company) u);
+                        req.setAttribute("userType",(Boolean) isTourist);
+                        req.setAttribute("user",(Company) u);
                         String emailCompany = u.getEmail();
                         List<Advertisement> listAdvertisement = AdvertisementDAO.searchAdvertisement(emailCompany);
                         req.setAttribute("advertisement-list", listAdvertisement);
@@ -61,7 +65,7 @@ public class ShowProfileServlet extends AbstractDatabaseServlet {
                             ec.getErrorCode(), ex.getMessage());
                     res.setStatus(ec.getHTTPCode());
                     req.setAttribute("message", m);
-                    req.getRequestDispatcher("/jsp/include/show-message.jsp").forward(req, res);
+                    req.getRequestDispatcher("/jsp/index.jsp").forward(req, res);
                 }
                 break;
             default:
@@ -70,7 +74,7 @@ public class ShowProfileServlet extends AbstractDatabaseServlet {
                         ec.getErrorCode(), ec.getErrorMessage());
                 res.setStatus(ec.getHTTPCode());
                 req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/include/show-message.jsp").forward(req, res);
+                req.getRequestDispatcher("/jsp/index.jsp").forward(req, res);
             }
     }
 }
