@@ -115,6 +115,33 @@ public class AdvertisementDAO extends AbstractDAO{
     }
 
     /**
+     * Delete an Advertisement
+     *
+     * @throws SQLException
+     *             if any error occurs.
+     * @throws NamingException
+     *             if any error occurs.
+     */
+    public static void deleteAdvertisement(int idAvertisement) throws SQLException, NamingException {
+        final String STATEMENT_EDIT =
+                "UPDATE ADVERTISEMENT SET num_tot_item = 0 WHERE ID_advertisement = ? RETURNING *;";
+        Connection con = DataSourceProvider.getDataSource().getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            pstmt = con.prepareStatement(STATEMENT_EDIT);
+            pstmt.setInt(1, idAvertisement);
+
+            rs = pstmt.executeQuery();
+
+        } finally {
+            //close all the possible resources
+            cleaningOperations(pstmt, rs, con);
+        }
+    }
+
+    /**
      * Searches an Advertisement by ID_ADVERTISEMENT
      *
      * @throws SQLException
@@ -183,6 +210,7 @@ public class AdvertisementDAO extends AbstractDAO{
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        Advertisement adv=null;
 
         // the results of the search
         List<Advertisement> listAdvertisement=new ArrayList<Advertisement>();
@@ -195,7 +223,7 @@ public class AdvertisementDAO extends AbstractDAO{
 
             while (rs.next()) {
 
-                listAdvertisement.add(new Advertisement(
+                adv = new Advertisement(
                         rs.getInt("ID_advertisement"),
                         rs.getString("title"),
                         rs.getString("description"),
@@ -207,7 +235,11 @@ public class AdvertisementDAO extends AbstractDAO{
                         rs.getTime("time_start"),
                         rs.getTime("time_end"),
                         rs.getString("email_c"),
-                        rs.getInt("ID_type")));
+                        rs.getInt("ID_type"));
+
+                if(adv.getNumTotItem()!=0){
+                    listAdvertisement.add(adv);
+                }
             }
         } finally {
             //close all the possible resources
@@ -244,6 +276,8 @@ public class AdvertisementDAO extends AbstractDAO{
         // the results of the search
         final List<Advertisement> advertisements = new ArrayList<Advertisement>();
 
+        Advertisement adv=null;
+
         try {
             pstmt = con.prepareStatement(STATEMENT);
             pstmt.setInt(1, reqIdCity);
@@ -254,7 +288,7 @@ public class AdvertisementDAO extends AbstractDAO{
 
             while (rs.next()) {
 
-                advertisements.add(new Advertisement(
+                adv = new Advertisement(
                         rs.getInt("ID_advertisement"),
                         rs.getString("title"),
                         rs.getString("description"),
@@ -266,7 +300,11 @@ public class AdvertisementDAO extends AbstractDAO{
                         rs.getTime("time_start"),
                         rs.getTime("time_end"),
                         rs.getString("email_c"),
-                        rs.getInt("ID_type")));
+                        rs.getInt("ID_type"));
+
+                if(adv.getNumTotItem()!=0){
+                    advertisements.add(adv);
+                }
             }
         } finally {
             //close all the possible resources

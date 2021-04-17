@@ -92,9 +92,8 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
             case "GET":
             case "PUT":
             case "POST":
-                return true;
             case "DELETE":
-                return false;
+                return true;
             default:
                 ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
                 m = new Message("Unknown resource requested.",
@@ -161,6 +160,9 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
                     break;
                 case "PUT":
                     new AdvertisementRestResource(req, res, getDataSource().getConnection()).editAdvertisement();
+                    break;
+                case "DELETE":
+                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).deleteAdvertisement();
                     break;
                 default:
                     ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;

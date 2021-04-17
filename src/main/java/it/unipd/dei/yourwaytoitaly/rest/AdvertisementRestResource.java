@@ -321,7 +321,56 @@ public class AdvertisementRestResource extends RestResource {
     }
 
     /**
-     * Updates an employee in the database.
+     * Updates an advertisement in the database.
+     *
+     * @throws IOException
+     *             if any error occurs
+     * @throws ServletException
+     *             if any error occurs
+     */
+    public void deleteAdvertisement() throws IOException, ServletException {
+
+
+        int idAdvertisement = 0;
+        String emailCompany = null;
+        Advertisement advertisement;
+        String op = req.getRequestURI();
+        op = op.substring(op.lastIndexOf("advertisement") + 14);
+        idAdvertisement = Integer.parseInt(op);
+
+        //TODO: Check if the idAdvertisement retrieved from the URI is correct
+
+        try{
+
+            //TODO: Check that the company is the owner of the advertisement
+
+            // check if the email of the session is equal to emailCompany
+
+            emailCompany = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
+            if (!emailSession.equals(emailCompany)) {
+                ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
+                Message m = new Message("User is not authorized.",
+                        ec.getErrorCode(),"User is not authorized to edit this advertisement");
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/user/do-login/").forward(req, res);
+            }
+
+            AdvertisementDAO.editAdvertisement(idAdvertisement);
+
+            res.sendRedirect(req.getContextPath() + "/user/profile");
+
+        } catch (Exception ex) {
+            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("Cannot edit the advertisement. ",
+                    ec.getErrorCode(), ex.getMessage());
+            res.setStatus(ec.getHTTPCode());
+            req.setAttribute("message", m);
+            req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
+        }
+    }
+    /**
+     * Edit an advertisement in the database.
      *
      * @throws IOException
      *             if any error occurs
