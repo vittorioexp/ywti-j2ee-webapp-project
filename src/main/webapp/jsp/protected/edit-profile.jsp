@@ -53,10 +53,18 @@ Since: 1.0
 <div>
     <form method="POST" action="<c:url value="/user/edit"/>">
 
-        <label for="phonenumber">Phone Number:</label>
-        <input id="phonenumber" name="phonenumber" type="text"/><br/><br/>
+
         <label for="password">new password:</label>
         <input id="password" name="password" type="password"/><br/><br/>
+
+        <label for="phonenumber">Phone Number:</label>
+        <input id="phonenumber" name="phonenumber" type="text"/><br/><br/>
+
+        <label for="address">Phone Number:</label>
+        <input id="address" name="address" type="text"/><br/><br/>
+
+        <label for="id_city">Phone Number:</label>
+        <input id="id_city" name="id_city" type="text"/><br/><br/>
         <button type="submit">Edit</button><br/>
 
     </form>
