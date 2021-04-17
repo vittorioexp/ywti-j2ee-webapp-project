@@ -122,7 +122,7 @@ public class AdvertisementDAO extends AbstractDAO{
      * @throws NamingException
      *             if any error occurs.
      */
-    public static void deleteAdvertisement(int idAvertisement) throws SQLException, NamingException {
+    public static void deleteAdvertisement(int idAdvertisement) throws SQLException, NamingException {
         final String STATEMENT_EDIT =
                 "UPDATE ADVERTISEMENT SET num_tot_item = 0 WHERE ID_advertisement = ? RETURNING *;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
@@ -131,7 +131,7 @@ public class AdvertisementDAO extends AbstractDAO{
 
         try {
             pstmt = con.prepareStatement(STATEMENT_EDIT);
-            pstmt.setInt(1, idAvertisement);
+            pstmt.setInt(1, idAdvertisement);
 
             rs = pstmt.executeQuery();
 

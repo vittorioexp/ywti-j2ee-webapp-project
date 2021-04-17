@@ -1,10 +1,7 @@
 package it.unipd.dei.yourwaytoitaly.rest;
 
 
-import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
-import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
-import it.unipd.dei.yourwaytoitaly.database.FeedbackDAO;
-import it.unipd.dei.yourwaytoitaly.database.ImageDAO;
+import it.unipd.dei.yourwaytoitaly.database.*;
 import it.unipd.dei.yourwaytoitaly.resource.*;
 import it.unipd.dei.yourwaytoitaly.servlet.LoginServlet;
 import it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet;
@@ -333,21 +330,43 @@ public class AdvertisementRestResource extends RestResource {
 
         int idAdvertisement = 0;
         String emailCompany = null;
+        String emailCompanyAdvertisement = null;
         Advertisement advertisement;
         String op = req.getRequestURI();
         op = op.substring(op.lastIndexOf("advertisement") + 14);
-        idAdvertisement = Integer.parseInt(op);
+
 
         //TODO: Check if the idAdvertisement retrieved from the URI is correct
 
+        if(op==null || Integer.parseInt(op) < 0){
+            ErrorCode ec = ErrorCode.ADVERTISEMENT_NOT_FOUND;
+            Message m = new Message("Advertisement not found.",
+                    ec.getErrorCode(),"Advertisement not found.");
+            res.setStatus(ec.getHTTPCode());
+            req.setAttribute("message", m);
+            req.getRequestDispatcher("/user/profile").forward(req, res);
+        }
+        idAdvertisement = Integer.parseInt(op);
+
         try{
 
-            //TODO: Check that the company is the owner of the advertisement
 
             // check if the email of the session is equal to emailCompany
 
-            emailCompany = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
-            if (!emailSession.equals(emailCompany)) {
+            User u = UserDAO.searchUserByEmail(LoginServlet.getUserEmail(req));
+
+            if (u == null) {
+                ErrorCode ec = ErrorCode.USER_NOT_FOUND;
+                Message m = new Message("User not found.",
+                        ec.getErrorCode(),"User not found.");
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+            }
+            emailCompany = u.getEmail();
+            emailCompanyAdvertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
+
+            if (!emailCompany.equals(emailCompanyAdvertisement)) {
                 ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
                 Message m = new Message("User is not authorized.",
                         ec.getErrorCode(),"User is not authorized to edit this advertisement");
@@ -356,7 +375,7 @@ public class AdvertisementRestResource extends RestResource {
                 req.getRequestDispatcher("/user/do-login/").forward(req, res);
             }
 
-            AdvertisementDAO.editAdvertisement(idAdvertisement);
+            AdvertisementDAO.deleteAdvertisement(idAdvertisement);
 
             res.sendRedirect(req.getContextPath() + "/user/profile");
 

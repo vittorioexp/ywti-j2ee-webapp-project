@@ -19,6 +19,7 @@ public enum ErrorCode {
     EMPTY_LIST(-11, HttpServletResponse.SC_NOT_FOUND, "No results found"),
     USER_NOT_FOUND(-12, HttpServletResponse.SC_NOT_FOUND, "User not found."),
     BADLY_FORMATTED_JSON(-13,  HttpServletResponse.SC_BAD_REQUEST, "The input json is in the wrong format."),
+    ADVERTISEMENT_NOT_FOUND(-14, HttpServletResponse.SC_NOT_FOUND, "Advertisement not found."),
     OPERATION_UNKNOWN(-20, HttpServletResponse.SC_BAD_REQUEST, "Operation unknown."),
     METHOD_NOT_ALLOWED(-40, HttpServletResponse.SC_METHOD_NOT_ALLOWED, "The method is not allowed"),
     INTERNAL_ERROR(-100, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Error");
