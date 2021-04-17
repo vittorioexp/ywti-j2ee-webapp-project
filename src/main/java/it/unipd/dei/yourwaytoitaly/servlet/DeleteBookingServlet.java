@@ -50,7 +50,7 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
         String mex="";
 
         try{
-
+            // TODO: when deleting a booking, remove the user from a score
             String emailTourist = LoginServlet.getUserEmail(req);
 
             // receive idAdvertisement from the hidden form

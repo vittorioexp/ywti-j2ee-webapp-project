@@ -55,6 +55,9 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
         int numTotItem=0;
 
         try{
+            // TODO: when booking, give the user a score
+            // TODO: if user score > X, give the user a discount of Y % on this booking and user score becomes 1
+
             // TODO: check if the email is of a tourist
             emailTourist = LoginServlet.getUserEmail(req);
 

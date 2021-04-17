@@ -216,6 +216,7 @@ public class AdvertisementRestResource extends RestResource {
                         try { item.write(new File(pathName)); }
                         catch (Exception e) {}
 
+                        // TODO: put "resources" in the context file
 
                         // Save the image URI inside the DB
                         pathName = URI.substring(0, URI.lastIndexOf("advertisement-create"));

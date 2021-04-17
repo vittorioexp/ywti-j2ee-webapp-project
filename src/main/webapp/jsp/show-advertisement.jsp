@@ -133,6 +133,9 @@ Since: 1.0
         </c:forEach>
     </table>
 </br>
+<%
+    // TODO: show the following form NOT to companies
+%>
     <div>
         <form id="booking-form" name="booking-form" method="POST" action="<c:url value="/booking-create"/>">
             <label for="numBooking">numBooking:</label>
@@ -156,6 +159,9 @@ Since: 1.0
         </c:forEach>
     </table>
     </br>
+<%
+    // TODO: show the following form NOT to companies
+%>
     <div>
     <form id="feedback-form" name="feedback-form" method="POST" action="<c:url value="/feedback-create"/>">
     <label for="rate">rate:</label>
