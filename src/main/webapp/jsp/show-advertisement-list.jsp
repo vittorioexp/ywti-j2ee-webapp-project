@@ -46,8 +46,12 @@
                     <td>${adv.numTotItem}</td>
                     <td>${adv.price}</td>
                     <td>
-                        <a href="${pageContext.request.contextPath}/advertisement/" +
-                            ${advertisment.idAdvertisement}>info</a>
+                        <!-- TODO: Insert the idAdvertisement -->
+                        <form id="showAdvertisement" name="showAdvertisement" method="GET" action="<c:url value=""/advertisement/" + ${advertisment.idAdvertisement/>">
+                            <button type="submit">Info</button><br/>
+                        </form>
+
+
                     </td>
                 </tr>
             </c:forEach>
