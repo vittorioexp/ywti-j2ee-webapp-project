@@ -268,7 +268,7 @@ public class AdvertisementDAO extends AbstractDAO{
                         "JOIN TYPE_ADVERTISEMENT ON TYPE_ADVERTISEMENT.ID_Type = ADVERTISEMENT.ID_Type " +
                         "WHERE CITY.id_city = ? AND " +
                         "TYPE_ADVERTISEMENT.id_type = ? AND " +
-                        "DATE_START >= ?;";
+                        "DATE_START >= ? ;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;

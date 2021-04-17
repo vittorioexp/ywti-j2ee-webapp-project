@@ -235,9 +235,7 @@ public class AdvertisementRestResource extends RestResource {
                 Message success = new Message(pathName);
                 req.setAttribute("message", success);
                 res.setStatus(HttpServletResponse.SC_OK);
-                // forward the user to its user profile page
-                req.getRequestDispatcher("/user/profile").forward(req,res);
-                //res.sendRedirect(req.getContextPath() + "/user/profile");
+                res.sendRedirect(req.getContextPath() + "/user/profile");
             }
 
 
