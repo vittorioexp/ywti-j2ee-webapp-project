@@ -145,7 +145,13 @@ Since: 1.0
                                 <button type="submit">Edit</button><br/>
                             </form>
                         </td>
-                        <td><button type="submit" formaction="/advertisement/ + ${adv.idAdvertisement}">Info</button></td>
+                        <td><button type="submit" formaction="/advertisement/${adv.idAdvertisement}">Info</button></td>
+                        <td>
+                            <form id="deleteAdvertisement" name="deleteAdvertisement" method="DELETE"
+                                  action="<c:url value="/advertisement/${adv.idAdvertisement}"/>">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
                     </tr>
             </c:forEach>
             </table>

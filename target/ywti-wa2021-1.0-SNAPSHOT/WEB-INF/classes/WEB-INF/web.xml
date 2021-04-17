@@ -151,6 +151,11 @@
 	<!-- Mapping between servlets and URIs -->
 
 	<servlet-mapping>
+		<servlet-name>RestAdvertisementServlet</servlet-name>
+		<url-pattern>/advertisement-delete</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
 		<servlet-name>IndexPageJSP</servlet-name>
 		<url-pattern>/index</url-pattern>
 	</servlet-mapping>

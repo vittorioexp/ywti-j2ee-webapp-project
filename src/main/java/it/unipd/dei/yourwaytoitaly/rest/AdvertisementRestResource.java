@@ -186,6 +186,7 @@ public class AdvertisementRestResource extends RestResource {
 
             } else {
                 String pathName="";
+                String URI = req.getRequestURI();
                 List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(req);
                 int count = 1;
                 for (FileItem item : multiparts) {
@@ -205,15 +206,20 @@ public class AdvertisementRestResource extends RestResource {
                                 break;
                         }
                     } else {
-
-                        //String name = new File(item.getName()).getName();
                         // TODO: check file extension
-
-                        //final String UPLOAD_DIRECTORY = "/" + String.valueOf(idAdvertisement);
                         // TODO: fix file path
-                        String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/ywti/img/" +  String.valueOf(idAdvertisement);
-                        pathName = UPLOAD_DIRECTORY + File.separator + String.valueOf(count++) + ".png";
-                        item.write(new File(pathName));
+                        // Save the picture inside the disk
+                        pathName = System.getProperty("user.dir");
+                        pathName = pathName.substring(0, pathName.lastIndexOf("bin"));
+                        pathName += "webapps/ywti_wa2021_war/res/img/" +  String.valueOf(idAdvertisement) + "/";
+                        pathName += String.valueOf(count) + ".png";
+                        try { item.write(new File(pathName)); }
+                        catch (Exception e) {}
+
+
+                        // Save the image URI inside the DB
+                        pathName = URI.substring(0, URI.lastIndexOf("advertisement-create"));
+                        pathName += "res/img/" + String.valueOf(idAdvertisement) + "/" + String.valueOf(count) + ".png";
                         Image img = new Image
                                 (
                                         0,
@@ -222,6 +228,7 @@ public class AdvertisementRestResource extends RestResource {
                                         idAdvertisement
                                 );
                         ImageDAO.createImage(img);
+                        count++;
                     }
 
                 }

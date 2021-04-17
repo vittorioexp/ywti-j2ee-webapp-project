@@ -100,23 +100,22 @@ Since: 1.0
     </tr>
 </table>
 </br>
+<div>
+    <%
+        List<String> filepathList = (List<String>) request.getAttribute("filepath-list");
+    %>
+    <table id="imageTable" name="imageTable"
+           cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
+        <tr>
+        <c:forEach items="<%=filepathList%>" var="filepath">
+            <td><img src="${filepath}" width="320" height="240"/></td>
+        </c:forEach>
+        </tr>
+    </table>
+</div>
 <p>
     Rate is: <%=request.getAttribute("rate") %>
 </p>
-</br>
-    <%
-        List<String> filepathList = (List) request.getAttribute("filepath-list");
-    %>
-    <table id="image-list-table" name="image-list-table"
-           cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
-    <c:forEach items="<%=filepathList%>" var="filepath">
-        <tr>
-            <td>
-                <img src="${pageContext.request.contextPath}" + filepath>
-            </td>
-        </tr>
-        </table>
-    </c:forEach>
 </br>
     <%
         List<Booking> bookingList = (List) request.getAttribute("booking-list");
