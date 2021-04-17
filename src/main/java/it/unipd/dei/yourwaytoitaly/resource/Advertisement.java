@@ -160,13 +160,13 @@ public final class Advertisement extends Resource{
 
         // while we are not on the start of an element or the element is not
         // a token element, advance to the next element (if any)
-        while (jp.getCurrentToken() != JsonToken.FIELD_NAME || "advertisement".equals(jp.getCurrentName()) == false) {
+        /*while (jp.getCurrentToken() != JsonToken.FIELD_NAME || "advertisement".equals(jp.getCurrentName()) == false) {
 
             // there are no more events
             if (jp.nextToken() == null) {
                 throw new IOException("Unable to parse JSON: no advertisement object found.");
             }
-        }
+        }*/
 
         while (jp.nextToken() != JsonToken.END_OBJECT) {
 
@@ -175,11 +175,11 @@ public final class Advertisement extends Resource{
                 switch (jp.getCurrentName()) {
                     case "idAdvertisement":
                         jp.nextToken();
-                        jidAdvertisement = jp.getIntValue();
+                        jidAdvertisement = Integer.parseInt(jp.getValueAsString());
                         break;
                     case "title":
                         jp.nextToken();
-                        jtitle = jp.getText();
+                        jtitle = jp.getValueAsString();
                         break;
                     case "description":
                         jp.nextToken();
@@ -187,15 +187,15 @@ public final class Advertisement extends Resource{
                         break;
                     case "score":
                         jp.nextToken();
-                        jscore = jp.getIntValue();
+                        jscore = Integer.parseInt(jp.getValueAsString());
                         break;
                     case "price":
                         jp.nextToken();
-                        jprice = jp.getIntValue();
+                        jprice = Integer.parseInt(jp.getValueAsString());
                         break;
                     case "numTotItem":
                         jp.nextToken();
-                        jnumTotItem = jp.getIntValue();
+                        jnumTotItem = Integer.parseInt(jp.getValueAsString());
                         break;
                     case "dateStart":
                         jp.nextToken();
@@ -219,7 +219,7 @@ public final class Advertisement extends Resource{
                         break;
                     case "idType":
                         jp.nextToken();
-                        jidType = jp.getIntValue();
+                        jidType = Integer.parseInt(jp.getValueAsString());
                         break;
 
                 }

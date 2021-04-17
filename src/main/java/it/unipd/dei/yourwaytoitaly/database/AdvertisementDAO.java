@@ -38,7 +38,7 @@ public class AdvertisementDAO extends AbstractDAO{
     public static Advertisement createAdvertisement(Advertisement advertisement) throws SQLException, NamingException {
         final String STATEMENT =
                 "INSERT INTO Advertisement (TITLE, DESCRIPTION, SCORE, PRICE, NUM_TOT_ITEM, DATE_START, DATE_END, TIME_START, TIME_END, email_c, ID_TYPE)\n" +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, (SELECT ID_type FROM Type_advertisement WHERE Type_advertisement.type = ?)) RETURNING *;";
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING *;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;

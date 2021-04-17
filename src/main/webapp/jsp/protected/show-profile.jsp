@@ -42,8 +42,7 @@ Since: 1.0
     <nav>
         <a href="${pageContext.request.contextPath}/index">Home</a>
 
-        <%!
-        %><c:choose>
+        <c:choose>
             <c:when test="${empty sessionScope.Authorization}">
             </c:when>
             <c:otherwise>
@@ -123,7 +122,6 @@ Since: 1.0
                     <td><c:out value="${user.idCity}"/></td>
                 </tr>
             </table>
-            <!-- TODO: Create the advertisement-create.jsp -->
             <form method="get" action="<c:url value="/advertisement-do-create"/>">
                 <button type="submit">New advertisement</button>
             </form>

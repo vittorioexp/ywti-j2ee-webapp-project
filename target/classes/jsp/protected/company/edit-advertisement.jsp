@@ -34,7 +34,8 @@
 <div>
 
     <%
-        int idAdvertisement = (int) request.getAttribute("idAdvertisement");
+        int idAdvertisement = 0;
+                //(int) request.getAttribute("idAdvertisement");
         String url = "/advertisement/" + String.valueOf(idAdvertisement);
     %>
 

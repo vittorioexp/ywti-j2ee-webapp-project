@@ -128,7 +128,11 @@ public class AdvertisementRestResource extends RestResource {
                 dateEnd = advertisement.getDateEnd();
                 timeStart = advertisement.getTimeStart();
                 timeEnd = advertisement.getTimeEnd();
-                if(dateEnd.compareTo(dateStart)<0 || timeEnd.compareTo(timeStart)<0){
+
+                if (dateStart==null) dateStart=Date.valueOf("08:30:00");
+                if (dateEnd==null) dateEnd=Date.valueOf("18:00:00");
+
+                if(dateEnd.compareTo(dateStart)<0) {
                     ErrorCode ec = ErrorCode.WRONG_FORMAT;
                     Message m = new Message("Input value not valid.",
                             ec.getErrorCode(),"Dates entered are not valid.");
@@ -137,7 +141,31 @@ public class AdvertisementRestResource extends RestResource {
                     return;
                 }
 
+                if (dateStart.compareTo(dateEnd)==0 && timeEnd.compareTo(timeStart)<0) {
+                    ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                    Message m = new Message("Input value not valid.",
+                            ec.getErrorCode(),"Times entered are not valid.");
+                    res.setStatus(ec.getHTTPCode());
+                    m.toJSON(res.getOutputStream());
+                    return;
+                }
+                idType = advertisement.getIdType();
                 score = (int) Math.floor(price/3.14);
+
+                advertisement = new Advertisement(
+                        0,
+                        title,
+                        description,
+                        score,
+                        price,
+                        numTotItem,
+                        dateStart,
+                        dateEnd,
+                        timeStart,
+                        timeEnd,
+                        email,
+                        idType
+                );
 
                 // insert JSON inside DB
                 advertisement = AdvertisementDAO.createAdvertisement(advertisement);
@@ -152,10 +180,12 @@ public class AdvertisementRestResource extends RestResource {
                 }
 
                 // set attribute
-                req.setAttribute("idAdvertisement",idAdvertisement);
+                req.setAttribute("idAdvertisement",String.valueOf(idAdvertisement));
 
-                // forward to create-advertisement.jsp
-                req.getRequestDispatcher("/jsp/create-advertisement.jsp").forward(req, res);
+                Message success = new Message("Successful creation!");
+                req.setAttribute("message", success);
+                res.setStatus(HttpServletResponse.SC_OK);
+                req.getRequestDispatcher("/advertisement-do-create").forward(req,res);
 
             } else {
                 // receive Images (if idAdvertisement!=0)
@@ -180,13 +210,13 @@ public class AdvertisementRestResource extends RestResource {
                         }
                     }
                     // forward the user to its user profile page
-                    req.getRequestDispatcher("/user/profile").forward(req, res);
+                    res.sendRedirect(req.getContextPath() + "/user/profile");
                 }
             }
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("Cannot create the advertisement. ",
+            Message m = new Message("BLACannot create the advertisement. ",
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);

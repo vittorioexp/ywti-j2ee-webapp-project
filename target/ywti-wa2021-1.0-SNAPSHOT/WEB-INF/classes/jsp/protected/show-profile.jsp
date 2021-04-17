@@ -40,14 +40,14 @@ Since: 1.0
         <h1>Show profile</h1>
     </header>
     <nav>
-        <a href="${pageContext.request.contextPath}/protected/edit-profile.jsp">Home</a>
+        <a href="${pageContext.request.contextPath}/index">Home</a>
 
-        <%!
-        %><c:choose>
+        <c:choose>
             <c:when test="${empty sessionScope.Authorization}">
             </c:when>
             <c:otherwise>
                 <a href="${pageContext.request.contextPath}/user/do-logout">Logout</a>
+                <a href="${pageContext.request.contextPath}/user/do-edit">Edit profile</a>
             </c:otherwise>
         </c:choose>
 
@@ -122,7 +122,6 @@ Since: 1.0
                     <td><c:out value="${user.idCity}"/></td>
                 </tr>
             </table>
-            <!-- TODO: Create the advertisement-create.jsp -->
             <form method="get" action="<c:url value="/advertisement-do-create"/>">
                 <button type="submit">New advertisement</button>
             </form>

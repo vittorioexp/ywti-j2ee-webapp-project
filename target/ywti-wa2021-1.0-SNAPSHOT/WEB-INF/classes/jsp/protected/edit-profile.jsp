@@ -51,11 +51,12 @@ Since: 1.0
 </nav>
 
 <div>
-    <form method="put" action="<c:url value="/user/edit"/>">
+    <form method="POST" action="<c:url value="/user/edit"/>">
 
         <label for="phonenumber">Phone Number:</label>
         <input id="phonenumber" name="phonenumber" type="text"/><br/><br/>
-
+        <label for="password">new password:</label>
+        <input id="password" name="password" type="password"/><br/><br/>
         <button type="submit">Edit</button><br/>
 
     </form>

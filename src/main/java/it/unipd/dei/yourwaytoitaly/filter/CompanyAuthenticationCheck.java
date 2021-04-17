@@ -83,6 +83,7 @@ public class CompanyAuthenticationCheck implements Filter {
 //                    res.sendRedirect(req.getContextPath() + "/index");
 //                    return;
                 }
+
             }catch(SQLException | NamingException e){
                 session.invalidate();
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
@@ -90,7 +91,8 @@ public class CompanyAuthenticationCheck implements Filter {
             }
 
         }
-
+        Message success = new Message("Filter is successful!");
+        req.setAttribute("message", success);
         filterChain.doFilter( req , res );
 
     }

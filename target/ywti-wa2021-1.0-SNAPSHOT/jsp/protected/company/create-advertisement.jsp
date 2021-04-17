@@ -49,15 +49,13 @@ Since: 1.0
 </nav>
 
 <%
-    int idAdvertisement = 0;
-    String tmp = String.valueOf(request.getAttribute("idAdvertisement"));
-    if (tmp!=null) {idAdvertisement = Integer.parseInt(tmp);}
+    //String idAdvertisement = String.valueOf(request.getAttribute("idAdvertisement"));
+    //boolean state = idAdvertisement.equals("0");
 %>
 
 <c:choose>
-
-    <c:when test="${idAdvertisement==0}">
-
+    <c:when test="${empty request.idAdvertisement}">
+        Null!
         <div>
             <form id="createAdvertisementForm" name="createAdvertisementForm" method="POST"
                   action="<c:url value="/advertisement-create" />" >
@@ -84,26 +82,26 @@ Since: 1.0
                 <input id="dateEnd" name="dateEnd" type="date" required/><br/><br/>
 
                 <label for="timeStart">timeStart:</label>
-                <input id="timeStart" name="timeStart" type="time" required/><br/><br/>
+                <input id="timeStart" name="timeStart" type="time" value="08:30:00"/><br/><br/>
 
                 <label for="timeEnd">timeEnd:</label>
-                <input id="timeEnd" name="timeEnd" type="time" required/><br/><br/>
+                <input id="timeEnd" name="timeEnd" type="time" value="18:30:00"/><br/><br/>
 
                 <button type="submit" name="Submit" value="Submit">Submit</button><br/>
 
             </form>
-            <div id="decoded"></div>
 
             <script>
                 createAdvertisementForm.onsubmit = async (e) => {
                     e.preventDefault();
-                    var form = document.querySelector("#create-advertisement-form");
 
+                    var form = document.querySelector("#createAdvertisementForm");
+                    // {"advertisement":
                     data = {
-                        idAdvertisement : 0,
+                        idAdvertisement : "0",
                         title : form.querySelector('input[name="title"]').value,
                         description : form.querySelector('input[name="description"]').value,
-                        score : 0,
+                        score : "0",
                         price : form.querySelector('input[name="price"]').value,
                         numTotItem : form.querySelector('input[name="numTotItem"]').value,
                         dateStart : form.querySelector('input[name="dateStart"]').value,
@@ -114,7 +112,7 @@ Since: 1.0
                         idType : form.querySelector('input[name="idType"]').value,
                     }
 
-                    let response = await fetch('http://localhost:8080/ywti_wa2021_war/advertisement-create', {
+                    fetch('http://localhost:8080/ywti_wa2021_war/advertisement-create', {
                         method: 'POST', // or 'PUT'
                         headers: {
                             'Content-Type': 'application/json',
@@ -122,16 +120,18 @@ Since: 1.0
                         body: JSON.stringify(data),
                     })
 
-                    let text = await response.text(); // read response body as text
-                    document.querySelector("#decoded").innerHTML = text;
+                    //let text = await response.text(); // read response body as text
+                    //document.querySelector("#decoded").innerHTML = text;
                 };
             </script>
 
         </div>
     </c:when>
     <c:otherwise>
+        NOT null!
         <div>
-            <form id="upload-images-form" method="post" enctype="multipart/form-data" action="/advertisement-create">
+            <form id="upload-images-form" method="post" enctype="multipart/form-data"
+                  action="<c:url value="/advertisement-create" />" >
                 <label for="image">image:</label>
                 <input id="image" name="image" type="file" id="file" multiple/><br/><br/>
                 <button type="submit" name="Submit" value="Submit">Upload</button><br/>
@@ -140,6 +140,7 @@ Since: 1.0
         </div>
     </c:otherwise>
 </c:choose>
+
 <div>
     <c:import url="/jsp/include/show-message.jsp"/>
 </div>
