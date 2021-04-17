@@ -63,8 +63,8 @@ Since: 1.0
         <label for="address">Phone Number:</label>
         <input id="address" name="address" type="text"/><br/><br/>
 
-        <label for="id_city">Phone Number:</label>
-        <input id="id_city" name="id_city" type="text"/><br/><br/>
+        <label for="idCity">Phone Number:</label>
+        <input id="idCity" name="idCity" type="text"/><br/><br/>
         <button type="submit">Edit</button><br/>
 
     </form>
