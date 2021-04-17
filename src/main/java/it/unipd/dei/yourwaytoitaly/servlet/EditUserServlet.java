@@ -42,6 +42,8 @@ public class EditUserServlet extends AbstractDatabaseServlet {
         String email;
         String password;
         String phoneNumber;
+        String address;
+        int idCity;
 
         try{
 
@@ -60,6 +62,8 @@ public class EditUserServlet extends AbstractDatabaseServlet {
 
             phoneNumber = req.getParameter("phonenumber");
             password = req.getParameter("password");
+            address = req.getParameter("address");
+            idCity = Integer.parseInt(req.getParameter("idCity"));
 
             if (phoneNumber==null || phoneNumber.length()<10 || phoneNumber.length()>15) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
@@ -69,36 +73,63 @@ public class EditUserServlet extends AbstractDatabaseServlet {
                 m.toJSON(res.getOutputStream());
                 return;
             }
+            if (password==null || password.length()<8 || password.length()>150) {
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Input password is not valid. ",
+                        ec.getErrorCode(), "Input password is not valid. ");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
+            if (address==null || address.length()<4 || address.length()>150) {
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Input address is not valid. ",
+                        ec.getErrorCode(), "Input address is not valid. " + address);
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
+            if (idCity<=0) {
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Input idCity is not valid. ",
+                        ec.getErrorCode(), "Input idCity is not valid. " + idCity);
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
+
 
             if (u instanceof Tourist) {
 
                 u = new Tourist(
                         email,
+                        password,
                         null,
-                        null,
-                        null,
+                        address,
                         phoneNumber,
-                        0,
+                        idCity,
                         null,
                         null
                 );
 
-                UserDAO.editUserPhoneNumber(u , password);
+                UserDAO.editUserProfile(u);
 
             } else if (u instanceof Company) {
 
                 u = new Company(
                         email,
                         password,
-                        null,
+                        address,
                         phoneNumber,
-                        0,
+                        idCity,
                         null
                 );
 
-                UserDAO.editUserPhoneNumber(u , password);
+                UserDAO.editUserProfile(u);
 
             }
+            Message success = new Message("Profile successfully edited!");
+            req.setAttribute("message", success);
             res.setStatus(HttpServletResponse.SC_OK);
             res.sendRedirect(req.getContextPath()+"/user/profile");
 

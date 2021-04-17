@@ -1,3 +1,5 @@
+<%@ page import="it.unipd.dei.yourwaytoitaly.utils.ErrorCode" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Message" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -53,9 +55,6 @@ Since: 1.0
     //boolean state = idAdvertisement.equals("0");
 %>
 
-<c:choose>
-    <c:when test="${empty request.idAdvertisement}">
-        Null!
         <div>
             <form id="createAdvertisementForm" name="createAdvertisementForm" method="POST"
                   action="<c:url value="/advertisement-create" />" >
@@ -90,8 +89,9 @@ Since: 1.0
                 <button type="submit" name="Submit" value="Submit">Submit</button><br/>
 
             </form>
-
+            <div id="response"></div>
             <script>
+                /*
                 createAdvertisementForm.onsubmit = async (e) => {
                     e.preventDefault();
 
@@ -121,25 +121,13 @@ Since: 1.0
                     })
 
                     //let text = await response.text(); // read response body as text
-                    //document.querySelector("#decoded").innerHTML = text;
+                    //document.querySelector("#response").innerHTML = text;
                 };
+                */
+
             </script>
 
         </div>
-    </c:when>
-    <c:otherwise>
-        NOT null!
-        <div>
-            <form id="upload-images-form" method="post" enctype="multipart/form-data"
-                  action="<c:url value="/advertisement-create" />" >
-                <label for="image">image:</label>
-                <input id="image" name="image" type="file" id="file" multiple/><br/><br/>
-                <button type="submit" name="Submit" value="Submit">Upload</button><br/>
-
-            </form>
-        </div>
-    </c:otherwise>
-</c:choose>
 
 <div>
     <c:import url="/jsp/include/show-message.jsp"/>

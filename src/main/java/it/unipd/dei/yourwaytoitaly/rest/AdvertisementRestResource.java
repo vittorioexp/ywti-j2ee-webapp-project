@@ -185,34 +185,57 @@ public class AdvertisementRestResource extends RestResource {
                 Message success = new Message("Successful creation!");
                 req.setAttribute("message", success);
                 res.setStatus(HttpServletResponse.SC_OK);
-                req.getRequestDispatcher("/advertisement-do-create").forward(req,res);
+                res.sendRedirect(req.getContextPath() + "/upload-images/" + String.valueOf(idAdvertisement));
 
             } else {
-                // receive Images (if idAdvertisement!=0)
-                idAdvertisement = (int) req.getAttribute("idAdvertisement");
-                if (idAdvertisement!=0) {
-                    final String UPLOAD_DIRECTORY = "/" + String.valueOf(idAdvertisement);
-                    List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(req);
-                    int count = 1;
-                    for (FileItem item : multiparts) {
-                        if (!item.isFormField()) {
-                            //String name = new File(item.getName()).getName();
-                            String pathName = UPLOAD_DIRECTORY + File.separator + String.valueOf(count++) + ".jpg";
-                            item.write(new File(pathName));
-                            Image img = new Image
-                                    (
-                                            0,
-                                            pathName,
-                                            title,
-                                            idAdvertisement
-                                    );
-                            ImageDAO.createImage(img);
+                String pathName="";
+                List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(req);
+                int count = 1;
+                for (FileItem item : multiparts) {
+                    if (item.isFormField()) {
+                        String name = item.getFieldName();
+                        String value = item.getString();
+                        switch (name) {
+                            case "idAdvertisement":
+                                // TODO: check if idAdv > 0
+                                // TODO: check if the company is authorized to upload images about this advertisement
+                                idAdvertisement = Integer.parseInt(value);
+                                break;
+                            case "description":
+                                description = value;
+                                break;
+                            default:
+                                break;
                         }
+                    } else {
+
+                        //String name = new File(item.getName()).getName();
+                        // TODO: check file extension
+
+                        //final String UPLOAD_DIRECTORY = "/" + String.valueOf(idAdvertisement);
+                        // TODO: fix file path
+                        String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/ywti/img/" +  String.valueOf(idAdvertisement);
+                        pathName = UPLOAD_DIRECTORY + File.separator + String.valueOf(count++) + ".png";
+                        item.write(new File(pathName));
+                        Image img = new Image
+                                (
+                                        0,
+                                        pathName,
+                                        description,
+                                        idAdvertisement
+                                );
+                        ImageDAO.createImage(img);
                     }
-                    // forward the user to its user profile page
-                    res.sendRedirect(req.getContextPath() + "/user/profile");
+
                 }
+                Message success = new Message(pathName);
+                req.setAttribute("message", success);
+                res.setStatus(HttpServletResponse.SC_OK);
+                // forward the user to its user profile page
+                req.getRequestDispatcher("/user/profile").forward(req,res);
+                //res.sendRedirect(req.getContextPath() + "/user/profile");
             }
+
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

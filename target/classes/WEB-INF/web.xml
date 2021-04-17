@@ -92,6 +92,11 @@
 	</servlet>
 
 	<servlet>
+		<servlet-name>UploadImagesJSP</servlet-name>
+		<jsp-file>/jsp/protected/company/upload-images.jsp</jsp-file>
+	</servlet>
+
+	<servlet>
 		<servlet-name>EditAdvertisementJSP</servlet-name>
 		<jsp-file>/jsp/protected/company/edit-advertisement.jsp</jsp-file>
 	</servlet>
@@ -126,6 +131,7 @@
 	<filter-mapping>
 		<filter-name>CompanyAuthenticationCheck</filter-name>
 		<url-pattern>/advertisement-do-create</url-pattern>
+		<url-pattern>/upload-images/*</url-pattern>
 		<url-pattern>/advertisement-edit</url-pattern>
 		<url-pattern>/advertisement-create</url-pattern>
 	</filter-mapping>
@@ -202,6 +208,11 @@
 	<servlet-mapping>
 		<servlet-name>CreateAdvertisementJSP</servlet-name>
 		<url-pattern>/advertisement-do-create</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>UploadImagesJSP</servlet-name>
+		<url-pattern>/upload-images/*</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>

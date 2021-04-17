@@ -1,6 +1,5 @@
-<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Tourist" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.resource.User" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.utils.ErrorCode" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Message" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -27,11 +26,12 @@ Since: 1.0
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Edit profile</title>
+    <title>Create an advertisement</title>
 </head>
 <body>
+
 <header>
-    <h1>Edit profile</h1>
+    <h1>Create Advertisement</h1>
 </header>
 <nav>
     <a href="${pageContext.request.contextPath}/index">Home</a>
@@ -50,26 +50,28 @@ Since: 1.0
     <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
 </nav>
 
+<%
+    //String idAdvertisement = String.valueOf(request.getAttribute("idAdvertisement"));
+    //boolean state = idAdvertisement.equals("0");
+%>
+
 <div>
-    <form method="POST" action="<c:url value="/user/edit"/>">
-
-
-        <label for="password">new password:</label>
-        <input id="password" name="password" type="password" required/><br/><br/>
-
-        <label for="phonenumber">Phone Number:</label>
-        <input id="phonenumber" name="phonenumber" type="text" required/><br/><br/>
-
-        <label for="address">Address:</label>
-        <input id="address" name="address" type="text" required/><br/><br/>
-
-        <label for="idCity">Id City:</label>
-        <input id="idCity" name="idCity" type="number" required/><br/><br/>
-        <button type="submit">Edit</button><br/>
+    <%
+        String path = request.getRequestURI();
+        String idAdvertisement = path.substring(path.lastIndexOf("upload-images") + 14);
+    %>
+    <%= idAdvertisement %>
+    <form id="uploadImagesForm" name="uploadImagesForm" method="post" enctype="multipart/form-data"
+          action="<c:url value="/advertisement-create" />" >
+        <input type="hidden" name="idAdvertisement" value="<%= idAdvertisement %>" />
+        <input type="hidden" name="description" value="ciao" />
+        <label for="image">image:</label>
+        <input id="image" name="image" type="file" id="file" multiple/><br/><br/>
+        <button type="submit" name="Submit" value="Submit">Upload</button><br/>
 
     </form>
-    <br />
 </div>
+
 
 
 <div>
@@ -77,3 +79,5 @@ Since: 1.0
 </div>
 </body>
 </html>
+
+
