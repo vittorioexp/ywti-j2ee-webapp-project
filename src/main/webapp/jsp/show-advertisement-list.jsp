@@ -46,8 +46,9 @@
                     <td>${adv.numTotItem}</td>
                     <td>${adv.price}</td>
                     <td>
-                        <a href="${pageContext.request.contextPath}/advertisement/" +
-                            ${advertisment.idAdvertisement}>info</a>
+
+
+
                     </td>
                 </tr>
             </c:forEach>
