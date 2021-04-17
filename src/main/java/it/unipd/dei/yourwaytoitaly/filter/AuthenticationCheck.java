@@ -1,6 +1,5 @@
 package it.unipd.dei.yourwaytoitaly.filter;
 
-import it.unipd.dei.yourwaytoitaly.resource.Message;
 import it.unipd.dei.yourwaytoitaly.servlet.LoginServlet;
 
 import javax.servlet.*;
@@ -68,8 +67,6 @@ public class AuthenticationCheck implements Filter {
             }
 
         }
-        Message success = new Message("Filter is successful!");
-        req.setAttribute("message", success);
         filterChain.doFilter( req , res );
 
     }

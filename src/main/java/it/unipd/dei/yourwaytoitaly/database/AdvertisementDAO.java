@@ -151,6 +151,7 @@ public class AdvertisementDAO extends AbstractDAO{
      */
     public static Advertisement searchAdvertisement(int reqIdAdvertisement) throws SQLException, NamingException
     {
+        // TODO: return only the advertisement if it has numTotItem>0
         final String STATEMENT =
                 "SELECT * " +
                         "FROM ADVERTISEMENT " +
@@ -203,6 +204,7 @@ public class AdvertisementDAO extends AbstractDAO{
      *             if any error occurs.
      */
     public static List<Advertisement> searchAdvertisement(String reqEmail) throws SQLException, NamingException {
+        // TODO: return only advertisements with numTotItem>0
         final String STATEMENT =
                 "SELECT *\n" +
                         "FROM ADVERTISEMENT\n" +
@@ -260,6 +262,7 @@ public class AdvertisementDAO extends AbstractDAO{
      */
     public static List<Advertisement> searchAdvertisement(final int reqIdCity, final int reqIdType,
                                                    final Date reqDate) throws SQLException, NamingException {
+        // TODO: returns only advertisements with numTotItem>0
         final String STATEMENT =
                 "SELECT * " +
                         "FROM ADVERTISEMENT " +

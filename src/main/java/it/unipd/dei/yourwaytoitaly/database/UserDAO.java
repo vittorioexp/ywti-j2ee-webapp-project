@@ -314,8 +314,8 @@ public class UserDAO extends AbstractDAO{
      * @return a TypeAdvertisement objects matching with the Id of the type advertisement.
      * @throws SQLException if any error occurs while searching for a type advertisement.
      */
-    public static int searchUserScore(String reqIdTourist) throws SQLException, NamingException {
-
+    public static int getUserScore(String reqIdTourist) throws SQLException, NamingException {
+        // TODO: fix query - get the total score of a user by accounting only for all SUCCESSFUL bookings
         final String STATEMENT = "SELECT *\n" +
                 "FROM BOOKING JOIN ADVERTISEMENT ON ADVERTISEMENT.ID_ADVERTISEMENT = BOOKING.ID_ADVERTISEMENT\n" +
                 "WHERE BOOKING.email_t = ? AND BOOKING.state = 'SUCCESSFUL';";

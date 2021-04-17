@@ -35,7 +35,6 @@
 
     <%
         int idAdvertisement = 0;
-                //(int) request.getAttribute("idAdvertisement");
         String url = "/advertisement/" + String.valueOf(idAdvertisement);
     %>
 

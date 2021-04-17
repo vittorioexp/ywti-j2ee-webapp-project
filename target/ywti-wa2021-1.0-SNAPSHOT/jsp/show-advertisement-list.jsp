@@ -33,7 +33,7 @@
         <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
     </nav>
     <%
-        // TODO : get JSON ResourceList<Advertisement>
+        // TODO : get JSON ResourceList<Advertisement> and show: title, dateStart, dateEnd, numTotItem (>0) and price
         ResourceList<Advertisement> listAdvertisement = null;
     %>
         <table id="advertisement-list-table" name="advertisement-list-table"

@@ -88,6 +88,8 @@ Since: 1.0
             </table>
             <%
                 List<Booking> bookingslist = (List) request.getAttribute("bookings-list");
+                // TODO: show only NOT DELETED bookings and don't show old bookings (useless)
+                // TODO: for each element, show also the advertisement title (for clarity reasons)
             %>
             <table>
             <c:forEach items="<%=bookingslist%>" var="booking">
@@ -126,7 +128,7 @@ Since: 1.0
                 <button type="submit">New advertisement</button>
             </form>
             <%
-                // TODO : get JSON ResourceList<Advertisement>
+                // TODO : get JSON ResourceList<Advertisement> and show: title, dateStart, dateEnd, numTotItem (>0) and price
                 List<Advertisement> advertisementList = null;
             %>
             <table>

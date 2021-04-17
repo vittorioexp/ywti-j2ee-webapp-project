@@ -44,6 +44,7 @@ public class ShowProfileServlet extends AbstractDatabaseServlet {
                     }
 
                     if (u instanceof Tourist) {
+                        // TODO: show the user score (mod 100)
                         isTourist = true;
                         req.setAttribute("userType",(Boolean) isTourist);
                         req.setAttribute("user",(Tourist) u);

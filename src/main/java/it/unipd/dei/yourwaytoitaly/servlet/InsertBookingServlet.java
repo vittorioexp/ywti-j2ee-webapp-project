@@ -55,8 +55,7 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
         int numTotItem=0;
 
         try{
-            // TODO: when booking, give the user a score
-            // TODO: if user score > X, give the user a discount of Y % on this booking and user score becomes 1
+            // TODO: if (userScore % 10 == 0), give the user a discount of 10% on this booking
 
             // TODO: check if the email is of a tourist
             emailTourist = LoginServlet.getUserEmail(req);
@@ -152,7 +151,7 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             Message success = new Message("Successfully booked!");
             req.setAttribute("message", success);
             res.setStatus(HttpServletResponse.SC_OK);
-            res.sendRedirect(req.getContextPath() + "/user/profile");
+            req.getRequestDispatcher("/advertisement/" + String.valueOf(idAdvertisement)).forward(req,res);
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

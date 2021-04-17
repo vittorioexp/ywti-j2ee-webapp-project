@@ -51,6 +51,9 @@ Since: 1.0
 
         <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
     </nav>
+    <%
+        // TODO: write contacts.html
+    %>
         <br>
         <br>
         <br>

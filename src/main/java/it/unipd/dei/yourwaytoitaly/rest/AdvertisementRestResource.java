@@ -147,7 +147,7 @@ public class AdvertisementRestResource extends RestResource {
                     return;
                 }
                 idType = advertisement.getIdType();
-                score = (int) Math.floor(price/3.14);
+                score = (int) Math.floor(price/3.14); // TODO: put "resources" in the context file
 
                 advertisement = new Advertisement(
                         0,
@@ -206,8 +206,7 @@ public class AdvertisementRestResource extends RestResource {
                                 break;
                         }
                     } else {
-                        // TODO: check file extension
-                        // TODO: fix file path
+                        // TODO: check file extension (only images allowed)
                         // Save the picture inside the disk
                         pathName = System.getProperty("user.dir");
                         pathName = pathName.substring(0, pathName.lastIndexOf("bin"));
@@ -216,7 +215,7 @@ public class AdvertisementRestResource extends RestResource {
                         try { item.write(new File(pathName)); }
                         catch (Exception e) {}
 
-                        // TODO: put "resources" in the context file
+
 
                         // Save the image URI inside the DB
                         pathName = URI.substring(0, URI.lastIndexOf("advertisement-create"));
@@ -236,7 +235,7 @@ public class AdvertisementRestResource extends RestResource {
                 Message success = new Message(pathName);
                 req.setAttribute("message", success);
                 res.setStatus(HttpServletResponse.SC_OK);
-                res.sendRedirect(req.getContextPath() + "/user/profile");
+                res.sendRedirect(req.getContextPath() + "/advertisement/" + idAdvertisement);
             }
 
 

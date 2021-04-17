@@ -73,6 +73,8 @@ Since: 1.0
                     (Integer) jo.get("idType")
                     );
     int idAdvertisement = (Integer) jo.get("idAdvertisement");
+    // TODO: don't show the score of an advertisement
+    // TODO: the company owner has a button (form) to edit/delete the advertisement
 
 %>
 <table cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">

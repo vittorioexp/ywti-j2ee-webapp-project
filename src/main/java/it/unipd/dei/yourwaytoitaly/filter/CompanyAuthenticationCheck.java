@@ -91,8 +91,6 @@ public class CompanyAuthenticationCheck implements Filter {
             }
 
         }
-        Message success = new Message("Filter is successful!");
-        req.setAttribute("message", success);
         filterChain.doFilter( req , res );
 
     }
