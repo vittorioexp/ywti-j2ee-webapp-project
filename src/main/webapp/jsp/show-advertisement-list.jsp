@@ -46,9 +46,9 @@
                     <td>${adv.numTotItem}</td>
                     <td>${adv.price}</td>
                     <td>
-
-
-
+                        <form id="showAdvertisement" name="showAdvertisement" method="GET" action="<c:url value="/advertisement/${adv.idAdvertisement}"/>">
+                            <button type="submit">Info</button><br/>
+                        </form>
                     </td>
                 </tr>
             </c:forEach>
