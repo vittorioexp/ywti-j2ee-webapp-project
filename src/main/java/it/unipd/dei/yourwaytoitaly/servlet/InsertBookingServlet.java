@@ -2,9 +2,8 @@ package it.unipd.dei.yourwaytoitaly.servlet;
 
 import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
 import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
-import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
-import it.unipd.dei.yourwaytoitaly.resource.Booking;
-import it.unipd.dei.yourwaytoitaly.resource.Message;
+import it.unipd.dei.yourwaytoitaly.database.UserDAO;
+import it.unipd.dei.yourwaytoitaly.resource.*;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
 import javax.servlet.ServletException;
@@ -58,7 +57,18 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             // TODO: if (userScore % 10 == 0), give the user a discount of 10% on this booking
 
             // TODO: check if the email is of a tourist
+            //  Done
+
             emailTourist = LoginServlet.getUserEmail(req);
+            User user = UserDAO.searchUserByEmail(emailTourist);
+            if(user instanceof Company){
+                ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
+                Message m = new Message("Method not allowed: User not tourist.",
+                        ec.getErrorCode(),"User must be a tourist.");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
 
             if (emailTourist.equals("")) {
                 ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;

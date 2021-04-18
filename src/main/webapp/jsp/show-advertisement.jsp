@@ -74,7 +74,8 @@ Since: 1.0
                     );
     int idAdvertisement = (Integer) jo.get("idAdvertisement");
     // TODO: don't show the score of an advertisement
-    // TODO: the company owner has a button (form) to edit/delete the advertisement
+    // TODO: the company owner has a button (form) to edit/delete the advertisement --> A company can edit/delete
+    //  an advertisement in the Advertisement list in the user profile page
 
 %>
 <table cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">

@@ -51,6 +51,10 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
 
         try{
             // TODO: when deleting a booking, remove the user from a score
+            /*  When you calculate the score, in the query, will be check the state of the booking.
+                If the state of the booking is DELETED, the query will ignore that score
+             */
+
             String emailTourist = LoginServlet.getUserEmail(req);
 
             // receive idAdvertisement from the hidden form

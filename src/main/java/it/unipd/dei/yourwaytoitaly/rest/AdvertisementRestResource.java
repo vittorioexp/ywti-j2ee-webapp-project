@@ -187,6 +187,10 @@ public class AdvertisementRestResource extends RestResource {
             } else {
                 String pathName="";
                 String URI = req.getRequestURI();
+                int uriIdAdvertisement =  Integer.parseInt(URI.substring(URI.lastIndexOf("upload-images") + 14));
+
+                Advertisement advertisement = AdvertisementDAO.searchAdvertisement(Integer.parseInt(uriIdAdvertisement));
+
                 List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(req);
                 int count = 1;
                 for (FileItem item : multiparts) {
@@ -195,9 +199,28 @@ public class AdvertisementRestResource extends RestResource {
                         String value = item.getString();
                         switch (name) {
                             case "idAdvertisement":
-                                // TODO: check if idAdv > 0
-                                // TODO: check if the company is authorized to upload images about this advertisement
+                                if(uriIdAdvertisement<0){
+                                    ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
+                                    Message m = new Message("This is not your advertisement. ",
+                                            ec.getErrorCode(), ec.getErrorMessage());
+                                    res.setStatus(ec.getHTTPCode());
+                                    req.setAttribute("message", m);
+                                    m.toJSON(res.getOutputStream());
+                                    return;
+                                }
+                                // TODO: retrieve the email of the user company (emailCompany)
                                 idAdvertisement = Integer.parseInt(value);
+                                String emailCompanyAdvertisement = AdvertisementDAO.searchAdvertisement(uriIdAdvertisement).getEmailCompany();
+
+                                if(emailCompanyAdvertisement!=emailCompany){
+                                    ErrorCode ec = ErrorCode.MAIL_ALREADY_USED;
+                                    Message m = new Message("User not allowed. ",
+                                            ec.getErrorCode(), ec.getErrorMessage());
+                                    res.setStatus(ec.getHTTPCode());
+                                    req.setAttribute("message", m);
+                                    m.toJSON(res.getOutputStream());
+                                    return;
+                                }
                                 break;
                             case "description":
                                 description = value;
@@ -241,7 +264,7 @@ public class AdvertisementRestResource extends RestResource {
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("BLACannot create the advertisement. ",
+            Message m = new Message("Cannot create the advertisement. ",
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
@@ -342,6 +365,7 @@ public class AdvertisementRestResource extends RestResource {
 
 
         //TODO: Check if the idAdvertisement retrieved from the URI is correct
+        // Done
 
         if(op==null || Integer.parseInt(op) < 0){
             ErrorCode ec = ErrorCode.ADVERTISEMENT_NOT_FOUND;

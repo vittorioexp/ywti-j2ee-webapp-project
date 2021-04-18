@@ -192,6 +192,7 @@ public class BookingDAO extends AbstractDAO{
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        Booking booking;
 
         // the results of the search
         final List<Booking> bookings = new ArrayList<Booking>();
@@ -204,13 +205,17 @@ public class BookingDAO extends AbstractDAO{
 
             while (rs.next()) {
 
-                bookings.add(new Booking(
+                booking = new Booking(
                         rs.getString("email_t"),
                         rs.getInt("ID_advertisement"),
                         rs.getDate("date_b"),
                         rs.getTime("time_b"),
                         rs.getInt("num_booking"),
-                        rs.getString("state")));
+                        rs.getString("state"));
+
+                if(booking.getState()!="DELETED"){
+                    bookings.add(booking;
+                }
             }
         } finally {
             //close all the possible resources
