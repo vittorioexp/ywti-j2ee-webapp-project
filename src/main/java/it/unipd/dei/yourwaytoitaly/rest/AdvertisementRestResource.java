@@ -171,7 +171,7 @@ public class AdvertisementRestResource extends RestResource {
      *             if any error occurs
      */
     public void insertAdvertisement() throws IOException {
-        // TODO: rewrite this function using proper JSON - REST
+
         try{
             // check if a session is valid
             String email = LoginServlet.getUserEmail(req);
@@ -266,7 +266,7 @@ public class AdvertisementRestResource extends RestResource {
                     return;
                 }
                 idType = advertisement.getIdType();
-                score = (int) Math.floor(price/3.14); // TODO: put "resources" in the context file
+                score = (int) Math.floor(price/3.14);
 
                 advertisement = new Advertisement(
                         0,
@@ -304,36 +304,36 @@ public class AdvertisementRestResource extends RestResource {
                 res.sendRedirect(req.getContextPath() + "/upload-images/" + String.valueOf(idAdvertisement));
 
             } else {
-                String pathName="";
                 String URI = req.getRequestURI();
-                int uriIdAdvertisement =  Integer.parseInt(URI.substring(URI.lastIndexOf("upload-images") + 14));
+                String pathName="";
 
-                Advertisement advertisement = AdvertisementDAO.searchAdvertisement(uriIdAdvertisement);
+                //Advertisement advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
 
-                List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(req);
+                List<FileItem> multipart = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(req);
                 int count = 1;
-                for (FileItem item : multiparts) {
+                for (FileItem item : multipart) {
                     if (item.isFormField()) {
                         String name = item.getFieldName();
                         String value = item.getString();
                         switch (name) {
                             case "idAdvertisement":
-                                if(uriIdAdvertisement<0){
-                                    ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
-                                    Message m = new Message("This is not your advertisement. ",
+                                idAdvertisement = Integer.parseInt(value);
+                                if(idAdvertisement<=0){
+                                    ErrorCode ec = ErrorCode.AD_NOT_FOUND;
+                                    Message m = new Message("The requested advertisement does not exists!",
                                             ec.getErrorCode(), ec.getErrorMessage());
                                     res.setStatus(ec.getHTTPCode());
                                     req.setAttribute("message", m);
                                     m.toJSON(res.getOutputStream());
                                     return;
                                 }
-                                // TODO: retrieve the email of the user company (emailCompany)
-                                idAdvertisement = Integer.parseInt(value);
-                                String emailCompanyAdvertisement = AdvertisementDAO.searchAdvertisement(uriIdAdvertisement).getEmailCompany();
 
-                                if(emailCompanyAdvertisement!=email){
-                                    ErrorCode ec = ErrorCode.MAIL_ALREADY_USED;
-                                    Message m = new Message("User not allowed. ",
+                                String emailAdv =
+                                        AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
+                                if(emailAdv!=email){
+                                    ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
+                                    Message m = new Message(
+                                            "User not allowed to upload images on this advertisement!",
                                             ec.getErrorCode(), ec.getErrorMessage());
                                     res.setStatus(ec.getHTTPCode());
                                     req.setAttribute("message", m);
@@ -348,7 +348,29 @@ public class AdvertisementRestResource extends RestResource {
                                 break;
                         }
                     } else {
-                        // TODO: check file extension (only images allowed)
+                        if (idAdvertisement<=0 || description.equals("")) {
+                            ErrorCode ec = ErrorCode.AD_NOT_FOUND;
+                            Message m = new Message(
+                                    "Cannot upload images on this advertisement: The requested advertisement does not exists!",
+                                    ec.getErrorCode(), ec.getErrorMessage());
+                            res.setStatus(ec.getHTTPCode());
+                            req.setAttribute("message", m);
+                            m.toJSON(res.getOutputStream());
+                            return;
+                        }
+
+                        // check file extension (only png and jpg allowed)
+                        if (!item.getName().toLowerCase().endsWith(".png") || !item.getName().toLowerCase().endsWith(".jpg")) {
+                            ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                            Message m = new Message(
+                                    "Cannot upload this file! Use .PNG or .JPG instead",
+                                    ec.getErrorCode(), ec.getErrorMessage());
+                            res.setStatus(ec.getHTTPCode());
+                            req.setAttribute("message", m);
+                            m.toJSON(res.getOutputStream());
+                            return;
+                        }
+
                         // Save the picture inside the disk
                         pathName = System.getProperty("user.dir");
                         pathName = pathName.substring(0, pathName.lastIndexOf("bin"));
@@ -357,10 +379,8 @@ public class AdvertisementRestResource extends RestResource {
                         try { item.write(new File(pathName)); }
                         catch (Exception e) {}
 
-
-
                         // Save the image URI inside the DB
-                        pathName = URI.substring(0, URI.lastIndexOf("advertisement-create"));
+                        pathName = URI.substring(0, URI.lastIndexOf("adv-create"));
                         pathName += "res/img/" + String.valueOf(idAdvertisement) + "/" + String.valueOf(count) + ".png";
                         Image img = new Image
                                 (
@@ -377,7 +397,7 @@ public class AdvertisementRestResource extends RestResource {
                 Message success = new Message(pathName);
                 req.setAttribute("message", success);
                 res.setStatus(HttpServletResponse.SC_OK);
-                res.sendRedirect(req.getContextPath() + "/advertisement/" + idAdvertisement);
+                res.sendRedirect(req.getContextPath() + "/adv/" + idAdvertisement);
             }
 
 
@@ -386,8 +406,6 @@ public class AdvertisementRestResource extends RestResource {
             Message m = new Message("Cannot create the advertisement. ",
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
-            req.setAttribute("idAdvertisement", 0);
             m.toJSON(res.getOutputStream());
             return;
         }
@@ -403,53 +421,44 @@ public class AdvertisementRestResource extends RestResource {
      */
     public void deleteAdvertisement() throws IOException, ServletException {
 
-        // TODO: rewrite this function using proper JSON - REST
         int idAdvertisement = 0;
-        String emailCompany = null;
-        String emailCompanyAdvertisement = null;
+        String emailCompany = "";
+        String emailAdv = "";
         Advertisement advertisement;
-        String op = req.getRequestURI();
-        op = op.substring(op.lastIndexOf("advertisement") + 14);
+        String URI = req.getRequestURI();
 
+        idAdvertisement = Integer.parseInt(URI.substring(URI.lastIndexOf("adv")+4));
 
-        //TODO: Check if the idAdvertisement retrieved from the URI is correct
-        // Done
-
-        if(op==null || Integer.parseInt(op) < 0){
+        if(idAdvertisement <= 0){
             ErrorCode ec = ErrorCode.ADVERTISEMENT_NOT_FOUND;
             Message m = new Message("Advertisement not found.",
                     ec.getErrorCode(),"Advertisement not found.");
             res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
-            req.getRequestDispatcher("/user/profile").forward(req, res);
+            m.toJSON(res.getOutputStream());
+            return;
         }
-        idAdvertisement = Integer.parseInt(op);
 
         try{
-
-
             // check if the email of the session is equal to emailCompany
+            emailCompany = LoginServlet.getUserEmail(req);
 
-            User u = UserDAO.searchUserByEmail(LoginServlet.getUserEmail(req));
-
-            if (u == null) {
+            if (emailCompany.equals("")) {
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
                 Message m = new Message("User not found.",
                         ec.getErrorCode(),"User not found.");
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+                m.toJSON(res.getOutputStream());
+                return;
             }
-            emailCompany = u.getEmail();
-            emailCompanyAdvertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
+            emailAdv = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
 
-            if (!emailCompany.equals(emailCompanyAdvertisement)) {
+            if (!emailCompany.equals(emailAdv)) {
                 ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
                 Message m = new Message("User is not authorized.",
-                        ec.getErrorCode(),"User is not authorized to edit this advertisement");
+                        ec.getErrorCode(),"User is not authorized to delete this advertisement");
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/user/do-login/").forward(req, res);
+                m.toJSON(res.getOutputStream());
+                return;
             }
 
             AdvertisementDAO.deleteAdvertisement(idAdvertisement);
@@ -461,8 +470,8 @@ public class AdvertisementRestResource extends RestResource {
             Message m = new Message("Cannot edit the advertisement. ",
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
+            m.toJSON(res.getOutputStream());
+            return;
         }
     }
 
