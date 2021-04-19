@@ -4,12 +4,12 @@ package it.unipd.dei.yourwaytoitaly.rest;
 import it.unipd.dei.yourwaytoitaly.database.*;
 import it.unipd.dei.yourwaytoitaly.resource.*;
 import it.unipd.dei.yourwaytoitaly.servlet.LoginServlet;
-import it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -83,32 +83,22 @@ public class AdvertisementRestResource extends RestResource {
      * @throws ServletException
      *             if any error occurs
      */
-    public void editAdvertisement() throws IOException, ServletException {
-        // TODO: rewrite this function using proper JSON - REST
-        int score;
-        int price;
-        int numTotItem = 0;
-        int idAdvertisement = 0;
-        String emailCompany = null;
-        Advertisement advertisement;
-        String op = req.getRequestURI();
-        op = op.substring(op.lastIndexOf("advertisement") + 14);
+    public void editAdvertisement() throws IOException, ServletException, SQLException, NamingException {
 
         try{
-            // check if a session is valid
-            User u = new SessionCheckServlet(req, res).getUser();
-            if (u == null) {
-                ErrorCode ec = ErrorCode.USER_NOT_FOUND;
-                Message m = new Message("User not found.",
-                        ec.getErrorCode(),"User not found.");
-                res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/user/do-login/").forward(req, res);
-            }
 
-            // check if the email of the session is equal to emailCompany
-            String emailSession = u.getEmail();
-            emailCompany = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
+            String URI = req.getRequestURI();
+            // The URI should be /adv/ID
+
+            int idAdvertisement = Integer.parseInt(URI.substring(URI.lastIndexOf("adv") + 4));
+
+            //How to retrieve a JSON object
+            Advertisement advertisement = Advertisement.fromJSON(req.getInputStream());
+
+
+            String emailSession = LoginServlet.getUserEmail(req);
+            String emailCompany = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
+
             if (!emailSession.equals(emailCompany)) {
                 ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
                 Message m = new Message("User is not authorized.",
@@ -118,16 +108,9 @@ public class AdvertisementRestResource extends RestResource {
                 req.getRequestDispatcher("/user/do-login/").forward(req, res);
             }
 
-            // receive idAdvertisement from the hidden form
-            idAdvertisement = Integer.parseInt(op);
+            int price = advertisement.getPrice();
+            int numTotItem = advertisement.getNumTotItem();
 
-            advertisement = Advertisement.fromJSON(req.getInputStream());
-
-            price = advertisement.getPrice();
-            numTotItem = advertisement.getNumTotItem();
-
-            //price = Integer.parseInt(req.getParameter("price"));
-            //numTotItem = Integer.parseInt(req.getParameter("numTotItem"));
 
             if(price<0 || price>50000){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
@@ -147,7 +130,7 @@ public class AdvertisementRestResource extends RestResource {
                 req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
             }
 
-            score = (int) Math.floor(price/3.14);
+            int score = (int) Math.floor(price/3.14);
 
             advertisement = new Advertisement(
                     idAdvertisement,
@@ -166,15 +149,18 @@ public class AdvertisementRestResource extends RestResource {
 
             AdvertisementDAO.editAdvertisement(advertisement);
 
-            req.getRequestDispatcher("/user/profile").forward(req, res);
+            // For debug, pass the entity as an attribute
+            req.setAttribute("advertisement", advertisement);
 
-        } catch (Exception ex) {
+            res.sendRedirect(req.getContextPath() + "/adv-show/" + String.valueOf(idAdvertisement));
+
+            } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("Cannot edit the advertisement. ",
+            Message m = new Message("Cannot show the advertisement. ",
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
+            m.toJSON(res.getOutputStream());
+            return;
         }
     }
 
