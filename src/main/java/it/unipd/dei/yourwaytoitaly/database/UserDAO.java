@@ -336,9 +336,10 @@ public class UserDAO extends AbstractDAO{
                         rs.getTime("time_b"),
                         rs.getInt("num_booking"),
                         rs.getString("state"));
-
+                rs.getInt("score");
                 bookings.add(b);
                 // TODO: fix function
+                totalScore+=AdvertisementDAO.searchAdvertisement(b.getIdAdvertisement()).getScore();
                 totalScore += 0;
             }
 

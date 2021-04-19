@@ -62,7 +62,7 @@ Since: 1.0
     %>
     <%= idAdvertisement %>
     <form id="uploadImagesForm" name="uploadImagesForm" method="post" enctype="multipart/form-data"
-          action="<c:url value="/advertisement-create" />" >
+          action="<c:url value="/adv-create" />" >
         <input type="hidden" name="idAdvertisement" value="<%= idAdvertisement %>" />
         <input type="hidden" name="description" value="ciao" />
         <label for="image">image:</label>

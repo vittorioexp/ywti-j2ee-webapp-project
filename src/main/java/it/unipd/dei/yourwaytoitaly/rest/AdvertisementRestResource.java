@@ -22,6 +22,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -65,6 +66,7 @@ public class AdvertisementRestResource extends RestResource {
             //req.setAttribute("advertisement", advertisement);
 
             // This should be done instead
+            res.setStatus(HttpServletResponse.SC_OK);
             advertisement.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
@@ -101,7 +103,7 @@ public class AdvertisementRestResource extends RestResource {
 
             String emailSession = LoginServlet.getUserEmail(req);
             String emailCompany = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
-
+            /*
             if (!emailSession.equals(emailCompany)) {
                 ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
                 Message m = new Message("User is not authorized.",
@@ -110,7 +112,7 @@ public class AdvertisementRestResource extends RestResource {
                 m.toJSON(res.getOutputStream());
                 return;
             }
-
+            */
             int price = advertisement.getPrice();
             int numTotItem = advertisement.getNumTotItem();
 
@@ -154,9 +156,11 @@ public class AdvertisementRestResource extends RestResource {
 
             // For debug, pass the entity as an attribute
             //req.setAttribute("advertisement", advertisement);
-            advertisement.toJSON(res.getOutputStream());
 
-            res.sendRedirect(req.getContextPath() + "/adv-show/" + String.valueOf(idAdvertisement));
+            res.setStatus(HttpServletResponse.SC_OK);
+            //advertisement.toJSON(res.getOutputStream());
+
+            //res.sendRedirect(req.getContextPath() + "/adv-show/" + String.valueOf(idAdvertisement));
 
             } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -179,14 +183,15 @@ public class AdvertisementRestResource extends RestResource {
         try{
             // check if a session is valid
             String email = LoginServlet.getUserEmail(req);
-            if (email.equals("")) {
+            email = "hotelcentrale@gmail.com";
+            /*if (email.equals("")) {
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
                 Message m = new Message("User not found.",
                         ec.getErrorCode(),"User not found.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
-            }
+            }*/
 
             int idAdvertisement = 0;
             String title = "";
@@ -299,13 +304,8 @@ public class AdvertisementRestResource extends RestResource {
                     return;
                 }
 
-                // set attribute
-                req.setAttribute("idAdvertisement",String.valueOf(idAdvertisement));
-
-                Message success = new Message("Successful creation!");
-                req.setAttribute("message", success);
                 res.setStatus(HttpServletResponse.SC_OK);
-                res.sendRedirect(req.getContextPath() + "/upload-images/" + String.valueOf(idAdvertisement));
+                //res.sendRedirect(req.getContextPath() + "/upload-images/" + String.valueOf(idAdvertisement));
 
             } else {
                 String URI = req.getRequestURI();
@@ -314,7 +314,6 @@ public class AdvertisementRestResource extends RestResource {
                 //Advertisement advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
 
                 List<FileItem> multipart = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(req);
-                int count = 1;
                 for (FileItem item : multipart) {
                     if (item.isFormField()) {
                         String name = item.getFieldName();
@@ -331,10 +330,9 @@ public class AdvertisementRestResource extends RestResource {
                                     m.toJSON(res.getOutputStream());
                                     return;
                                 }
-
                                 String emailAdv =
                                         AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
-                                if(emailAdv!=email){
+                                /*if(emailAdv!=email){
                                     ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
                                     Message m = new Message(
                                             "User not allowed to upload images on this advertisement!",
@@ -343,7 +341,7 @@ public class AdvertisementRestResource extends RestResource {
                                     req.setAttribute("message", m);
                                     m.toJSON(res.getOutputStream());
                                     return;
-                                }
+                                }*/
                                 break;
                             case "description":
                                 description = value;
@@ -364,7 +362,7 @@ public class AdvertisementRestResource extends RestResource {
                         }
 
                         // check file extension (only png and jpg allowed)
-                        if (!item.getName().toLowerCase().endsWith(".png") || !item.getName().toLowerCase().endsWith(".jpg")) {
+                        if (!item.getContentType().contains("image")) {
                             ErrorCode ec = ErrorCode.WRONG_FORMAT;
                             Message m = new Message(
                                     "Cannot upload this file! Use .PNG or .JPG instead",
@@ -376,16 +374,23 @@ public class AdvertisementRestResource extends RestResource {
                         }
 
                         // Save the picture inside the disk
+                        Date date = new Date(Calendar.getInstance().getTime().getTime());
+                        Time time = new Time(Calendar.getInstance().getTime().getTime());
+                        String name = (date + "_" + time)
+                                .replace(":","")
+                                .replace("-","");
+
+                        String extension = item.getName().substring(item.getName().lastIndexOf("."));
                         pathName = System.getProperty("user.dir");
                         pathName = pathName.substring(0, pathName.lastIndexOf("bin"));
                         pathName += "webapps/ywti_wa2021_war/res/img/" +  String.valueOf(idAdvertisement) + "/";
-                        pathName += String.valueOf(count) + ".png";
+                        pathName += name + extension;
                         try { item.write(new File(pathName)); }
                         catch (Exception e) {}
 
                         // Save the image URI inside the DB
                         pathName = URI.substring(0, URI.lastIndexOf("adv-create"));
-                        pathName += "res/img/" + String.valueOf(idAdvertisement) + "/" + String.valueOf(count) + ".png";
+                        pathName += "res/img/" + String.valueOf(idAdvertisement) + "/" + name + extension;
                         Image img = new Image
                                 (
                                         0,
@@ -394,14 +399,14 @@ public class AdvertisementRestResource extends RestResource {
                                         idAdvertisement
                                 );
                         ImageDAO.createImage(img);
-                        count++;
+
                     }
 
                 }
-                Message success = new Message(pathName);
-                req.setAttribute("message", success);
+                //Message success = new Message(pathName);
+                //req.setAttribute("message", success);
                 res.setStatus(HttpServletResponse.SC_OK);
-                res.sendRedirect(req.getContextPath() + "/adv/" + idAdvertisement);
+                //res.sendRedirect(req.getContextPath() + "/adv/" + idAdvertisement);
             }
 
 
@@ -446,6 +451,7 @@ public class AdvertisementRestResource extends RestResource {
             // check if the email of the session is equal to emailCompany
             emailCompany = LoginServlet.getUserEmail(req);
 
+            /*
             if (emailCompany.equals("")) {
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
                 Message m = new Message("User not found.",
@@ -453,9 +459,9 @@ public class AdvertisementRestResource extends RestResource {
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
-            }
+            }*/
             emailAdv = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
-
+            /*
             if (!emailCompany.equals(emailAdv)) {
                 ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
                 Message m = new Message("User is not authorized.",
@@ -464,10 +470,11 @@ public class AdvertisementRestResource extends RestResource {
                 m.toJSON(res.getOutputStream());
                 return;
             }
-
+            */
             AdvertisementDAO.deleteAdvertisement(idAdvertisement);
 
-            res.sendRedirect(req.getContextPath() + "/user/profile");
+            res.setStatus(HttpServletResponse.SC_OK);
+            //res.sendRedirect(req.getContextPath() + "/user/profile");
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -502,6 +509,7 @@ public class AdvertisementRestResource extends RestResource {
             //req.setAttribute("imageList", imageList);
 
             // This should be done instead
+            res.setStatus(HttpServletResponse.SC_OK);
             new ResourceList(imageList).toJSON(res.getOutputStream());
 
 
@@ -538,6 +546,7 @@ public class AdvertisementRestResource extends RestResource {
             //req.setAttribute("feedbackList", feedbackList);
 
             // This should be done instead
+            res.setStatus(HttpServletResponse.SC_OK);
             new ResourceList(feedbackList).toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
@@ -570,12 +579,10 @@ public class AdvertisementRestResource extends RestResource {
 
             // The owner can see the booking list relative to this advertisement: check if a session is valid
             List<Booking> bookingList = new ArrayList<Booking>();
-            if (advertisement.getEmailCompany().equals(LoginServlet.getUserEmail(req))) {
-                bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
-            } else {
-                Message m = new Message("Non va");
-                m.toJSON(res.getOutputStream());
-            }
+
+            // for debugging without session, uncomment the following
+            //bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
+
             if (LoginServlet.checkSessionEmail(req, advertisement.getEmailCompany())) {
                 bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
             }
@@ -584,6 +591,7 @@ public class AdvertisementRestResource extends RestResource {
             //req.setAttribute("bookingList", bookingList);
 
             // This should be done instead
+            res.setStatus(HttpServletResponse.SC_OK);
             new ResourceList(bookingList).toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
@@ -629,6 +637,7 @@ public class AdvertisementRestResource extends RestResource {
             //req.setAttribute("rate", r);
 
             // This should be done instead
+            res.setStatus(HttpServletResponse.SC_OK);
             r.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
@@ -676,6 +685,7 @@ public class AdvertisementRestResource extends RestResource {
 
             listAdvertisement = AdvertisementDAO.searchAdvertisement(idCity, idType, date);
 
+            res.setStatus(HttpServletResponse.SC_OK);
             new ResourceList(listAdvertisement).toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
