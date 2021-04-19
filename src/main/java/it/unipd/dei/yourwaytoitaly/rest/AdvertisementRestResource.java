@@ -106,7 +106,7 @@ public class AdvertisementRestResource extends RestResource {
             String emailCompany = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
             /*
             if (!emailSession.equals(emailCompany)) {
-                ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
+                ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
                 Message m = new Message("User is not authorized.",
                         ec.getErrorCode(),"User is not authorized to edit this advertisement");
                 res.setStatus(ec.getHTTPCode());
@@ -531,7 +531,7 @@ public class AdvertisementRestResource extends RestResource {
             emailAdv = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
             /*
             if (!emailCompany.equals(emailAdv)) {
-                ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
+                ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
                 Message m = new Message("User is not authorized.",
                         ec.getErrorCode(),"User is not authorized to delete this advertisement");
                 res.setStatus(ec.getHTTPCode());

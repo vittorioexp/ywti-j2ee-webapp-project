@@ -133,7 +133,6 @@ INSERT INTO Type_advertisement (ID_type, type) VALUES
 INSERT INTO TOURIST (email_t, SURNAME, NAME, birth_date, phone_number, address, password, ID_city) 
 VALUES ('mariorossi@gmail.com', 'Rossi', 'Mario', '1998-03-10', '3287888901', 'Via Roma 10', MD5('prova'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
 
-
 INSERT INTO COMPANY (email_c, name_c, phone_number, address, password, ID_city) 
 VALUES ('hotelcentrale@gmail.com', 'Hotel centrale', '0495341234', 'Via Venezia 48', MD5('prova_c'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
 
@@ -143,6 +142,10 @@ VALUES ('Capodanno sulle dolomiti', 'Sette giorni di relax in mezzo alla neve de
 INSERT INTO IMAGE (path_i, description_i, ID_Advertisement) 
 VALUES ('/image/image1.jpg', 'hotel', 1);
 
+INSERT INTO Feedback (rate,text_f,date_f,email_t,ID_Advertisement)
+VALUES (4,'ottima esperienza', '2021-12-31','mariorossi@gmail.com',1);
 
+INSERT INTO Booking (date_b,time_b,num_booking,state,email_t,ID_Advertisement)
+VALUES ('2020-02-02','10:10:10', 2, 'SUCCESFUL','mariorossi@gmail.com',1);
 
 
