@@ -1,7 +1,9 @@
 package it.unipd.dei.yourwaytoitaly.rest;
 
-
-import it.unipd.dei.yourwaytoitaly.database.*;
+import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
+import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
+import it.unipd.dei.yourwaytoitaly.database.FeedbackDAO;
+import it.unipd.dei.yourwaytoitaly.database.ImageDAO;
 import it.unipd.dei.yourwaytoitaly.resource.*;
 import it.unipd.dei.yourwaytoitaly.servlet.LoginServlet;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
@@ -21,6 +23,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Manages the REST API for the {@link Advertisement} resource.
@@ -486,10 +489,11 @@ public class AdvertisementRestResource extends RestResource {
         try {
 
             String URI = req.getRequestURI();
-            // The URI should be .../adv/ID/images
+            // The URI should be .../adv/ID/image
 
-            // TODO: get idAdvertisement from URI
-            int idAdvertisement = -1;
+            // get idAdvertisement from URI
+            String op = URI.substring(URI.lastIndexOf("adv") + 4, URI.lastIndexOf("/image"));
+            int idAdvertisement = Integer.parseInt(op);
 
             List<Image> imageList = ImageDAO.searchImageByIdAdvertisement(idAdvertisement);
 
@@ -522,28 +526,18 @@ public class AdvertisementRestResource extends RestResource {
             String URI = req.getRequestURI();
             // The URI should be .../adv/ID/feedback
 
-            // TODO: get idAdvertisement from URI
-            int idAdvertisement = -1;
+            // get idAdvertisement from URI
+            String op = URI.substring(URI.lastIndexOf("adv") + 4, URI.lastIndexOf("/feedback"));
+            int idAdvertisement = Integer.parseInt(op);
 
             // Return the list of feedback for thi
             List<Feedback> feedbackList = FeedbackDAO.searchFeedbackByAdvertisement(idAdvertisement);
-            double rate = 0;
-            if (feedbackList.size()!=0) {
-                for (Feedback f: feedbackList) {
-                    rate += f.getRate();
-                }
-                rate/=feedbackList.size();
-            }
 
             // For debug, pass the entity as an attribute
             req.setAttribute("feedbackList", feedbackList);
 
             // This should be done instead
             //new ResourceList(feedbackList).toJSON(res.getOutputStream());
-
-            // TODO: where should i pass a rate?
-            req.setAttribute("rate", (int) rate);
-
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -564,11 +558,13 @@ public class AdvertisementRestResource extends RestResource {
     public void listBookings() throws IOException {
 
         try {
-            String URI  = req.getRequestURI();
+            String URI = req.getRequestURI();
             // The URI should be .../adv/ID/booking
 
-            // TODO: get idAdvertisement from URI
-            int idAdvertisement = -1;
+            // get idAdvertisement from URI
+            String op = URI.substring(URI.lastIndexOf("adv") + 4, URI.lastIndexOf("/booking"));
+            int idAdvertisement = Integer.parseInt(op);
+
             Advertisement advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
 
             // The owner can see the booking list relative to this advertisement: check if a session is valid
@@ -583,7 +579,6 @@ public class AdvertisementRestResource extends RestResource {
             // This should be done instead
             //new ResourceList(bookingList).toJSON(res.getOutputStream());
 
-
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message("Cannot show the advertisement. ",
@@ -596,81 +591,91 @@ public class AdvertisementRestResource extends RestResource {
     }
 
     /**
+     * Returns the rate
+     *
+     * @throws IOException
+     *             if any error occurs in the client/server communication.
+     */
+    public void getRate() throws IOException {
+
+        try {
+            String URI = req.getRequestURI();
+            // The URI should be .../adv/ID/feedback
+
+            // get idAdvertisement from URI
+            String op = URI.substring(URI.lastIndexOf("adv") + 4, URI.lastIndexOf("/rate"));
+            int idAdvertisement = Integer.parseInt(op);
+
+            // Return the list of feedback for thi
+            List<Feedback> feedbackList = FeedbackDAO.searchFeedbackByAdvertisement(idAdvertisement);
+            double rate = 0;
+            if (feedbackList.size()!=0) {
+                for (Feedback f: feedbackList) {
+                    rate += f.getRate();
+                }
+                rate/=feedbackList.size();
+            }
+
+            Rate r = new Rate((int) rate);
+
+            // For debug, pass the entity as an attribute
+            req.setAttribute("rate", r);
+
+            // This should be done instead
+            //r.toJSON(res.getOutputStream());
+
+        } catch (Exception ex) {
+            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("Cannot show the advertisement. ",
+                    ec.getErrorCode(), ex.getMessage());
+            res.setStatus(ec.getHTTPCode());
+            m.toJSON(res.getOutputStream());
+            return;
+        }
+    }
+
+    /**
      * Returns the list of Advertisements to a tourist (based on search criteria)
      *
      * @throws IOException
      *             if any error occurs in the client/server communication.
      */
     public void listAdvertisements() throws IOException {
-        //per la company: list/advertisement
-        //per il tourist: homepage
-        String op = req.getRequestURI();
-        op = op.substring(op.lastIndexOf("list") + 5);
-        List<Advertisement> listAdvertisement;
+
+        List<Advertisement> listAdvertisement = new ArrayList<Advertisement>();
 
         try {
+            // list all the advertisements requested by the user
+            int idCity;
+            Date date = null;
+            int idType;
 
-            switch (op) {
-                case "advertisement":
-                    // list all the advertisements requested by the user
+            String d = req.getParameter("date").toString();
+            String c = req.getParameter("city");
+            String t = req.getParameter("typeAdvertisement");
 
-                    int idCity;
-                    Date date = null;
-                    int idType;
-
-                    String d = req.getParameter("date").toString();
-                    String c = req.getParameter("city");
-                    String t = req.getParameter("typeAdvertisement");
-
-                    if (d == null || c == null || t == null) {
-                        ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                        Message m = new Message("Input value not valid.",
-                                ec.getErrorCode(), "Input value not valid.");
-                        res.setStatus(ec.getHTTPCode());
-                        m.toJSON(res.getOutputStream());
-                        return;
-                    }
-
-                    idCity = Integer.parseInt(c);
-                    idType = Integer.parseInt(t);
-                    date = Date.valueOf(d);
-
-                    listAdvertisement = AdvertisementDAO.searchAdvertisement(idCity, idType, date);
-
-                    if (listAdvertisement.size()==0) {
-                        ErrorCode ec = ErrorCode.EMPTY_LIST;
-                        Message m = new Message("Empty list of advertisements",
-                                ec.getErrorCode(), "");
-                        res.setStatus(ec.getHTTPCode());
-                        m.toJSON(res.getOutputStream());
-                        return;
-                    }
-
-                    new ResourceList(listAdvertisement).toJSON(res.getOutputStream());
-
-                    break;
-                default:
-                    ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
-                    Message m = new Message("Cannot show the advertisement. Method not allowed.",
-                            ec.getErrorCode(), "Method not allowed");
-                    res.setStatus(ec.getHTTPCode());
-                    m.toJSON(res.getOutputStream());
-                    return;
+            if (d == null || c == null || t == null) {
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(), "Input value not valid.");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
             }
-        } catch (SQLException ex) {
-            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("SQL Cannot show the advertisement. ",
-                    ec.getErrorCode(), ex.getMessage());
-            res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
-            m.toJSON(res.getOutputStream());
-            return;
+
+            idCity = Integer.parseInt(c);
+            idType = Integer.parseInt(t);
+            date = Date.valueOf(d);
+
+            listAdvertisement = AdvertisementDAO.searchAdvertisement(idCity, idType, date);
+
+            new ResourceList(listAdvertisement).toJSON(res.getOutputStream());
+
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message("Cannot show the advertisement. ",
-                    ec.getErrorCode(), ex.getMessage());
+                    ec.getErrorCode(), ex.toString());
             res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
             m.toJSON(res.getOutputStream());
             return;
         }

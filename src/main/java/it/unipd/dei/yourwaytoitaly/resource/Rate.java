@@ -8,36 +8,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-/**
- * Class to define the objects which represents the Image in the DB
- * @author Vittorio Esposito
- * @version 1.0
- * @since 1.0
- */
+public final class Rate extends Resource{
+    private final int rate;
 
-public final class Image extends Resource {
-    private final int idImage;
-    private final String path;
-    private final String description;
-    private final int idAdvertisement;
+    public Rate(int rate) {
+        this.rate=rate;
+    }
 
-    public Image(final int idImage, final String path, final String description, final int idAdvertisement) {
-        this.idImage = idImage;
-        this.path = path;
-        this.description = description;
-        this.idAdvertisement = idAdvertisement;
-    }
-    public final int getIdImage() {
-        return idImage;
-    }
-    public final String getPath() {
-        return path;
-    }
-    public final int getIdAdvertisement() {
-        return idAdvertisement;
-    }
-    public final String getDescription() {
-        return description;
+    public int getRate() {
+        return rate;
     }
 
     /**
@@ -52,13 +31,10 @@ public final class Image extends Resource {
         final JsonGenerator jg = JSON_FACTORY.createGenerator(out);
 
         jg.writeStartObject();
-        jg.writeFieldName("image");
+        jg.writeFieldName("rate");
         jg.writeStartObject();
 
-        jg.writeNumberField("idImage", idImage);
-        jg.writeStringField("path", path);
-        jg.writeStringField("description", description);
-        jg.writeNumberField("idAdvertisement", idAdvertisement);
+        jg.writeNumberField("rate", rate);
 
         jg.writeEndObject();
         jg.writeEndObject();

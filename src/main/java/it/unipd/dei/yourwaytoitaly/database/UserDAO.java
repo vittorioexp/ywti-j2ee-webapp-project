@@ -1,10 +1,7 @@
 package it.unipd.dei.yourwaytoitaly.database;
 
 
-import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
-import it.unipd.dei.yourwaytoitaly.resource.Company;
-import it.unipd.dei.yourwaytoitaly.resource.Tourist;
-import it.unipd.dei.yourwaytoitaly.resource.User;
+import it.unipd.dei.yourwaytoitaly.resource.*;
 import it.unipd.dei.yourwaytoitaly.utils.DataSourceProvider;
 
 import javax.naming.NamingException;
@@ -314,42 +311,37 @@ public class UserDAO extends AbstractDAO{
      * @return a TypeAdvertisement objects matching with the Id of the type advertisement.
      * @throws SQLException if any error occurs while searching for a type advertisement.
      */
-    public static int getUserScore(String reqIdTourist) throws SQLException, NamingException {
-        // TODO: fix query - get the total score of a user by accounting only for all SUCCESSFUL bookings
+    public static int getUserScore(String emailTourist) throws SQLException, NamingException {
+
         final String STATEMENT = "SELECT *\n" +
                 "FROM BOOKING JOIN ADVERTISEMENT ON ADVERTISEMENT.ID_ADVERTISEMENT = BOOKING.ID_ADVERTISEMENT\n" +
                 "WHERE BOOKING.email_t = ? AND BOOKING.state = 'SUCCESSFUL';";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        List<Advertisement> bookings = null;
+        List<Booking> bookings = null;
         int totalScore = 0;
 
         try {
             pstmt = con.prepareStatement(STATEMENT);
-            pstmt.setString(1, reqIdTourist);
+            pstmt.setString(1, emailTourist);
 
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                bookings.add(new Advertisement(
-                        rs.getInt("ID_advertisement"),
-                        rs.getString("title"),
-                        rs.getString("description"),
-                        rs.getInt("score"),
-                        rs.getInt("price"),
-                        rs.getInt("num_tot_item"),
-                        rs.getDate("date_start"),
-                        rs.getDate("date_end"),
-                        rs.getTime("time_start"),
-                        rs.getTime("time_end"),
-                        rs.getString("email_c"),
-                        rs.getInt("ID_type")));
+                Booking b = new Booking(
+                        rs.getString("email_t"),
+                        rs.getInt("id_Advertisement"),
+                        rs.getDate("date_b"),
+                        rs.getTime("time_b"),
+                        rs.getInt("num_booking"),
+                        rs.getString("state"));
+
+                bookings.add(b);
+                // TODO: fix function
+                totalScore += 0;
             }
 
-            for (Advertisement adv : bookings) {
-                totalScore = +adv.getScore();
-            }
         } finally {
             //close all the possible resources
             cleaningOperations(pstmt, rs, con);

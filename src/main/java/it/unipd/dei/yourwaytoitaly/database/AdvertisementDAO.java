@@ -149,13 +149,12 @@ public class AdvertisementDAO extends AbstractDAO{
      * @throws NamingException
      *             if any error occurs.
      */
-    public static Advertisement searchAdvertisement(int reqIdAdvertisement) throws SQLException, NamingException
-    {
-        // TODO: What does this method return back if the numTotItem=0?
+    public static Advertisement searchAdvertisement(int reqIdAdvertisement) throws SQLException, NamingException {
+
         final String STATEMENT =
                 "SELECT * " +
                         "FROM ADVERTISEMENT " +
-                        "WHERE ID_ADVERTISEMENT = ? ;";
+                        "WHERE ID_ADVERTISEMENT = ? AND NUM_TOT_ITEM > 0;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -190,10 +189,6 @@ public class AdvertisementDAO extends AbstractDAO{
             cleaningOperations(pstmt, rs, con);
         }
 
-        if(advertisement.getNumTotItem()<0){
-            return null;
-        }
-
         return advertisement;
     }
 
@@ -208,11 +203,10 @@ public class AdvertisementDAO extends AbstractDAO{
      *             if any error occurs.
      */
     public static List<Advertisement> searchAdvertisement(String reqEmail) throws SQLException, NamingException {
-        // TODO: What does this method return back if the numTotItem=0?
         final String STATEMENT =
                 "SELECT *\n" +
                         "FROM ADVERTISEMENT\n" +
-                        "WHERE email_c = ?;";
+                        "WHERE email_c = ? AND NUM_TOT_ITEM > 0;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -243,9 +237,7 @@ public class AdvertisementDAO extends AbstractDAO{
                         rs.getString("email_c"),
                         rs.getInt("ID_type"));
 
-                if(adv.getNumTotItem()!=0){
-                    listAdvertisement.add(adv);
-                }
+                listAdvertisement.add(adv);
             }
         } finally {
             //close all the possible resources
@@ -266,16 +258,15 @@ public class AdvertisementDAO extends AbstractDAO{
      */
     public static List<Advertisement> searchAdvertisement(final int reqIdCity, final int reqIdType,
                                                    final Date reqDate) throws SQLException, NamingException {
-        // TODO: What does this method return back if the numTotItem=0?
         final String STATEMENT =
                 "SELECT * " +
                         "FROM ADVERTISEMENT " +
                         "JOIN COMPANY ON COMPANY.EMAIL_C = ADVERTISEMENT.EMAIL_C " +
                         "JOIN CITY ON CITY.ID_CITY = COMPANY.ID_CITY " +
                         "JOIN TYPE_ADVERTISEMENT ON TYPE_ADVERTISEMENT.ID_Type = ADVERTISEMENT.ID_Type " +
-                        "WHERE CITY.id_city = ? AND " +
+                        "WHERE advertisement.num_tot_item > 0 AND CITY.id_city = ? AND " +
                         "TYPE_ADVERTISEMENT.id_type = ? AND " +
-                        "DATE_START >= ? ;";
+                        "DATE_START >= ?;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -309,9 +300,8 @@ public class AdvertisementDAO extends AbstractDAO{
                         rs.getString("email_c"),
                         rs.getInt("ID_type"));
 
-                if(adv.getNumTotItem()!=0){
-                    advertisements.add(adv);
-                }
+                advertisements.add(adv);
+
             }
         } finally {
             //close all the possible resources

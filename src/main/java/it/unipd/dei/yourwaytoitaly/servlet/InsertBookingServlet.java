@@ -56,9 +56,6 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
         try{
             // TODO: if (userScore % 10 == 0), give the user a discount of 10% on this booking
 
-            // TODO: check if the email is of a tourist
-            //  Done
-
             emailTourist = LoginServlet.getUserEmail(req);
             User user = UserDAO.searchUserByEmail(emailTourist);
             if(user instanceof Company){

@@ -9,8 +9,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Date;
 
-import static it.unipd.dei.yourwaytoitaly.resource.Resource.JSON_FACTORY;
-
 /**
  * Class to define the objects which represents the Feedback in the DB
  * @author Vittorio Esposito
@@ -18,7 +16,7 @@ import static it.unipd.dei.yourwaytoitaly.resource.Resource.JSON_FACTORY;
  * @since 1.0
  */
 
-public final class Feedback {
+public final class Feedback extends Resource{
 
     private final String emailTourist;
     private final int idAdvertisement;

@@ -10,8 +10,6 @@ import java.io.OutputStream;
 import java.sql.Date;
 import java.sql.Time;
 
-import static it.unipd.dei.yourwaytoitaly.resource.Resource.JSON_FACTORY;
-
 /**
  * Class to define the objects which represents the Booking in the DB
  * @author Vittorio Esposito
@@ -19,7 +17,7 @@ import static it.unipd.dei.yourwaytoitaly.resource.Resource.JSON_FACTORY;
  * @since 1.0
  */
 
-public final class Booking {
+public final class Booking extends Resource{
     private final String emailTourist;
     private final int idAdvertisement;
     private final Date date;

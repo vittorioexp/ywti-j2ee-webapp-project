@@ -46,7 +46,7 @@ public class AbstractDatabaseServlet extends HttpServlet {
 
         try {
             ct = new InitialContext();
-            ds = (DataSource) ct.lookup("java:/comp/env/jdbc/YWTI"); //TODO : changing database context name
+            ds = (DataSource) ct.lookup("java:/comp/env/jdbc/YWTI");
 
         } catch (NamingException e) {
             ds = null;

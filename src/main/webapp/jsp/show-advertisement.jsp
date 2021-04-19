@@ -1,11 +1,8 @@
-<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Advertisement" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Booking" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Feedback" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Image" %>
 <%@ page import="org.json.JSONObject" %>
 <%@ page import="java.sql.Date" %>
 <%@ page import="java.sql.Time" %>
 <%@ page import="java.util.List" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.*" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -58,27 +55,9 @@ Since: 1.0
 
 <%
     // For debug only
-    JSONObject jo = new JSONObject(String.valueOf(request.getAttribute("advertisement")));
-
-    Advertisement adv = new Advertisement(
-                    (Integer) jo.get("idAdvertisement"),
-                    String.valueOf(jo.get("title")),
-                    String.valueOf(jo.get("description")),
-                    (Integer) jo.get("score"),
-                    (Integer) jo.get("price"),
-                    (Integer) jo.get("numTotItem"),
-                    Date.valueOf((String) jo.get("dateStart")),
-                    Date.valueOf((String) jo.get("dateEnd")),
-                    Time.valueOf((String) jo.get("timeStart")),
-                    Time.valueOf((String) jo.get("timeEnd")),
-                    String.valueOf(jo.get("emailCompany")),
-                    (Integer) jo.get("idType")
-                    );
-    int idAdvertisement = (Integer) jo.get("idAdvertisement");
+    Advertisement adv = (Advertisement) request.getAttribute("advertisement");
+    int idAdvertisement = adv.getIdAdvertisement();
     // TODO: don't show the score of an advertisement
-    // TODO: the company owner has a button (form) to edit/delete the advertisement --> A company can edit/delete
-    //  an advertisement in the Advertisement list in the user profile page
-
 %>
 <table cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
     <tr>
@@ -119,7 +98,7 @@ Since: 1.0
     </table>
 </div>
 <p>
-    Rate is: <%=request.getAttribute("rate") %>
+    Rate is: <%=((Rate) request.getAttribute("rate")).getRate() %>
 </p>
 </br>
     <%
@@ -170,14 +149,14 @@ Since: 1.0
 %>
     <div>
     <form id="feedback-form" name="feedback-form" method="POST" action="<c:url value="/feedback-create"/>">
-    <label for="rate">rate:</label>
-    <input id="rate" name="rate" type="number" min="1" max="5" step="1" required/>
-    <label for="text_f">text::</label>
-    <input id="text_f" name="text_f" type="text"/>
-    <input type="hidden" name="idAdvertisement" value="<%=idAdvertisement %>" />
+        <label for="rate">rate:</label>
+        <input id="rate" name="rate" type="number" min="1" max="5" step="1" required/>
+        <label for="text_f">text::</label>
+        <input id="text_f" name="text_f" type="text"/>
+        <input type="hidden" name="idAdvertisement" value="<%=idAdvertisement %>" />
         <button type="submit">Leave a feedback</button><br/>
-        </form>
-        </div>
+    </form>
+    </div>
 </br>
     <div>
         <c:import url="/jsp/include/show-message.jsp"/>

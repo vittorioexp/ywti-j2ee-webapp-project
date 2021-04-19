@@ -136,6 +136,7 @@
 	<filter-mapping>
 		<filter-name>CompanyAuthenticationCheck</filter-name>
 		<url-pattern>/advertisement-do-create</url-pattern>
+		<url-pattern>/adv-create</url-pattern>
 		<url-pattern>/upload-images/*</url-pattern>
 		<url-pattern>/advertisement-edit</url-pattern>
 		<url-pattern>/advertisement-create</url-pattern>
