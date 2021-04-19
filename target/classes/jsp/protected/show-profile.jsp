@@ -88,7 +88,7 @@ Since: 1.0
             </table>
             <%
                 List<Booking> bookingslist = (List) request.getAttribute("bookings-list");
-                // TODO: show only NOT DELETED bookings and don't show old bookings (useless)
+                // TODO: show only NOT DELETED bookings and don't show old bookings (useless) --> Done in the BookingDAO
                 // TODO: for each element, show also the advertisement title (for clarity reasons)
             %>
             <table>

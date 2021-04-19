@@ -69,8 +69,8 @@ public final class Feedback extends Resource{
         jg.writeStartObject();
 
         jg.writeStringField("emailTourist", emailTourist);
-        jg.writeNumberField("idAdvertisement", idAdvertisement);
-        jg.writeNumberField("rate", rate);
+        jg.writeStringField("idAdvertisement", String.valueOf(idAdvertisement));
+        jg.writeStringField("rate", String.valueOf(rate));
         jg.writeStringField("text", text);
         jg.writeStringField("date", date.toString());
 

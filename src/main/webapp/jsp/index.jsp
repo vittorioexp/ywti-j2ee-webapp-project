@@ -58,8 +58,7 @@ Since: 1.0
         <br>
         <br>
     <div>
-        <form id="advertisement-list-form" name="advertisement-list-form"
-              action="list/advertisement" method="get">
+        <form id="advertisementListForm" name="advertisementListForm" method="get" action="<c:url value="/adv"/>">
 
             <label for="typeAdvertisement">typeAdvertisement:</label>
             <input type="number" id="typeAdvertisement" name="typeAdvertisement" required

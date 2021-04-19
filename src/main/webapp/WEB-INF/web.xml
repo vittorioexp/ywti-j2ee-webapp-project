@@ -224,7 +224,7 @@
 
 	<servlet-mapping>
 		<servlet-name>ShowAdvertisementJSP</servlet-name>
-		<url-pattern>/adv-show</url-pattern>
+		<url-pattern>/adv-show/*</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>

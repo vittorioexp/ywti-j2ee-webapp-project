@@ -51,7 +51,7 @@ public final class ResourceList<T extends Resource> extends Resource {
         final JsonGenerator jg = JSON_FACTORY.createGenerator(out);
 
         jg.writeStartObject();
-        jg.writeFieldName("resource-list");
+        jg.writeFieldName("resourceList");
         jg.writeStartArray();
         jg.flush();
 

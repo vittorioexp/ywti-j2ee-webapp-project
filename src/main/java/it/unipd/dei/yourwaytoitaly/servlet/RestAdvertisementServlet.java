@@ -119,7 +119,7 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
             m.toJSON(res.getOutputStream());
             return false;
         }
-
+        /*
         if(!accept.contains(JSON_MEDIA_TYPE) && !accept.equals(ALL_MEDIA_TYPE)) {
             ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
             m = new Message("Unsupported output media type. Resources are represented only in application/json.",
@@ -127,7 +127,7 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return false;
-        }
+        }*/
 
         switch(method) {
             case "GET":
@@ -193,6 +193,14 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
                 switch (method) {
                     case "GET":     // GET /adv/ID/booking
                         new AdvertisementRestResource(req, res, getDataSource().getConnection()).listBookings();
+                        break;
+                    default:
+                        return false;
+                }
+            } else if (path.contains("/rate")) {
+                switch (method) {
+                    case "GET":     // GET /adv/ID/rate
+                        new AdvertisementRestResource(req, res, getDataSource().getConnection()).getRate();
                         break;
                     default:
                         return false;

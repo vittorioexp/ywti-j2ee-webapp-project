@@ -98,18 +98,18 @@ public final class Advertisement extends Resource{
         jg.writeFieldName("advertisement");
         jg.writeStartObject();
 
-        jg.writeNumberField("idAdvertisement", idAdvertisement);
+        jg.writeStringField("idAdvertisement", String.valueOf(idAdvertisement));
         jg.writeStringField("title", title);
         jg.writeStringField("description", description);
-        jg.writeNumberField("score", score);
-        jg.writeNumberField("price", price);
-        jg.writeNumberField("numTotItem", numTotItem);
+        jg.writeStringField("score", String.valueOf(score));
+        jg.writeStringField("price", String.valueOf(price));
+        jg.writeStringField("numTotItem", String.valueOf(numTotItem));
         jg.writeStringField("dateStart", dateStart.toString());
         jg.writeStringField("dateEnd", dateEnd.toString());
         jg.writeStringField("timeStart", timeStart.toString());
         jg.writeStringField("timeEnd", timeEnd.toString());
         jg.writeStringField("emailCompany", emailCompany);
-        jg.writeNumberField("idType", idType);
+        jg.writeStringField("idType", String.valueOf(idType));
 
         jg.writeEndObject();
         jg.writeEndObject();

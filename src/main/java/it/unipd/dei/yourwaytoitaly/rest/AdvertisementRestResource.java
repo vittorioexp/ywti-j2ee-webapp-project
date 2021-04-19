@@ -62,10 +62,10 @@ public class AdvertisementRestResource extends RestResource {
             Advertisement advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
 
             // For debug, pass the entity as an attribute
-            req.setAttribute("advertisement", advertisement);
+            //req.setAttribute("advertisement", advertisement);
 
             // This should be done instead
-            //advertisement.toJSON(res.getOutputStream());
+            advertisement.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -107,8 +107,8 @@ public class AdvertisementRestResource extends RestResource {
                 Message m = new Message("User is not authorized.",
                         ec.getErrorCode(),"User is not authorized to edit this advertisement");
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/user/do-login/").forward(req, res);
+                m.toJSON(res.getOutputStream());
+                return;
             }
 
             int price = advertisement.getPrice();
@@ -120,8 +120,8 @@ public class AdvertisementRestResource extends RestResource {
                 Message m = new Message("Price not valid.",
                         ec.getErrorCode(),"Price not valid");
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
+                m.toJSON(res.getOutputStream());
+                return;
             }
 
             if(numTotItem<0 || numTotItem>1000){
@@ -129,8 +129,8 @@ public class AdvertisementRestResource extends RestResource {
                 Message m = new Message("Number of items not valid.",
                         ec.getErrorCode(),"Number of items not valid");
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
+                m.toJSON(res.getOutputStream());
+                return;
             }
 
             int score = (int) Math.floor(price/3.14);
@@ -153,7 +153,8 @@ public class AdvertisementRestResource extends RestResource {
             AdvertisementDAO.editAdvertisement(advertisement);
 
             // For debug, pass the entity as an attribute
-            req.setAttribute("advertisement", advertisement);
+            //req.setAttribute("advertisement", advertisement);
+            advertisement.toJSON(res.getOutputStream());
 
             res.sendRedirect(req.getContextPath() + "/adv-show/" + String.valueOf(idAdvertisement));
 
@@ -498,10 +499,10 @@ public class AdvertisementRestResource extends RestResource {
             List<Image> imageList = ImageDAO.searchImageByIdAdvertisement(idAdvertisement);
 
             // For debug, pass the entity as an attribute
-            req.setAttribute("imageList", imageList);
+            //req.setAttribute("imageList", imageList);
 
             // This should be done instead
-            //new ResourceList(imageList).toJSON(res.getOutputStream());
+            new ResourceList(imageList).toJSON(res.getOutputStream());
 
 
         } catch (Exception ex) {
@@ -534,10 +535,10 @@ public class AdvertisementRestResource extends RestResource {
             List<Feedback> feedbackList = FeedbackDAO.searchFeedbackByAdvertisement(idAdvertisement);
 
             // For debug, pass the entity as an attribute
-            req.setAttribute("feedbackList", feedbackList);
+            //req.setAttribute("feedbackList", feedbackList);
 
             // This should be done instead
-            //new ResourceList(feedbackList).toJSON(res.getOutputStream());
+            new ResourceList(feedbackList).toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -569,15 +570,21 @@ public class AdvertisementRestResource extends RestResource {
 
             // The owner can see the booking list relative to this advertisement: check if a session is valid
             List<Booking> bookingList = new ArrayList<Booking>();
+            if (advertisement.getEmailCompany().equals(LoginServlet.getUserEmail(req))) {
+                bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
+            } else {
+                Message m = new Message("Non va");
+                m.toJSON(res.getOutputStream());
+            }
             if (LoginServlet.checkSessionEmail(req, advertisement.getEmailCompany())) {
                 bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
             }
 
             // For debug, pass the entity as an attribute
-            req.setAttribute("bookingList", bookingList);
+            //req.setAttribute("bookingList", bookingList);
 
             // This should be done instead
-            //new ResourceList(bookingList).toJSON(res.getOutputStream());
+            new ResourceList(bookingList).toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -619,10 +626,10 @@ public class AdvertisementRestResource extends RestResource {
             Rate r = new Rate((int) rate);
 
             // For debug, pass the entity as an attribute
-            req.setAttribute("rate", r);
+            //req.setAttribute("rate", r);
 
             // This should be done instead
-            //r.toJSON(res.getOutputStream());
+            r.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

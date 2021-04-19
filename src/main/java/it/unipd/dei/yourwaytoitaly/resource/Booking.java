@@ -69,17 +69,15 @@ public final class Booking extends Resource{
         jg.writeStartObject();
 
         jg.writeStringField("emailTourist", emailTourist);
-        jg.writeNumberField("idAdvertisement", idAdvertisement);
+        jg.writeStringField("idAdvertisement", String.valueOf(idAdvertisement));
         jg.writeStringField("date", date.toString());
         jg.writeStringField("time", time.toString());
-        jg.writeNumberField("numBooking", numBooking);
+        jg.writeStringField("numBooking", String.valueOf(numBooking));
         jg.writeStringField("state", state);
 
         jg.writeEndObject();
         jg.writeEndObject();
         jg.flush();
-
-
     }
 
     /**

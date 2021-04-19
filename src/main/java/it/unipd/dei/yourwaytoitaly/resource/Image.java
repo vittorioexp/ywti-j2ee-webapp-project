@@ -55,10 +55,10 @@ public final class Image extends Resource {
         jg.writeFieldName("image");
         jg.writeStartObject();
 
-        jg.writeNumberField("idImage", idImage);
+        jg.writeStringField("idImage", String.valueOf(idImage));
         jg.writeStringField("path", path);
         jg.writeStringField("description", description);
-        jg.writeNumberField("idAdvertisement", idAdvertisement);
+        jg.writeStringField("idAdvertisement", String.valueOf(idAdvertisement));
 
         jg.writeEndObject();
         jg.writeEndObject();

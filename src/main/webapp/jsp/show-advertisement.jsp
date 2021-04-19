@@ -55,8 +55,10 @@ Since: 1.0
 
 <%
     // For debug only
+    String URI = request.getRequestURI();
+    int idAdvertisement = Integer.parseInt(URI.substring(URI.lastIndexOf("adv-show")+9));
     Advertisement adv = (Advertisement) request.getAttribute("advertisement");
-    int idAdvertisement = adv.getIdAdvertisement();
+
     // TODO: don't show the score of an advertisement
 %>
 <table cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">

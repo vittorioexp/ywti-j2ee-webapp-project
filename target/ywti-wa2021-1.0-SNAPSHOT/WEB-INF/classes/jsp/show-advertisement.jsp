@@ -1,10 +1,8 @@
-<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Advertisement" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Booking" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Feedback" %>
 <%@ page import="org.json.JSONObject" %>
 <%@ page import="java.sql.Date" %>
 <%@ page import="java.sql.Time" %>
 <%@ page import="java.util.List" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.*" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -56,26 +54,12 @@ Since: 1.0
 </br>
 
 <%
-    JSONObject jo = (JSONObject) request.getAttribute("advertisement");
+    // For debug only
+    String URI = request.getRequestURI();
+    int idAdvertisement = Integer.parseInt(URI.substring(URI.lastIndexOf("adv-show")+9));
+    Advertisement adv = (Advertisement) request.getAttribute("advertisement");
 
-    Advertisement adv = new Advertisement(
-                    (Integer) jo.get("idAdvertisement"),
-                    String.valueOf(jo.get("title")),
-                    String.valueOf(jo.get("description")),
-                    (Integer) jo.get("score"),
-                    (Integer) jo.get("price"),
-                    (Integer) jo.get("numTotItem"),
-                    Date.valueOf((String) jo.get("dateStart")),
-                    Date.valueOf((String) jo.get("dateEnd")),
-                    Time.valueOf((String) jo.get("timeStart")),
-                    Time.valueOf((String) jo.get("timeEnd")),
-                    String.valueOf(jo.get("emailCompany")),
-                    (Integer) jo.get("idType")
-                    );
-    int idAdvertisement = (Integer) jo.get("idAdvertisement");
     // TODO: don't show the score of an advertisement
-    // TODO: the company owner has a button (form) to edit/delete the advertisement
-
 %>
 <table cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
     <tr>
@@ -104,23 +88,23 @@ Since: 1.0
 </br>
 <div>
     <%
-        List<String> filepathList = (List<String>) request.getAttribute("filepath-list");
+        List<Image> imageList = (List<Image>) request.getAttribute("imageList");
     %>
     <table id="imageTable" name="imageTable"
            cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
         <tr>
-        <c:forEach items="<%=filepathList%>" var="filepath">
-            <td><img src="${filepath}" width="320" height="240"/></td>
+        <c:forEach items="<%=imageList%>" var="image">
+            <td><img src="${image.path}" width="320" height="240"/></td>
         </c:forEach>
         </tr>
     </table>
 </div>
 <p>
-    Rate is: <%=request.getAttribute("rate") %>
+    Rate is: <%=((Rate) request.getAttribute("rate")).getRate() %>
 </p>
 </br>
     <%
-        List<Booking> bookingList = (List) request.getAttribute("booking-list");
+        List<Booking> bookingList = (List) request.getAttribute("bookingList");
     %>
     <table id="booking-list-table" name="booking-list-table"
            cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
@@ -148,7 +132,8 @@ Since: 1.0
     </div>
 </br>
     <%
-    List<Feedback> feedbackList = (List) request.getAttribute("feedback-list");
+
+    List<Feedback> feedbackList = (List) request.getAttribute("feedbackList");
     %>
     <table id="feedback-list-table" name="feedback-list-table"
         cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
@@ -166,14 +151,14 @@ Since: 1.0
 %>
     <div>
     <form id="feedback-form" name="feedback-form" method="POST" action="<c:url value="/feedback-create"/>">
-    <label for="rate">rate:</label>
-    <input id="rate" name="rate" type="number" min="1" max="5" step="1" required/>
-    <label for="text_f">text::</label>
-    <input id="text_f" name="text_f" type="text"/>
-    <input type="hidden" name="idAdvertisement" value="<%=idAdvertisement %>" />
+        <label for="rate">rate:</label>
+        <input id="rate" name="rate" type="number" min="1" max="5" step="1" required/>
+        <label for="text_f">text::</label>
+        <input id="text_f" name="text_f" type="text"/>
+        <input type="hidden" name="idAdvertisement" value="<%=idAdvertisement %>" />
         <button type="submit">Leave a feedback</button><br/>
-        </form>
-        </div>
+    </form>
+    </div>
 </br>
     <div>
         <c:import url="/jsp/include/show-message.jsp"/>
