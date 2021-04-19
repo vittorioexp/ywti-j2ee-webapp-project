@@ -1,6 +1,7 @@
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Advertisement" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Booking" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Feedback" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Image" %>
 <%@ page import="org.json.JSONObject" %>
 <%@ page import="java.sql.Date" %>
 <%@ page import="java.sql.Time" %>
@@ -56,7 +57,8 @@ Since: 1.0
 </br>
 
 <%
-    JSONObject jo = (JSONObject) request.getAttribute("advertisement");
+    // For debug only
+    JSONObject jo = new JSONObject(String.valueOf(request.getAttribute("advertisement")));
 
     Advertisement adv = new Advertisement(
                     (Integer) jo.get("idAdvertisement"),
@@ -105,13 +107,13 @@ Since: 1.0
 </br>
 <div>
     <%
-        List<String> filepathList = (List<String>) request.getAttribute("filepath-list");
+        List<Image> imageList = (List<Image>) request.getAttribute("imageList");
     %>
     <table id="imageTable" name="imageTable"
            cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
         <tr>
-        <c:forEach items="<%=filepathList%>" var="filepath">
-            <td><img src="${filepath}" width="320" height="240"/></td>
+        <c:forEach items="<%=imageList%>" var="image">
+            <td><img src="${image.path}" width="320" height="240"/></td>
         </c:forEach>
         </tr>
     </table>
@@ -121,7 +123,7 @@ Since: 1.0
 </p>
 </br>
     <%
-        List<Booking> bookingList = (List) request.getAttribute("booking-list");
+        List<Booking> bookingList = (List) request.getAttribute("bookingList");
     %>
     <table id="booking-list-table" name="booking-list-table"
            cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
@@ -149,7 +151,8 @@ Since: 1.0
     </div>
 </br>
     <%
-    List<Feedback> feedbackList = (List) request.getAttribute("feedback-list");
+
+    List<Feedback> feedbackList = (List) request.getAttribute("feedbackList");
     %>
     <table id="feedback-list-table" name="feedback-list-table"
         cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">

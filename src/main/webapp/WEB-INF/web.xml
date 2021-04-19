@@ -82,6 +82,11 @@
 	</servlet>
 
 	<servlet>
+		<servlet-name>ShowAdvertisementJSP</servlet-name>
+		<jsp-file>/jsp/show-advertisement.jsp</jsp-file>
+	</servlet>
+
+	<servlet>
 		<servlet-name>RestAdvertisementServlet</servlet-name>
 		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.RestAdvertisementServlet</servlet-class>
 	</servlet>
@@ -151,11 +156,6 @@
 	<!-- Mapping between servlets and URIs -->
 
 	<servlet-mapping>
-		<servlet-name>RestAdvertisementServlet</servlet-name>
-		<url-pattern>/advertisement-delete</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
 		<servlet-name>IndexPageJSP</servlet-name>
 		<url-pattern>/index</url-pattern>
 	</servlet-mapping>
@@ -200,14 +200,10 @@
 		<url-pattern>/user/do-edit</url-pattern>
 	</servlet-mapping>
 
+
 	<servlet-mapping>
 		<servlet-name>EditAdvertisementJSP</servlet-name>
 		<url-pattern>/advertisement-edit</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>RestAdvertisementServlet</servlet-name>
-		<url-pattern>/advertisement-create</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
@@ -222,12 +218,22 @@
 
 	<servlet-mapping>
 		<servlet-name>RestAdvertisementServlet</servlet-name>
-		<url-pattern>/advertisement/*</url-pattern>
+		<url-pattern>/adv-create</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ShowAdvertisementJSP</servlet-name>
+		<url-pattern>/adv-show</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>RestAdvertisementServlet</servlet-name>
-		<url-pattern>/list/advertisement</url-pattern>
+		<url-pattern>/adv/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>RestAdvertisementServlet</servlet-name>
+		<url-pattern>/adv</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>

@@ -10,7 +10,6 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,15 +43,149 @@ public class AdvertisementRestResource extends RestResource {
     }
 
     /**
-     * Creates an Advertisement
+     * Get an Advertisement
+     *
+     * @throws IOException
+     *             if any error occurs
+     */
+    public void getAdvertisement() throws IOException {
+
+        try {
+
+            String URI = req.getRequestURI();
+            // The URI should be /adv/ID
+
+            int idAdvertisement = Integer.parseInt(URI.substring(URI.lastIndexOf("adv") + 4));
+            Advertisement advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
+
+            // For debug, pass the entity as an attribute
+            req.setAttribute("advertisement", advertisement);
+
+            // This should be done instead
+            //advertisement.toJSON(res.getOutputStream());
+
+        } catch (Exception ex) {
+            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("Cannot show the advertisement. ",
+                    ec.getErrorCode(), ex.getMessage());
+            res.setStatus(ec.getHTTPCode());
+            m.toJSON(res.getOutputStream());
+            return;
+        }
+
+    }
+
+    /**
+     * Edit an Advertisement in the database.
      *
      * @throws IOException
      *             if any error occurs
      * @throws ServletException
      *             if any error occurs
      */
-    public void insertAdvertisement() throws ServletException, IOException {
+    public void editAdvertisement() throws IOException, ServletException {
+        // TODO: rewrite this function using proper JSON - REST
+        int score;
+        int price;
+        int numTotItem = 0;
+        int idAdvertisement = 0;
+        String emailCompany = null;
+        Advertisement advertisement;
+        String op = req.getRequestURI();
+        op = op.substring(op.lastIndexOf("advertisement") + 14);
 
+        try{
+            // check if a session is valid
+            User u = new SessionCheckServlet(req, res).getUser();
+            if (u == null) {
+                ErrorCode ec = ErrorCode.USER_NOT_FOUND;
+                Message m = new Message("User not found.",
+                        ec.getErrorCode(),"User not found.");
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/user/do-login/").forward(req, res);
+            }
+
+            // check if the email of the session is equal to emailCompany
+            String emailSession = u.getEmail();
+            emailCompany = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
+            if (!emailSession.equals(emailCompany)) {
+                ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
+                Message m = new Message("User is not authorized.",
+                        ec.getErrorCode(),"User is not authorized to edit this advertisement");
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/user/do-login/").forward(req, res);
+            }
+
+            // receive idAdvertisement from the hidden form
+            idAdvertisement = Integer.parseInt(op);
+
+            advertisement = Advertisement.fromJSON(req.getInputStream());
+
+            price = advertisement.getPrice();
+            numTotItem = advertisement.getNumTotItem();
+
+            //price = Integer.parseInt(req.getParameter("price"));
+            //numTotItem = Integer.parseInt(req.getParameter("numTotItem"));
+
+            if(price<0 || price>50000){
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Price not valid.",
+                        ec.getErrorCode(),"Price not valid");
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
+            }
+
+            if(numTotItem<0 || numTotItem>1000){
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Number of items not valid.",
+                        ec.getErrorCode(),"Number of items not valid");
+                res.setStatus(ec.getHTTPCode());
+                req.setAttribute("message", m);
+                req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
+            }
+
+            score = (int) Math.floor(price/3.14);
+
+            advertisement = new Advertisement(
+                    idAdvertisement,
+                    null,
+                    null,
+                    score,
+                    price,
+                    numTotItem,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    0
+            );
+
+            AdvertisementDAO.editAdvertisement(advertisement);
+
+            req.getRequestDispatcher("/user/profile").forward(req, res);
+
+        } catch (Exception ex) {
+            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("Cannot edit the advertisement. ",
+                    ec.getErrorCode(), ex.getMessage());
+            res.setStatus(ec.getHTTPCode());
+            req.setAttribute("message", m);
+            req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
+        }
+    }
+
+    /**
+     * Creates an Advertisement
+     *
+     * @throws IOException
+     *             if any error occurs
+     */
+    public void insertAdvertisement() throws IOException {
+        // TODO: rewrite this function using proper JSON - REST
         try{
             // check if a session is valid
             String email = LoginServlet.getUserEmail(req);
@@ -189,7 +322,7 @@ public class AdvertisementRestResource extends RestResource {
                 String URI = req.getRequestURI();
                 int uriIdAdvertisement =  Integer.parseInt(URI.substring(URI.lastIndexOf("upload-images") + 14));
 
-                Advertisement advertisement = AdvertisementDAO.searchAdvertisement(Integer.parseInt(uriIdAdvertisement));
+                Advertisement advertisement = AdvertisementDAO.searchAdvertisement(uriIdAdvertisement);
 
                 List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(req);
                 int count = 1;
@@ -212,7 +345,7 @@ public class AdvertisementRestResource extends RestResource {
                                 idAdvertisement = Integer.parseInt(value);
                                 String emailCompanyAdvertisement = AdvertisementDAO.searchAdvertisement(uriIdAdvertisement).getEmailCompany();
 
-                                if(emailCompanyAdvertisement!=emailCompany){
+                                if(emailCompanyAdvertisement!=email){
                                     ErrorCode ec = ErrorCode.MAIL_ALREADY_USED;
                                     Message m = new Message("User not allowed. ",
                                             ec.getErrorCode(), ec.getErrorMessage());
@@ -275,77 +408,6 @@ public class AdvertisementRestResource extends RestResource {
     }
 
     /**
-     * Reads an Advertisement from the database.
-     *
-     * @throws IOException
-     *             if any error occurs
-     * @throws ServletException
-     *             if any error occurs
-     */
-    public void showAdvertisement() throws IOException, ServletException {
-
-        try {
-            // TODO: tell the JSP if the user is a tourist or a company to show properly booking/feedback forms
-            String idAdvertisement = req.getRequestURI();
-            idAdvertisement = idAdvertisement.substring(idAdvertisement.lastIndexOf("advertisement") + 14);
-            Advertisement advertisement = AdvertisementDAO.searchAdvertisement(Integer.parseInt(idAdvertisement));
-
-            //advertisement.toJSON(res.getOutputStream());
-            req.setAttribute("advertisement", advertisement.toJSON());
-
-            List<Image> imageList = ImageDAO.searchImageByIdAdvertisement(Integer.parseInt(idAdvertisement));
-
-            if (imageList.size()!=0) {
-                List<String> filepathList = new ArrayList<String>();
-                for (Image image : imageList) {
-                    String filepath = image.getPath();
-                    filepathList.add(filepath);
-                }
-                req.setAttribute("filepath-list", filepathList);
-            } else {
-                req.setAttribute("filepath-list", new ArrayList<String>());
-            }
-
-            // The owner can see the booking list relative to this advertisement: check if a session is valid
-            if (LoginServlet.checkSessionEmail(req, advertisement.getEmailCompany())) {
-                List<Booking> listBookings = BookingDAO.searchBookingByAdvertisement(Integer.parseInt(idAdvertisement));
-                req.setAttribute("booking-list", listBookings);
-            } else {
-                req.setAttribute("booking-list", new ArrayList<Booking>());
-            }
-
-            List<Feedback> feedbackList = FeedbackDAO.searchFeedbackByAdvertisement(Integer.parseInt(idAdvertisement));
-            double rate = 0;
-            if (feedbackList.size()!=0) {
-                for (Feedback f: feedbackList) {
-                    rate += f.getRate();
-                }
-                rate/=feedbackList.size();
-                req.setAttribute("feedback-list", feedbackList);
-                req.setAttribute("rate", (int) rate);
-
-            } else {
-                req.setAttribute("feedback-list", new ArrayList<Feedback>());
-                req.setAttribute("rate", 0);
-            }
-
-            Message success = new Message("Successful show of the advertisement!");
-            req.setAttribute("message", success);
-            //res.setStatus(HttpServletResponse.SC_OK);
-            req.getRequestDispatcher("/jsp/show-advertisement.jsp").forward(req, res);
-
-        } catch (Exception ex) {
-            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("Cannot show the advertisement. ",
-                    ec.getErrorCode(), ex.getMessage());
-            res.setStatus(ec.getHTTPCode());
-            m.toJSON(res.getOutputStream());
-            return;
-        }
-
-    }
-
-    /**
      * Updates an advertisement in the database.
      *
      * @throws IOException
@@ -355,7 +417,7 @@ public class AdvertisementRestResource extends RestResource {
      */
     public void deleteAdvertisement() throws IOException, ServletException {
 
-
+        // TODO: rewrite this function using proper JSON - REST
         int idAdvertisement = 0;
         String emailCompany = null;
         String emailCompanyAdvertisement = null;
@@ -417,118 +479,134 @@ public class AdvertisementRestResource extends RestResource {
             req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
         }
     }
-    /**
-     * Edit an advertisement in the database.
-     *
-     * @throws IOException
-     *             if any error occurs
-     * @throws ServletException
-     *             if any error occurs
-     */
-    public void editAdvertisement() throws IOException, ServletException {
-
-        int score;
-        int price;
-        int numTotItem = 0;
-        int idAdvertisement = 0;
-        String emailCompany = null;
-        Advertisement advertisement;
-        String op = req.getRequestURI();
-        op = op.substring(op.lastIndexOf("advertisement") + 14);
-
-        try{
-            // check if a session is valid
-            User u = new SessionCheckServlet(req, res).getUser();
-            if (u == null) {
-                ErrorCode ec = ErrorCode.USER_NOT_FOUND;
-                Message m = new Message("User not found.",
-                        ec.getErrorCode(),"User not found.");
-                res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/user/do-login/").forward(req, res);
-            }
-
-            // check if the email of the session is equal to emailCompany
-            String emailSession = u.getEmail();
-            emailCompany = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
-            if (!emailSession.equals(emailCompany)) {
-                ErrorCode ec = ErrorCode.WRONG_CREDENTIALS;
-                Message m = new Message("User is not authorized.",
-                        ec.getErrorCode(),"User is not authorized to edit this advertisement");
-                res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/user/do-login/").forward(req, res);
-            }
-
-            // receive idAdvertisement from the hidden form
-            idAdvertisement = Integer.parseInt(op);
-
-            advertisement = Advertisement.fromJSON(req.getInputStream());
-
-            price = advertisement.getPrice();
-            numTotItem = advertisement.getNumTotItem();
-
-            //price = Integer.parseInt(req.getParameter("price"));
-            //numTotItem = Integer.parseInt(req.getParameter("numTotItem"));
-
-            if(price<0 || price>50000){
-                ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                Message m = new Message("Price not valid.",
-                        ec.getErrorCode(),"Price not valid");
-                res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
-            }
-
-            if(numTotItem<0 || numTotItem>1000){
-                ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                Message m = new Message("Number of items not valid.",
-                        ec.getErrorCode(),"Number of items not valid");
-                res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
-            }
-
-            score = (int) Math.floor(price/3.14);
-
-            advertisement = new Advertisement(
-                    idAdvertisement,
-                    null,
-                    null,
-                    score,
-                    price,
-                    numTotItem,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    0
-            );
-
-            AdvertisementDAO.editAdvertisement(advertisement);
-
-            req.getRequestDispatcher("/user/profile").forward(req, res);
-
-        } catch (Exception ex) {
-            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("Cannot edit the advertisement. ",
-                    ec.getErrorCode(), ex.getMessage());
-            res.setStatus(ec.getHTTPCode());
-            req.setAttribute("message", m);
-            req.getRequestDispatcher("/jsp/edit-advertisement.jsp").forward(req, res);
-        }
-    }
 
     /**
-     * Shows:
-     * - the list of Advertisements to a tourist (based on search criteria)
-     * - the list of Advertisements to a company (based on emailCompany)
+     * Returns the list of Images of an Advertisement
      *
      * @throws IOException
      *             if any error occurs in the client/server communication.
      */
-    public void listAdvertisement() throws IOException, ServletException, SQLException, NamingException {
+    public void listImages() throws  IOException {
+
+        try {
+
+            String URI = req.getRequestURI();
+            // The URI should be .../adv/ID/images
+
+            // TODO: get idAdvertisement from URI
+            int idAdvertisement = -1;
+
+            List<Image> imageList = ImageDAO.searchImageByIdAdvertisement(idAdvertisement);
+
+            // For debug, pass the entity as an attribute
+            req.setAttribute("imageList", imageList);
+
+            // This should be done instead
+            //new ResourceList(imageList).toJSON(res.getOutputStream());
+
+
+        } catch (Exception ex) {
+            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("Cannot show the advertisement. ",
+                    ec.getErrorCode(), ex.getMessage());
+            res.setStatus(ec.getHTTPCode());
+            m.toJSON(res.getOutputStream());
+            return;
+        }
+    }
+
+    /**
+     * Returns the list of Feedback of an Advertisement
+     *
+     * @throws IOException
+     *             if any error occurs in the client/server communication.
+     */
+    public void listFeedback() throws IOException {
+
+        try {
+            String URI = req.getRequestURI();
+            // The URI should be .../adv/ID/feedback
+
+            // TODO: get idAdvertisement from URI
+            int idAdvertisement = -1;
+
+            // Return the list of feedback for thi
+            List<Feedback> feedbackList = FeedbackDAO.searchFeedbackByAdvertisement(idAdvertisement);
+            double rate = 0;
+            if (feedbackList.size()!=0) {
+                for (Feedback f: feedbackList) {
+                    rate += f.getRate();
+                }
+                rate/=feedbackList.size();
+            }
+
+            // For debug, pass the entity as an attribute
+            req.setAttribute("feedbackList", feedbackList);
+
+            // This should be done instead
+            //new ResourceList(feedbackList).toJSON(res.getOutputStream());
+
+            // TODO: where should i pass a rate?
+            req.setAttribute("rate", (int) rate);
+
+
+        } catch (Exception ex) {
+            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("Cannot show the advertisement. ",
+                    ec.getErrorCode(), ex.getMessage());
+            res.setStatus(ec.getHTTPCode());
+            m.toJSON(res.getOutputStream());
+            return;
+        }
+    }
+
+    /**
+     * Returns the list of Bookings of an Advertisement
+     *
+     * @throws IOException
+     *             if any error occurs in the client/server communication.
+     */
+    public void listBookings() throws IOException {
+
+        try {
+            String URI  = req.getRequestURI();
+            // The URI should be .../adv/ID/booking
+
+            // TODO: get idAdvertisement from URI
+            int idAdvertisement = -1;
+            Advertisement advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
+
+            // The owner can see the booking list relative to this advertisement: check if a session is valid
+            List<Booking> bookingList = new ArrayList<Booking>();
+            if (LoginServlet.checkSessionEmail(req, advertisement.getEmailCompany())) {
+                bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
+            }
+
+            // For debug, pass the entity as an attribute
+            req.setAttribute("bookingList", bookingList);
+
+            // This should be done instead
+            //new ResourceList(bookingList).toJSON(res.getOutputStream());
+
+
+        } catch (Exception ex) {
+            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message("Cannot show the advertisement. ",
+                    ec.getErrorCode(), ex.getMessage());
+            res.setStatus(ec.getHTTPCode());
+            m.toJSON(res.getOutputStream());
+            return;
+        }
+
+    }
+
+    /**
+     * Returns the list of Advertisements to a tourist (based on search criteria)
+     *
+     * @throws IOException
+     *             if any error occurs in the client/server communication.
+     */
+    public void listAdvertisements() throws IOException {
         //per la company: list/advertisement
         //per il tourist: homepage
         String op = req.getRequestURI();

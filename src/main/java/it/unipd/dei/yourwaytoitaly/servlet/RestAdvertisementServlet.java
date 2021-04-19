@@ -70,24 +70,26 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
             }
 
             // if the requested resource was an Advertisement, delegate its processing and return
-            if (processAdvertisement(req, res)) {
+            if (processRequest(req, res)) {
                 return;
             }
 
             // if none of the above process methods succeeds, it means an unknown resource has been requested
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             final Message m = new Message("Unknown resource requested.",
-                    ec.getErrorCode(),String.format("A.Requested resource is %s.", req.getRequestURI()));
+                    ec.getErrorCode(),req.getMethod() + " at " + req.getRequestURI() + " not supported");
             res.setStatus(ec.getHTTPCode());
             res.setStatus(HttpServletResponse.SC_NOT_FOUND);
             m.toJSON(res.getOutputStream());
+            return;
 
         } catch(Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("Generic error",
+            Message m = new Message("Internal error while processing REST requests",
                     ec.getErrorCode(),ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
+            return;
         }
     }
 
@@ -118,6 +120,15 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
             return false;
         }
 
+        if(!accept.contains(JSON_MEDIA_TYPE) && !accept.equals(ALL_MEDIA_TYPE)) {
+            ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
+            m = new Message("Unsupported output media type. Resources are represented only in application/json.",
+                    ec.getErrorCode(), String.format("Requested representation is %s.", accept));
+            res.setStatus(ec.getHTTPCode());
+            m.toJSON(res.getOutputStream());
+            return false;
+        }
+
         switch(method) {
             case "GET":
             case "PUT":
@@ -125,11 +136,6 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
             case "DELETE":
                 return true;
             default:
-                ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
-                m = new Message("Unknown resource requested.",
-                        ec.getErrorCode(),String.format("Requested operation is %s.", method));
-                res.setStatus(ec.getHTTPCode());
-                m.toJSON(res.getOutputStream());
                 return false;
         }
     }
@@ -144,18 +150,85 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
      *
      * @throws IOException if any error occurs in the client/server communication.
      */
-    private boolean processAdvertisement(HttpServletRequest req, HttpServletResponse res) throws Exception {
+    private boolean processRequest(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
         final String method = req.getMethod();
 
-        String path = req.getRequestURI();
+        String URI = req.getRequestURI();
         Message m = null;
 
         // the requested resource was not an advertisement
-        if (path.lastIndexOf("advertisement") <= 0) {
+        if (URI.lastIndexOf("/adv") <= 0) {
             return false;
         }
 
+        String path = URI.substring(URI.lastIndexOf("adv"));
+
+        if (path.equals("adv-create")) {
+            switch (method) {
+                case "POST":    // POST /adv-create
+                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).insertAdvertisement();
+                    break;
+                default:
+                    return false;
+            }
+        } else if (path.contains("adv/")) {
+            if (path.contains("/image")) {
+                switch (method) {
+                    case "GET":     // GET /adv/ID/image
+                        new AdvertisementRestResource(req, res, getDataSource().getConnection()).listImages();
+                        break;
+                    default:
+                        return false;
+                }
+            } else if (path.contains("/feedback")) {
+                switch (method) {
+                    case "GET":     // GET /adv/ID/feedback
+                        new AdvertisementRestResource(req, res, getDataSource().getConnection()).listFeedback();
+                        break;
+                    default:
+                        return false;
+                }
+            } else if (path.contains("/booking")) {
+                switch (method) {
+                    case "GET":     // GET /adv/ID/booking
+                        new AdvertisementRestResource(req, res, getDataSource().getConnection()).listBookings();
+                        break;
+                    default:
+                        return false;
+                }
+            } else {
+                switch (method) {
+                    case "GET":     // GET /adv/ID
+                        new AdvertisementRestResource(req, res, getDataSource().getConnection()).getAdvertisement();
+                        break;
+                    case "PUT":    // PUT /adv/ID
+                        new AdvertisementRestResource(req, res, getDataSource().getConnection()).editAdvertisement();
+                        break;
+                    case "DELETE":  // DELETE /adv/ID
+                        new AdvertisementRestResource(req, res, getDataSource().getConnection()).deleteAdvertisement();
+                        break;
+                    default:
+                        return false;
+                }
+            }
+        } else if (path.equals("adv")) {
+            switch (method) {
+                case "GET":     // GET /adv
+                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).listAdvertisements();
+                    break;
+                default:
+                    return false;
+            }
+
+        } else {
+            return false;
+        }
+
+
+
+
+        /*
         String tempPath = path.substring(path.lastIndexOf("list") + 5);
 
         // the requested URI is /list/advertisement
@@ -163,7 +236,7 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
         if (tempPath.equals("advertisement")) {
             switch (method) {
                 case "GET":
-                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).listAdvertisement();
+                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).listAdvertisements();
                     break;
                 default:
                     ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
@@ -183,7 +256,7 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
 
             switch (method) {
                 case "GET":
-                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).showAdvertisement();
+                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).getAdvertisement();
                     break;
                 case "POST":
                     new AdvertisementRestResource(req, res, getDataSource().getConnection()).insertAdvertisement();
@@ -203,6 +276,7 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
                     break;
             }
         }
+        */
         return true;
     }
 }

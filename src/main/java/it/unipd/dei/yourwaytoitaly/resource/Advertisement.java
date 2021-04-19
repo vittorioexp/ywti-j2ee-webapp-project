@@ -3,7 +3,6 @@ package it.unipd.dei.yourwaytoitaly.resource;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -84,27 +83,13 @@ public final class Advertisement extends Resource{
         return idType;
     }
 
-    public final JSONObject toJSON() throws IOException {
-        //final JsonGenerator jg = JSON_FACTORY.createGenerator(out);
-        JSONObject jg = new JSONObject();
-
-        jg.put("idAdvertisement", idAdvertisement);
-        jg.put("title", title);
-        jg.put("description", description);
-        jg.put("score", score);
-        jg.put("price", price);
-        jg.put("numTotItem", numTotItem);
-        jg.put("dateStart", dateStart.toString());
-        jg.put("dateEnd", dateEnd.toString());
-        jg.put("timeStart", timeStart.toString());
-        jg.put("timeEnd", timeEnd.toString());
-        jg.put("emailCompany", emailCompany);
-        jg.put("idType", idType);
-
-        return jg;
-    }
-
-
+    /**
+     * Writes the JSON representation to the output stream.
+     *
+     * @param out the output stream
+     *
+     * @throws IOException if something goes wrong while parsing.
+     */
     public final void toJSON(final OutputStream out) throws IOException {
 
         final JsonGenerator jg = JSON_FACTORY.createGenerator(out);
@@ -136,7 +121,7 @@ public final class Advertisement extends Resource{
      *
      * @param in the input stream containing the JSON document.
      *
-     * @return the {@code Employee} created from the JSON representation.
+     * @return the {@code Advertisement} created from the JSON representation.
      *
      * @throws IOException if something goes wrong while parsing.
      */
@@ -160,13 +145,13 @@ public final class Advertisement extends Resource{
 
         // while we are not on the start of an element or the element is not
         // a token element, advance to the next element (if any)
-        /*while (jp.getCurrentToken() != JsonToken.FIELD_NAME || "advertisement".equals(jp.getCurrentName()) == false) {
+        while (jp.getCurrentToken() != JsonToken.FIELD_NAME || "advertisement".equals(jp.getCurrentName()) == false) {
 
             // there are no more events
             if (jp.nextToken() == null) {
                 throw new IOException("Unable to parse JSON: no advertisement object found.");
             }
-        }*/
+        }
 
         while (jp.nextToken() != JsonToken.END_OBJECT) {
 
