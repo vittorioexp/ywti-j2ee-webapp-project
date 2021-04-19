@@ -99,6 +99,7 @@ public class AdvertisementRestResource extends RestResource {
 
             //How to retrieve a JSON object
             Advertisement advertisement = Advertisement.fromJSON(req.getInputStream());
+            Advertisement old_advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
 
 
             String emailSession = LoginServlet.getUserEmail(req);
@@ -113,10 +114,73 @@ public class AdvertisementRestResource extends RestResource {
                 return;
             }
             */
+
+
+            String title = advertisement.getTitle();
+            if(title==null || title.length()<5 || title.length()>100){
+                title = old_advertisement.getTitle();
+            }
+            if(title.length()<5 || title.length()>100){
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"Title of the advertisement not valid.");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
+
+            String description = advertisement.getDescription();
+            if(description==null){
+                description = old_advertisement.getDescription();
+            }
+            if(description.length()<5 || description.length()>10000){
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"description of the advertisement not valid.");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
+
+            Date dateStart = advertisement.getDateStart();
+            if(dateStart == null ) {
+                dateStart = old_advertisement.getDateStart();
+            }
+            Date dateEnd = advertisement.getDateEnd();
+            if(dateEnd == null ) {
+                dateEnd = old_advertisement.getDateEnd();
+            }
+            Time timeStart = advertisement.getTimeStart();
+            if(timeStart == null ) {
+                timeStart = old_advertisement.getTimeStart();
+            }
+            Time timeEnd = advertisement.getTimeEnd();
+            if(timeEnd == null ) {
+                timeEnd = old_advertisement.getTimeEnd();
+            }
+
+            if (dateStart.compareTo(dateEnd)==0 && timeEnd.compareTo(timeStart)<0) {
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"Times entered are not valid.");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
+            if(dateEnd.compareTo(dateStart)<0) {
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message("Input value not valid.",
+                        ec.getErrorCode(),"Dates entered are not valid.");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
+
+
             int price = advertisement.getPrice();
-            int numTotItem = advertisement.getNumTotItem();
-
-
+            if(price == -1 ) {
+                price = old_advertisement.getPrice();
+            }
             if(price<0 || price>50000){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message("Price not valid.",
@@ -126,6 +190,10 @@ public class AdvertisementRestResource extends RestResource {
                 return;
             }
 
+            int numTotItem = advertisement.getNumTotItem();
+            if(numTotItem == -1 ) {
+                numTotItem = old_advertisement.getNumTotItem();
+            }
             if(numTotItem<0 || numTotItem>1000){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message("Number of items not valid.",
@@ -139,15 +207,15 @@ public class AdvertisementRestResource extends RestResource {
 
             advertisement = new Advertisement(
                     idAdvertisement,
-                    null,
-                    null,
+                    title,
+                    description,
                     score,
                     price,
                     numTotItem,
-                    null,
-                    null,
-                    null,
-                    null,
+                    dateStart,
+                    dateEnd,
+                    timeStart,
+                    timeEnd,
                     null,
                     0
             );
@@ -164,7 +232,7 @@ public class AdvertisementRestResource extends RestResource {
 
             } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("Cannot show the advertisement. ",
+            Message m = new Message("Cannot edit the advertisement. ",
                     ec.getErrorCode(), ex.getMessage());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());

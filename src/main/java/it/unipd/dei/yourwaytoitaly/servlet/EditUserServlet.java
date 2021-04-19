@@ -37,7 +37,7 @@ public class EditUserServlet extends AbstractDatabaseServlet {
      */
 
     public void doPost(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+            throws IOException {
 
         String email;
         String password;

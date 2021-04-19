@@ -94,7 +94,10 @@ public class AdvertisementDAO extends AbstractDAO{
      */
     public static void editAdvertisement(Advertisement advertisement) throws SQLException, NamingException {
         final String STATEMENT_EDIT =
-                "UPDATE ADVERTISEMENT SET price = ? , score = ? , num_tot_item = ? WHERE ID_advertisement = ? RETURNING *;";
+                "UPDATE ADVERTISEMENT SET price = ? , score = ? , num_tot_item = ? , " +
+                        "title = ? , description = ? , date_end = ? , date_start = ? , " +
+                        "time_start = ? , time_end = ?" +
+                        "WHERE ID_advertisement = ? RETURNING *;";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -104,7 +107,13 @@ public class AdvertisementDAO extends AbstractDAO{
             pstmt.setInt(1, advertisement.getPrice());
             pstmt.setInt(2, advertisement.getScore());
             pstmt.setInt(3, advertisement.getNumTotItem());
-            pstmt.setInt(4, advertisement.getIdAdvertisement());
+            pstmt.setString(4, advertisement.getTitle());
+            pstmt.setString( 5 , advertisement.getDescription());
+            pstmt.setDate( 6 , advertisement.getDateEnd());
+            pstmt.setDate( 7 , advertisement.getDateStart());
+            pstmt.setTime( 8 , advertisement.getTimeStart());
+            pstmt.setTime( 9 , advertisement.getTimeEnd());
+            pstmt.setInt(10, advertisement.getIdAdvertisement());
 
             rs = pstmt.executeQuery();
 
