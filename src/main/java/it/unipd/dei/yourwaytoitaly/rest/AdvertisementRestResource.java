@@ -70,7 +70,7 @@ public class AdvertisementRestResource extends RestResource {
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getErrorCode(), "Cannot show the advertisement.");
+                    ec.getHTTPCode(), "Cannot show the advertisement.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -95,9 +95,20 @@ public class AdvertisementRestResource extends RestResource {
 
             //get idAvertisement from request URI
             int idAdvertisement = Integer.parseInt(URI.substring(URI.lastIndexOf("adv") + 4));
+            Advertisement advertisement=null;
 
-            //How to retrieve a JSON object
-            Advertisement advertisement = Advertisement.fromJSON(req.getInputStream());
+            try{
+                //How to retrieve a JSON object
+                advertisement = Advertisement.fromJSON(req.getInputStream());
+            }catch(Exception e){
+                ErrorCode ec = ErrorCode.BADLY_FORMATTED_JSON;
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getHTTPCode(),"Wrong JSON object.");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
+
 
             //I get the old advertisement to get the info that are not changed.
             Advertisement old_advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
@@ -111,7 +122,7 @@ public class AdvertisementRestResource extends RestResource {
             if (!emailSession.equals(emailCompany)) {
                 ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"User is not authorized to edit this advertisement");
+                        ec.getHTTPCode(),"User is not authorized to edit this advertisement");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -126,7 +137,7 @@ public class AdvertisementRestResource extends RestResource {
             if(title.length()<5 || title.length()>100){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"Title of the advertisement not valid.");
+                        ec.getHTTPCode(),"Title of the advertisement not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -139,7 +150,7 @@ public class AdvertisementRestResource extends RestResource {
             if(description.length()<5 || description.length()>10000){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"Description of the advertisement not valid.");
+                        ec.getHTTPCode(),"Description of the advertisement not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -165,7 +176,7 @@ public class AdvertisementRestResource extends RestResource {
             if (dateStart.compareTo(dateEnd)==0 && timeEnd.compareTo(timeStart)<0) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"Times not valid.");
+                        ec.getHTTPCode(),"Times not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -173,7 +184,7 @@ public class AdvertisementRestResource extends RestResource {
             if(dateEnd.compareTo(dateStart)<0) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"Dates not valid.");
+                        ec.getHTTPCode(),"Dates not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -187,7 +198,7 @@ public class AdvertisementRestResource extends RestResource {
             if(price<0 || price>50000){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"Price not valid.");
+                        ec.getHTTPCode(),"Price not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -200,7 +211,7 @@ public class AdvertisementRestResource extends RestResource {
             if(numTotItem<0 || numTotItem>1000){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"Number of items not valid.");
+                        ec.getHTTPCode(),"Number of items not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -235,7 +246,7 @@ public class AdvertisementRestResource extends RestResource {
             } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getErrorCode(), "Cannot edit the advertisement.");
+                    ec.getHTTPCode(), "Cannot edit the advertisement.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -259,7 +270,7 @@ public class AdvertisementRestResource extends RestResource {
             /*if (email.equals("")) {
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"User not found.");
+                        ec.getHTTPCode(),"User not found.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -279,15 +290,25 @@ public class AdvertisementRestResource extends RestResource {
             // check if the servlet needs to receive images or if a json object (advertisement)
             if (!ServletFileUpload.isMultipartContent(req)) {
 
-                // receive JSON object
-                Advertisement advertisement = Advertisement.fromJSON(req.getInputStream());
+                Advertisement advertisement=null;
+                try{
+                    //How to retrieve a JSON object
+                    advertisement = Advertisement.fromJSON(req.getInputStream());
+                }catch(Exception e){
+                    ErrorCode ec = ErrorCode.BADLY_FORMATTED_JSON;
+                    Message m = new Message(ec.getErrorMessage(),
+                            ec.getHTTPCode(),"Wrong JSON object.");
+                    res.setStatus(ec.getHTTPCode());
+                    m.toJSON(res.getOutputStream());
+                    return;
+                }
 
                 // control the parameters
                 title = advertisement.getTitle();
                 if(title==null || title.length()<5 || title.length()>100){
                     ErrorCode ec = ErrorCode.WRONG_FORMAT;
                     Message m = new Message(ec.getErrorMessage(),
-                            ec.getErrorCode(),"Title of the advertisement not valid.");
+                            ec.getHTTPCode(),"Title of the advertisement not valid.");
                     res.setStatus(ec.getHTTPCode());
                     m.toJSON(res.getOutputStream());
                     return;
@@ -296,7 +317,7 @@ public class AdvertisementRestResource extends RestResource {
                 if(description==null || description.length()<5 || description.length()>10000){
                     ErrorCode ec = ErrorCode.WRONG_FORMAT;
                     Message m = new Message(ec.getErrorMessage(),
-                            ec.getErrorCode(),"Description of the advertisement not valid.");
+                            ec.getHTTPCode(),"Description of the advertisement not valid.");
                     res.setStatus(ec.getHTTPCode());
                     m.toJSON(res.getOutputStream());
                     return;
@@ -305,7 +326,7 @@ public class AdvertisementRestResource extends RestResource {
                 if(price<0){
                     ErrorCode ec = ErrorCode.WRONG_FORMAT;
                     Message m = new Message(ec.getErrorMessage(),
-                            ec.getErrorCode(),"Price not valid");
+                            ec.getHTTPCode(),"Price not valid.");
                     res.setStatus(ec.getHTTPCode());
                     m.toJSON(res.getOutputStream());
                     return;
@@ -315,7 +336,7 @@ public class AdvertisementRestResource extends RestResource {
                 if(numTotItem<=0){
                     ErrorCode ec = ErrorCode.WRONG_FORMAT;
                     Message m = new Message(ec.getErrorMessage(),
-                            ec.getErrorCode(),"Total number of item not valid");
+                            ec.getHTTPCode(),"Total number of item not valid.");
                     res.setStatus(ec.getHTTPCode());
                     m.toJSON(res.getOutputStream());
                     return;
@@ -333,7 +354,7 @@ public class AdvertisementRestResource extends RestResource {
                 if(dateEnd.compareTo(dateStart)<0) {
                     ErrorCode ec = ErrorCode.WRONG_FORMAT;
                     Message m = new Message(ec.getErrorMessage(),
-                            ec.getErrorCode(),"Dates are not valid.");
+                            ec.getHTTPCode(),"Dates are not valid.");
                     res.setStatus(ec.getHTTPCode());
                     m.toJSON(res.getOutputStream());
                     return;
@@ -342,7 +363,7 @@ public class AdvertisementRestResource extends RestResource {
                 if (dateStart.compareTo(dateEnd)==0 && timeEnd.compareTo(timeStart)<0) {
                     ErrorCode ec = ErrorCode.WRONG_FORMAT;
                     Message m = new Message(ec.getErrorMessage(),
-                            ec.getErrorCode(),"Times are not valid.");
+                            ec.getHTTPCode(),"Times are not valid.");
                     res.setStatus(ec.getHTTPCode());
                     m.toJSON(res.getOutputStream());
                     return;
@@ -371,7 +392,7 @@ public class AdvertisementRestResource extends RestResource {
                 if(advertisement==null){
                     ErrorCode ec = ErrorCode.INTERNAL_ERROR;
                     Message m = new Message(ec.getErrorMessage(),
-                            ec.getErrorCode(),"Cannot create the advertisement.");
+                            ec.getHTTPCode(),"Cannot create the advertisement.");
                     res.setStatus(ec.getHTTPCode());
                     m.toJSON(res.getOutputStream());
                     return;
@@ -395,7 +416,7 @@ public class AdvertisementRestResource extends RestResource {
                                 if(idAdvertisement<=0){
                                     ErrorCode ec = ErrorCode.AD_NOT_FOUND;
                                     Message m = new Message(ec.getErrorMessage(),
-                                            ec.getErrorCode(), "The requested advertisement does not exists.");
+                                            ec.getHTTPCode(), "The requested advertisement does not exists.");
                                     res.setStatus(ec.getHTTPCode());
                                     req.setAttribute("message", m);
                                     m.toJSON(res.getOutputStream());
@@ -408,7 +429,7 @@ public class AdvertisementRestResource extends RestResource {
                                     ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
                                     Message m = new Message(
                                             ec.getErrorMessage(),
-                                            ec.getErrorCode(), "User not allowed to upload images on this advertisement.");
+                                            ec.getHTTPCode(), "User not allowed to upload images on this advertisement.");
                                     res.setStatus(ec.getHTTPCode());
                                     req.setAttribute("message", m);
                                     m.toJSON(res.getOutputStream());
@@ -426,7 +447,7 @@ public class AdvertisementRestResource extends RestResource {
                             ErrorCode ec = ErrorCode.AD_NOT_FOUND;
                             Message m = new Message(
                                     ec.getErrorMessage(),
-                                    ec.getErrorCode(), "Cannot upload images on this advertisement: the requested advertisement does not exists.");
+                                    ec.getHTTPCode(), "Cannot upload images on this advertisement: the requested advertisement does not exists.");
                             res.setStatus(ec.getHTTPCode());
                             req.setAttribute("message", m);
                             m.toJSON(res.getOutputStream());
@@ -437,7 +458,7 @@ public class AdvertisementRestResource extends RestResource {
                         if (!item.getContentType().contains("image")) {
                             ErrorCode ec = ErrorCode.WRONG_FORMAT;
                             Message m = new Message(ec.getErrorMessage(),
-                                    ec.getErrorCode(), "Cannot upload this file. Use .PNG or .JPG instead");
+                                    ec.getHTTPCode(), "Cannot upload this file. Use .PNG or .JPG instead");
                             res.setStatus(ec.getHTTPCode());
                             req.setAttribute("message", m);
                             m.toJSON(res.getOutputStream());
@@ -483,7 +504,7 @@ public class AdvertisementRestResource extends RestResource {
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getErrorCode(), "Cannot create the advertisement.");
+                    ec.getHTTPCode(), "Cannot create the advertisement.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -509,9 +530,9 @@ public class AdvertisementRestResource extends RestResource {
         idAdvertisement = Integer.parseInt(URI.substring(URI.lastIndexOf("adv")+4));
 
         if(idAdvertisement <= 0){
-            ErrorCode ec = ErrorCode.ADVERTISEMENT_NOT_FOUND;
+            ErrorCode ec = ErrorCode.AD_NOT_FOUND;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getErrorCode(),"Advertisement not found.");
+                    ec.getHTTPCode(),"Advertisement not found.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -525,7 +546,7 @@ public class AdvertisementRestResource extends RestResource {
             if (emailCompany.equals("")) {
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"User not found.");
+                        ec.getHTTPCode(),"User not found.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -535,7 +556,7 @@ public class AdvertisementRestResource extends RestResource {
             if (!emailCompany.equals(emailAdv)) {
                 ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"User is not authorized to delete this advertisement.");
+                        ec.getHTTPCode(),"User is not authorized to delete this advertisement.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -549,7 +570,7 @@ public class AdvertisementRestResource extends RestResource {
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getErrorCode(), "Cannot delete the advertisement.");
+                    ec.getHTTPCode(), "Cannot delete the advertisement.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -574,9 +595,9 @@ public class AdvertisementRestResource extends RestResource {
             int idAdvertisement = Integer.parseInt(op);
 
             if(idAdvertisement <= 0){
-                ErrorCode ec = ErrorCode.ADVERTISEMENT_NOT_FOUND;
+                ErrorCode ec = ErrorCode.AD_NOT_FOUND;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"Advertisement not found.");
+                        ec.getHTTPCode(),"Advertisement not found.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -592,7 +613,7 @@ public class AdvertisementRestResource extends RestResource {
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getErrorCode(), "Cannot show list of images.");
+                    ec.getHTTPCode(), "Cannot show list of images.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -616,9 +637,9 @@ public class AdvertisementRestResource extends RestResource {
             int idAdvertisement = Integer.parseInt(op);
 
             if(idAdvertisement <= 0){
-                ErrorCode ec = ErrorCode.ADVERTISEMENT_NOT_FOUND;
+                ErrorCode ec = ErrorCode.AD_NOT_FOUND;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"Advertisement not found.");
+                        ec.getHTTPCode(),"Advertisement not found.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -633,7 +654,7 @@ public class AdvertisementRestResource extends RestResource {
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getErrorCode(), "Cannot show list of feedback.");
+                    ec.getHTTPCode(), "Cannot show list of feedback.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -657,9 +678,9 @@ public class AdvertisementRestResource extends RestResource {
             int idAdvertisement = Integer.parseInt(op);
 
             if(idAdvertisement <= 0){
-                ErrorCode ec = ErrorCode.ADVERTISEMENT_NOT_FOUND;
+                ErrorCode ec = ErrorCode.AD_NOT_FOUND;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"Advertisement not found.");
+                        ec.getHTTPCode(),"Advertisement not found.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -684,7 +705,7 @@ public class AdvertisementRestResource extends RestResource {
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getErrorCode(), "Cannot show the list of bookings.");
+                    ec.getHTTPCode(), "Cannot show the list of bookings.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -709,9 +730,9 @@ public class AdvertisementRestResource extends RestResource {
             int idAdvertisement = Integer.parseInt(op);
 
             if(idAdvertisement <= 0){
-                ErrorCode ec = ErrorCode.ADVERTISEMENT_NOT_FOUND;
+                ErrorCode ec = ErrorCode.AD_NOT_FOUND;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"Advertisement not found.");
+                        ec.getHTTPCode(),"Advertisement not found.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -737,7 +758,7 @@ public class AdvertisementRestResource extends RestResource {
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getErrorCode(), "Cannot show the advertisement. ");
+                    ec.getHTTPCode(), "Cannot show the advertisement. ");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -766,8 +787,8 @@ public class AdvertisementRestResource extends RestResource {
 
             if (d == null || c == null || t == null) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                Message m = new Message("Input value not valid.",
-                        ec.getErrorCode(), "Input value not valid.");
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getHTTPCode(), "Input value not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -779,13 +800,22 @@ public class AdvertisementRestResource extends RestResource {
 
             listAdvertisement = AdvertisementDAO.searchAdvertisement(idCity, idType, date);
 
+            if(listAdvertisement.isEmpty()){
+                ErrorCode ec = ErrorCode.EMPTY_LIST;
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getHTTPCode(), "No results that match with the input parameters.");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
+
             res.setStatus(HttpServletResponse.SC_OK);
             new ResourceList(listAdvertisement).toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("Cannot show the advertisement. ",
-                    ec.getErrorCode(), ex.toString());
+            Message m = new Message(ec.getErrorMessage(),
+                    ec.getHTTPCode(), "Cannot show the advertisement.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
