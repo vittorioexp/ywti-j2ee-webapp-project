@@ -6,7 +6,6 @@ import it.unipd.dei.yourwaytoitaly.database.UserDAO;
 import it.unipd.dei.yourwaytoitaly.resource.*;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -34,13 +33,11 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
      * @param res
      *            the HTTP response from the server.
      *
-     * @throws ServletException
-     *             if any error occurs while executing the servlet.
      * @throws IOException
      *             if any error occurs in the client/server communication.
      */
     public void doPost(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+            throws IOException {
 
         // The user must give these parameters
         int numBooking;
@@ -155,7 +152,10 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
 
             AdvertisementDAO.editAdvertisement(adv);
 
+            Message success = new Message("Successfully left a feedback!");
+            req.setAttribute("message", success);
             res.setStatus(HttpServletResponse.SC_OK);
+            res.sendRedirect(req.getContextPath() + "/user/profile");
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

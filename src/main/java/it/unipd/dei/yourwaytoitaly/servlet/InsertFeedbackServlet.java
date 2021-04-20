@@ -3,10 +3,12 @@ package it.unipd.dei.yourwaytoitaly.servlet;
 import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
 import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
 import it.unipd.dei.yourwaytoitaly.database.FeedbackDAO;
-import it.unipd.dei.yourwaytoitaly.resource.*;
+import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
+import it.unipd.dei.yourwaytoitaly.resource.Booking;
+import it.unipd.dei.yourwaytoitaly.resource.Feedback;
+import it.unipd.dei.yourwaytoitaly.resource.Message;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -33,13 +35,11 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
      * @param res
      *            the HTTP response from the server.
      *
-     * @throws ServletException
-     *             if any error occurs while executing the servlet.
      * @throws IOException
      *             if any error occurs in the client/server communication.
      */
     public void doPost(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+            throws  IOException {
 
         int idAdvertisement = 0;
         String emailTourist="";
@@ -116,11 +116,7 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
 
             feedback = FeedbackDAO.createFeedback(feedback);
 
-
-            Message success = new Message("Successfully left a feedback!");
-            req.setAttribute("message", success);
             res.setStatus(HttpServletResponse.SC_OK);
-            res.sendRedirect(req.getContextPath() + "/advertisement/" + idAdvertisement);
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
