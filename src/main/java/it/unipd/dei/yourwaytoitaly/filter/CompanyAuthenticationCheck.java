@@ -54,9 +54,6 @@ public class CompanyAuthenticationCheck implements Filter {
      * */
     @Override
     public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
-        if (!(servletRequest instanceof HttpServletRequest) || !(servletResponse instanceof HttpServletResponse)){
-            throw new ServletException("Only HTTP requests or response are accepted");
-        }
 
         final HttpServletRequest req = (HttpServletRequest) servletRequest;
         final HttpServletResponse res = (HttpServletResponse) servletResponse;
