@@ -565,7 +565,7 @@ public class AdvertisementRestResource extends RestResource {
             AdvertisementDAO.deleteAdvertisement(idAdvertisement);
 
             res.setStatus(HttpServletResponse.SC_OK);
-            //res.sendRedirect(req.getContextPath() + "/user/profile");
+            res.sendRedirect(req.getContextPath() + "/user/profile");
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
