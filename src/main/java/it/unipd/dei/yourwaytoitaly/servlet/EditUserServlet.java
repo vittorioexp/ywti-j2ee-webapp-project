@@ -36,7 +36,7 @@ public class EditUserServlet extends AbstractDatabaseServlet {
      *             if any error occurs in the client/server communication.
      */
 
-    public void doPost(HttpServletRequest req, HttpServletResponse res)
+    public void doPut(HttpServletRequest req, HttpServletResponse res)
             throws IOException {
 
         String email;
@@ -50,7 +50,7 @@ public class EditUserServlet extends AbstractDatabaseServlet {
             User u = UserDAO.searchUserByEmail(LoginServlet.getUserEmail(req));
             if (u==null) {
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
-                Message m = new Message("User not found.",
+                Message m = new Message(ec.getErrorMessage(),
                         ec.getErrorCode(),"User not found.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
@@ -67,16 +67,16 @@ public class EditUserServlet extends AbstractDatabaseServlet {
 
             if (phoneNumber==null || phoneNumber.length()<10 || phoneNumber.length()>15) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                Message m = new Message("Input phone number is not valid. ",
-                        ec.getErrorCode(), "Input phone number is not valid. " + phoneNumber);
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getErrorCode(), "Phone number not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
             }
             if (password==null || password.length()<8 || password.length()>150) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                Message m = new Message("Input password is not valid. ",
-                        ec.getErrorCode(), "Input password is not valid. ");
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getErrorCode(), "Password not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;

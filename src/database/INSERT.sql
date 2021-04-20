@@ -137,15 +137,20 @@ INSERT INTO COMPANY (email_c, name_c, phone_number, address, password, ID_city)
 VALUES ('hotelcentrale@gmail.com', 'Hotel centrale', '0495341234', 'Via Venezia 48', MD5('prova_c'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
 
 INSERT INTO Advertisement (title, DESCRIPTION, SCORE, PRICE, NUM_TOT_ITEM, DATE_START, DATE_END, TIME_START, TIME_END, email_c, ID_TYPE)
-VALUES ('Capodanno sulle dolomiti', 'Sette giorni di relax in mezzo alla neve delle dolomiti in Trentino alto adige a capodanno', 100,  800, 20, '2021-05-1','2021-05-1','14:15:16','14:15:19', 'hotelcentrale@gmail.com', (SELECT ID_TYPE FROM Type_advertisement WHERE Type_advertisement.type = 'Dance club'));
-
-INSERT INTO IMAGE (path_i, description_i, ID_Advertisement) 
-VALUES ('/image/image1.jpg', 'hotel', 1);
+VALUES ('Delicious dinner in the Dolomites, da Pino', 'This is a mock advertisement. Requests to the REST web server will be made in order to show the desired advertisement.', 6,  19, 28, '2021-04-19','2021-07-01','18:30:00','23:30:00', 'hotelcentrale@gmail.com', (SELECT ID_TYPE FROM Type_advertisement WHERE Type_advertisement.type = 'Restaurant'));
 
 INSERT INTO Feedback (rate,text_f,date_f,email_t,ID_Advertisement)
-VALUES (4,'ottima esperienza', '2021-12-31','mariorossi@gmail.com',1);
+VALUES (5,'Amazing experience!', '2021-04-31','mariorossi@gmail.com',1);
+
+INSERT INTO Feedback (rate,text_f,date_f,email_t,ID_Advertisement)
+VALUES (5,'This was super cool!', '2021-05-02','pluto@mail.com',1);
+
+INSERT INTO Feedback (rate,text_f,date_f,email_t,ID_Advertisement)
+VALUES (4,'Good! I will surely come back', '2021-05-05','giovanna@mail.com',1);
 
 INSERT INTO Booking (date_b,time_b,num_booking,state,email_t,ID_Advertisement)
-VALUES ('2020-02-02','10:10:10', 2, 'SUCCESFUL','mariorossi@gmail.com',1);
+VALUES ('2020-04-29','14:30:00', 2, 'SUCCESSFUL','pippopasticcio@gmail.com',1);
 
+INSERT INTO Booking (date_b,time_b,num_booking,state,email_t,ID_Advertisement)
+VALUES ('2020-04-28','12:33:10', 1, 'SUCCESSFUL','filippo@mail.com',1);
 

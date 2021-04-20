@@ -1,8 +1,8 @@
-<%@ page import="org.json.JSONObject" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.*" %>
 <%@ page import="java.sql.Date" %>
 <%@ page import="java.sql.Time" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.resource.*" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -33,7 +33,7 @@ Since: 1.0
 </head>
 <body>
 <header>
-    <h1>Show Advertisement</h1>
+    <h1>Show Advertisement - mock page</h1>
 </header>
 <nav>
     <a href="${pageContext.request.contextPath}/index">Home</a>
@@ -51,141 +51,71 @@ Since: 1.0
 
     <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
 </nav>
-<article>
+    <br>
     <p>This is a mock page. Requests to the REST web server will be made in order to show the desired advertisement.</p>
-</br>
-
-<%
-    // For debug only
-    String URI = request.getRequestURI();
-    int idAdvertisement = Integer.parseInt(URI.substring(URI.lastIndexOf("adv-show")+9));
-    Advertisement adv = new Advertisement(
-            idAdvertisement,
-            "Delicious dinner in the Dolomites, da Pino",
-            "This is a mock advertisement. Requests to the REST web server will be made in order to show the desired advertisement.",
-            6,
-            19,
-            30,
-            Date.valueOf("30/04/2021"),
-            Date.valueOf("01/05/2021"),
-            Time.valueOf("18:30:00"),
-            Time.valueOf("23:30:00"),
-            "hotelcentrale@gmail.com",
-            28
-    );
-%>
-    <h3><%= adv.getTitle() %></h3>
-    <p> <%= adv.getDescription() %> </p>
-    <p> At only <%= adv.getPrice() %> euro </p>
-    <p> Starting from <%= adv.getDateStart() %> to <%= adv.getDateEnd() %>  </p>
-    <p> Opening time: <%= adv.getTimeStart() %> - <%= adv.getTimeEnd() %>  </p>
-    <p> Items available are only <%= adv.getNumTotItem() %>! </p>
-
+    </br>
+    <h3> Delicious dinner in the Dolomites, da Pino </h3>
+    <p> This is a mock advertisement. Requests to the REST web server will be made in order to show the desired advertisement. </p>
+    <p> Rated: 4.7/5</p>
+    <p> At only 19 euro </p>
+    <p> Starting from 19/04/2021 to 01/07/2021  </p>
+    <p> Opening time: 18:30:00 - 23:30:00 </p>
+    <p> Items available: 28 </p>
+    </br>
     <p>Images of the advertisement will be shown here!</p>
+    </br>
+    <p>
+        The following is a simple form to create a booking.
+
+        <form id="createBookingForm" name="createBookingForm" method="POST" action="<c:url value="/booking-create"/>">
+            <label for="numBooking">numBooking:</label>
+            <input id="numBooking" name="numBooking" type="number" required/><br/><br/>
+            <input type="hidden" name="idAdvertisement" value="1" />
+            <button type="submit">Book your journey</button><br/>
+        </form>
+    </p>
 
     <p>
         The following is a simple form to leave a feedback.
-        The server will check if the tourist is allowed to perform this action.
-        A tourist can write a feedback only if he booked the advertisement and if the event already started.
-    </p>
-    <form id="feedback-form" name="feedback-form" method="POST" action="<c:url value="/feedback-create"/>">
-        <label for="rate">rate:</label>
-        <input id="rate" name="rate" type="number" min="1" max="5" step="1" required/>
-        <label for="text_f">text::</label>
-        <input id="text_f" name="text_f" type="text"/>
-        <input type="hidden" name="idAdvertisement" value="<%=idAdvertisement %>" />
+
+    <form id="createFeedbackForm" name="createFeedbackForm" method="POST" action="<c:url value="/feedback-create"/>">
+        <label for="rateFeedback">rate:</label>
+        <input id="rateFeedback" name="rateFeedback" type="number" min="1" max="5" step="1" required/>
+        <label for="textFeedback">text:</label>
+        <input id="textFeedback" name="textFeedback" type="text"/>
+        <input type="hidden" name="idAdvertisement" value="1" />
         <button type="submit">Leave a feedback</button><br/>
     </form>
-
+    </p>
+    </br>
     <p> Here it will be shown a list of feedback.</p>
     <p>
         Rate: 5/5, "Amazing experience!"
-        Written on 31/04/2021
+        Written on 30/04/2021
     </p>
     <p>
         Rate: 5/5, "This was super cool!"
-        Written on 2/04/2021
+        Written on 2/05/2021
+    </p>
+    <p>
+        Rate: 4/5, "Good! I will surely come back"
+        Written on 5/05/2021
     </p>
 
-    <!--
-<div>
-    <%
-        List<Image> imageList = (List<Image>) request.getAttribute("imageList");
-    %>
-    <table id="imageTable" name="imageTable"
-           cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
-        <tr>
-        <c:forEach items="<%=imageList%>" var="image">
-            <td><img src="${image.path}" width="320" height="240"/></td>
-        </c:forEach>
-        </tr>
-    </table>
-</div>
-<p>
-    Rate is: <%=((Rate) request.getAttribute("rate")).getRate() %>
-</p>
-</br>
-    <%
-        List<Booking> bookingList = (List) request.getAttribute("bookingList");
-    %>
-    <table id="booking-list-table" name="booking-list-table"
-           cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
-        <c:forEach items="<%=bookingList%>" var="booking">
-            <tr>
-                <td>${booking.getEmailTourist()}</td>
-                <td>${booking.getDate()}</td>
-                <td>${booking.getTime()}</td>
-                <td>${booking.getNumBooking()}</td>
-                <td>${booking.getState()}</td>
-            </tr>
-        </c:forEach>
-    </table>
-</br>
-<%
-    // TODO: show the following form NOT to companies
-%>
-    <div>
-        <form id="booking-form" name="booking-form" method="POST" action="<c:url value="/booking-create"/>">
-            <label for="numBooking">numBooking:</label>
-            <input id="numBooking" name="numBooking" type="number" required/><br/><br/>
-            <input type="hidden" id="idAdvertisement" name="idAdvertisement" value="<%=idAdvertisement %>" />
-            <button type="submit">Book your journey</button><br/>
-        </form>
-    </div>
-</br>
-    <%
-
-    List<Feedback> feedbackList = (List) request.getAttribute("feedbackList");
-    %>
-    <table id="feedback-list-table" name="feedback-list-table"
-        cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
-        <c:forEach items="<%=feedbackList%>" var="feedback">
-            <tr>
-            <td>${feedback.getDate()}</td>
-            <td>${feedback.getRate()}</td>
-            <td>${feedback.getText()}</td>
-            </tr>
-        </c:forEach>
-    </table>
     </br>
-<%
-    // TODO: show the following form NOT to companies
-%>
-    <div>
-    <form id="feedback-form" name="feedback-form" method="POST" action="<c:url value="/feedback-create"/>">
-        <label for="rate">rate:</label>
-        <input id="rate" name="rate" type="number" min="1" max="5" step="1" required/>
-        <label for="text_f">text::</label>
-        <input id="text_f" name="text_f" type="text"/>
-        <input type="hidden" name="idAdvertisement" value="<%=idAdvertisement %>" />
-        <button type="submit">Leave a feedback</button><br/>
-    </form>
-    </div>
-</br>
-    <div>
-        <c:import url="/jsp/include/show-message.jsp"/>
-    </div>
-    -->
+
+    <p>
+        Here the owner of the advertisement will see the list of bookings.
+    </p>
+    <p>
+        pippopasticcio@gmail.com booked for 2.
+        29/04/2021 - 14:30
+    </p>
+    <p>
+        filippo@gmail.com booked for 1.
+        28/04/2021 - 12:33
+    </p>
+
 </article>
 </body>
 </html>

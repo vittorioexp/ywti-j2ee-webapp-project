@@ -98,7 +98,7 @@ Since: 1.0
                         <td>${booking.numBooking}</td>
                         <td>${booking.state}</td>
                         <td>
-                            <form id="delete booking-form" name="delete booking-form" action = "<c:url value="/booking-delete"/>" method="POST">
+                            <form id="delete booking-form" name="delete booking-form" action = "<c:url value="/booking-delete"/>" method="DELETE">
                                 <input type="hidden" id="idAdvertisement" name="idAdvertisement" value="${booking.idAdvertisement}"/>
                                 <button type="submit" >Delete</button><br/>
                             </form>
@@ -124,7 +124,7 @@ Since: 1.0
                     <td><c:out value="${user.idCity}"/></td>
                 </tr>
             </table>
-            <form method="get" action="<c:url value="/advertisement-do-create"/>">
+            <form method="GET" action="<c:url value="/advertisement-do-create"/>">
                 <button type="submit">New advertisement</button>
             </form>
             <%
