@@ -259,7 +259,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             if (!mail.sendConfirmationEmail("YourWayToItaly:Account successfully registered",
                     "Congratulations, your account has successfully been registered. " +
                             "You can now start your Journey!")){
-                ErrorCode ec = ErrorCode.SEND_MAIL_EROR;
+                ErrorCode ec = ErrorCode.SEND_MAIL_ERROR;
                 Message m = new Message(ec.getErrorMessage(),
                         ec.getHTTPCode(), "Email not sent.");
                 res.setStatus(ec.getHTTPCode());

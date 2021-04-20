@@ -36,11 +36,10 @@ public class ShowProfileServlet extends AbstractDatabaseServlet {
 
                     if (u == null) {
                         ErrorCode ec = ErrorCode.USER_NOT_FOUND;
-                        Message m = new Message("User not found.",
-                                ec.getErrorCode(),"User not found.");
+                        Message m = new Message(ec.getErrorMessage(),
+                                ec.getHTTPCode(),"User not found.");
                         res.setStatus(ec.getHTTPCode());
-                        req.setAttribute("message", m);
-                        req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+                        m.toJSON(res.getOutputStream());
                     }
 
                     if (u instanceof Tourist) {
@@ -62,20 +61,18 @@ public class ShowProfileServlet extends AbstractDatabaseServlet {
 
                 } catch (Exception ex) {
                     ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-                    Message m = new Message("Cannot show the user. ",
-                            ec.getErrorCode(), ex.getMessage());
+                    Message m = new Message(ec.getErrorMessage(),
+                            ec.getHTTPCode(), "Cannot show the user.");
                     res.setStatus(ec.getHTTPCode());
-                    req.setAttribute("message", m);
-                    req.getRequestDispatcher("/jsp/index.jsp").forward(req, res);
+                    m.toJSON(res.getOutputStream());
                 }
                 break;
             default:
                 ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
-                Message m = new Message("Operation unknown. ",
-                        ec.getErrorCode(), ec.getErrorMessage());
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getHTTPCode(), "Operation unknown.");
                 res.setStatus(ec.getHTTPCode());
-                req.setAttribute("message", m);
-                req.getRequestDispatcher("/jsp/index.jsp").forward(req, res);
+                m.toJSON(res.getOutputStream());
             }
     }
 }
