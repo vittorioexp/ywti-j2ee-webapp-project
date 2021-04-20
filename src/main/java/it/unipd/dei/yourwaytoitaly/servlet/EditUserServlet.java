@@ -36,7 +36,7 @@ public class EditUserServlet extends AbstractDatabaseServlet {
      *             if any error occurs in the client/server communication.
      */
 
-    public void doPut(HttpServletRequest req, HttpServletResponse res)
+    public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws IOException {
 
         String email;
@@ -51,7 +51,7 @@ public class EditUserServlet extends AbstractDatabaseServlet {
             if (u==null) {
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"User not found.");
+                        ec.getHTTPCode(),"User not found.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -68,7 +68,7 @@ public class EditUserServlet extends AbstractDatabaseServlet {
             if (phoneNumber==null || phoneNumber.length()<10 || phoneNumber.length()>15) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(), "Phone number not valid.");
+                        ec.getHTTPCode(), "Phone number not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -76,7 +76,7 @@ public class EditUserServlet extends AbstractDatabaseServlet {
             if (password==null || password.length()<8 || password.length()>150) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(), "Password not valid.");
+                        ec.getHTTPCode(), "Password not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -84,7 +84,7 @@ public class EditUserServlet extends AbstractDatabaseServlet {
             if (address==null || address.length()<4 || address.length()>150) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(), "Address not valid.");
+                        ec.getHTTPCode(), "Address not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -92,7 +92,7 @@ public class EditUserServlet extends AbstractDatabaseServlet {
             if (idCity<=0) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(), "IdCity not valid.");
+                        ec.getHTTPCode(), "IdCity not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -136,7 +136,7 @@ public class EditUserServlet extends AbstractDatabaseServlet {
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getErrorCode(), "Cannot edit the user profile.");
+                    ec.getHTTPCode(), "Cannot edit the user profile.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
