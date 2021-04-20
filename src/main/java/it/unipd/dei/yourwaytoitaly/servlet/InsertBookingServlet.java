@@ -58,7 +58,7 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             if(user instanceof Company){
                 ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"User not allowed.");
+                        ec.getHTTPCode(),"User not allowed.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -67,7 +67,7 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             if (emailTourist.equals("")) {
                 ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"User not logged in.");
+                        ec.getHTTPCode(),"User not logged in.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -80,7 +80,7 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             if (booking!=null) {
                 ErrorCode ec = ErrorCode.BOOKING_ALREADY_DONE;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"Booking already done.");
+                        ec.getHTTPCode(),"Booking already done.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -92,7 +92,7 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             if(numBooking<=0) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"Invalid number of items booked.");
+                        ec.getHTTPCode(),"Invalid number of items booked.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -103,7 +103,7 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             if (adv.getDateEnd().compareTo(date)<0) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"Dates not valid.");
+                        ec.getHTTPCode(),"Dates not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -115,7 +115,7 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             if(numBooking > numTotItem){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"The number of item is too big.");
+                        ec.getHTTPCode(),"The number of item is too big.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -160,7 +160,7 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getErrorCode(), "Cannot create the booking: " + ex.toString());
+                    ec.getHTTPCode(), "Cannot create the booking: " + ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;

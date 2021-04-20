@@ -112,7 +112,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
             if (email == null || email.equals("")) {
                 ErrorCode ec = ErrorCode.EMAIL_MISSING;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"Email not inserted or not valid.");
+                        ec.getHTTPCode(),"Email not inserted or not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -131,7 +131,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
             if (password == null || password.equals( "" )) {
                 ErrorCode ec = ErrorCode.PASSWORD_MISSING;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"Password not inserted or not valid.");
+                        ec.getHTTPCode(),"Password not inserted or not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -143,7 +143,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
                 res.setStatus(ec.getHTTPCode());
                 Message m = new Message( ec.getErrorMessage(),
-                        ec.getErrorCode(),"Credentials are wrong.");
+                        ec.getHTTPCode(),"Credentials are wrong.");
                 m.toJSON(res.getOutputStream());
                 return;
             }
@@ -163,7 +163,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
         }catch (Exception ex){
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getErrorCode(), "Failed to login.");
+                    ec.getHTTPCode(), "Failed to login.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
            return;
