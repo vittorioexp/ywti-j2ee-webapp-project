@@ -83,16 +83,16 @@ public class EditUserServlet extends AbstractDatabaseServlet {
             }
             if (address==null || address.length()<4 || address.length()>150) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                Message m = new Message("Input address is not valid. ",
-                        ec.getErrorCode(), "Input address is not valid. " + address);
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getErrorCode(), "Address not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
             }
             if (idCity<=0) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                Message m = new Message("Input idCity is not valid. ",
-                        ec.getErrorCode(), "Input idCity is not valid. " + idCity);
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getErrorCode(), "IdCity not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -128,15 +128,15 @@ public class EditUserServlet extends AbstractDatabaseServlet {
                 UserDAO.editUserProfile(u);
 
             }
-            Message success = new Message("Profile successfully edited!");
+            Message success = new Message("Profile successfully edited.");
             req.setAttribute("message", success);
             res.setStatus(HttpServletResponse.SC_OK);
             res.sendRedirect(req.getContextPath()+"/user/profile");
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("Cannot edit the user profile. ",
-                    ec.getErrorCode(), ex.toString());
+            Message m = new Message(ec.getErrorMessage(),
+                    ec.getErrorCode(), "Cannot edit the user profile.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;

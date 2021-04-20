@@ -22,6 +22,7 @@ public enum ErrorCode {
     ADVERTISEMENT_NOT_FOUND(-14, HttpServletResponse.SC_NOT_FOUND, "Advertisement not found."),
     USER_NOT_ALLOWED(-15, HttpServletResponse.SC_BAD_REQUEST, "User not allowed."),
     OPERATION_UNKNOWN(-20, HttpServletResponse.SC_BAD_REQUEST, "Operation unknown."),
+    BOOKING_ALREADY_DONE(-16, HttpServletResponse.SC_NOT_FOUND, "Booking already done."),
     METHOD_NOT_ALLOWED(-40, HttpServletResponse.SC_METHOD_NOT_ALLOWED, "The method is not allowed"),
     INTERNAL_ERROR(-100, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Error");
 
