@@ -3,10 +3,12 @@ package it.unipd.dei.yourwaytoitaly.servlet;
 import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
 import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
 import it.unipd.dei.yourwaytoitaly.database.FeedbackDAO;
-import it.unipd.dei.yourwaytoitaly.resource.*;
+import it.unipd.dei.yourwaytoitaly.resource.Advertisement;
+import it.unipd.dei.yourwaytoitaly.resource.Booking;
+import it.unipd.dei.yourwaytoitaly.resource.Feedback;
+import it.unipd.dei.yourwaytoitaly.resource.Message;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -33,13 +35,11 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
      * @param res
      *            the HTTP response from the server.
      *
-     * @throws ServletException
-     *             if any error occurs while executing the servlet.
      * @throws IOException
      *             if any error occurs in the client/server communication.
      */
     public void doPost(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+            throws  IOException {
 
         int idAdvertisement = 0;
         String emailTourist="";
@@ -55,7 +55,7 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
             if (emailTourist.equals("")) {
                 ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"User must be logged in.");
+                        ec.getHTTPCode(),"User must be logged in.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -68,7 +68,7 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
             if (feedback!=null) {
                 ErrorCode ec = ErrorCode.FEEDBACK_ALREADY_DONE;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"Feedback already inserted.");
+                        ec.getHTTPCode(),"Feedback already inserted.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -83,7 +83,7 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
             if (booking == null || currentDate.compareTo(advertisement.getDateStart())<0) {
                 ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"The event has yet to begin");
+                        ec.getHTTPCode(),"The event has yet to begin");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -95,7 +95,7 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
             if (rate<1 || rate >5) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(), "Rate not valid.");
+                        ec.getHTTPCode(), "Rate not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -116,16 +116,12 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
 
             feedback = FeedbackDAO.createFeedback(feedback);
 
-
-            Message success = new Message("Successfully left a feedback!");
-            req.setAttribute("message", success);
             res.setStatus(HttpServletResponse.SC_OK);
-            res.sendRedirect(req.getContextPath() + "/advertisement/" + idAdvertisement);
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getErrorCode(), "Cannot create the feedback.");
+                    ec.getHTTPCode(), "Cannot create the feedback.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;

@@ -79,7 +79,7 @@ public class CompanyAuthenticationCheck implements Filter {
                 if (!(UserDAO.searchUserByEmail(email) instanceof Company)) {
                     ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
                     Message m = new Message(ec.getErrorMessage(),
-                            ec.getErrorCode(),"You need a company account to access this page");
+                            ec.getHTTPCode(),"You need a company account to access this page");
                     res.setStatus(ec.getHTTPCode());
                     m.toJSON(res.getOutputStream());
                     return;
@@ -89,7 +89,7 @@ public class CompanyAuthenticationCheck implements Filter {
                 session.invalidate();
                 ErrorCode ec = ErrorCode.INTERNAL_ERROR;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(),"Internal error has occured");
+                        ec.getHTTPCode(),"Internal error has occured");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;

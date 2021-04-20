@@ -59,7 +59,7 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
             if ( advertisement == null ){
                 ErrorCode ec = ErrorCode.AD_NOT_FOUND;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(), "Cannot delete because advertisement doesn't exist.");
+                        ec.getHTTPCode(), "Cannot delete because advertisement doesn't exist.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -68,7 +68,7 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
             if ( booking == null ){
                 ErrorCode ec = ErrorCode.AD_NOT_FOUND;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(), "Cannot delete because booking doesn't exist.");
+                        ec.getHTTPCode(), "Cannot delete because booking doesn't exist.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -78,7 +78,7 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
                 ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
                 Message m = new Message(
                         ec.getErrorMessage(),
-                        ec.getErrorCode(), "Cannot delete because booking is already deleted.");
+                        ec.getHTTPCode(), "Cannot delete because booking is already deleted.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -91,7 +91,7 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
             if (today.compareTo(advertisement.getDateStart())>0) {
                 ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getErrorCode(), "The event is already started. You cannot delete this booking.");
+                        ec.getHTTPCode(), "The event is already started. You cannot delete this booking.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -134,7 +134,7 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getErrorCode(), "Cannot delete this booking.");
+                    ec.getHTTPCode(), "Cannot delete this booking.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;

@@ -93,10 +93,10 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             register(req, res);
         }
         else{
-                // the requested operation is unknown
+            // the requested operation is unknown
             ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
-            Message m = new Message("Not Valid Request.", ec.getErrorCode()
-                    ,"You have requested a non existing resource .");
+            Message m = new Message(ec.getErrorMessage(), ec.getHTTPCode()
+                    ,"You have requested a non existing resource.");
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
             m.toJSON(res.getOutputStream());
@@ -119,8 +119,8 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
             if ( email == null || email.equals("") ) {
                 ErrorCode ec = ErrorCode.EMAIL_MISSING;
-                Message m = new Message("Input value not valid.",
-                        ec.getErrorCode(),"Email not inserted or not valid.");
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getHTTPCode(),"Email not inserted or not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -128,7 +128,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
             if ( userType == null ) {
                 ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
-                Message m = new Message("Input value not valid.", ec.getErrorCode()
+                Message m = new Message(ec.getErrorMessage(), ec.getHTTPCode()
                         ,"User type not selected.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
@@ -137,8 +137,8 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
             if ( password == null || password.equals("") || !rpassword.equals(password) ) {
                 ErrorCode ec = ErrorCode.PASSWORD_MISSING;
-                Message m = new Message("Input value not valid.",
-                        ec.getErrorCode(),"Password not valid.");
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getHTTPCode(),"Password not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -146,16 +146,16 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
             if ( name == null || name.equals("")  ) {
                 ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
-                Message m = new Message("Input value not valid.",
-                        ec.getErrorCode(),"Name not present.");
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getHTTPCode(),"Name not entered.");
                 m.toJSON(res.getOutputStream());
                 return;
             }
 
             if ( address == null || address.equals("") ) {
                 ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
-                Message m = new Message("Input value not valid.",
-                        ec.getErrorCode(),"Address not present.");
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getHTTPCode(),"Address not entered.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -163,8 +163,8 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
             if ( phone == null || phone.equals( "" ) ){
                 ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
-                Message m = new Message("Input value not valid.",
-                        ec.getErrorCode(),"Phone number not present.");
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getHTTPCode(),"Phone number not entered.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -183,8 +183,8 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                 }
                 catch ( IllegalArgumentException e ) {
                     ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                    Message m = new Message("Input value not valid.",
-                            ec.getErrorCode(),"Date not valid.");
+                    Message m = new Message(ec.getErrorMessage(),
+                            ec.getHTTPCode(),"Date not valid.");
                     m.toJSON(res.getOutputStream());
                     return;
                 }
@@ -193,8 +193,8 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
                 if ( surname == null || surname.equals( "" )) {
                     ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
-                    Message m = new Message("Input value not valid.",
-                            ec.getErrorCode(),"Surname not present.");
+                    Message m = new Message(ec.getErrorMessage(),
+                            ec.getHTTPCode(),"Surname not entered.");
                     res.setStatus(ec.getHTTPCode());
                     m.toJSON(res.getOutputStream());
                     return;
@@ -206,8 +206,8 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                 if (usr!=null) {
                     // the user is already registered
                     ErrorCode ec = ErrorCode.MAIL_ALREADY_USED;
-                    Message m = new Message("Mail already used.",
-                            ec.getErrorCode(),"The user is already registered");
+                    Message m = new Message(ec.getErrorMessage(),
+                            ec.getHTTPCode(),"The user is already registered.");
                     res.setStatus(ec.getHTTPCode());
                     m.toJSON(res.getOutputStream());
                     return;
@@ -222,8 +222,8 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                 if (usr!=null) {
                     // the user is already registered
                     ErrorCode ec = ErrorCode.MAIL_ALREADY_USED;
-                    Message m = new Message("Mail already used.",
-                            ec.getErrorCode(),"The user is already registered");
+                    Message m = new Message(ec.getErrorMessage(),
+                            ec.getHTTPCode(),"The user is already registered.");
                     res.setStatus(ec.getHTTPCode());
                     m.toJSON(res.getOutputStream());
                     return;
@@ -234,8 +234,8 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
             if ( usr == null ){
                 ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-                Message m = new Message("Failed creating user account.",
-                        ec.getErrorCode(),"Something went wrong creating user account.");
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getHTTPCode(),"Internal error.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -259,9 +259,9 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             if (!mail.sendConfirmationEmail("YourWayToItaly:Account successfully registered",
                     "Congratulations, your account has successfully been registered. " +
                             "You can now start your Journey!")){
-                ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-                Message m = new Message("Failed to send confirmation email.",
-                        ec.getErrorCode(), "An error occurred while sending email confirmation");
+                ErrorCode ec = ErrorCode.SEND_MAIL_EROR;
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getHTTPCode(), "Email not sent.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -278,8 +278,8 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
         }catch (Exception ex){
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("Failed to register.",
-                    ec.getErrorCode(), ex.toString());
+            Message m = new Message(ec.getErrorMessage(),
+                    ec.getHTTPCode(), "Internal error.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             //req.setAttribute("message", m);

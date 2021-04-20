@@ -51,8 +51,7 @@ Since: 1.0
 </nav>
 
 <div>
-    <form method="PUT" action="<c:url value="/user/edit"/>">
-
+    <form name="editProfileForm" id="editProfileForm" method="POST" action="<c:url value="/user/edit"/>">
 
         <label for="password">new password:</label>
         <input id="password" name="password" type="password" required/><br/><br/>
