@@ -51,7 +51,7 @@ Since: 1.0
 </nav>
 
 <div>
-    <form method="POST" action="<c:url value="/user/edit"/>">
+    <form method="PUT" action="<c:url value="/user/edit"/>">
 
 
         <label for="password">new password:</label>
