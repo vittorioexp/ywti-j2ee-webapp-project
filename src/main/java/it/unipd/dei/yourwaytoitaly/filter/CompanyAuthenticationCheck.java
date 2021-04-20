@@ -73,20 +73,26 @@ public class CompanyAuthenticationCheck implements Filter {
             try {
                 String email = LoginServlet.getUserEmail(req);
                 if (!(UserDAO.searchUserByEmail(email) instanceof Company)) {
-                    ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
-                    Message m = new Message("Not a company.",
-                            ec.getErrorCode(),"The user is already registered");
+                    ErrorCode ec = ErrorCode.MAIL_ALREADY_USED;
+                    Message m = new Message(ec.getErrorMessage(),
+                            ec.getErrorCode(),"The company is already registered");
                     res.setStatus(ec.getHTTPCode());
                     m.toJSON(res.getOutputStream());
                     return;
-//                    res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//                    res.sendRedirect(req.getContextPath() + "/index");
-//                    return;
+                    /*
+                    res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    res.sendRedirect(req.getContextPath() + "/index");
+                    return;
+                     */
                 }
 
             }catch(SQLException | NamingException e){
                 session.invalidate();
-                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+                ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getErrorCode(),"Internal error has occured");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
                 return;
             }
 

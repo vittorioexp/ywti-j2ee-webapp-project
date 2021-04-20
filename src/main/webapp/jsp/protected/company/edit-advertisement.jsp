@@ -38,7 +38,7 @@
         String url = "/advertisement/" + String.valueOf(idAdvertisement);
     %>
 
-<form method="put" action="<c:url value="${url}"/>">
+<form method="PUT" action="<c:url value="${url}"/>">
 
     <label for="price">price:</label>
     <input id="price" name="price" type="text"/><br/><br/>
