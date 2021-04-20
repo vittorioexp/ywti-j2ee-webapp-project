@@ -23,6 +23,7 @@ public enum ErrorCode {
     OPERATION_UNKNOWN(-20, HttpServletResponse.SC_BAD_REQUEST, "Operation unknown."),
     BOOKING_ALREADY_DONE(-16, HttpServletResponse.SC_NOT_FOUND, "Booking already done."),
     FEEDBACK_ALREADY_DONE(-17, HttpServletResponse.SC_NOT_FOUND, "Feedback already done."),
+    SEND_MAIL_EROR(-18, HttpServletResponse.SC_NOT_FOUND, "Email not sent."),
     METHOD_NOT_ALLOWED(-40, HttpServletResponse.SC_METHOD_NOT_ALLOWED, "The method is not allowed"),
     INTERNAL_ERROR(-100, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Error");
 
