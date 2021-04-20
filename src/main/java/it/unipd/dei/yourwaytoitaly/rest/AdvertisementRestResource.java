@@ -36,7 +36,7 @@ import java.util.List;
 public class AdvertisementRestResource extends RestResource {
 
     /**
-     * Creates a new REST resource for managing {@code Employee} resources.
+     * Creates a new REST resource for managing {@code Advertisement} resources.
      *
      * @param req the HTTP request.
      * @param res the HTTP response.
@@ -62,8 +62,6 @@ public class AdvertisementRestResource extends RestResource {
             int idAdvertisement = Integer.parseInt(URI.substring(URI.lastIndexOf("adv") + 4));
             Advertisement advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
 
-            // For debug, pass the entity as an attribute
-            //req.setAttribute("advertisement", advertisement);
 
             // This should be done instead
             res.setStatus(HttpServletResponse.SC_OK);
@@ -95,13 +93,18 @@ public class AdvertisementRestResource extends RestResource {
             String URI = req.getRequestURI();
             // The URI should be /adv/ID
 
+            //get idAvertisement from request URI
             int idAdvertisement = Integer.parseInt(URI.substring(URI.lastIndexOf("adv") + 4));
 
             //How to retrieve a JSON object
             Advertisement advertisement = Advertisement.fromJSON(req.getInputStream());
+
+            //I get the old advertisement to get the info that are not changed.
             Advertisement old_advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
 
 
+            // Checking the user is the owner of the advertisement
+            // TODO : DISABLED for DEBUG
             String emailSession = LoginServlet.getUserEmail(req);
             String emailCompany = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
             /*
@@ -115,8 +118,9 @@ public class AdvertisementRestResource extends RestResource {
             }
             */
 
+            //Checking if the attributes are changed and checking the integrity of the new values
             String title = advertisement.getTitle();
-            if(title==null || title.length()<5 || title.length()>100){
+            if(title==null){
                 title = old_advertisement.getTitle();
             }
             if(title.length()<5 || title.length()>100){
@@ -201,9 +205,10 @@ public class AdvertisementRestResource extends RestResource {
                 m.toJSON(res.getOutputStream());
                 return;
             }
-
+            //recalculate the new score with the new price
             int score = (int) Math.floor(price/3.14);
 
+            //object with the new values if changed and the old ones
             advertisement = new Advertisement(
                     idAdvertisement,
                     title,
@@ -221,12 +226,10 @@ public class AdvertisementRestResource extends RestResource {
 
             AdvertisementDAO.editAdvertisement(advertisement);
 
-            // For debug, pass the entity as an attribute
-            //req.setAttribute("advertisement", advertisement);
-
             res.setStatus(HttpServletResponse.SC_OK);
-            //advertisement.toJSON(res.getOutputStream());
 
+            // for DEBUG if you want to receive the updated advertisement details
+            //advertisement.toJSON(res.getOutputStream());
             //res.sendRedirect(req.getContextPath() + "/adv-show/" + String.valueOf(idAdvertisement));
 
             } catch (Exception ex) {
@@ -249,8 +252,10 @@ public class AdvertisementRestResource extends RestResource {
 
         try{
             // check if a session is valid
-            String email = LoginServlet.getUserEmail(req);
-            email = "hotelcentrale@gmail.com";
+
+            //String email = LoginServlet.getUserEmail(req);
+            String email = "hotelcentrale@gmail.com"; // for DEBUG
+            // TODO: DISABLED for DEBUG
             /*if (email.equals("")) {
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
                 Message m = new Message(ec.getErrorMessage(),
@@ -373,13 +378,10 @@ public class AdvertisementRestResource extends RestResource {
                 }
 
                 res.setStatus(HttpServletResponse.SC_OK);
-                //res.sendRedirect(req.getContextPath() + "/upload-images/" + String.valueOf(idAdvertisement));
 
             } else {
                 String URI = req.getRequestURI();
                 String pathName="";
-
-                //Advertisement advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
 
                 List<FileItem> multipart = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(req);
                 int count = 1;
@@ -401,6 +403,7 @@ public class AdvertisementRestResource extends RestResource {
                                 }
                                 String emailAdv =
                                         AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
+                                // TODO : DISABLED for debug
                                 /*if(emailAdv!=email){
                                     ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
                                     Message m = new Message(
@@ -471,10 +474,9 @@ public class AdvertisementRestResource extends RestResource {
                     }
 
                 }
-                //Message success = new Message(pathName);
-                //req.setAttribute("message", success);
+
                 res.setStatus(HttpServletResponse.SC_OK);
-                //res.sendRedirect(req.getContextPath() + "/adv/" + idAdvertisement);
+
             }
 
 
@@ -518,7 +520,7 @@ public class AdvertisementRestResource extends RestResource {
         try{
             // check if the email of the session is equal to emailCompany
             emailCompany = LoginServlet.getUserEmail(req);
-
+            // TODO : DISABLED for DEBUG
             /*
             if (emailCompany.equals("")) {
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
@@ -582,9 +584,6 @@ public class AdvertisementRestResource extends RestResource {
 
             List<Image> imageList = ImageDAO.searchImageByIdAdvertisement(idAdvertisement);
 
-            // For debug, pass the entity as an attribute
-            //req.setAttribute("imageList", imageList);
-
             // This should be done instead
             res.setStatus(HttpServletResponse.SC_OK);
             new ResourceList(imageList).toJSON(res.getOutputStream());
@@ -625,13 +624,9 @@ public class AdvertisementRestResource extends RestResource {
                 return;
             }
 
-            // Return the list of feedback for thi
+            // Return the list of feedback
             List<Feedback> feedbackList = FeedbackDAO.searchFeedbackByAdvertisement(idAdvertisement);
 
-            // For debug, pass the entity as an attribute
-            //req.setAttribute("feedbackList", feedbackList);
-
-            // This should be done instead
             res.setStatus(HttpServletResponse.SC_OK);
             new ResourceList(feedbackList).toJSON(res.getOutputStream());
 
@@ -675,15 +670,12 @@ public class AdvertisementRestResource extends RestResource {
             // The owner can see the booking list relative to this advertisement: check if a session is valid
             List<Booking> bookingList = new ArrayList<Booking>();
 
-            // for debugging without session, uncomment the following
+            // TODO : for debugging without session, uncomment the following
             //bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
 
             if (LoginServlet.checkSessionEmail(req, advertisement.getEmailCompany())) {
                 bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
             }
-
-            // For debug, pass the entity as an attribute
-            //req.setAttribute("bookingList", bookingList);
 
             // This should be done instead
             res.setStatus(HttpServletResponse.SC_OK);
@@ -725,7 +717,7 @@ public class AdvertisementRestResource extends RestResource {
                 return;
             }
 
-            // Return the list of feedback for thi
+            // Return the list of feedback for the advertisement with idAdvertisement
             List<Feedback> feedbackList = FeedbackDAO.searchFeedbackByAdvertisement(idAdvertisement);
             double rate = 0;
             if (feedbackList.size()!=0) {
@@ -737,8 +729,6 @@ public class AdvertisementRestResource extends RestResource {
 
             Rate r = new Rate((int) rate);
 
-            // For debug, pass the entity as an attribute
-            //req.setAttribute("rate", r);
 
             // This should be done instead
             res.setStatus(HttpServletResponse.SC_OK);

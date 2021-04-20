@@ -6,6 +6,8 @@ import org.apache.commons.mail.MultiPartEmail;
 
 public class EmailSender {
 
+    /** Email destination address
+     * */
     private final String email_to;
 
 
@@ -26,6 +28,7 @@ public class EmailSender {
     public boolean sendConfirmationEmail(String subject, String message){
 
         try {
+            //using Google SMTP server to send emails
             String email_from = "yourwaytoitalywebapp@gmail.com";
             String email_password = "waywti2021";
             MultiPartEmail mail = new MultiPartEmail();
@@ -41,7 +44,7 @@ public class EmailSender {
             return true;
         }catch(EmailException ex){
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("Failed to register.",
+            Message m = new Message("Failed to send registration email, check the email syntax.",
                     ec.getErrorCode(), ex.toString());
             System.out.println(ex.getMessage());
             System.out.println(email_to);
