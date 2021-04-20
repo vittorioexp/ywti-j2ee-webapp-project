@@ -60,7 +60,23 @@ public class AdvertisementRestResource extends RestResource {
             // The URI should be /adv/ID
 
             int idAdvertisement = Integer.parseInt(URI.substring(URI.lastIndexOf("adv") + 4));
+
+
+            if(idAdvertisement<=0){
+                ErrorCode ec = ErrorCode.WRONG_FORMAT;
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getHTTPCode(), "Cannot show the advertisement.");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+            }
             Advertisement advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
+            if(advertisement==null){
+                ErrorCode ec = ErrorCode.AD_NOT_FOUND;
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getHTTPCode(), "Advertisement not found.");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+            }
 
 
             // This should be done instead
