@@ -382,6 +382,7 @@ public class AdvertisementRestResource extends RestResource {
                 //Advertisement advertisement = AdvertisementDAO.searchAdvertisement(idAdvertisement);
 
                 List<FileItem> multipart = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(req);
+                int count = 1;
                 for (FileItem item : multipart) {
                     if (item.isFormField()) {
                         String name = item.getFieldName();
@@ -444,7 +445,7 @@ public class AdvertisementRestResource extends RestResource {
                         // Save the picture inside the disk
                         Date date = new Date(Calendar.getInstance().getTime().getTime());
                         Time time = new Time(Calendar.getInstance().getTime().getTime());
-                        String name = (date + "_" + time)
+                        String name = (date + "_" + time + "_" + String.valueOf(count++))
                                 .replace(":","")
                                 .replace("-","");
 
