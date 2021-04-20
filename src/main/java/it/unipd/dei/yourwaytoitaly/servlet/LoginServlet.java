@@ -65,7 +65,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
     }
 
     /**
-     * Manages HTTP GET and POST requests for login
+     * Check HTTP GET and POST requests for login
      * @param req
      *            the request from the client.
      * @param res
@@ -100,14 +100,25 @@ public class LoginServlet extends AbstractDatabaseServlet {
         }
     }
 
-
+    /** Method to create session from user credentials
+     * @param req
+     *            the request from the client.
+     * @param res
+     *            the response from the server.
+     *
+     * @throws ServletException
+     *             if any problem occurs while executing the servlet.
+     * @throws IOException
+     *             if any problem occurs while communicating between the client
+     *             and the server.
+     */
     public void login (HttpServletRequest req, HttpServletResponse res)  throws IOException ,ServletException {
 
         try {
             String email = req.getParameter("email");
             String password = req.getParameter("password");
 
-            // esposito.vittorio.1998@gmail.com
+            //checkin email
 
             if (email == null || email.equals("")) {
                 ErrorCode ec = ErrorCode.EMAIL_MISSING;
@@ -118,6 +129,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
                 return;
             }
 
+            //check if there's an active session
             HttpSession session = req.getSession(false);
             if (session != null ){
                 if ( email.equals(LoginServlet.getUserEmail(req)) ){
@@ -128,6 +140,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
                     session.invalidate();
             }
 
+            // checking password
             if (password == null || password.equals( "" )) {
                 ErrorCode ec = ErrorCode.PASSWORD_MISSING;
                 Message m = new Message(ec.getErrorMessage(),
@@ -137,6 +150,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
                 return;
             }
 
+            //checking the presence of the user in the dB
             User usr = UserDAO.searchUserLogin(email, password);
 
             if (usr == null){
@@ -148,9 +162,10 @@ public class LoginServlet extends AbstractDatabaseServlet {
                 return;
             }
 
+            //encoding the user email and password in the session attribute
             String auth = email + ":" + password;
             byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes(Charset.forName("US-ASCII")) );
-
+            //creating the session and setting the attribute
             String authHeader = "Basic " + new String( encodedAuth );
             session = req.getSession(true);
             session.setAttribute( "Authorization", authHeader );
@@ -170,6 +185,11 @@ public class LoginServlet extends AbstractDatabaseServlet {
         }
     }
 
+    /** Method to get the decoded pair email:password from authorization session attribute
+     * @param req HttpServletRequest to get session attribute
+     * @return String containing the pair.  Empty String if session authorization attribute not present
+     * */
+
     private static String getPair( HttpServletRequest req ){
         HttpSession session = req.getSession(false);
         if (session==null) return "";
@@ -180,16 +200,29 @@ public class LoginServlet extends AbstractDatabaseServlet {
         return a;
     }
 
+    /** Method to get the user email from session
+     * @param req HttpServletRequest to get session attribute
+     * @return String containing the email. Empty String if session authorization attribute not present
+     * */
     public static String getUserEmail( HttpServletRequest req ){
         String[] credentials = getPair(req).split(":");
         return credentials[0];
     }
 
-
+    /** Method to get the user email from session
+     * @param req HttpServletRequest to get session attribute
+     * @return String containing the password. Empty String if session authorization attribute not present
+     * */
     private static String getUserPassword( HttpServletRequest req ){
         String[] credentials = getPair(req).split(":");
         return credentials[1];
     }
+
+    /** Method compairing a given email with the session one
+     * @param req HttpServletRequest to get session attribute
+     * @param email email to compare
+     * @return true if the emails coincide, false if not.
+     * */
 
     public static boolean checkSessionEmail(HttpServletRequest req, String email){
         return  email.equals(getUserEmail(req));

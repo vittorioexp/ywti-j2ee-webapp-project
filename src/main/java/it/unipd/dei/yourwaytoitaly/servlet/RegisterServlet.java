@@ -21,12 +21,16 @@ import static java.lang.Integer.parseInt;
 
 /**
  * Servlet class, to be written
- * @author Vittorio Esposito
+ * @author Francesco Giurisato
  * @version 1.0
  * @since 1.0
  */
 
 public class RegisterServlet extends AbstractDatabaseServlet {
+
+
+    private static final String JSON_UTF_8_MEDIA_TYPE = "application/json; charset=utf-8";
+
 
     /**
      * Manages HTTP GET requests for register
@@ -42,8 +46,6 @@ public class RegisterServlet extends AbstractDatabaseServlet {
      *             if any problem occurs while communicating between the client
      *             and the server.
      */
-
-
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         handleRequest(req, res);
     }
@@ -61,14 +63,13 @@ public class RegisterServlet extends AbstractDatabaseServlet {
      *             if any problem occurs while communicating between the client
      *             and the server.
      */
-
-
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         handleRequest(req, res);
     }
 
+
     /**
-     * Manages HTTP GET and POST requests for register
+     * Check HTTP GET and POST requests for register
      * @param req
      *            the request from the client.
      * @param res
@@ -80,7 +81,6 @@ public class RegisterServlet extends AbstractDatabaseServlet {
      *             if any problem occurs while communicating between the client
      *             and the server.
      */
-    private static final String JSON_UTF_8_MEDIA_TYPE = "application/json; charset=utf-8";
     public void handleRequest(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
         res.setContentType(JSON_UTF_8_MEDIA_TYPE);
@@ -100,10 +100,21 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
             m.toJSON(res.getOutputStream());
-            //res.sendRedirect(req.getContextPath() + "/user/do-register");
         }
     }
 
+    /** Method to register and create session from user credentials
+     * @param req
+     *            the request from the client.
+     * @param res
+     *            the response from the server.
+     *
+     * @throws ServletException
+     *             if any problem occurs while executing the servlet.
+     * @throws IOException
+     *             if any problem occurs while communicating between the client
+     *             and the server.
+     */
 
     public void register (HttpServletRequest req, HttpServletResponse res)  throws IOException ,ServletException {
 
@@ -117,6 +128,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             String phone = req.getParameter("phone");
             int idCity = parseInt(req.getParameter("city"));
 
+            //check user parameters
             if ( email == null || email.equals("") ) {
                 ErrorCode ec = ErrorCode.EMAIL_MISSING;
                 Message m = new Message(ec.getErrorMessage(),
@@ -181,6 +193,8 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
             User usr;
 
+            // checking different parameters for tourist and company
+
             if ( userType.equals("tourist") ){
 
                 String birthDate = req.getParameter("birthDate");
@@ -208,7 +222,6 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                     m.toJSON(res.getOutputStream());
                     return;
                 }
-                //assert birthDateFormatted != null;
 
                 usr = UserDAO.searchUserByEmail(email);
 
@@ -241,6 +254,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                 usr = (Company) UserDAO.createUser(c);
             }
 
+            //checking if the user is correctly created
             if ( usr == null ){
                 ErrorCode ec = ErrorCode.INTERNAL_ERROR;
                 Message m = new Message(ec.getErrorMessage(),
@@ -249,19 +263,21 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                 m.toJSON(res.getOutputStream());
                 return;
             }
-
+            //checking the presence of a session and in case invalidate it
             HttpSession session = req.getSession(false);
             if (session != null ){
                     session.invalidate();
             }
 
-            assert usr != null; // if user for some reason is null it will raise an AssertionException
+            //encoding the user email and password in the session attribute
             String auth = email + ":" + password;
             byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes(Charset.forName("US-ASCII")) );
             session = req.getSession(true);
             String authHeader = "Basic " + new String( encodedAuth );
             session.setAttribute( "Authorization", authHeader );
 
+
+            // sending confirmation email
             EmailSender mail= new EmailSender(email);
 
             //send email and check if email is sent correctly
@@ -276,10 +292,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                 return;
             }
 
-            // login credentials were correct: we redirect the user to the homepage
-            // now the session is active and its data can used to change the homepage
-            //res.sendRedirect(req.getContextPath()+"/jsp/homepage.jsp");
-
+            //everything went fine
             Message success = new Message("Successful registration!");
             req.setAttribute("message", success);
             res.setStatus(HttpServletResponse.SC_OK);
@@ -291,8 +304,6 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                     ec.getHTTPCode(), "Internal error.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
-            //req.setAttribute("message", m);
-            //res.sendRedirect(req.getContextPath() + "/user/do-register");
         }
 
     }
