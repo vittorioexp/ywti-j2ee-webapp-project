@@ -51,7 +51,6 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
         int numTotItem=0;
 
         try{
-            // TODO: if (userScore % 10 == 0), give the user a discount of 10% on this booking
 
             emailTourist = LoginServlet.getUserEmail(req);
             User user = UserDAO.searchUserByEmail(emailTourist);
@@ -152,10 +151,21 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
 
             AdvertisementDAO.editAdvertisement(adv);
 
-            Message success = new Message("Successfully left a feedback!");
-            req.setAttribute("message", success);
+            // Calculate the score
+            int userScore = UserDAO.getUserScore(emailTourist);
+
+            Message message = new Message("Congratulation! Booking is successful!");
+
+            // if (userScore % 7 == 0), give the user a discount of 5% on this booking
+            // if (userScore % 17 == 0), give the user a discount of 10% on this booking
+            if (userScore % 7 == 0) {
+                message = new Message("Congratulation! You have unlocked a 5% discount on this booking!");
+            } else if (userScore % 17 == 0) {
+                message = new Message("Congratulation! You have unlocked a 10% discount on this booking!");
+            }
+
+            message.toJSON(res.getOutputStream());
             res.setStatus(HttpServletResponse.SC_OK);
-            res.sendRedirect(req.getContextPath() + "/user/profile");
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

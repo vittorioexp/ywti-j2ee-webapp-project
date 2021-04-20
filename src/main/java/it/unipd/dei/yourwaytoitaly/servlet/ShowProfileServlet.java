@@ -47,14 +47,15 @@ public class ShowProfileServlet extends AbstractDatabaseServlet {
                         req.setAttribute("userType",(Boolean) isTourist);
                         req.setAttribute("user",(Tourist) u);
                         String emailTourist = u.getEmail();
+                        req.setAttribute("score", UserDAO.getUserScore(emailTourist));
                         List<Booking> listBookings = BookingDAO.searchBookingByUser(emailTourist);
-                        req.setAttribute("bookings-list", listBookings);
+                        req.setAttribute("bookingList", listBookings);
                     } else if (u instanceof Company) {
                         req.setAttribute("userType",(Boolean) isTourist);
                         req.setAttribute("user",(Company) u);
                         String emailCompany = u.getEmail();
                         List<Advertisement> listAdvertisement = AdvertisementDAO.searchAdvertisement(emailCompany);
-                        req.setAttribute("advertisement-list", listAdvertisement);
+                        req.setAttribute("advertisementList", listAdvertisement);
                     }
                     req.getRequestDispatcher("/jsp/protected/show-profile.jsp").forward(req, res);
 //                    res.sendRedirect(req.getContextPath() + "/jsp/protected/show-profile.jsp");

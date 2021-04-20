@@ -27,6 +27,24 @@ import java.util.Calendar;
 public class DeleteBookingServlet extends AbstractDatabaseServlet{
 
     /**
+     * Edit a booking: html form method DELETE is converted into GET
+     *
+     * @param req
+     *            the HTTP request from the client.
+     * @param res
+     *            the HTTP response from the server.
+     *
+     * @throws ServletException
+     *             if any error occurs while executing the servlet.
+     * @throws IOException
+     *             if any error occurs in the client/server communication.
+     */
+    public void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws IOException {
+        doDelete(req, res);
+    }
+
+    /**
      * Edit a booking
      *
      * @param req
@@ -40,7 +58,7 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
      *             if any error occurs in the client/server communication.
      */
     public void doDelete(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+            throws IOException {
 
         int idAdvertisement = 0;
         Date date = null;
