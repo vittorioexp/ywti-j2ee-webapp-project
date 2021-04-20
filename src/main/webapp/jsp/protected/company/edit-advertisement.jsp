@@ -35,10 +35,12 @@
 
     <%
         int idAdvertisement = 0;
-        String url = "/advertisement/" + String.valueOf(idAdvertisement);
+        String url = "/adv/" + String.valueOf(idAdvertisement);
+        // TODO: the advertisement edited must be in JSON format
     %>
+<p>TODO: the advertisement edited must be in JSON format</p>
 
-<form method="PUT" action="<c:url value="${url}"/>">
+<form method="PUT" action="<c:url value="/adv/${idAdvertisement}"/>" >
 
     <label for="price">price:</label>
     <input id="price" name="price" type="text"/><br/><br/>

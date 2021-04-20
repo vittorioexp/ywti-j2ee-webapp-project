@@ -147,10 +147,19 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                 return;
             }
 
-            if ( password == null || password.equals("") || !rpassword.equals(password) ) {
+            if ( password == null || password.equals("")) {
                 ErrorCode ec = ErrorCode.PASSWORD_MISSING;
                 Message m = new Message(ec.getErrorMessage(),
                         ec.getHTTPCode(),"Password not valid.");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
+
+            if (!rpassword.equals(password) ) {
+                ErrorCode ec = ErrorCode.DIFFERENT_PASSWORDS;
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getHTTPCode(),"Different passwords entered.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -275,7 +284,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             if (!mail.sendConfirmationEmail("YourWayToItaly:Account successfully registered",
                     "Congratulations, your account has successfully been registered. " +
                             "You can now start your Journey!")){
-                ErrorCode ec = ErrorCode.SEND_MAIL_ERROR;
+                ErrorCode ec = ErrorCode.INTERNAL_ERROR;
                 Message m = new Message(ec.getErrorMessage(),
                         ec.getHTTPCode(), "Email not sent.");
                 res.setStatus(ec.getHTTPCode());

@@ -151,6 +151,9 @@ VALUES ('hotelcentrale@gmail.com', 'Hotel centrale', '0495341234', 'Via Venezia 
 INSERT INTO Advertisement (title, DESCRIPTION, SCORE, PRICE, NUM_TOT_ITEM, DATE_START, DATE_END, TIME_START, TIME_END, email_c, ID_TYPE)
 VALUES ('Delicious dinner in the Dolomites, da Pino', 'This is a mock advertisement. Requests to the REST web server will be made in order to show the desired advertisement.', 6,  19, 28, '2021-04-19','2021-07-01','18:30:00','23:30:00', 'hotelcentrale@gmail.com', (SELECT ID_TYPE FROM Type_advertisement WHERE Type_advertisement.type = 'Restaurant'));
 
+INSERT INTO Advertisement (title, DESCRIPTION, SCORE, PRICE, NUM_TOT_ITEM, DATE_START, DATE_END, TIME_START, TIME_END, email_c, ID_TYPE)
+VALUES ('Tour of Cortina', 'This is a mock advertisement. Requests to the REST web server will be made in order to show the desired advertisement.', 6,  19, 28, '2021-04-19','2021-07-01','18:30:00','23:30:00', 'hotelcentrale@gmail.com', (SELECT ID_TYPE FROM Type_advertisement WHERE Type_advertisement.type = 'Guided tour'));
+
 INSERT INTO Feedback (rate,text_f,date_f,email_t,ID_Advertisement)
 VALUES (5,'Amazing experience!', '2021-04-30','mariorossi@gmail.com',1);
 

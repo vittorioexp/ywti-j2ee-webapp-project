@@ -329,18 +329,7 @@ public class UserDAO extends AbstractDAO{
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                Booking b = new Booking(
-                        rs.getString("email_t"),
-                        rs.getInt("id_Advertisement"),
-                        rs.getDate("date_b"),
-                        rs.getTime("time_b"),
-                        rs.getInt("num_booking"),
-                        rs.getString("state"));
-                rs.getInt("score");
-                bookings.add(b);
-                // TODO: fix function
-                totalScore+=AdvertisementDAO.searchAdvertisement(b.getIdAdvertisement()).getScore();
-                totalScore += 0;
+                totalScore += rs.getInt("score");
             }
 
         } finally {

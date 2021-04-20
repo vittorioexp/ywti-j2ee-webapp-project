@@ -56,8 +56,9 @@ Since: 1.0
 %>
 
         <div>
+            <p>TODO: the advertisement must be in JSON format </p>
             <form id="createAdvertisementForm" name="createAdvertisementForm" method="POST"
-                  action="<c:url value="/advertisement-create" />" >
+                  action="<c:url value="/adv-create" />" >
 
                 <label for="title">title:</label>
                 <input id="title" name="title" type="text" required/><br/><br/>
