@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Base64;
 
 /**
- * Servlet class, to be written
+ * Filter checking the request are HTTP requests.
  * @author Vittorio Esposito
  * @version 1.0
  * @since 1.0

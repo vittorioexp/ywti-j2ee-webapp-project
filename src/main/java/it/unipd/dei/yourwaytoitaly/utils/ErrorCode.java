@@ -1,6 +1,5 @@
 package it.unipd.dei.yourwaytoitaly.utils;
 
-//import org.json.JSONObject;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,9 +25,6 @@ public enum ErrorCode {
     INTERNAL_ERROR(-100, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Error");
 
 
-    //TYPE_MISSING(-1, HttpServletResponse.SC_BAD_REQUEST, "User type not selected.");
-
-
     private final int errorCode;
     private final int httpCode;
     private final String errorMessage;
@@ -51,13 +47,4 @@ public enum ErrorCode {
         return errorMessage;
     }
 
-
-//    public JSONObject toJSON() {
-//        JSONObject data = new JSONObject();
-//        data.put("code", errorCode);
-//        data.put("message", errorMessage);
-//        JSONObject info = new JSONObject();
-//        info.put("error", data);
-//        return info;
-//    }
 }

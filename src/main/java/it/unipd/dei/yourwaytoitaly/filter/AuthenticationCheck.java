@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Base64;
 
 /**
- * Servlet class, to be written
+ * Filter checking the presence of an active session to access the resources
  * @author Vittorio Esposito
  * @version 1.0
  * @since 1.0
@@ -23,10 +23,6 @@ public class AuthenticationCheck implements Filter {
     * Base 64 Decoder
     * */
     private static final Base64.Decoder DECODER = Base64.getDecoder();
-    /*
-     * The name of the user attribute in the session
-     * */
-    private static final String USER_ATTRIBUTE = "user";
     /*
      * The configuration for the filter
      * */
@@ -44,6 +40,11 @@ public class AuthenticationCheck implements Filter {
         this.config = filterConfig;
     }
 
+    /** Method filtering pages that requires an active session to be reached
+     * @param servletRequest ServletRequest
+     * @param servletResponse ServletResponse
+     * @param filterChain FilterChain
+     * */
     @Override
     public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
 
@@ -54,12 +55,13 @@ public class AuthenticationCheck implements Filter {
         final HttpServletRequest req = (HttpServletRequest) servletRequest;
         final HttpServletResponse res = (HttpServletResponse) servletResponse;
         final HttpSession session = req.getSession(false);
-
+        //Checking session presence end eventually redirecting to login page
         if (session == null ){
             req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
             return;
         }
         else{
+            //checking session email is not empty
             if ( LoginServlet.checkSessionEmail(req, "") ) {
                 session.invalidate();
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);

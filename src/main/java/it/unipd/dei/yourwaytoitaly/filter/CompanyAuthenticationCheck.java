@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.util.Base64;
 
 /**
- * Servlet class, to be written
+ * Filter checking the user has a company role to access the resource
  * @author Vittorio Esposito
  * @version 1.0
  * @since 1.0
@@ -30,10 +30,6 @@ public class CompanyAuthenticationCheck implements Filter {
      * */
     private static final Base64.Decoder DECODER = Base64.getDecoder();
     /*
-     * The name of the user attribute in the session
-     * */
-    private static final String USER_ATTRIBUTE = "user";
-    /*
      * The configuration for the filter
      * */
     private FilterConfig config = null;
@@ -41,6 +37,7 @@ public class CompanyAuthenticationCheck implements Filter {
      * The connection to the database
      * */
     private DataSource ds;
+
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -50,6 +47,11 @@ public class CompanyAuthenticationCheck implements Filter {
         this.config = filterConfig;
     }
 
+    /** Method filtering pages that requires an active session and a company role to be reached
+     * @param servletRequest ServletRequest
+     * @param servletResponse ServletResponse
+     * @param filterChain FilterChain
+     * */
     @Override
     public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
         if (!(servletRequest instanceof HttpServletRequest) || !(servletResponse instanceof HttpServletResponse)){
@@ -59,31 +61,28 @@ public class CompanyAuthenticationCheck implements Filter {
         final HttpServletRequest req = (HttpServletRequest) servletRequest;
         final HttpServletResponse res = (HttpServletResponse) servletResponse;
         final HttpSession session = req.getSession(false);
-
+        //Checking session presence end eventually redirecting to login page
         if (session == null ){
             req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
             return;
         }
         else{
+            //checking session email is not empty
             if (LoginServlet.checkSessionEmail(req, "") ) {
                 session.invalidate();
                 req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
                 return;
             }
             try {
+                //checking that session email is referred to a company account
                 String email = LoginServlet.getUserEmail(req);
                 if (!(UserDAO.searchUserByEmail(email) instanceof Company)) {
-                    ErrorCode ec = ErrorCode.MAIL_ALREADY_USED;
+                    ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
                     Message m = new Message(ec.getErrorMessage(),
-                            ec.getErrorCode(),"The company is already registered");
+                            ec.getErrorCode(),"You need a company account to access this page");
                     res.setStatus(ec.getHTTPCode());
                     m.toJSON(res.getOutputStream());
                     return;
-                    /*
-                    res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    res.sendRedirect(req.getContextPath() + "/index");
-                    return;
-                     */
                 }
 
             }catch(SQLException | NamingException e){
