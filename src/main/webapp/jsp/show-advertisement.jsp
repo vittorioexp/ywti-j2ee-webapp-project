@@ -70,7 +70,7 @@ Since: 1.0
         <form id="createBookingForm" name="createBookingForm" method="POST" action="<c:url value="/booking-create"/>">
             <label for="numBooking">numBooking:</label>
             <input id="numBooking" name="numBooking" type="number" required/><br/><br/>
-            <input type="hidden" name="idAdvertisement" value="1" />
+            <input type="hidden" name="idAdvertisement" value="5" />
             <button type="submit">Book your journey</button><br/>
         </form>
     </p>
@@ -83,7 +83,7 @@ Since: 1.0
         <input id="rateFeedback" name="rateFeedback" type="number" min="1" max="5" step="1" required/>
         <label for="textFeedback">text:</label>
         <input id="textFeedback" name="textFeedback" type="text"/>
-        <input type="hidden" name="idAdvertisement" value="1" />
+        <input type="hidden" name="idAdvertisement" value="5" />
         <button type="submit">Leave a feedback</button><br/>
     </form>
     </p>

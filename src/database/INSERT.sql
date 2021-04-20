@@ -133,6 +133,18 @@ INSERT INTO Type_advertisement (ID_type, type) VALUES
 INSERT INTO TOURIST (email_t, SURNAME, NAME, birth_date, phone_number, address, password, ID_city) 
 VALUES ('mariorossi@gmail.com', 'Rossi', 'Mario', '1998-03-10', '3287888901', 'Via Roma 10', MD5('prova'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
 
+INSERT INTO TOURIST (email_t, SURNAME, NAME, birth_date, phone_number, address, password, ID_city)
+VALUES ('pluto@mail.com', 'pluto', 'pippo', '1998-03-10', '3287888901', 'Via Roma 10', MD5('prova'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
+
+INSERT INTO TOURIST (email_t, SURNAME, NAME, birth_date, phone_number, address, password, ID_city)
+VALUES ('giovanna@mail.com', 'giovanna', 'mail', '1998-03-10', '3287888901', 'Via Roma 10', MD5('prova'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
+
+INSERT INTO TOURIST (email_t, SURNAME, NAME, birth_date, phone_number, address, password, ID_city)
+VALUES ('pippopasticcio@gmail.com', 'pippopasticcio', 'pippo', '1998-03-10', '3287888901', 'Via Roma 10', MD5('prova'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
+
+INSERT INTO TOURIST (email_t, SURNAME, NAME, birth_date, phone_number, address, password, ID_city)
+VALUES ('filippo@mail.com', 'filippo', 'mail', '1998-03-10', '3287888901', 'Via Roma 10', MD5('prova'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
+
 INSERT INTO COMPANY (email_c, name_c, phone_number, address, password, ID_city) 
 VALUES ('hotelcentrale@gmail.com', 'Hotel centrale', '0495341234', 'Via Venezia 48', MD5('prova_c'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
 
@@ -140,7 +152,7 @@ INSERT INTO Advertisement (title, DESCRIPTION, SCORE, PRICE, NUM_TOT_ITEM, DATE_
 VALUES ('Delicious dinner in the Dolomites, da Pino', 'This is a mock advertisement. Requests to the REST web server will be made in order to show the desired advertisement.', 6,  19, 28, '2021-04-19','2021-07-01','18:30:00','23:30:00', 'hotelcentrale@gmail.com', (SELECT ID_TYPE FROM Type_advertisement WHERE Type_advertisement.type = 'Restaurant'));
 
 INSERT INTO Feedback (rate,text_f,date_f,email_t,ID_Advertisement)
-VALUES (5,'Amazing experience!', '2021-04-31','mariorossi@gmail.com',1);
+VALUES (5,'Amazing experience!', '2021-04-30','mariorossi@gmail.com',1);
 
 INSERT INTO Feedback (rate,text_f,date_f,email_t,ID_Advertisement)
 VALUES (5,'This was super cool!', '2021-05-02','pluto@mail.com',1);

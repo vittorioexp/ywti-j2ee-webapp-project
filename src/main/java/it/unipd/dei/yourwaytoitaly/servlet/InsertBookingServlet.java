@@ -140,30 +140,27 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
 
             adv = new Advertisement(
                     idAdvertisement,
-                    null,
-                    null,
+                    adv.getTitle(),
+                    adv.getDescription(),
                     adv.getScore(),
                     adv.getPrice(),
                     adv.getNumTotItem()-numBooking,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    0
+                    adv.getDateStart(),
+                    adv.getDateEnd(),
+                    adv.getTimeStart(),
+                    adv.getTimeEnd(),
+                    adv.getEmailCompany(),
+                    adv.getIdType()
             );
 
             AdvertisementDAO.editAdvertisement(adv);
 
-            Message success = new Message("Successfully booked!");
-            req.setAttribute("message", success);
             res.setStatus(HttpServletResponse.SC_OK);
-            req.getRequestDispatcher("/advertisement/" + String.valueOf(idAdvertisement)).forward(req,res);
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getErrorCode(), "Cannot create the booking.");
+                    ec.getErrorCode(), "Cannot create the booking: " + ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
