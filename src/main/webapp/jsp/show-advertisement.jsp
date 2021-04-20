@@ -51,41 +51,63 @@ Since: 1.0
 
     <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
 </nav>
+<article>
+    <p>This is a mock page. Requests to the REST web server will be made in order to show the desired advertisement.</p>
 </br>
 
 <%
     // For debug only
     String URI = request.getRequestURI();
     int idAdvertisement = Integer.parseInt(URI.substring(URI.lastIndexOf("adv-show")+9));
-    Advertisement adv = (Advertisement) request.getAttribute("advertisement");
-
-    // TODO: don't show the score of an advertisement
+    Advertisement adv = new Advertisement(
+            idAdvertisement,
+            "Delicious dinner in the Dolomites, da Pino",
+            "This is a mock advertisement. Requests to the REST web server will be made in order to show the desired advertisement.",
+            6,
+            19,
+            30,
+            Date.valueOf("30/04/2021"),
+            Date.valueOf("01/05/2021"),
+            Time.valueOf("18:30:00"),
+            Time.valueOf("23:30:00"),
+            "hotelcentrale@gmail.com",
+            28
+    );
 %>
-<table cellpadding="1"  cellspacing="1" border="1" bordercolor="gray">
-    <tr>
-        <td>Title</td>
-        <td>Description</td>
-        <td>Date Start</td>
-        <td>Date End</td>
-        <td>Time Start</td>
-        <td>Time End</td>
-        <td>Items available</td>
-        <td>Price</td>
-        <td>Score</td>
-    </tr>
-    <tr>
-        <td><%=adv.getTitle() %></td>
-        <td><%=adv.getDescription() %></td>
-        <td><%=adv.getDateStart() %></td>
-        <td><%=adv.getDateEnd() %></td>
-        <td><%=adv.getTimeStart() %></td>
-        <td><%=adv.getTimeEnd() %></td>
-        <td><%=adv.getNumTotItem() %></td>
-        <td><%=adv.getPrice() %></td>
-        <td><%=adv.getScore() %></td>
-    </tr>
-</table>
-</br>
+    <h3><%= adv.getTitle() %></h3>
+    <p> <%= adv.getDescription() %> </p>
+    <p> At only <%= adv.getPrice() %> euro </p>
+    <p> Starting from <%= adv.getDateStart() %> to <%= adv.getDateEnd() %>  </p>
+    <p> Opening time: <%= adv.getTimeStart() %> - <%= adv.getTimeEnd() %>  </p>
+    <p> Items available are only <%= adv.getNumTotItem() %>! </p>
+
+    <p>Images of the advertisement will be shown here!</p>
+
+    <p>
+        The following is a simple form to leave a feedback.
+        The server will check if the tourist is allowed to perform this action.
+        A tourist can write a feedback only if he booked the advertisement and if the event already started.
+    </p>
+    <form id="feedback-form" name="feedback-form" method="POST" action="<c:url value="/feedback-create"/>">
+        <label for="rate">rate:</label>
+        <input id="rate" name="rate" type="number" min="1" max="5" step="1" required/>
+        <label for="text_f">text::</label>
+        <input id="text_f" name="text_f" type="text"/>
+        <input type="hidden" name="idAdvertisement" value="<%=idAdvertisement %>" />
+        <button type="submit">Leave a feedback</button><br/>
+    </form>
+
+    <p> Here it will be shown a list of feedback.</p>
+    <p>
+        Rate: 5/5, "Amazing experience!"
+        Written on 31/04/2021
+    </p>
+    <p>
+        Rate: 5/5, "This was super cool!"
+        Written on 2/04/2021
+    </p>
+
+    <!--
 <div>
     <%
         List<Image> imageList = (List<Image>) request.getAttribute("imageList");
@@ -163,5 +185,7 @@ Since: 1.0
     <div>
         <c:import url="/jsp/include/show-message.jsp"/>
     </div>
+    -->
+</article>
 </body>
 </html>
