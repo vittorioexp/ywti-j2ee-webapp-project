@@ -54,8 +54,8 @@ public class LogoutServlet extends AbstractDatabaseServlet {
         else{
             // the requested operation is unknown
             ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
-            Message m = new Message("Not Valid Request.", ec.getErrorCode()
-                    ,"You have requested a non existing resource .");
+            Message m = new Message(ec.getErrorMessage(), ec.getHTTPCode()
+                    ,"You have requested a non existing resource.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -69,15 +69,15 @@ public class LogoutServlet extends AbstractDatabaseServlet {
             HttpSession session = req.getSession(false);
             session.invalidate();
 
-            Message success = new Message("Successful logout!");
+            Message success = new Message("Successful logout.");
             req.setAttribute("message", success);
             res.setStatus(HttpServletResponse.SC_OK);
             res.sendRedirect(req.getContextPath() + "/index");
 
         }catch (Exception ex){
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("Failed to logout.",
-                    ec.getErrorCode(), ex.toString());
+            Message m = new Message(ec.getErrorMessage(),
+                    ec.getHTTPCode(), "Cannot logout.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;

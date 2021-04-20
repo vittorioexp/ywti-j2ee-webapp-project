@@ -54,8 +54,8 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
 
             if (emailTourist.equals("")) {
                 ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
-                Message m = new Message("Method not allowed: User not logged in.",
-                        ec.getErrorCode(),"User must be logged in to create a booking");
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getErrorCode(),"User must be logged in.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -66,8 +66,8 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
             // check if the user already left a feedback for this advertisement
             Feedback feedback = FeedbackDAO.searchFeedback(emailTourist,idAdvertisement);
             if (feedback!=null) {
-                ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
-                Message m = new Message("User cannot insert a feedback.",
+                ErrorCode ec = ErrorCode.FEEDBACK_ALREADY_DONE;
+                Message m = new Message(ec.getErrorMessage(),
                         ec.getErrorCode(),"Feedback already inserted.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
@@ -82,8 +82,8 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
             // check if the current date is bigger than the dateStart of the advertisement
             if (booking == null || currentDate.compareTo(advertisement.getDateStart())<0) {
                 ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
-                Message m = new Message("User cannot insert a feedback.",
-                        ec.getErrorCode(),"User cannot insert a feedback about this booking.");
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getErrorCode(),"The event has yet to begin");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -94,8 +94,8 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
 
             if (rate<1 || rate >5) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                Message m = new Message("Input rate is not valid. ",
-                        ec.getErrorCode(), "Rate is " + rate);
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getErrorCode(), "Rate not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -124,8 +124,8 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("Cannot create the feedback. ",
-                    ec.getErrorCode(), ex.toString());
+            Message m = new Message(ec.getErrorMessage(),
+                    ec.getErrorCode(), "Cannot create the feedback.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;

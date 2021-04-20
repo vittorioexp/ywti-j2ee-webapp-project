@@ -92,8 +92,8 @@ public class LoginServlet extends AbstractDatabaseServlet {
         else{
             // the requested operation is unknown
             ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
-            Message m = new Message("Not Valid Request.", ec.getErrorCode()
-                    ,"You have requested a non existing resource .");
+            Message m = new Message(ec.getErrorMessage(), ec.getHTTPCode()
+                    ,"You have requested a non existing resource.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -111,7 +111,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
             if (email == null || email.equals("")) {
                 ErrorCode ec = ErrorCode.EMAIL_MISSING;
-                Message m = new Message("Email not valid.",
+                Message m = new Message(ec.getErrorMessage(),
                         ec.getErrorCode(),"Email not inserted or not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
@@ -130,7 +130,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
             if (password == null || password.equals( "" )) {
                 ErrorCode ec = ErrorCode.PASSWORD_MISSING;
-                Message m = new Message("Password not valid.",
+                Message m = new Message(ec.getErrorMessage(),
                         ec.getErrorCode(),"Password not inserted or not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
@@ -142,8 +142,8 @@ public class LoginServlet extends AbstractDatabaseServlet {
             if (usr == null){
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
                 res.setStatus(ec.getHTTPCode());
-                Message m = new Message( "User not found.",
-                        ec.getErrorCode(),"Credentials are wrong");
+                Message m = new Message( ec.getErrorMessage(),
+                        ec.getErrorCode(),"Credentials are wrong.");
                 m.toJSON(res.getOutputStream());
                 return;
             }
@@ -162,8 +162,8 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
         }catch (Exception ex){
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("Failed to login.",
-                    ec.getErrorCode(), ex.toString());
+            Message m = new Message(ec.getErrorMessage(),
+                    ec.getErrorCode(), "Failed to login.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
            return;
