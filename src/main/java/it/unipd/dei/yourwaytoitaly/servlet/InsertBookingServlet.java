@@ -60,8 +60,8 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             User user = UserDAO.searchUserByEmail(emailTourist);
             if(user instanceof Company){
                 ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
-                Message m = new Message("Method not allowed: User not tourist.",
-                        ec.getErrorCode(),"User must be a tourist.");
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getErrorCode(),"User not allowed.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -69,8 +69,8 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
 
             if (emailTourist.equals("")) {
                 ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
-                Message m = new Message("Method not allowed: User not logged in.",
-                        ec.getErrorCode(),"User must be logged in to create a booking");
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getErrorCode(),"User not logged in.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -81,9 +81,9 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             // check if the tourist already booked
             Booking booking = BookingDAO.searchBooking(emailTourist, idAdvertisement);
             if (booking!=null) {
-                ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
-                Message m = new Message("Method not allowed: User already booked.",
-                        ec.getErrorCode(),"User already booked!");
+                ErrorCode ec = ErrorCode.BOOKING_ALREADY_DONE;
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getErrorCode(),"Booking already done.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -94,8 +94,8 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
 
             if(numBooking<=0) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                Message m = new Message("Input value not valid.",
-                        ec.getErrorCode(),"The number of item is not valid");
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getErrorCode(),"Invalid number of items booked.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -105,8 +105,8 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             Advertisement adv = AdvertisementDAO.searchAdvertisement(idAdvertisement);
             if (adv.getDateEnd().compareTo(date)<0) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                Message m = new Message("The advertisement is expired.",
-                        ec.getErrorCode(),"You cannot book an advertisement which is expired");
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getErrorCode(),"Dates not valid.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -117,8 +117,8 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
 
             if(numBooking > numTotItem){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
-                Message m = new Message("Input value not valid.",
-                        ec.getErrorCode(),"The number of item is too big!");
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getErrorCode(),"The number of item is too big.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -162,8 +162,8 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message("Cannot create the booking. ",
-                    ec.getErrorCode(), ex.toString());
+            Message m = new Message(ec.getErrorMessage(),
+                    ec.getErrorCode(), "Cannot create the booking.");
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
