@@ -89,8 +89,8 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
                 return;
             }
 
-            rate = Integer.parseInt(req.getParameter("rate"));
-            text = req.getParameter("text_f");
+            rate = Integer.parseInt(req.getParameter("rateFeedback"));
+            text = req.getParameter("textFeedback");
 
             if (rate<1 || rate >5) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
