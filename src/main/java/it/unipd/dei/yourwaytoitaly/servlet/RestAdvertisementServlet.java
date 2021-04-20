@@ -119,6 +119,7 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
             m.toJSON(res.getOutputStream());
             return false;
         }
+        // TODO: fix contentType
         /*
         if(!accept.contains(JSON_MEDIA_TYPE) && !accept.equals(ALL_MEDIA_TYPE)) {
             ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
