@@ -797,6 +797,7 @@ public class AdvertisementRestResource extends RestResource {
             Date date = null;
             int idType;
 
+            // TODO: pass parameters in JSON {"typeAdvertisement"="4","city"="28","date"="2021-04-16"}
             String d = req.getParameter("date").toString();
             String c = req.getParameter("city");
             String t = req.getParameter("typeAdvertisement");

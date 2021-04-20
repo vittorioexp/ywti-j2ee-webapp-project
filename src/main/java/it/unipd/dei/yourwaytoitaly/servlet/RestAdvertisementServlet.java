@@ -120,7 +120,6 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
             return false;
         }
         // TODO: fix contentType
-        /*
         if(!accept.contains(JSON_MEDIA_TYPE) && !accept.equals(ALL_MEDIA_TYPE)) {
             ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
             m = new Message("Unsupported output media type. Resources are represented only in application/json.",
@@ -128,7 +127,7 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return false;
-        }*/
+        }
 
         switch(method) {
             case "GET":
@@ -221,7 +220,7 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
                         return false;
                 }
             }
-        } else if (path.equals("adv")) {
+        } else if (path.contains("adv")) {
             switch (method) {
                 case "GET":     // GET /adv
                     new AdvertisementRestResource(req, res, getDataSource().getConnection()).listAdvertisements();
@@ -229,63 +228,9 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
                 default:
                     return false;
             }
-
         } else {
             return false;
         }
-
-
-
-
-        /*
-        String tempPath = path.substring(path.lastIndexOf("list") + 5);
-
-        // the requested URI is /list/advertisement
-        // if method GET, list advertisements by search criteria
-        if (tempPath.equals("advertisement")) {
-            switch (method) {
-                case "GET":
-                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).listAdvertisements();
-                    break;
-                default:
-                    ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
-                    m = new Message("Unknown resource requested.",
-                            ec.getErrorCode(), String.format("Requested operation is %s.", method));
-                    res.setStatus(ec.getHTTPCode());
-                    m.toJSON(res.getOutputStream());
-                    break;
-            }
-        }
-
-        // the request URI is: /advertisement/{idAdvertisement}
-        // if method GET,  show the advertisement
-        // if method POST, create the advertisement
-        // if method PUT,  edit the advertisement
-        else {
-
-            switch (method) {
-                case "GET":
-                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).getAdvertisement();
-                    break;
-                case "POST":
-                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).insertAdvertisement();
-                    break;
-                case "PUT":
-                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).editAdvertisement();
-                    break;
-                case "DELETE":
-                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).deleteAdvertisement();
-                    break;
-                default:
-                    ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
-                    m = new Message("Unknown resource requested.",
-                            ec.getErrorCode(), String.format("Requested operation is %s.", method));
-                    res.setStatus(ec.getHTTPCode());
-                    m.toJSON(res.getOutputStream());
-                    break;
-            }
-        }
-        */
         return true;
     }
 }
