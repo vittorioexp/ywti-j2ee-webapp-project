@@ -87,12 +87,14 @@ public class AdvertisementDAO extends AbstractDAO{
     /**
      * Edits some parameters of an Advertisement
      *
+     * @return the just edited advertisement
+     *
      * @throws SQLException
      *             if any error occurs.
      * @throws NamingException
      *             if any error occurs.
      */
-    public static void editAdvertisement(Advertisement advertisement) throws SQLException, NamingException {
+    public static Advertisement editAdvertisement(Advertisement advertisement) throws SQLException, NamingException {
         final String STATEMENT_EDIT =
                 "UPDATE ADVERTISEMENT SET price = ? , score = ? , num_tot_item = ? , " +
                         "title = ? , description = ? , date_end = ? , date_start = ? , " +
@@ -101,6 +103,8 @@ public class AdvertisementDAO extends AbstractDAO{
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+
+        Advertisement adv = null;
 
         try {
             pstmt = con.prepareStatement(STATEMENT_EDIT);
@@ -116,11 +120,26 @@ public class AdvertisementDAO extends AbstractDAO{
             pstmt.setInt(10, advertisement.getIdAdvertisement());
 
             rs = pstmt.executeQuery();
-
+            while (rs.next()) {
+                adv = new Advertisement(
+                        rs.getInt("ID_advertisement"),
+                        rs.getString("title"),
+                        rs.getString("description"),
+                        rs.getInt("score"),
+                        rs.getInt("price"),
+                        rs.getInt("num_tot_item"),
+                        rs.getDate("date_start"),
+                        rs.getDate("date_end"),
+                        rs.getTime("time_start"),
+                        rs.getTime("time_end"),
+                        rs.getString("email_c"),
+                        rs.getInt("ID_type"));
+            }
         } finally {
             //close all the possible resources
             cleaningOperations(pstmt, rs, con);
         }
+        return adv;
     }
 
     /**

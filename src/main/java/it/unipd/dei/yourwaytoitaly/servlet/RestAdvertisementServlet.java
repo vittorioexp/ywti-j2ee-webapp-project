@@ -119,11 +119,14 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
             m.toJSON(res.getOutputStream());
             return false;
         }
-        // TODO: fix contentType
+
+        // TODO: fix accept, contentType
+
         if(!accept.contains(JSON_MEDIA_TYPE) && !accept.equals(ALL_MEDIA_TYPE)) {
             ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
-            m = new Message("Unsupported output media type. Resources are represented only in application/json.",
-                    ec.getErrorCode(), String.format("Requested representation is %s.", accept));
+            m = new Message(ec.getErrorMessage(), ec.getErrorCode(),
+                    String.format("Unsupported output media type. Resources are represented only in application/json. " +
+                            "Requested representation is %s.", accept));
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return false;
@@ -131,13 +134,39 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
 
         switch(method) {
             case "GET":
+            case "DELETE":
+                break;
+
             case "PUT":
             case "POST":
-            case "DELETE":
-                return true;
+                if(contentType == null) {
+                    ErrorCode ec = ErrorCode.EMPTY_INPUT_FIELDS;
+                    m = new Message(ec.getErrorMessage(), ec.getErrorCode(),
+                            "Content-Type request header missing.");
+                    res.setStatus(ec.getHTTPCode());
+                    m.toJSON(res.getOutputStream());
+                    return false;
+                }
+
+                if(!contentType.contains(JSON_MEDIA_TYPE)) {
+                    ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
+                    m = new Message(ec.getErrorMessage(), ec.getErrorCode(),
+                            String.format("Unsupported input media type. Resources are represented only in" +
+                                    " application/json. Submitted representation is %s.", contentType));
+                    res.setStatus(ec.getHTTPCode());
+                    m.toJSON(res.getOutputStream());
+                    return false;
+                }
+                break;
             default:
+                ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
+                m = new Message(ec.getErrorMessage(), ec.getErrorCode(),
+                        String.format("Unsupported operation. Requested operation %s.", method));
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
                 return false;
         }
+        return true;
     }
 
 

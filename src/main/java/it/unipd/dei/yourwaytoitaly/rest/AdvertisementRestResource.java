@@ -131,9 +131,9 @@ public class AdvertisementRestResource extends RestResource {
 
 
             // Checking the user is the owner of the advertisement
-            // TODO : DISABLED for DEBUG
             String emailSession = LoginServlet.getUserEmail(req);
             String emailCompany = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
+            // TODO : DISABLED for DEBUG
             /*
             if (!emailSession.equals(emailCompany)) {
                 ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
@@ -251,9 +251,10 @@ public class AdvertisementRestResource extends RestResource {
                     0
             );
 
-            AdvertisementDAO.editAdvertisement(advertisement);
+            advertisement = AdvertisementDAO.editAdvertisement(advertisement);
 
             res.setStatus(HttpServletResponse.SC_OK);
+            advertisement.toJSON(res.getOutputStream());
 
             // for DEBUG if you want to receive the updated advertisement details
             //advertisement.toJSON(res.getOutputStream());
@@ -262,7 +263,7 @@ public class AdvertisementRestResource extends RestResource {
             } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getHTTPCode(), "Cannot edit the advertisement.");
+                    ec.getHTTPCode(), "Cannot edit the advertisement:" + ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -365,7 +366,7 @@ public class AdvertisementRestResource extends RestResource {
 
 
                 if (timeStart==null) timeStart=Time.valueOf("05:00:00");
-                if (timeEnd==null) timeEnd=Time.valueOf("24:00:00");
+                if (timeEnd==null) timeEnd=Time.valueOf("23:30:00");
 
                 if(dateEnd.compareTo(dateStart)<0) {
                     ErrorCode ec = ErrorCode.WRONG_FORMAT;
@@ -415,6 +416,7 @@ public class AdvertisementRestResource extends RestResource {
                 }
 
                 res.setStatus(HttpServletResponse.SC_OK);
+                advertisement.toJSON(res.getOutputStream());
 
             } else {
                 String URI = req.getRequestURI();
@@ -708,7 +710,7 @@ public class AdvertisementRestResource extends RestResource {
             List<Booking> bookingList = new ArrayList<Booking>();
 
             // TODO : for debugging without session, uncomment the following
-            //bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
+            bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
 
             if (LoginServlet.checkSessionEmail(req, advertisement.getEmailCompany())) {
                 bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
@@ -793,16 +795,14 @@ public class AdvertisementRestResource extends RestResource {
 
         try {
             // list all the advertisements requested by the user
-            int idCity;
-            Date date = null;
-            int idType;
 
-            // TODO: pass parameters in JSON {"typeAdvertisement"="4","city"="28","date"="2021-04-16"}
-            String d = req.getParameter("date").toString();
-            String c = req.getParameter("city");
-            String t = req.getParameter("typeAdvertisement");
+            SearchParameters s = SearchParameters.fromJSON(req.getInputStream());
 
-            if (d == null || c == null || t == null) {
+            int idCity = s.getIdCity();
+            int idType = s.getIdType();
+            Date date = s.getDateStart();
+
+            if (date == null || idCity <= 0 || idType <= 0) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
                         ec.getHTTPCode(), "Input value not valid.");
@@ -810,10 +810,6 @@ public class AdvertisementRestResource extends RestResource {
                 m.toJSON(res.getOutputStream());
                 return;
             }
-
-            idCity = Integer.parseInt(c);
-            idType = Integer.parseInt(t);
-            date = Date.valueOf(d);
 
             listAdvertisement = AdvertisementDAO.searchAdvertisement(idCity, idType, date);
 
@@ -832,7 +828,7 @@ public class AdvertisementRestResource extends RestResource {
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getHTTPCode(), "Cannot show the advertisement.");
+                    ec.getHTTPCode(), "Cannot show the advertisement:" + ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;

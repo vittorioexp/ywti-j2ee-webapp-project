@@ -36,9 +36,8 @@
     <%
         int idAdvertisement = 0;
         String url = "/adv/" + String.valueOf(idAdvertisement);
-        // TODO: the advertisement edited must be in JSON format
     %>
-<p>TODO: the advertisement edited must be in JSON format</p>
+<p>Attention: the data must be in JSON format</p>
 
 <form method="PUT" action="<c:url value="/adv/${idAdvertisement}"/>" >
 
@@ -54,6 +53,6 @@
 </div>
     <div>
         <c:import url="/jsp/include/show-message.jsp"/>
-    <div>
+    </div>
 </body>
 </html>

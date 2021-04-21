@@ -139,7 +139,6 @@
 		<!--<url-pattern>/adv-create</url-pattern>-->
 		<url-pattern>/upload-images/*</url-pattern>
 		<url-pattern>/adv-edit</url-pattern>
-		<url-pattern>/adv-create</url-pattern>
 	</filter-mapping>
 
 	<filter-mapping>

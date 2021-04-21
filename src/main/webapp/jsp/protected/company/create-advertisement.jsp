@@ -82,10 +82,10 @@ Since: 1.0
                 <input id="dateEnd" name="dateEnd" type="date" required/><br/><br/>
 
                 <label for="timeStart">timeStart:</label>
-                <input id="timeStart" name="timeStart" type="time" value="08:30:00"/><br/><br/>
+                <input id="timeStart" name="timeStart" type="time" value="05:00:00"/><br/><br/>
 
                 <label for="timeEnd">timeEnd:</label>
-                <input id="timeEnd" name="timeEnd" type="time" value="18:30:00"/><br/><br/>
+                <input id="timeEnd" name="timeEnd" type="time" value="23:30:00"/><br/><br/>
 
                 <button type="submit" name="Submit" value="Submit">Submit</button><br/>
 

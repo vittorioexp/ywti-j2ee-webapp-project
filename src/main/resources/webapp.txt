@@ -27,26 +27,23 @@ COMANDI CURL PER TESTARE REST:
 https://reqbin.com/req/curl/yjok4snr/post-html-form-example
 https://docs.oracle.com/en/cloud/saas/marketing/eloqua-develop/Developers/GettingStarted/APIRequests/curl-requests.htm
 
-curl --header "Content-Type: application/json" http://localhost:8080/ywti_wa2021_war/adv/5
+curl -v -X GET -H "Accept: application/json" http://localhost:8080/ywti_wa2021_war/adv/5
 
-curl --header "Content-Type: application/json" http://localhost:8080/ywti_wa2021_war/adv/5/rate
+curl -v -X GET -H "Accept: application/json" http://localhost:8080/ywti_wa2021_war/adv/5/rate
 
-curl --header "Content-Type: application/json" http://localhost:8080/ywti_wa2021_war/adv/5/image
+curl -v -X GET -H "Accept: application/json" http://localhost:8080/ywti_wa2021_war/adv/5/image
 
-curl --header "Content-Type: application/json" http://localhost:8080/ywti_wa2021_war/adv/5/feedback
+curl -v -X GET -H "Accept: application/json" http://localhost:8080/ywti_wa2021_war/adv/5/feedback
+
+curl -v -H "Accept: application/json" http://localhost:8080/ywti_wa2021_war/adv/5/booking
+
+curl -v -X GET -H "Accept: application/json" -H "Content-Type: application/json" -d "{\"searchParameters\":{\"idType\":\"6\",\"idCity\":\"28\",\"dateStart\":\"2021-04-20\"}}" http://localhost:8080/ywti_wa2021_war/adv
+
+curl -v -X DELETE -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8080/ywti_wa2021_war/adv/10
+
+curl -v --request POST -H "Accept: application/json" -H "Content-Type: application/json" -d "{\"advertisement\":{\"idAdvertisement\":\"5\",\"title\":\"Capodanno sulle dolomiti\",\"description\":\"Sette giorni di relax in mezzo alla neve delle dolomiti in Trentino alto adige a capodanno\",\"score\":\"100\",\"price\":\"800\",\"numTotItem\":\"24\",\"dateStart\":\"2021-12-28\",\"dateEnd\":\"2021-12-28\",\"timeStart\":\"14:14:14\",\"timeEnd\":\"14:14:15\",\"emailCompany\":\"hotelcentrale@gmail.com\",\"idType\":\"6\"}}" http://localhost:8080/ywti_wa2021_war/adv-create
+
+curl -v --request PUT -H "Accept: application/json" -H "Content-Type: application/json" -d "{\"advertisement\":{\"idAdvertisement\":\"5\",\"title\":\"EDITED Delicious dinner in the Dolomites, da Pino\",\"description\":\"Sette giorni di relax in mezzo alla neve delle dolomiti in Trentino alto adige a capodanno\",\"score\":\"100\",\"price\":\"800\",\"numTotItem\":\"29\",\"dateStart\":\"2021-12-28\",\"dateEnd\":\"2021-12-28\",\"timeStart\":\"14:14:14\",\"timeEnd\":\"14:14:15\",\"emailCompany\":\"hotelcentrale@gmail.com\",\"idType\":\"6\"}}" http://localhost:8080/ywti_wa2021_war/adv/5
 
 
-se il controllo della sessione è ettivo, i seguenti comandi non funzionano:
 
-curl -X GET http://localhost:8080/ywti_wa2021_war/adv/5/booking -H "Accept: application/json"
-
-curl --header "Content-Type: application/json" -X DELETE http://localhost:8080/ywti_wa2021_war/adv/10
-
-curl --header "Content-Type: application/json" --request POST --data "{\"advertisement\":{\"idAdvertisement\":\"5\",\"title\":\"Capodanno sulle dolomiti\",\"description\":\"Sette giorni di relax in mezzo alla neve delle dolomiti in Trentino alto adige a capodanno\",\"score\":\"100\",\"price\":\"800\",\"numTotItem\":\"24\",\"dateStart\":\"2021-12-28\",\"dateEnd\":\"2021-12-28\",\"timeStart\":\"14:14:14\",\"timeEnd\":\"14:14:15\",\"emailCompany\":\"hotelcentrale@gmail.com\",\"idType\":\"6\"}}" http://localhost:8080/ywti_wa2021_war/adv-create
-
-curl --header "Content-Type: application/json" --request PUT --data "{\"advertisement\":{\"idAdvertisement\":\"5\",\"title\":\"Vacanzina sulle dolomiti\",\"description\":\"Sette giorni di relax in mezzo alla neve delle dolomiti in Trentino alto adige a capodanno\",\"score\":\"100\",\"price\":\"800\",\"numTotItem\":\"29\",\"dateStart\":\"2021-12-28\",\"dateEnd\":\"2021-12-28\",\"timeStart\":\"14:14:14\",\"timeEnd\":\"14:14:15\",\"emailCompany\":\"hotelcentrale@gmail.com\",\"idType\":\"6\"}}" http://localhost:8080/ywti_wa2021_war/adv/1
-
-
-Il seguente comando non funziona (motivo sconosciuto)
-
-curl -X GET --header "Content-Type: application/json" http://localhost:8080/ywti_wa2021_war/adv?typeAdvertisement=4&city=28&date=2021-04-13 -H "Accept: application/json"

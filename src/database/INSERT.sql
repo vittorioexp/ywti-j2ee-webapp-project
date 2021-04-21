@@ -169,3 +169,14 @@ VALUES ('2020-04-29','14:30:00', 2, 'SUCCESSFUL','pippopasticcio@gmail.com',1);
 INSERT INTO Booking (date_b,time_b,num_booking,state,email_t,ID_Advertisement)
 VALUES ('2020-04-28','12:33:10', 1, 'SUCCESSFUL','filippo@mail.com',1);
 
+INSERT INTO Image (id_image, path_i, description_i, id_advertisement)
+VALUES (0, 'http://localhost:8080/ywti_wa2021_war/res/img/1/img1.png', 'TitoloAnnuncio', 1);
+
+INSERT INTO Image (id_image, path_i, description_i, id_advertisement)
+VALUES (0, 'http://localhost:8080/ywti_wa2021_war/res/img/1/img2.png', 'TitoloAnnuncio', 1);
+
+INSERT INTO Image (path_i, description_i, id_advertisement)
+VALUES ('http://localhost:8080/ywti_wa2021_war/res/img/5/img1.png', 'TitoloAnnuncio', 5);
+
+INSERT INTO Image (path_i, description_i, id_advertisement)
+VALUES ('http://localhost:8080/ywti_wa2021_war/res/img/5/img2.png', 'TitoloAnnuncio', 5);
