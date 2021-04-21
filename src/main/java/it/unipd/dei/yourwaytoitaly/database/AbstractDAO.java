@@ -19,6 +19,10 @@ public class AbstractDAO {
     /**
      * Cleans the operations
      *
+     * @param stmnt     the prepared statement
+     * @param result    the result
+     * @param conn      the connection to the database
+     * @throws SQLException if any error occurs while accessing the database
      */
     static void cleaningOperations(PreparedStatement stmnt, ResultSet result, Connection conn) throws SQLException {
         if (stmnt!=null) {
@@ -35,6 +39,9 @@ public class AbstractDAO {
     /**
      * Cleans the operations
      *
+     * @param stmnt     the prepared statement
+     * @param conn      the connection to the database
+     * @throws SQLException if any error occurs while accessing the database
      */
     static void cleaningOperations(PreparedStatement stmnt, Connection conn) throws SQLException {
         cleaningOperations(stmnt, null, conn);
