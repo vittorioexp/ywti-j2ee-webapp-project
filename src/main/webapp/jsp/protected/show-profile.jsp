@@ -3,6 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Booking" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Advertisement" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -71,23 +72,16 @@ Since: 1.0
             </br>
             <p>These are your bookings</p>
             </br>
-            <table>
-                <tr>
-                    <td>Booking date    .</td>
-                    <td>Item booked     .</td>
-                    <td>Booking state   .</td>
-                </tr>
-            </table>
             <%
                 List<Booking> bookinglist = (List) request.getAttribute("bookingList");
-                // TODO: for each element, show also the advertisement title (for clarity reasons)
             %>
             <table>
             <c:forEach items="<%=bookinglist%>" var="booking">
                     <tr>
-                        <td>${booking.date}    </td>
-                        <td>${booking.numBooking}    </td>
-                        <td>${booking.state}    </td>
+                        <td>
+                            This is the title of the advertisement,
+                        </td>
+                        <td> ${booking.numBooking} items booked  </td>
                         <td>
                             <form id="deleteBookingForm" name="deleteBookingForm" action = "<c:url value="/booking-delete"/>" method="DELETE">
                                 <input type="hidden" name="idAdvertisement" value="${booking.idAdvertisement}"/>
