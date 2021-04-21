@@ -1,7 +1,7 @@
 package it.unipd.dei.yourwaytoitaly.resource;
 
 /**
- * Class to define the objects which represents the User in the DB
+ * Abstract class to define the objects which represents a User
  * @author Vittorio Esposito
  * @version 1.0
  * @since 1.0

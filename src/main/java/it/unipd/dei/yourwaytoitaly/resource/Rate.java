@@ -8,6 +8,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * Class to define the rate of an advertisement
+ * @author Vittorio Esposito
+ * @version 1.0
+ * @since 1.0
+ */
 public final class Rate extends Resource{
     private final int rate;
 
@@ -43,11 +49,11 @@ public final class Rate extends Resource{
     }
 
     /**
-     * Creates a {@code Image} from its JSON representation.
+     * Creates a {@code Rate} from its JSON representation.
      *
      * @param in the input stream containing the JSON document.
      *
-     * @return the {@code Image} created from the JSON representation.
+     * @return the {@code Rate} created from the JSON representation.
      *
      * @throws IOException if something goes wrong while parsing.
      */

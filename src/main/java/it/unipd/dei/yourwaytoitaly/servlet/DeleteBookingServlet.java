@@ -16,7 +16,7 @@ import java.sql.Time;
 import java.util.Calendar;
 
 /**
- * Servlet class to delete a booking (mark as DELETED)
+ * Servlet class to mark a booking as DELETED
  *
  * @author Vittorio Esposito
  * @author Marco Basso
@@ -27,25 +27,7 @@ import java.util.Calendar;
 public class DeleteBookingServlet extends AbstractDatabaseServlet{
 
     /**
-     * Edit a booking: html form method DELETE is converted into GET
-     *
-     * @param req
-     *            the HTTP request from the client.
-     * @param res
-     *            the HTTP response from the server.
-     *
-     * @throws ServletException
-     *             if any error occurs while executing the servlet.
-     * @throws IOException
-     *             if any error occurs in the client/server communication.
-     */
-    public void doGet(HttpServletRequest req, HttpServletResponse res)
-            throws IOException {
-        doDelete(req, res);
-    }
-
-    /**
-     * Edit a booking
+     * Marks a booking as DELETED
      *
      * @param req
      *            the HTTP request from the client.
@@ -157,5 +139,24 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
             m.toJSON(res.getOutputStream());
             return;
         }
+    }
+
+    /**
+     * Marks a booking as DELETED.
+     * This method can be used by an HTML form trying to perform a DELETE
+     *
+     * @param req
+     *            the HTTP request from the client.
+     * @param res
+     *            the HTTP response from the server.
+     *
+     * @throws ServletException
+     *             if any error occurs while executing the servlet.
+     * @throws IOException
+     *             if any error occurs in the client/server communication.
+     */
+    public void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws IOException {
+        doDelete(req, res);
     }
 }

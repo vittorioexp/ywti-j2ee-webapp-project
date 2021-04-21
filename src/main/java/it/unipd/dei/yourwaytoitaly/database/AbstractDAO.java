@@ -16,6 +16,10 @@ import java.sql.SQLException;
  */
 public class AbstractDAO {
 
+    /**
+     * Cleans the operations
+     *
+     */
     static void cleaningOperations(PreparedStatement stmnt, ResultSet result, Connection conn) throws SQLException {
         if (stmnt!=null) {
             stmnt.close();
@@ -28,6 +32,10 @@ public class AbstractDAO {
         }
     }
 
+    /**
+     * Cleans the operations
+     *
+     */
     static void cleaningOperations(PreparedStatement stmnt, Connection conn) throws SQLException {
         cleaningOperations(stmnt, null, conn);
     }

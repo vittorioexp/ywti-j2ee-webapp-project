@@ -26,7 +26,7 @@ import java.util.Calendar;
 public final class InsertBookingServlet extends AbstractDatabaseServlet {
 
     /**
-     * Create a booking
+     * Creates a booking
      *
      * @param req
      *            the HTTP request from the client.

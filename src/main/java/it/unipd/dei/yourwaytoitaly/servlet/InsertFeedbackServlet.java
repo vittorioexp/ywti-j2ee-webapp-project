@@ -28,7 +28,7 @@ import java.util.Calendar;
 public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
 
     /**
-     * Create a booking
+     * Creates a feedback
      *
      * @param req
      *            the HTTP request from the client.

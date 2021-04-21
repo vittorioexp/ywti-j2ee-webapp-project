@@ -4,13 +4,26 @@ import it.unipd.dei.yourwaytoitaly.resource.Message;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.MultiPartEmail;
 
+/**
+ * Class to send the confirmation email to the user
+ * @author Francesco Giurisato
+ * @version 1.0
+ * @since 1.0
+ */
 public class EmailSender {
 
-    /** Email destination address
-     * */
+    /**
+     * Email destination address
+     */
     private final String email_to;
 
-
+    /**
+     * Class constructor
+     *
+     * @param email
+     *          email address of the user
+     *
+     */
     public EmailSender (String email){
         email_to = email;
     }
@@ -18,13 +31,12 @@ public class EmailSender {
 
     /**
      * Manages Registration Email confirmation
-     * @param  subject
+     * @param subject
      *            subject of email.
      * @param message
      *            email message
      * @return true if email is sent, false if not
      */
-
     public boolean sendConfirmationEmail(String subject, String message){
 
         try {

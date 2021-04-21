@@ -24,7 +24,9 @@ import java.util.List;
 /**
  * Manages the REST API for the {@link Advertisement} resource.
  *
- * @author Nicola Ferro (ferro@dei.unipd.it)
+ * @author Vittorio Esposito
+ * @author Marco Basso
+ * @author Francesco Giurisato
  * @version 1.00
  * @since 1.00
  */
@@ -621,7 +623,7 @@ public class AdvertisementRestResource extends RestResource {
     }
 
     /**
-     * Returns the rate
+     * Gets the Rate of an Advertisement
      *
      * @throws IOException
      *             if any error occurs in the client/server communication.

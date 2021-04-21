@@ -18,10 +18,17 @@ import java.sql.Time;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * Servlet class upload images of an Advertisement
+ * @author Vittorio Esposito
+ * @version 1.0
+ * @since 1.0
+ */
+
 public class UploadImageServlet extends AbstractDatabaseServlet {
 
     /**
-     * Upload an image (or multiple images)
+     * Upload images from a multipart/form-data
      *
      * @param req the HTTP request from the client.
      * @param res the HTTP response from the server.
