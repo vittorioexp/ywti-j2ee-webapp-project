@@ -86,7 +86,7 @@ public class CompanyAuthenticationCheck implements Filter {
                 session.invalidate();
                 ErrorCode ec = ErrorCode.INTERNAL_ERROR;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getHTTPCode(),"Internal error has occured");
+                        ec.getHTTPCode(),"Internal error has occurred");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;

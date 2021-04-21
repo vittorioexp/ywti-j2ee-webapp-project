@@ -47,3 +47,7 @@ curl -v --request PUT -H "Accept: application/json" -H "Content-Type: applicatio
 
 
 
+CARICAMENTO IMMAGINI
+
+/image-do-upload/ID -> JSP che prende in input le immagini
+/image-upload --> servlet riceve le immagini multipart form (ID passato con hidden form)

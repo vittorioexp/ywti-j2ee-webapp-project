@@ -97,8 +97,13 @@
 	</servlet>
 
 	<servlet>
-		<servlet-name>UploadImagesJSP</servlet-name>
+		<servlet-name>UploadImageJSP</servlet-name>
 		<jsp-file>/jsp/protected/company/upload-images.jsp</jsp-file>
+	</servlet>
+
+	<servlet>
+		<servlet-name>UploadImageServlet</servlet-name>
+		<servlet-class>it.unipd.dei.yourwaytoitaly.servlet.UploadImageServlet</servlet-class>
 	</servlet>
 
 	<servlet>
@@ -137,7 +142,8 @@
 		<filter-name>CompanyAuthenticationCheck</filter-name>
 		<url-pattern>/adv-do-create</url-pattern>
 		<!--<url-pattern>/adv-create</url-pattern>-->
-		<url-pattern>/upload-images/*</url-pattern>
+		<url-pattern>/image-do-upload/*</url-pattern>
+		<url-pattern>/image-upload</url-pattern>
 		<url-pattern>/adv-edit</url-pattern>
 	</filter-mapping>
 
@@ -223,8 +229,13 @@
 	</servlet-mapping>
 
 	<servlet-mapping>
-		<servlet-name>UploadImagesJSP</servlet-name>
-		<url-pattern>/upload-images/*</url-pattern>
+		<servlet-name>UploadImageJSP</servlet-name>
+		<url-pattern>/image-do-upload/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>UploadImageServlet</servlet-name>
+		<url-pattern>/image-upload</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
