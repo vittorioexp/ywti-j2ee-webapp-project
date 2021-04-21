@@ -8,6 +8,9 @@ import it.unipd.dei.yourwaytoitaly.resource.User;
 import it.unipd.dei.yourwaytoitaly.utils.EmailSender;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -276,9 +279,11 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             String authHeader = "Basic " + new String( encodedAuth );
             session.setAttribute( "Authorization", authHeader );
 
-
+            ServletContext sc = getServletContext();
+            String emailsite = sc.getInitParameter("emailSite");
+            String passEmail = sc.getInitParameter("passwordEmail");
             // sending confirmation email
-            EmailSender mail= new EmailSender(email);
+            EmailSender mail= new EmailSender(email , emailsite , passEmail);
 
             //send email and check if email is sent correctly
             if (!mail.sendConfirmationEmail("YourWayToItaly:Account successfully registered",
@@ -300,8 +305,8 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
         }catch (Exception ex){
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-            Message m = new Message(ec.getErrorMessage(),
-                    ec.getHTTPCode(), "Internal error.");
+            Message m = new Message("Something went wrong during registration",
+                    ec.getHTTPCode(), ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
         }
