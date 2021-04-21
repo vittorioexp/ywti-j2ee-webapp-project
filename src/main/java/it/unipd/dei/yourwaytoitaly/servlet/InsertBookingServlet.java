@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.Calendar;
 
@@ -132,7 +133,16 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
                     state
             );
 
-            booking = BookingDAO.createBooking(booking);
+            try {
+                booking = BookingDAO.createBooking(booking);
+            } catch (SQLException ex) {
+                ErrorCode ec = ErrorCode.BOOKING_ALREADY_DONE;
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getHTTPCode(),"Booking already done.");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
 
             adv = new Advertisement(
                     idAdvertisement,
