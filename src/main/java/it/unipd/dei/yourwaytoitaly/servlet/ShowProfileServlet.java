@@ -10,6 +10,7 @@ import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -51,14 +52,20 @@ public class ShowProfileServlet extends AbstractDatabaseServlet {
                     req.setAttribute("user",(Tourist) u);
                     String emailTourist = u.getEmail();
                     req.setAttribute("score", UserDAO.getUserScore(emailTourist));
-                    List<Booking> listBookings = BookingDAO.searchBookingByUser(emailTourist);
-                    req.setAttribute("bookingList", listBookings);
+                    List<Booking> bookingList = BookingDAO.searchBookingByUser(emailTourist);
+                    req.setAttribute("bookingList", bookingList);
+                    List<Advertisement> advertisementList = new ArrayList<Advertisement>();
+                    for (Booking b : bookingList) {
+                        Advertisement adv = AdvertisementDAO.searchAdvertisement(b.getIdAdvertisement());
+                        advertisementList.add(adv);
+                    }
+                    req.setAttribute("advertisementList", advertisementList);
                 } else if (u instanceof Company) {
                     req.setAttribute("userType",(Boolean) isTourist);
                     req.setAttribute("user",(Company) u);
                     String emailCompany = u.getEmail();
-                    List<Advertisement> listAdvertisement = AdvertisementDAO.searchAdvertisement(emailCompany);
-                    req.setAttribute("advertisementList", listAdvertisement);
+                    List<Advertisement> advertisementList = AdvertisementDAO.searchAdvertisement(emailCompany);
+                    req.setAttribute("advertisementList", advertisementList);
                 }
                 req.getRequestDispatcher("/jsp/protected/show-profile.jsp").forward(req, res);
             break;
