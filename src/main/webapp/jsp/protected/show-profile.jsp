@@ -74,12 +74,17 @@ Since: 1.0
             </br>
             <%
                 List<Booking> bookinglist = (List) request.getAttribute("bookingList");
+                List<Advertisement> advertisementList = (List) request.getAttribute("advertisementList");
+                int count = 0;
             %>
             <table>
             <c:forEach items="<%=bookinglist%>" var="booking">
                     <tr>
                         <td>
-                            This is the title of the advertisement,
+                            <%=advertisementList.get(count).getDateStart()%>
+                        </td>
+                        <td>
+                            <%=advertisementList.get(count).getTitle()%>
                         </td>
                         <td> ${booking.numBooking} items booked  </td>
                         <td>
@@ -88,6 +93,7 @@ Since: 1.0
                                 <button type="submit" >Delete</button><br/>
                             </form>
                         </td>
+                        <%count++;%>
                     </tr>
             </c:forEach>
             </table>

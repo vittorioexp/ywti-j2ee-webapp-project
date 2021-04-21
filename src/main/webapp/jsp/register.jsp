@@ -46,7 +46,11 @@ Since: 1.0
 
     <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
 </nav>
-
+<br/>
+<p>This is a mock page to register</p>
+<br/>
+<p>If you wish to register as a tourist, please fill up this form.</p>
+<br/>
 <div>
     <form method="POST" action="<c:url value="/user/register"/>">
 
@@ -75,7 +79,9 @@ Since: 1.0
 
     </form>
 </div>
-
+<br/>
+<p>If you wish to register as a company, please fill up this form.</p>
+<br/>
 <div>
     <form method="POST" action="<c:url value="/user/register"/>">
 
