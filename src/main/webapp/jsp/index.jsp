@@ -50,11 +50,9 @@ Since: 1.0
 
         <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
     </nav>
-    <%
-        // TODO: write contacts.html
-    %>
         <br>
         <br>
+    <p>This is a mock page. Please, use the proper curl command to search for some advertisements.</p>
         <br>
     <div>
         <form id="advertisementListForm" name="advertisementListForm" method="get" action="<c:url value="/adv"/>">

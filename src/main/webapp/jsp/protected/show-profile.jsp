@@ -55,6 +55,7 @@ Since: 1.0
 
     </nav>
 
+    <p>This is a mock page to show the user profile.</p>
 
     <c:choose>
         <c:when test="${userType}">
@@ -68,12 +69,13 @@ Since: 1.0
                 <p>City: ${user.idCity}</p>
                 <p>Your score is ${score} </p>
             </br>
-        <p></p>
+            <p>These are your bookings</p>
+            </br>
             <table>
                 <tr>
-                    <td>Booking date   </td>
-                    <td>Item booked    </td>
-                    <td>Booking state  </td>
+                    <td>Booking date    .</td>
+                    <td>Item booked     .</td>
+                    <td>Booking state   .</td>
                 </tr>
             </table>
             <%
@@ -104,6 +106,9 @@ Since: 1.0
             <p>Address: ${user.address}</p>
             <p>City: ${user.idCity}</p>
             </br>
+            </br>
+            <p>Click this button to create a new advertisement</p>
+            </br>
             <form method="GET" action="<c:url value="/adv-do-create"/>">
                 <button type="submit">New advertisement</button>
             </form>
@@ -111,6 +116,8 @@ Since: 1.0
                 List<Advertisement> advertisementList = (List<Advertisement>) request.getAttribute("advertisementList");
                 // TODO: html method DELETE is converted into GET (and a JSON obj must be provided)
             %>
+            </br>
+            <p>These are your active advertisements</p>
             </br>
             <table>
             <c:forEach items="${advertisementList}" var="adv">

@@ -48,7 +48,9 @@ Since: 1.0
 
     <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
 </nav>
-
+</br>
+<p>This is a mock page to update your profile</p>
+</br>
 <div>
     <form name="editProfileForm" id="editProfileForm" method="POST" action="<c:url value="/user/edit"/>">
 
