@@ -61,7 +61,7 @@ public class EmailSender {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message("Failed to send registration email, check the email syntax.",
                     ec.getErrorCode(), ex.toString());
-            System.out.println(ex.getMessage());
+            System.out.println(m.getMessage() + " " + m.getErrorDetails());
             return false;
         }
     }
