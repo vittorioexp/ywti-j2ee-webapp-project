@@ -143,7 +143,7 @@ public class BookingDAO extends AbstractDAO{
     public static List<Booking> searchBookingByAdvertisement(int reqIdAdvertisement)
             throws SQLException, NamingException {
         final String STATEMENT =
-                "SELECT * FROM BOOKING WHERE id_Advertisement = ? ;";
+                "SELECT * FROM BOOKING WHERE id_Advertisement = ? AND state='SUCCESSFUL';";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -190,7 +190,7 @@ public class BookingDAO extends AbstractDAO{
     public static List<Booking> searchBookingByUser(String reqEmailTourist) throws SQLException, NamingException {
         final String STATEMENT = "SELECT email_t , DATE_B, TIME_B, num_booking, state, ID_advertisement " +
                 "FROM BOOKING " +
-                "WHERE email_t = ? ;";
+                "WHERE email_t = ? AND state='SUCCESSFUL';";
         Connection con = DataSourceProvider.getDataSource().getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;

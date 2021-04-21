@@ -25,7 +25,6 @@ public abstract class Resource {
         JSON_FACTORY.disable(JsonParser.Feature.AUTO_CLOSE_SOURCE);
     }
 
-    /**
      /**
      * Returns a JSON representation of the {@code Resource} into the given {@code OutputStream}.
      *

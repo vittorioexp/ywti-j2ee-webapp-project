@@ -23,35 +23,14 @@ import java.util.Base64;
 import static java.lang.Integer.parseInt;
 
 /**
- * Servlet class, to be written
+ * Servlet class register a user
  * @author Francesco Giurisato
+ * @author Vittorio Esposito
  * @version 1.0
  * @since 1.0
  */
 
 public class RegisterServlet extends AbstractDatabaseServlet {
-
-
-    private static final String JSON_UTF_8_MEDIA_TYPE = "application/json; charset=utf-8";
-
-
-    /**
-     * Manages HTTP GET requests for register
-     *
-     * @param req
-     *            the request from the client.
-     * @param res
-     *            the response from the server.
-     *
-     * @throws ServletException
-     *             if any problem occurs while executing the servlet.
-     * @throws IOException
-     *             if any problem occurs while communicating between the client
-     *             and the server.
-     */
-    public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-        handleRequest(req, res);
-    }
 
     /**
      * Manages HTTP POST requests for register
@@ -72,7 +51,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
 
     /**
-     * Check HTTP GET and POST requests for register
+     * Check HTTP POST requests for register
      * @param req
      *            the request from the client.
      * @param res
@@ -85,8 +64,6 @@ public class RegisterServlet extends AbstractDatabaseServlet {
      *             and the server.
      */
     public void handleRequest(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-
-        res.setContentType(JSON_UTF_8_MEDIA_TYPE);
 
         String op = req.getRequestURI();
         op = op.substring(op.lastIndexOf("user") + 5);

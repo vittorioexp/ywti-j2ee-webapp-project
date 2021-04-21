@@ -9,36 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/*
-GET /adv		->	RestAdvertisementServlet.java > AdvertisementRestResource.java > listAdvertisements() > JSON list
-
-GET /adv-show/ID	->	show-advertisement.jsp
-
-GET /adv/ID		->	RestAdvertisementServlet.java > AdvertisementRestResource.java > getAdvertisement() > JSON obj
-
-PUT /adv/ID		->	RestAdvertisementServlet.java > AdvertisementRestResource.java > editAdvertisement() > redirect to /adv-show/ID
-
-GET /adv/ID/image	->	RestAdvertisementServlet.java > AdvertisementRestResource.java > listImages() > JSON list
-
-GET /adv/ID/feedback	->	RestAdvertisementServlet.java > AdvertisementRestResource.java > listFeedback() > JSON list
-
-GET /adv/ID/booking	->	RestAdvertisementServlet.java > AdvertisementRestResource.java > listBookings() > JSON list
-
-POST /adv-create	->	RestAdvertisementServlet.java > AdvertisementRestResource.java > insertAdvertisement() > redirect to /upload-images/ID
-
-DELETE /adv/ID		->	RestAdvertisementServlet.java > AdvertisementRestResource.java > deleteAdvertisement() > redirect to /user/profile
-
-
-
-mapping
-
-toJson / fromJson : images, feedback, booking
-
-RestAdvertisementServlet.java
-
-AdvertisementRestResource.java
+/**
+ * Manages the REST API for Advertisements
+ *
+ * @author Nicola Ferro (ferro@dei.unipd.it)
+ * @version 1.00
+ * @since 1.00
  */
-
 public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
 
     /**
@@ -119,8 +96,6 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
             m.toJSON(res.getOutputStream());
             return false;
         }
-
-        // TODO: fix accept, contentType
 
         if(!accept.contains(JSON_MEDIA_TYPE) && !accept.equals(ALL_MEDIA_TYPE)) {
             ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;

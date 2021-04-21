@@ -3,6 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Booking" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Advertisement" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -55,6 +56,7 @@ Since: 1.0
 
     </nav>
 
+    <p>This is a mock page to show the user profile.</p>
 
     <c:choose>
         <c:when test="${userType}">
@@ -68,30 +70,30 @@ Since: 1.0
                 <p>City: ${user.idCity}</p>
                 <p>Your score is ${score} </p>
             </br>
-        <p></p>
-            <table>
-                <tr>
-                    <td>Booking date   </td>
-                    <td>Item booked    </td>
-                    <td>Booking state  </td>
-                </tr>
-            </table>
+            <p>These are your bookings</p>
+            </br>
             <%
                 List<Booking> bookinglist = (List) request.getAttribute("bookingList");
-                // TODO: for each element, show also the advertisement title (for clarity reasons)
+                List<Advertisement> advertisementList = (List) request.getAttribute("advertisementList");
+                int count = 0;
             %>
             <table>
             <c:forEach items="<%=bookinglist%>" var="booking">
                     <tr>
-                        <td>${booking.date}    </td>
-                        <td>${booking.numBooking}    </td>
-                        <td>${booking.state}    </td>
+                        <td>
+                            <%=advertisementList.get(count).getDateStart()%>
+                        </td>
+                        <td>
+                            <%=advertisementList.get(count).getTitle()%>
+                        </td>
+                        <td> ${booking.numBooking} items booked  </td>
                         <td>
                             <form id="deleteBookingForm" name="deleteBookingForm" action = "<c:url value="/booking-delete"/>" method="DELETE">
                                 <input type="hidden" name="idAdvertisement" value="${booking.idAdvertisement}"/>
                                 <button type="submit" >Delete</button><br/>
                             </form>
                         </td>
+                        <%count++;%>
                     </tr>
             </c:forEach>
             </table>
@@ -104,13 +106,17 @@ Since: 1.0
             <p>Address: ${user.address}</p>
             <p>City: ${user.idCity}</p>
             </br>
+            </br>
+            <p>Click this button to create a new advertisement</p>
+            </br>
             <form method="GET" action="<c:url value="/adv-do-create"/>">
                 <button type="submit">New advertisement</button>
             </form>
             <%
                 List<Advertisement> advertisementList = (List<Advertisement>) request.getAttribute("advertisementList");
-                // TODO: html method DELETE is converted into GET (and a JSON obj must be provided)
             %>
+            </br>
+            <p>These are your active advertisements</p>
             </br>
             <table>
             <c:forEach items="${advertisementList}" var="adv">

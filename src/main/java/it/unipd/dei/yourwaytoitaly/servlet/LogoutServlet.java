@@ -21,8 +21,6 @@ import java.io.IOException;
 
 public class LogoutServlet extends AbstractDatabaseServlet {
 
-    private static final String JSON_UTF_8_MEDIA_TYPE = "application/json; charset=utf-8";
-
     /**
      * Manages HTTP GET requests for logout
      *
@@ -41,8 +39,6 @@ public class LogoutServlet extends AbstractDatabaseServlet {
     }
 
     public void handleRequest(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-
-        res.setContentType(JSON_UTF_8_MEDIA_TYPE);
 
         String op = req.getRequestURI();
         op = op.substring(op.lastIndexOf("user") + 5);

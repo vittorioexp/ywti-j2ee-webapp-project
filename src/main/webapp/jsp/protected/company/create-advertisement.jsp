@@ -54,9 +54,10 @@ Since: 1.0
     //String idAdvertisement = String.valueOf(request.getAttribute("idAdvertisement"));
     //boolean state = idAdvertisement.equals("0");
 %>
-
+</br>
+<p>This is a mock page. Please, use the proper curl command to POST a new advertisement.</p>
+</br>
         <div>
-            <p>TODO: the advertisement must be in JSON format </p>
             <form id="createAdvertisementForm" name="createAdvertisementForm" method="POST"
                   action="<c:url value="/adv-create" />" >
 

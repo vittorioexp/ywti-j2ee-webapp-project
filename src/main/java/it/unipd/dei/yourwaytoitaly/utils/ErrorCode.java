@@ -3,6 +3,12 @@ package it.unipd.dei.yourwaytoitaly.utils;
 
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Enumerator to manage the error codes
+ * @author Francesco Giurisato
+ * @version 1.0
+ * @since 1.0
+ */
 public enum ErrorCode {
 
     WRONG_FORMAT(-1, HttpServletResponse.SC_BAD_REQUEST,"Wrong format."),

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet class to edit the user profile of a company
+ * Servlet class to edit a user
  * @author Vittorio Esposito
  * @author Marco Basso
  * @author Matteo Piva
@@ -22,8 +22,9 @@ import java.io.IOException;
  */
 
 public class EditUserServlet extends AbstractDatabaseServlet {
+
     /**
-     * Edit an user
+     * Edits an user
      *
      * @param req
      *            the HTTP request from the client.
