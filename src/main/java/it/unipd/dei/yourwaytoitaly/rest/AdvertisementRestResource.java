@@ -128,7 +128,8 @@ public class AdvertisementRestResource extends RestResource {
             // Checking the user is the owner of the advertisement
             String emailSession = LoginServlet.getUserEmail(req);
             String emailCompany = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
-            // TODO : DISABLED for DEBUG
+
+            // TODO : the following is COMMENTED for DEBUG
             /*
             if (!emailSession.equals(emailCompany)) {
                 ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
@@ -278,7 +279,8 @@ public class AdvertisementRestResource extends RestResource {
 
             //String email = LoginServlet.getUserEmail(req);
             String email = "hotelcentrale@gmail.com"; // for DEBUG
-            // TODO: DISABLED for DEBUG
+
+            // TODO: the following is COMMENTED for DEBUG
             /*if (email.equals("")) {
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
                 Message m = new Message(ec.getErrorMessage(),
@@ -450,7 +452,8 @@ public class AdvertisementRestResource extends RestResource {
         try{
             // check if the email of the session is equal to emailCompany
             emailCompany = LoginServlet.getUserEmail(req);
-            // TODO : DISABLED for DEBUG
+
+            // TODO : the following is COMMENTED for DEBUG
             /*
             if (emailCompany.equals("")) {
                 ErrorCode ec = ErrorCode.USER_NOT_FOUND;
@@ -600,7 +603,7 @@ public class AdvertisementRestResource extends RestResource {
             // The owner can see the booking list relative to this advertisement: check if a session is valid
             List<Booking> bookingList = new ArrayList<Booking>();
 
-            // TODO : for debugging without session, uncomment the following
+            // TODO : the following is UNCOMMENTED for DEBUG
             bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
 
             if (LoginServlet.checkSessionEmail(req, advertisement.getEmailCompany())) {

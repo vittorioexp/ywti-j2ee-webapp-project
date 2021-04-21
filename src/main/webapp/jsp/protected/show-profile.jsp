@@ -108,7 +108,6 @@ Since: 1.0
             </form>
             <%
                 List<Advertisement> advertisementList = (List<Advertisement>) request.getAttribute("advertisementList");
-                // TODO: html method DELETE is converted into GET (and a JSON obj must be provided)
             %>
             </br>
             <p>These are your active advertisements</p>

@@ -79,9 +79,6 @@ public class LoginServlet extends AbstractDatabaseServlet {
 
     public void handleRequest(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
-        // TODO: set the proper content type
-        //res.setContentType(JSON_UTF_8_MEDIA_TYPE);
-
         String op = req.getRequestURI();
         op = op.substring(op.lastIndexOf("user") + 5);
 

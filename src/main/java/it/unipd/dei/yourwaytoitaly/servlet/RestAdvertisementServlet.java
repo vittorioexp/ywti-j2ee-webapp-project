@@ -97,8 +97,6 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
             return false;
         }
 
-        // TODO: fix accept, contentType
-
         if(!accept.contains(JSON_MEDIA_TYPE) && !accept.equals(ALL_MEDIA_TYPE)) {
             ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
             m = new Message(ec.getErrorMessage(), ec.getErrorCode(),
