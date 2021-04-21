@@ -11,9 +11,9 @@ import java.util.List;
 /**
  * Class for:
  * <ul>
- *  <li> inserting an Advertisement </li>
- *  <li> editing some parameters of an Advertisement </li>
- *  <li> searching an Advertisement by ID_ADVERTISEMENT </li>
+ *  <li> inserting an Advertisement, </li>
+ *  <li> editing some parameters of an Advertisement, </li>
+ *  <li> searching an Advertisement by ID_ADVERTISEMENT, </li>
  *  <li> searching and returning some Advertisements by ID_CITY, ID_TYPE and DATE_START  </li>
  * </ul>
  * inside the database
