@@ -2,7 +2,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.City" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.User" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
