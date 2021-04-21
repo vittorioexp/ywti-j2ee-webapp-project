@@ -13,8 +13,10 @@ import java.util.List;
 
 /**
  * Class for:
- * - searching and returning a TypeAdvertisement by ID_TYPE
- * - searching and returning a TypeAdvertisement by TYPE
+ * <ul>
+ *  <li> searching and returning a TypeAdvertisement by ID_TYPE, </li>
+ *  <li> searching and returning a TypeAdvertisement by TYPE </li>
+ * </ul>
  * inside the database
  *
  * @author Vittorio Esposito
@@ -26,7 +28,7 @@ import java.util.List;
 public class TypeAdvertisementDAO extends AbstractDAO{
 
     /**
-     * searches and returns a TypeAdvertisement by ID_TYPE
+     * Searches and returns a TypeAdvertisement by ID_TYPE
      *
      * @return a TypeAdvertisement objects matching
      *
@@ -65,7 +67,7 @@ public class TypeAdvertisementDAO extends AbstractDAO{
     }
 
     /**
-     * searches and returns a TypeAdvertisement by NAME (TYPE)
+     * Searches and returns a TypeAdvertisement by NAME (TYPE)
      *
      * @return a TypeAdvertisement objects matching
      *
@@ -105,7 +107,7 @@ public class TypeAdvertisementDAO extends AbstractDAO{
     }
 
     /**
-     * searches and returns a list of typeAdvertisement
+     * Searches and returns a list of typeAdvertisement
      *
      * @return a City objects matching with the parameter.
      *

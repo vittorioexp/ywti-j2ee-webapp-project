@@ -13,10 +13,12 @@ import java.util.List;
 
 /**
  * Class for:
- * - inserting a Booking
- * - editing some parameters of a Booking
- * - searching and returning some Bookings by ID_ADVERTISEMENT
- * - searching and returning some Bookings by EMAIL_T
+ * <ul>
+ *  <li> inserting a Booking, </li>
+ *  <li> editing some parameters of a Booking, </li>
+ *  <li> searching and returning some Bookings by ID_ADVERTISEMENT, </li>
+ *  <li> searching and returning some Bookings by EMAIL_T </li>
+ * </ul>
  * inside the database
  *
  * @author Vittorio Esposito
@@ -106,7 +108,7 @@ public class BookingDAO extends AbstractDAO{
     }
 
     /**
-     * searches and returns a Booking both by EMAIL_T and ID_ADVERTISEMENT
+     * Searches and returns a Booking both by EMAIL_T and ID_ADVERTISEMENT
      *
      * @return a Booking objects matching with the criteria
      *
@@ -128,7 +130,7 @@ public class BookingDAO extends AbstractDAO{
     }
 
     /**
-     * searches and returns some Bookings by ID_ADVERTISEMENT
+     * Searches and returns some Bookings by ID_ADVERTISEMENT
      *
      * @return a list of {@code Booking} objects matching with the Id of the advertisement.
      *
@@ -175,7 +177,7 @@ public class BookingDAO extends AbstractDAO{
 
 
     /**
-     * searches and returns some Bookings by EMAIL_T
+     * Searches and returns some Bookings by EMAIL_T
      *
      * @return a list of {@code Booking} objects matching with the email of the tourist
      *

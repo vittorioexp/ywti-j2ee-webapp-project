@@ -11,8 +11,10 @@ import java.util.List;
 
 /**
  * Class for:
- * - searching and returning a city by ID_CITY
- * - searching and returning a city by NAME
+ * <ul>
+ *  <li> searching and returning a city by ID_CITY, </li>
+ *  <li> searching and returning a city by NAME </li>
+ * </ul>
  * inside the database
  *
  * @author Vittorio Esposito
@@ -25,7 +27,7 @@ import java.util.List;
 public class CityDAO extends AbstractDAO{
 
     /**
-     * searches and returns a city by ID_CITY
+     * Searches and returns a city by ID_CITY
      *
      * @return a City objects matching with the parameter.
      *
@@ -65,7 +67,7 @@ public class CityDAO extends AbstractDAO{
     }
 
     /**
-     * searches and returns a city by NAME (TYPE)
+     * Searches and returns a city by NAME (TYPE)
      *
      * @return a City objects matching with the parameter.
      *
@@ -105,7 +107,7 @@ public class CityDAO extends AbstractDAO{
     }
 
     /**
-     * searches and returns a list of city
+     * Searches and returns a list of city
      *
      * @return a City objects matching with the parameter.
      *

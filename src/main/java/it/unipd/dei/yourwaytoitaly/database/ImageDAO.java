@@ -13,9 +13,11 @@ import java.util.List;
 
 /**
  * Class for:
- * - inserting an Image
- * - deleting an Image
- * - searching and returning some Images by ID_ADVERTISEMENT
+ * <ul>
+ *  <li> inserting an Image, </li>
+ *  <li> deleting an Image, </li>
+ *  <li> searching and returning some Images by ID_ADVERTISEMENT </li>
+ * </ul>
  * inside the database
  *
  * @author Vittorio Esposito
@@ -68,7 +70,7 @@ public class ImageDAO extends AbstractDAO{
     }
 
     /**
-     * searching and returning an image by ID_ADVERTISEMENT
+     * Searching and returning an image by ID_ADVERTISEMENT
      *
      * @return a modified Feedback
      *

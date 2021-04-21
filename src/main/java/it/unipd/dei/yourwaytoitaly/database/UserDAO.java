@@ -14,10 +14,12 @@ import java.util.List;
 /**
  * UserDAO.java
  * Class for:
- * - inserting a User (company/tourist)
- * - editing a User (company/tourist)
- * - searching and returning a User (company/tourist) by EMAIL_T and PASSWORD
- * - returning the score accumulated by a User (Tourist)
+ * <ul>
+ *  <li> inserting a User (company/tourist) </li>
+ *  <li> editing a User (company/tourist) </li>
+ *  <li> searching and returning a User (company/tourist) by EMAIL_T and PASSWORD </li>
+ *  <li> returning the score accumulated by a User (Tourist) </li>
+ * </ul>
  * inside the database
  *
  * @author Vittorio Esposito
@@ -119,9 +121,6 @@ public class UserDAO extends AbstractDAO{
                 "UPDATE TOURIST SET password = MD5(?) , address = ?, phone_number = ?, id_city = ? WHERE email_t = ? RETURNING *;";
 
 
-        /**
-         * The SQL statement to be executed
-         */
         final String STATEMENT_COMPANY_EDIT =
                 "UPDATE COMPANY SET password = MD5(?) , address = ?, phone_number = ?, id_city = ?  WHERE email_c = ? RETURNING *;";
         Connection con = DataSourceProvider.getDataSource().getConnection();

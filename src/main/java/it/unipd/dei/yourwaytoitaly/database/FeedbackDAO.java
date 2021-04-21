@@ -13,10 +13,12 @@ import java.util.List;
 
 /**
  * Class for:
- * - inserting a Feedback
- * - editing some parameters of a Feedback
- * - searching and returning some Feedback by ID_ADVERTISEMENT
- * - searching and returning some Feedback by EMAIL_T
+ * <ul>
+ *  <li> inserting a Feedback, </li>
+ *  <li> editing some parameters of a Feedback, </li>
+ *  <li> searching and returning some Feedback by ID_ADVERTISEMENT, </li>
+ *  <li> searching and returning some Feedback by EMAIL_T </li>
+ * </ul>
  * inside the database
  *
  * @author Vittorio Esposito
@@ -73,7 +75,7 @@ public class FeedbackDAO extends AbstractDAO{
     }
 
     /**
-     * searches and returns a Feedback both by EMAIL_T and ID_ADVERTISEMENT
+     * Searches and returns a Feedback both by EMAIL_T and ID_ADVERTISEMENT
      *
      * @return a Booking objects matching with the criteria
      *
@@ -96,7 +98,7 @@ public class FeedbackDAO extends AbstractDAO{
 
 
     /**
-     * searches and returns some Feedback by ID_ADVERTISEMENT
+     * Searches and returns some Feedback by ID_ADVERTISEMENT
      *
      * @return a list of {@code Feedback} objects matching the parameter.
      *
@@ -139,7 +141,7 @@ public class FeedbackDAO extends AbstractDAO{
 
 
     /**
-     * searches and returns some Feedback by EMAIL_T
+     * Searches and returns some Feedback by EMAIL_T
      *
      * @return a list of {@code Feedback} objects matching the parameter.
      *
