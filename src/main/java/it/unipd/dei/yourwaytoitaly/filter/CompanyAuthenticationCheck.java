@@ -1,19 +1,15 @@
 package it.unipd.dei.yourwaytoitaly.filter;
 
-import it.unipd.dei.yourwaytoitaly.database.UserDAO;
-import it.unipd.dei.yourwaytoitaly.resource.Company;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
 import it.unipd.dei.yourwaytoitaly.servlet.LoginServlet;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
-import javax.naming.NamingException;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Base64;
 
 /**
@@ -72,7 +68,6 @@ public class CompanyAuthenticationCheck implements Filter {
             }
             try {
                 //checking that session email is referred to a company account
-//                String email = LoginServlet.getUserEmail(req);
                 String role = LoginServlet.getUserRole(req);
                 if (!role.equals("company")) {
                     ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
@@ -82,15 +77,6 @@ public class CompanyAuthenticationCheck implements Filter {
                     m.toJSON(res.getOutputStream());
                     return;
                 }
-
-//                if (!(UserDAO.searchUserByEmail(email) instanceof Company)) {
-//                    ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
-//                    Message m = new Message(ec.getErrorMessage(),
-//                            ec.getHTTPCode(),"You need a company account to access this page");
-//                    res.setStatus(ec.getHTTPCode());
-//                    m.toJSON(res.getOutputStream());
-//                    return;
-//                }
 
             }catch(Exception e){
                 session.invalidate();

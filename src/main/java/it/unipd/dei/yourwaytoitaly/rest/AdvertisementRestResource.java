@@ -272,19 +272,9 @@ public class AdvertisementRestResource extends RestResource {
     public void insertAdvertisement() throws IOException {
 
         try{
+
             // check if a session is valid
-
             String email = LoginServlet.getUserEmail(req);
-//            String email = "hotelcentrale@gmail.com";
-//            if (email.equals("")) {
-//                ErrorCode ec = ErrorCode.USER_NOT_FOUND;
-//                Message m = new Message(ec.getErrorMessage(),
-//                        ec.getHTTPCode(),"User not found.");
-//                res.setStatus(ec.getHTTPCode());
-//                m.toJSON(res.getOutputStream());
-//                return;
-//            }
-
 
             int idAdvertisement = 0;
             String title = "";
