@@ -32,6 +32,12 @@ import static java.lang.Integer.parseInt;
 
 public class RegisterServlet extends AbstractDatabaseServlet {
 
+
+    /**
+     * The JSON UTF-8 MIME media type
+     */
+    private static final String JSON_UTF_8_MEDIA_TYPE = "application/json; charset=utf-8";
+
     /**
      * Manages HTTP POST requests for register
      * @param req
@@ -65,6 +71,8 @@ public class RegisterServlet extends AbstractDatabaseServlet {
      */
     public void handleRequest(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
+        res.setContentType(JSON_UTF_8_MEDIA_TYPE);
+
         String op = req.getRequestURI();
         op = op.substring(op.lastIndexOf("user") + 5);
 
@@ -80,6 +88,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             res.setStatus(ec.getHTTPCode());
             req.setAttribute("message", m);
             m.toJSON(res.getOutputStream());
+            return;
         }
     }
 
@@ -97,6 +106,8 @@ public class RegisterServlet extends AbstractDatabaseServlet {
      */
 
     public void register (HttpServletRequest req, HttpServletResponse res)  throws IOException ,ServletException {
+
+        res.setContentType(JSON_UTF_8_MEDIA_TYPE);
 
         try {
             String userType = req.getParameter("userType");
@@ -286,6 +297,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                     ec.getHTTPCode(), ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
+            return;
         }
 
     }
