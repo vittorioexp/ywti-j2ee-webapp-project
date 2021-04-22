@@ -1,7 +1,9 @@
 package it.unipd.dei.yourwaytoitaly.servlet;
 
 import it.unipd.dei.yourwaytoitaly.database.UserDAO;
+import it.unipd.dei.yourwaytoitaly.resource.Company;
 import it.unipd.dei.yourwaytoitaly.resource.Message;
+import it.unipd.dei.yourwaytoitaly.resource.Tourist;
 import it.unipd.dei.yourwaytoitaly.resource.User;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
@@ -170,8 +172,15 @@ public class LoginServlet extends AbstractDatabaseServlet {
                 return;
             }
 
+            String role = "";
+            if (usr instanceof Tourist){
+                role = "tourist";
+            }else if (usr instanceof Company){
+                role = "company";
+            }
+
             //encoding the user email and password in the session attribute
-            String auth = email + ":" + password;
+            String auth = email + ":" + role;
             byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes(Charset.forName("US-ASCII")) );
             //creating the session and setting the attribute
             String authHeader = "Basic " + new String( encodedAuth );
@@ -193,7 +202,8 @@ public class LoginServlet extends AbstractDatabaseServlet {
         }
     }
 
-    /** Method to get the decoded pair email:password from authorization session attribute
+
+    /** Method to get the decoded pair email:role from authorization session attribute
      * @param req HttpServletRequest to get session attribute
      * @return String containing the pair.  Empty String if session authorization attribute not present
      * */
@@ -208,23 +218,26 @@ public class LoginServlet extends AbstractDatabaseServlet {
         return a;
     }
 
-    /** Method to get the user email from session
+    /** Method to get the decoded pair email:password from authorization session attribute
      * @param req HttpServletRequest to get session attribute
-     * @return String containing the email. Empty String if session authorization attribute not present
+     * @return String containing the pair.  Empty String if session authorization attribute not present
      * */
+
     public static String getUserEmail( HttpServletRequest req ){
         String[] credentials = getPair(req).split(":");
-        return credentials[0];
+        return  credentials[0];
     }
 
-    /** Method to get the user email from session
+    /** Method to get the user role from session
      * @param req HttpServletRequest to get session attribute
-     * @return String containing the password. Empty String if session authorization attribute not present
+     * @return String containing the role. Empty String if session authorization attribute not present
      * */
-    private static String getUserPassword( HttpServletRequest req ){
+
+    public static String getUserRole( HttpServletRequest req ){
         String[] credentials = getPair(req).split(":");
         return credentials[1];
     }
+
 
     /** Method compairing a given email with the session one
      * @param req HttpServletRequest to get session attribute

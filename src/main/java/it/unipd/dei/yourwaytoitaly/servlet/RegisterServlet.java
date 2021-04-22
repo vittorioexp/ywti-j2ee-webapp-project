@@ -183,7 +183,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             }
 
             User usr;
-
+            String role="";
             // checking different parameters for tourist and company
 
             if ( userType.equals("tourist") ){
@@ -228,6 +228,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
                 Tourist t = new Tourist(email, password , name , address , phone , idCity , surname , birthDateFormatted);
                 usr = (Tourist) UserDAO.createUser(t);
+                role = "tourist";
 
             }else {
                 usr = UserDAO.searchUserByEmail(email);
@@ -243,6 +244,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
                 }
                 Company c = new Company( email, password , address , phone , idCity , name);
                 usr = (Company) UserDAO.createUser(c);
+                role = "company";
             }
 
             //checking if the user is correctly created
@@ -261,7 +263,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             }
 
             //encoding the user email and password in the session attribute
-            String auth = email + ":" + password;
+            String auth = email + ":" +role;
             byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes(Charset.forName("US-ASCII")) );
             session = req.getSession(true);
             String authHeader = "Basic " + new String( encodedAuth );

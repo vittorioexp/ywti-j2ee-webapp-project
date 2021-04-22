@@ -141,7 +141,7 @@
 	<filter-mapping>
 		<filter-name>CompanyAuthenticationCheck</filter-name>
 		<url-pattern>/adv-do-create</url-pattern>
-		<!--<url-pattern>/adv-create</url-pattern>-->
+		<url-pattern>/adv-create</url-pattern>
 		<url-pattern>/image-do-upload/*</url-pattern>
 		<url-pattern>/image-upload</url-pattern>
 		<url-pattern>/adv-edit</url-pattern>

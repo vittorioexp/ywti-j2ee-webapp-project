@@ -72,8 +72,9 @@ public class CompanyAuthenticationCheck implements Filter {
             }
             try {
                 //checking that session email is referred to a company account
-                String email = LoginServlet.getUserEmail(req);
-                if (!(UserDAO.searchUserByEmail(email) instanceof Company)) {
+//                String email = LoginServlet.getUserEmail(req);
+                String role = LoginServlet.getUserRole(req);
+                if (!role.equals("company")) {
                     ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
                     Message m = new Message(ec.getErrorMessage(),
                             ec.getHTTPCode(),"You need a company account to access this page");
@@ -82,7 +83,16 @@ public class CompanyAuthenticationCheck implements Filter {
                     return;
                 }
 
-            }catch(SQLException | NamingException e){
+//                if (!(UserDAO.searchUserByEmail(email) instanceof Company)) {
+//                    ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
+//                    Message m = new Message(ec.getErrorMessage(),
+//                            ec.getHTTPCode(),"You need a company account to access this page");
+//                    res.setStatus(ec.getHTTPCode());
+//                    m.toJSON(res.getOutputStream());
+//                    return;
+//                }
+
+            }catch(Exception e){
                 session.invalidate();
                 ErrorCode ec = ErrorCode.INTERNAL_ERROR;
                 Message m = new Message(ec.getErrorMessage(),

@@ -129,8 +129,6 @@ public class AdvertisementRestResource extends RestResource {
             String emailSession = LoginServlet.getUserEmail(req);
             String emailCompany = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
 
-            // TODO : the following is COMMENTED for DEBUG
-            /*
             if (!emailSession.equals(emailCompany)) {
                 ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
                 Message m = new Message(ec.getErrorMessage(),
@@ -139,7 +137,6 @@ public class AdvertisementRestResource extends RestResource {
                 m.toJSON(res.getOutputStream());
                 return;
             }
-            */
 
             //Checking if the attributes are changed and checking the integrity of the new values
             String title = advertisement.getTitle();
@@ -277,18 +274,17 @@ public class AdvertisementRestResource extends RestResource {
         try{
             // check if a session is valid
 
-            //String email = LoginServlet.getUserEmail(req);
-            String email = "hotelcentrale@gmail.com"; // for DEBUG
+            String email = LoginServlet.getUserEmail(req);
+//            String email = "hotelcentrale@gmail.com";
+//            if (email.equals("")) {
+//                ErrorCode ec = ErrorCode.USER_NOT_FOUND;
+//                Message m = new Message(ec.getErrorMessage(),
+//                        ec.getHTTPCode(),"User not found.");
+//                res.setStatus(ec.getHTTPCode());
+//                m.toJSON(res.getOutputStream());
+//                return;
+//            }
 
-            // TODO: the following is COMMENTED for DEBUG
-            /*if (email.equals("")) {
-                ErrorCode ec = ErrorCode.USER_NOT_FOUND;
-                Message m = new Message(ec.getErrorMessage(),
-                        ec.getHTTPCode(),"User not found.");
-                res.setStatus(ec.getHTTPCode());
-                m.toJSON(res.getOutputStream());
-                return;
-            }*/
 
             int idAdvertisement = 0;
             String title = "";
@@ -453,18 +449,18 @@ public class AdvertisementRestResource extends RestResource {
             // check if the email of the session is equal to emailCompany
             emailCompany = LoginServlet.getUserEmail(req);
 
-            // TODO : the following is COMMENTED for DEBUG
-            /*
-            if (emailCompany.equals("")) {
-                ErrorCode ec = ErrorCode.USER_NOT_FOUND;
+            Advertisement a = AdvertisementDAO.searchAdvertisement(idAdvertisement);
+
+            if (a == null){
+                ErrorCode ec = ErrorCode.AD_NOT_FOUND;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getHTTPCode(),"User not found.");
+                        ec.getHTTPCode(),"Advertisement not existing or already deleted.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
-            }*/
-            emailAdv = AdvertisementDAO.searchAdvertisement(idAdvertisement).getEmailCompany();
-            /*
+            }
+
+            emailAdv = a.getEmailCompany();
             if (!emailCompany.equals(emailAdv)) {
                 ErrorCode ec = ErrorCode.USER_NOT_ALLOWED;
                 Message m = new Message(ec.getErrorMessage(),
@@ -473,7 +469,6 @@ public class AdvertisementRestResource extends RestResource {
                 m.toJSON(res.getOutputStream());
                 return;
             }
-            */
             AdvertisementDAO.deleteAdvertisement(idAdvertisement);
 
             res.setStatus(HttpServletResponse.SC_OK);
@@ -603,7 +598,6 @@ public class AdvertisementRestResource extends RestResource {
             // The owner can see the booking list relative to this advertisement: check if a session is valid
             List<Booking> bookingList = new ArrayList<Booking>();
 
-            // TODO : the following is UNCOMMENTED for DEBUG
             bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
 
             if (LoginServlet.checkSessionEmail(req, advertisement.getEmailCompany())) {

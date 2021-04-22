@@ -39,7 +39,7 @@ curl -v -H "Accept: application/json" http://localhost:8080/ywti_wa2021_war/adv/
 
 curl -v -X GET -H "Accept: application/json" -H "Content-Type: application/json" -d "{\"searchParameters\":{\"idType\":\"6\",\"idCity\":\"28\",\"dateStart\":\"2021-04-20\"}}" http://localhost:8080/ywti_wa2021_war/adv
 
-curl -v -X DELETE -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8080/ywti_wa2021_war/adv/10
+curl -v -X DELETE -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8080/ywti_wa2021_war/adv/2
 
 curl -v --request POST -H "Accept: application/json" -H "Content-Type: application/json" -d "{\"advertisement\":{\"idAdvertisement\":\"5\",\"title\":\"Capodanno sulle dolomiti\",\"description\":\"Sette giorni di relax in mezzo alla neve delle dolomiti in Trentino alto adige a capodanno\",\"score\":\"100\",\"price\":\"800\",\"numTotItem\":\"24\",\"dateStart\":\"2021-12-28\",\"dateEnd\":\"2021-12-28\",\"timeStart\":\"14:14:14\",\"timeEnd\":\"14:14:15\",\"emailCompany\":\"hotelcentrale@gmail.com\",\"idType\":\"6\"}}" http://localhost:8080/ywti_wa2021_war/adv-create
 
