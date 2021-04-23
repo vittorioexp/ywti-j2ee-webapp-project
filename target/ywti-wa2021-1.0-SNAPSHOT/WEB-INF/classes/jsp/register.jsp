@@ -48,65 +48,67 @@ Since: 1.0
 </nav>
 <br/>
 <p>This is a mock page to register</p>
-<br/>
-<p>If you wish to register as a tourist, please fill up this form.</p>
-<br/>
-<div>
-    <form method="POST" action="<c:url value="/user/register"/>">
 
-        <label for="email_t">email:</label>
-        <input name="email" type="text" id="email_t" required/><br/><br/>
-        <label for="password_t">password:</label>
-        <input name="password" type="password" id="password_t" required/><br/><br/>
-        <label for="rpassword_t">repeat password:</label>
-        <input name="rpassword" type="password" id="rpassword_t" required/><br/><br/>
-        <label for="name_t">name:</label>
-        <input name="name" type="text" id="name_t" required/><br/><br/>
-        <label for="surname_t">surname:</label>
-        <input name="surname" type="text" id="surname_t" required/><br/><br/>
-        <label for="address_t">address:</label>
-        <input name="address" type="text" id="address_t" required/><br/><br/>
-        <label for="phonenumber_t">phone number:</label>
-        <input name="phone" type="text" id="phonenumber_t" required/><br/><br/>
-        <label for="city_t">city:</label>
-        <input name="city" type="number" id="city_t" required/><br/><br/>
-        <label for="birthdate_t">birth date:</label>
-        <input name="birthDate" type="Date" id="birthdate_t" required/><br/><br/>
+<table>
+    <tr>
+        <td>
+            <p>Register as a tourist and start your journey!</p>
+            <br/>
+            <form method="POST" action="<c:url value="/user/register"/>">
 
-        <input type="hidden" id="userType" name="userType" value="tourist">
+                <label for="email_t">email:</label>
+                <input name="email" type="text" id="email_t" required/><br/><br/>
+                <label for="password_t">password:</label>
+                <input name="password" type="password" id="password_t" required/><br/><br/>
+                <label for="rpassword_t">repeat password:</label>
+                <input name="rpassword" type="password" id="rpassword_t" required/><br/><br/>
+                <label for="name_t">name:</label>
+                <input name="name" type="text" id="name_t" required/><br/><br/>
+                <label for="surname_t">surname:</label>
+                <input name="surname" type="text" id="surname_t" required/><br/><br/>
+                <label for="address_t">address:</label>
+                <input name="address" type="text" id="address_t" required/><br/><br/>
+                <label for="phonenumber_t">phone number:</label>
+                <input name="phone" type="text" id="phonenumber_t" required/><br/><br/>
+                <label for="city_t">city:</label>
+                <input name="city" type="number" id="city_t" required/><br/><br/>
+                <label for="birthdate_t">birth date:</label>
+                <input name="birthDate" type="Date" id="birthdate_t" required/><br/><br/>
 
-        <button type="submit">Register</button><br/>
+                <input type="hidden" id="userType" name="userType" value="tourist">
 
-    </form>
-</div>
-<br/>
-<p>If you wish to register as a company, please fill up this form.</p>
-<br/>
-<div>
-    <form method="POST" action="<c:url value="/user/register"/>">
+                <button type="submit">Register</button><br/>
 
-        <label for="email_c">email:</label>
-        <input name="email" type="text" id="email_c"/><br/><br/>
-        <label for="password_c">password:</label>
-        <input name="password" type="password" id="password_c"/><br/><br/>
-        <label for="rpassword_c">repeat password:</label>
-        <input name="rpassword" type="password" id="rpassword_c"/><br/><br/>
-        <label for="name_c">name:</label>
-        <input name="name" type="text" id="name_c"/><br/><br/>
-        <label for="address_c">address:</label>
-        <input name="address" type="text" id="address_c"/><br/><br/>
-        <label for="phonenumber_c">phone number:</label>
-        <input name="phone" type="text" id="phonenumber_c"/><br/><br/>
-        <label for="city">city:</label>
-        <input name="city" type="number" id="city"/><br/><br/>
+            </form>
+        </td>
+        <td>
+            <p>Register as a company and create your event!</p>
+            <br/>
+            <form method="POST" action="<c:url value="/user/register"/>">
 
-        <input type="hidden" name="userType" value="company">
+                <label for="email_c">email:</label>
+                <input name="email" type="text" id="email_c"/><br/><br/>
+                <label for="password_c">password:</label>
+                <input name="password" type="password" id="password_c"/><br/><br/>
+                <label for="rpassword_c">repeat password:</label>
+                <input name="rpassword" type="password" id="rpassword_c"/><br/><br/>
+                <label for="name_c">name:</label>
+                <input name="name" type="text" id="name_c"/><br/><br/>
+                <label for="address_c">address:</label>
+                <input name="address" type="text" id="address_c"/><br/><br/>
+                <label for="phonenumber_c">phone number:</label>
+                <input name="phone" type="text" id="phonenumber_c"/><br/><br/>
+                <label for="city">city:</label>
+                <input name="city" type="number" id="city"/><br/><br/>
 
-        <button type="submit">Register</button><br/>
+                <input type="hidden" name="userType" value="company">
 
-    </form>
-</div>
+                <button type="submit">Register</button><br/>
 
+            </form>
+        </td>
+    </tr>
+</table>
 
 <div>
     <c:import url="/jsp/include/show-message.jsp"/>
