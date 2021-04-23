@@ -1,3 +1,5 @@
+PAGINE REST:
+
 GET /adv-show/ID	->	show-advertisement.jsp
 
 GET /adv/ID		->	RestAdvertisementServlet.java > AdvertisementRestResource.java > getAdvertisement() > JSON obj
@@ -18,45 +20,34 @@ GET /adv/ID/booking	->	RestAdvertisementServlet.java > AdvertisementRestResource
 
 GET /adv		->	RestAdvertisementServlet.java > AdvertisementRestResource.java > listAdvertisements() > JSON list
 
-<!-- -->
-
-COMANDI CURL: https://docs.oracle.com/en/cloud/saas/marketing/eloqua-develop/Developers/GettingStarted/APIRequests/curl-requests.htm
-
-
-curl http://localhost:8080/ywti_wa2021_war/adv/5
-curl http://localhost:8080/ywti_wa2021_war/adv/5/rate
-curl http://localhost:8080/ywti_wa2021_war/adv/5/image
-curl http://localhost:8080/ywti_wa2021_war/adv/5/feedback
-curl http://localhost:8080/ywti_wa2021_war/adv/7/booking	#disabilitare i controlli sessione
-
-
-curl -X DELETE http://localhost:8080/ywti_wa2021_war/adv/10
-
-curl --header "Content-Type: application/json" --request POST --data "{\"advertisement\":{\"idAdvertisement\":\"5\",\"title\":\"Capodanno sulle dolomiti\",\"description\":\"Sette giorni di relax in mezzo alla neve delle dolomiti in Trentino alto adige a capodanno\",\"score\":\"100\",\"price\":\"800\",\"numTotItem\":\"24\",\"dateStart\":\"2021-12-28\",\"dateEnd\":\"2021-12-28\",\"timeStart\":\"14:14:14\",\"timeEnd\":\"14:14:15\",\"emailCompany\":\"hotelcentrale@gmail.com\",\"idType\":\"6\"}}" http://localhost:8080/ywti_wa2021_war/adv-create
-
-curl --header "Content-Type: application/json" --request PUT --data "{\"advertisement\":{\"idAdvertisement\":\"5\",\"title\":\"Vacanzina sulle dolomiti\",\"description\":\"Sette giorni di relax in mezzo alla neve delle dolomiti in Trentino alto adige a capodanno\",\"score\":\"100\",\"price\":\"800\",\"numTotItem\":\"29\",\"dateStart\":\"2021-12-28\",\"dateEnd\":\"2021-12-28\",\"timeStart\":\"14:14:14\",\"timeEnd\":\"14:14:15\",\"emailCompany\":\"hotelcentrale@gmail.com\",\"idType\":\"6\"}}" http://localhost:8080/ywti_wa2021_war/adv/1
-
-
-curl -v -G http://localhost:8080/employee-rest-jdbc-1.00/rest/employee
-
-
-curl -v -G -H "Accept: text/xml" http://localhost:8080/employee-rest-jdbc-1.00/rest/employee
-
-
-curl -v -G http://localhost:8080/employee-rest-jdbc-1.00/rest/employee/7309
-
-curl -v -G http://localhost:8080/employee-rest-jdbc-1.00/rest/employee/salary/42
 
 
 
-curl -v -X POST -H "Content-Type: application/json" -d "{\"employee\":{\"badge\":999,\"surname\":\"Covid\",\"age\":2020,\"salary\":500}}" http://localhost:8080/employee-rest-jdbc-1.00/rest/employee
+COMANDI CURL PER TESTARE REST:
+https://reqbin.com/req/curl/yjok4snr/post-html-form-example
+https://docs.oracle.com/en/cloud/saas/marketing/eloqua-develop/Developers/GettingStarted/APIRequests/curl-requests.htm
+
+curl -v -X GET -H "Accept: application/json" http://localhost:8080/ywti_wa2021_war/adv/5
+
+curl -v -X GET -H "Accept: application/json" http://localhost:8080/ywti_wa2021_war/adv/5/rate
+
+curl -v -X GET -H "Accept: application/json" http://localhost:8080/ywti_wa2021_war/adv/5/image
+
+curl -v -X GET -H "Accept: application/json" http://localhost:8080/ywti_wa2021_war/adv/5/feedback
+
+curl -v -H "Accept: application/json" http://localhost:8080/ywti_wa2021_war/adv/5/booking
+
+curl -v -X GET -H "Accept: application/json" -H "Content-Type: application/json" -d "{\"searchParameters\":{\"idType\":\"6\",\"idCity\":\"28\",\"dateStart\":\"2021-04-20\"}}" http://localhost:8080/ywti_wa2021_war/adv
+
+curl -v -X DELETE -H "Accept: application/json" -H "Content-Type: application/json" http://localhost:8080/ywti_wa2021_war/adv/2
+
+curl -v --request POST -H "Accept: application/json" -H "Content-Type: application/json" -d "{\"advertisement\":{\"idAdvertisement\":\"5\",\"title\":\"Capodanno sulle dolomiti\",\"description\":\"Sette giorni di relax in mezzo alla neve delle dolomiti in Trentino alto adige a capodanno\",\"score\":\"100\",\"price\":\"800\",\"numTotItem\":\"24\",\"dateStart\":\"2021-12-28\",\"dateEnd\":\"2021-12-28\",\"timeStart\":\"14:14:14\",\"timeEnd\":\"14:14:15\",\"emailCompany\":\"hotelcentrale@gmail.com\",\"idType\":\"6\"}}" http://localhost:8080/ywti_wa2021_war/adv-create
+
+curl -v --request PUT -H "Accept: application/json" -H "Content-Type: application/json" -d "{\"advertisement\":{\"idAdvertisement\":\"5\",\"title\":\"EDITED Delicious dinner in the Dolomites, da Pino\",\"description\":\"Sette giorni di relax in mezzo alla neve delle dolomiti in Trentino alto adige a capodanno\",\"score\":\"100\",\"price\":\"800\",\"numTotItem\":\"29\",\"dateStart\":\"2021-12-28\",\"dateEnd\":\"2021-12-28\",\"timeStart\":\"14:14:14\",\"timeEnd\":\"14:14:15\",\"emailCompany\":\"hotelcentrale@gmail.com\",\"idType\":\"6\"}}" http://localhost:8080/ywti_wa2021_war/adv/5
 
 
 
-curl -v -X POST  -d "{\"employee\":{\"badge\":222,\"surname\":\"Verdi\",\"age\":21,\"salary\":37}}" http://localhost:8080/employee-rest-jdbc-1.00/rest/employee
+CARICAMENTO IMMAGINI
 
-
-curl -v -X PUT -H "Content-Type: application/json" -d "{\"employee\":{\"badge\":999,\"surname\":\"Covid-19\",\"age\":2020,\"salary\":500}}" http://localhost:8080/employee-rest-jdbc-1.00/rest/employee/999
-
-
-curl -v -X DELETE http://localhost:8080/employee-rest-jdbc-1.00/rest/employee/999
+/image-do-upload/ID -> JSP che prende in input le immagini
+/image-upload --> servlet riceve le immagini multipart form (ID passato con hidden form)

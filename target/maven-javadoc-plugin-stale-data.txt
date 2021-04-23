@@ -1,0 +1,117 @@
+/usr/lib/jvm/java-11-openjdk-amd64/bin/javadoc
+@options
+@packages
+-classpath
+'/home/espo/.m2/repository/javax/servlet/javax.servlet-api/4.0.0/javax.servlet-api-4.0.0.jar:/home/espo/.m2/repository/org/json/json/20210307/json-20210307.jar:/home/espo/.m2/repository/org/apache/taglibs/taglibs-standard-spec/1.2.5/taglibs-standard-spec-1.2.5.jar:/home/espo/.m2/repository/org/apache/taglibs/taglibs-standard-impl/1.2.5/taglibs-standard-impl-1.2.5.jar:/home/espo/.m2/repository/org/apache/taglibs/taglibs-standard-jstlel/1.2.5/taglibs-standard-jstlel-1.2.5.jar:/home/espo/.m2/repository/org/postgresql/postgresql/42.2.2/postgresql-42.2.2.jar:/home/espo/.m2/repository/org/apache/tomcat/tomcat-jdbc/9.0.7/tomcat-jdbc-9.0.7.jar:/home/espo/.m2/repository/org/apache/tomcat/tomcat-juli/9.0.7/tomcat-juli-9.0.7.jar:/home/espo/.m2/repository/org/mortbay/jetty/jetty-util/6.1.25/jetty-util-6.1.25.jar:/home/espo/.m2/repository/commons-fileupload/commons-fileupload/1.4/commons-fileupload-1.4.jar:/home/espo/.m2/repository/commons-io/commons-io/2.2/commons-io-2.2.jar:/home/espo/.m2/repository/org/apache/commons/commons-email/1.5/commons-email-1.5.jar:/home/espo/.m2/repository/com/sun/mail/javax.mail/1.5.6/javax.mail-1.5.6.jar:/home/espo/.m2/repository/javax/activation/activation/1.1/activation-1.1.jar:/home/espo/.m2/repository/commons-codec/commons-codec/1.15/commons-codec-1.15.jar:/home/espo/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.12.1/jackson-core-2.12.1.jar:/home/espo/.m2/repository/commons-digester/commons-digester/2.1/commons-digester-2.1.jar:/home/espo/.m2/repository/commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar:/home/espo/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar'
+-encoding
+'UTF-8'
+-protected
+-source
+'8'
+-sourcepath
+'/home/espo/Desktop/webapp/workspace/ywti-wa2021/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2021 <a href="http://www.dei.unipd.it/en/">Department of Information Engineering (DEI), University of Padua, Italy</a>. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'Your Way To Italy 1.0-SNAPSHOT API'
+-linkoffline
+'https://docs.oracle.com/javase/8/docs/api' '/home/espo/Desktop/webapp/workspace/ywti-wa2021/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'Your Way To Italy 1.0-SNAPSHOT API'
+it.unipd.dei.yourwaytoitaly.resource
+it.unipd.dei.yourwaytoitaly.resource
+it.unipd.dei.yourwaytoitaly.resource
+it.unipd.dei.yourwaytoitaly.resource
+it.unipd.dei.yourwaytoitaly.resource
+it.unipd.dei.yourwaytoitaly.resource
+it.unipd.dei.yourwaytoitaly.resource
+it.unipd.dei.yourwaytoitaly.resource
+it.unipd.dei.yourwaytoitaly.resource
+it.unipd.dei.yourwaytoitaly.resource
+it.unipd.dei.yourwaytoitaly.resource
+it.unipd.dei.yourwaytoitaly.resource
+it.unipd.dei.yourwaytoitaly.resource
+it.unipd.dei.yourwaytoitaly.resource
+it.unipd.dei.yourwaytoitaly.resource
+it.unipd.dei.yourwaytoitaly.rest
+it.unipd.dei.yourwaytoitaly.rest
+it.unipd.dei.yourwaytoitaly.rest
+it.unipd.dei.yourwaytoitaly.filter
+it.unipd.dei.yourwaytoitaly.filter
+it.unipd.dei.yourwaytoitaly.filter
+it.unipd.dei.yourwaytoitaly.filter
+it.unipd.dei.yourwaytoitaly.servlet
+it.unipd.dei.yourwaytoitaly.servlet
+it.unipd.dei.yourwaytoitaly.servlet
+it.unipd.dei.yourwaytoitaly.servlet
+it.unipd.dei.yourwaytoitaly.servlet
+it.unipd.dei.yourwaytoitaly.servlet
+it.unipd.dei.yourwaytoitaly.servlet
+it.unipd.dei.yourwaytoitaly.servlet
+it.unipd.dei.yourwaytoitaly.servlet
+it.unipd.dei.yourwaytoitaly.servlet
+it.unipd.dei.yourwaytoitaly.servlet
+it.unipd.dei.yourwaytoitaly.servlet
+it.unipd.dei.yourwaytoitaly.utils
+it.unipd.dei.yourwaytoitaly.utils
+it.unipd.dei.yourwaytoitaly.utils
+it.unipd.dei.yourwaytoitaly.utils
+it.unipd.dei.yourwaytoitaly.database
+it.unipd.dei.yourwaytoitaly.database
+it.unipd.dei.yourwaytoitaly.database
+it.unipd.dei.yourwaytoitaly.database
+it.unipd.dei.yourwaytoitaly.database
+it.unipd.dei.yourwaytoitaly.database
+it.unipd.dei.yourwaytoitaly.database
+it.unipd.dei.yourwaytoitaly.database
+it.unipd.dei.yourwaytoitaly.database
+/home/espo/.m2/repository/javax/servlet/javax.servlet-api/4.0.0/javax.servlet-api-4.0.0.jar = 1616000489811
+/home/espo/.m2/repository/org/json/json/20210307/json-20210307.jar = 1617970098787
+/home/espo/.m2/repository/org/apache/taglibs/taglibs-standard-spec/1.2.5/taglibs-standard-spec-1.2.5.jar = 1617896403582
+/home/espo/.m2/repository/org/apache/taglibs/taglibs-standard-impl/1.2.5/taglibs-standard-impl-1.2.5.jar = 1617896403974
+/home/espo/.m2/repository/org/apache/taglibs/taglibs-standard-jstlel/1.2.5/taglibs-standard-jstlel-1.2.5.jar = 1617896403934
+/home/espo/.m2/repository/org/postgresql/postgresql/42.2.2/postgresql-42.2.2.jar = 1617896404626
+/home/espo/.m2/repository/org/apache/tomcat/tomcat-jdbc/9.0.7/tomcat-jdbc-9.0.7.jar = 1617896404234
+/home/espo/.m2/repository/org/apache/tomcat/tomcat-juli/9.0.7/tomcat-juli-9.0.7.jar = 1617896404314
+/home/espo/.m2/repository/org/mortbay/jetty/jetty-util/6.1.25/jetty-util-6.1.25.jar = 1617896404434
+/home/espo/.m2/repository/commons-fileupload/commons-fileupload/1.4/commons-fileupload-1.4.jar = 1618131596789
+/home/espo/.m2/repository/commons-io/commons-io/2.2/commons-io-2.2.jar = 1618131596669
+/home/espo/.m2/repository/org/apache/commons/commons-email/1.5/commons-email-1.5.jar = 1618225525778
+/home/espo/.m2/repository/com/sun/mail/javax.mail/1.5.6/javax.mail-1.5.6.jar = 1618225526186
+/home/espo/.m2/repository/javax/activation/activation/1.1/activation-1.1.jar = 1618225525830
+/home/espo/.m2/repository/commons-codec/commons-codec/1.15/commons-codec-1.15.jar = 1618241987116
+/home/espo/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.12.1/jackson-core-2.12.1.jar = 1618225723943
+/home/espo/.m2/repository/commons-digester/commons-digester/2.1/commons-digester-2.1.jar = 1618295781230
+/home/espo/.m2/repository/commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar = 1618295780946
+/home/espo/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar = 1617896438541
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/src/main/java = 1616756358714
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/member-search-index.zip = 1619164321459
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/allclasses-index.html = 1619164321471
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/constant-values.html = 1619164321063
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/allpackages-index.html = 1619164321479
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/help-doc.html = 1619164321507
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/index.html = 1619164321503
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/type-search-index.js = 1619164321447
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/deprecated-list.html = 1619164321491
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/serialized-form.html = 1619164321079
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/package-search-index.zip = 1619164321447
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/package-search-index.js = 1619164321443
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/index-all.html = 1619164321459
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/element-list = 1619164320971
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/stylesheet.css = 1619164321515
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/member-search-index.js = 1619164321459
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/overview-tree.html = 1619164321339
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/script.js = 1619164321515
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/search.js = 1619164321515
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/allclasses.html = 1619164321495
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/overview-summary.html = 1619164321503
+/home/espo/Desktop/webapp/workspace/ywti-wa2021/javadoc/apidocs/type-search-index.zip = 1619164321447

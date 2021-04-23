@@ -148,23 +148,31 @@ VALUES ('filippo@mail.com', 'filippo', 'mail', '1998-03-10', '3287888901', 'Via 
 INSERT INTO COMPANY (email_c, name_c, phone_number, address, password, ID_city) 
 VALUES ('hotelcentrale@gmail.com', 'Hotel centrale', '0495341234', 'Via Venezia 48', MD5('prova_c'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
 
-INSERT INTO Advertisement (title, DESCRIPTION, SCORE, PRICE, NUM_TOT_ITEM, DATE_START, DATE_END, TIME_START, TIME_END, email_c, ID_TYPE)
-VALUES ('Delicious dinner in the Dolomites, da Pino', 'This is a mock advertisement. Requests to the REST web server will be made in order to show the desired advertisement.', 6,  19, 28, '2021-04-19','2021-07-01','18:30:00','23:30:00', 'hotelcentrale@gmail.com', (SELECT ID_TYPE FROM Type_advertisement WHERE Type_advertisement.type = 'Restaurant'));
 
 INSERT INTO Advertisement (title, DESCRIPTION, SCORE, PRICE, NUM_TOT_ITEM, DATE_START, DATE_END, TIME_START, TIME_END, email_c, ID_TYPE)
-VALUES ('Tour of Cortina', 'This is a mock advertisement. Requests to the REST web server will be made in order to show the desired advertisement.', 6,  19, 28, '2021-04-19','2021-07-01','18:30:00','23:30:00', 'hotelcentrale@gmail.com', (SELECT ID_TYPE FROM Type_advertisement WHERE Type_advertisement.type = 'Guided tour'));
+VALUES ('Delicious dinner in the Dolomites, da Pino', 'This is a mock advertisement. Requests to the REST web server will be made in order to show the desired advertisement.', 6,  19, 28, '2021-04-24','2021-04-24','18:30:00','23:30:00', 'hotelcentrale@gmail.com', (SELECT ID_TYPE FROM Type_advertisement WHERE Type_advertisement.type = 'Restaurant'));
 
-INSERT INTO Feedback (rate,text_f,date_f,email_t,ID_Advertisement)
-VALUES (5,'Amazing experience!', '2021-04-30','mariorossi@gmail.com',1);
+INSERT INTO Advertisement (title, DESCRIPTION, SCORE, PRICE, NUM_TOT_ITEM, DATE_START, DATE_END, TIME_START, TIME_END, email_c, ID_TYPE)
+VALUES ('Tour of Cortina', 'This is a mock advertisement. Requests to the REST web server will be made in order to show the desired advertisement.', 11,  35, 25, '2021-04-19','2021-04-25','18:30:00','23:30:00', 'hotelcentrale@gmail.com', (SELECT ID_TYPE FROM Type_advertisement WHERE Type_advertisement.type = 'Guided tour'));
 
-INSERT INTO Feedback (rate,text_f,date_f,email_t,ID_Advertisement)
-VALUES (5,'This was super cool!', '2021-05-02','pluto@mail.com',1);
-
-INSERT INTO Feedback (rate,text_f,date_f,email_t,ID_Advertisement)
-VALUES (4,'Good! I will surely come back', '2021-05-05','giovanna@mail.com',1);
 
 INSERT INTO Booking (date_b,time_b,num_booking,state,email_t,ID_Advertisement)
-VALUES ('2020-04-29','14:30:00', 2, 'SUCCESSFUL','pippopasticcio@gmail.com',1);
+VALUES ('2020-03-23','14:30:00', 1, 'SUCCESSFUL','mariorossi@gmail.com',1);
 
 INSERT INTO Booking (date_b,time_b,num_booking,state,email_t,ID_Advertisement)
-VALUES ('2020-04-28','12:33:10', 1, 'SUCCESSFUL','filippo@mail.com',1);
+VALUES ('2020-03-23','14:30:00', 2, 'SUCCESSFUL','pluto@mail.com',1);
+
+INSERT INTO Booking (date_b,time_b,num_booking,state,email_t,ID_Advertisement)
+VALUES ('2020-03-24','14:30:00', 4, 'SUCCESSFUL','pluto@mail.com',2);
+
+INSERT INTO Booking (date_b,time_b,num_booking,state,email_t,ID_Advertisement)
+VALUES ('2020-03-25','14:30:00', 4, 'SUCCESSFUL','mariorossi@gmail.com',2);
+
+
+
+INSERT INTO Feedback (rate,text_f,date_f,email_t,ID_Advertisement)
+VALUES (5,'This was super cool!', '2021-04-29','pluto@mail.com',2);
+
+INSERT INTO Feedback (rate,text_f,date_f,email_t,ID_Advertisement)
+VALUES (4,'Good! I will surely come back', '2021-04-30','mariorossi@gmail.com',2);
+

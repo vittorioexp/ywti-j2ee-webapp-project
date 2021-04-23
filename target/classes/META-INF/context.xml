@@ -44,4 +44,10 @@
           closeMethod="close"
 	/>
 
+    <Parameter name="emailSite" value="yourwaytoitalywebapp@gmail.com"
+               override="false"/>
+
+    <Parameter name="passwordEmail" value="waywti2021"
+               override="false"/>
+
 </Context>
