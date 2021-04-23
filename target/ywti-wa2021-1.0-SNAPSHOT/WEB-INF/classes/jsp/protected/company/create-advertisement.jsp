@@ -54,10 +54,12 @@ Since: 1.0
     //String idAdvertisement = String.valueOf(request.getAttribute("idAdvertisement"));
     //boolean state = idAdvertisement.equals("0");
 %>
-
+</br>
+<p>This is a mock page. Please, use the proper curl command to POST a new advertisement.</p>
+</br>
         <div>
             <form id="createAdvertisementForm" name="createAdvertisementForm" method="POST"
-                  action="<c:url value="/advertisement-create" />" >
+                  action="<c:url value="/adv-create" />" >
 
                 <label for="title">title:</label>
                 <input id="title" name="title" type="text" required/><br/><br/>
@@ -81,10 +83,10 @@ Since: 1.0
                 <input id="dateEnd" name="dateEnd" type="date" required/><br/><br/>
 
                 <label for="timeStart">timeStart:</label>
-                <input id="timeStart" name="timeStart" type="time" value="08:30:00"/><br/><br/>
+                <input id="timeStart" name="timeStart" type="time" value="05:00:00"/><br/><br/>
 
                 <label for="timeEnd">timeEnd:</label>
-                <input id="timeEnd" name="timeEnd" type="time" value="18:30:00"/><br/><br/>
+                <input id="timeEnd" name="timeEnd" type="time" value="23:30:00"/><br/><br/>
 
                 <button type="submit" name="Submit" value="Submit">Submit</button><br/>
 

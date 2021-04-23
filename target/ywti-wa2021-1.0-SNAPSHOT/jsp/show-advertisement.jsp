@@ -3,6 +3,7 @@
 <%@ page import="java.sql.Time" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -51,10 +52,21 @@ Since: 1.0
 
     <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
 </nav>
+<%
+    // For mock test only
+    int idAdvertisement = 1;
+    String URI = request.getRequestURI();
+    if (URI!=null) {
+        String tmp = URI.substring(URI.lastIndexOf("adv-show")+9);
+        try {
+            idAdvertisement = Integer.parseInt(tmp);
+        } catch (Exception ex) {}
+    }
+%>
     <br>
     <p>This is a mock page. Requests to the REST web server will be made in order to show the desired advertisement.</p>
     </br>
-    <h3> Delicious dinner in the Dolomites, da Pino </h3>
+    <h3>Delicious dinner in the Dolomites, da Pino </h3>
     <p> This is a mock advertisement. Requests to the REST web server will be made in order to show the desired advertisement. </p>
     <p> Rated: 4.7/5</p>
     <p> At only 19 euro </p>
@@ -70,7 +82,7 @@ Since: 1.0
         <form id="createBookingForm" name="createBookingForm" method="POST" action="<c:url value="/booking-create"/>">
             <label for="numBooking">numBooking:</label>
             <input id="numBooking" name="numBooking" type="number" required/><br/><br/>
-            <input type="hidden" name="idAdvertisement" value="5" />
+            <input type="hidden" name="idAdvertisement" value="<%=idAdvertisement%>" />
             <button type="submit">Book your journey</button><br/>
         </form>
     </p>
@@ -83,7 +95,7 @@ Since: 1.0
         <input id="rateFeedback" name="rateFeedback" type="number" min="1" max="5" step="1" required/>
         <label for="textFeedback">text:</label>
         <input id="textFeedback" name="textFeedback" type="text"/>
-        <input type="hidden" name="idAdvertisement" value="5" />
+        <input type="hidden" name="idAdvertisement" value="<%=idAdvertisement%>" />
         <button type="submit">Leave a feedback</button><br/>
     </form>
     </p>

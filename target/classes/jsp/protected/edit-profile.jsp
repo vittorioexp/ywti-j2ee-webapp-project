@@ -1,6 +1,5 @@
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Tourist" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.User" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -49,10 +48,11 @@ Since: 1.0
 
     <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
 </nav>
-
+</br>
+<p>This is a mock page to update your profile</p>
+</br>
 <div>
-    <form method="PUT" action="<c:url value="/user/edit"/>">
-
+    <form name="editProfileForm" id="editProfileForm" method="POST" action="<c:url value="/user/edit"/>">
 
         <label for="password">new password:</label>
         <input id="password" name="password" type="password" required/><br/><br/>

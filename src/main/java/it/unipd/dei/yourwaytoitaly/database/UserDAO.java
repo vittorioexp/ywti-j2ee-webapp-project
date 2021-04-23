@@ -328,7 +328,7 @@ public class UserDAO extends AbstractDAO{
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                totalScore += rs.getInt("score");
+                totalScore += rs.getInt("score")*rs.getInt("num_booking");
             }
 
         } finally {

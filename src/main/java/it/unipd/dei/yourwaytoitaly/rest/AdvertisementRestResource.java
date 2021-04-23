@@ -462,7 +462,8 @@ public class AdvertisementRestResource extends RestResource {
             AdvertisementDAO.deleteAdvertisement(idAdvertisement);
 
             res.setStatus(HttpServletResponse.SC_OK);
-            res.sendRedirect(req.getContextPath() + "/user/profile");
+            Message m = new Message("Advertisement successfully deleted!");
+            m.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -588,7 +589,7 @@ public class AdvertisementRestResource extends RestResource {
             // The owner can see the booking list relative to this advertisement: check if a session is valid
             List<Booking> bookingList = new ArrayList<Booking>();
 
-            bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
+            //bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
 
             if (LoginServlet.checkSessionEmail(req, advertisement.getEmailCompany())) {
                 bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);

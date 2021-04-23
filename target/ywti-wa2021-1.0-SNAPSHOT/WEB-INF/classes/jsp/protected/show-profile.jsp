@@ -3,6 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Booking" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Advertisement" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -55,102 +56,92 @@ Since: 1.0
 
     </nav>
 
+    <p>This is a mock page to show the user profile.</p>
 
     <c:choose>
         <c:when test="${userType}">
-            <table>
-                <tr>
-                    <td>Name</td>
-                    <td>Surname</td>
-                    <td>Phone number</td>
-                    <td>Address</td>
-                    <td>Email</td>
-                    <td>City</td>
-                    <td>Birthdate</td>
-                </tr>
-                <tr>
-                    <td><c:out value="${user.name}"/></td>
-                    <td><c:out value="${user.surname}"/></td>
-                    <td><c:out value="${user.phoneNumber}"/></td>
-                    <td><c:out value="${user.address}"/></td>
-                    <td><c:out value="${user.email}"/></td>
-                    <td><c:out value="${user.idCity}"/></td>
-                    <td><c:out value="${user.birthDate}"/></td>
-                </tr>
-            </table>
-
-            <table>
-                <tr>
-                    <td>Booking date</td>
-                    <td>Item booked</td>
-                    <td>Booking state</td>
-                </tr>
-            </table>
+            </br>
+                <p>Name: ${user.name}</p>
+                <p>Surname: ${user.surname}</p>
+                <p>Email: ${user.email}</p>
+                <p>Phone number: ${user.phoneNumber}</p>
+                <p>Birth date: ${user.birthDate}</p>
+                <p>Address: ${user.address}</p>
+                <p>City: ${user.idCity}</p>
+                <p>Your score is ${score} </p>
+            </br>
+            <p>These are your bookings</p>
+            </br>
             <%
-                List<Booking> bookingslist = (List) request.getAttribute("bookings-list");
-                // TODO: show only NOT DELETED bookings and don't show old bookings (useless) --> Done in the BookingDAO
-                // TODO: for each element, show also the advertisement title (for clarity reasons)
+                List<Booking> bookinglist = (List) request.getAttribute("bookingList");
+                List<Advertisement> advertisementList = (List) request.getAttribute("advertisementList");
+                int count = 0;
             %>
             <table>
-            <c:forEach items="<%=bookingslist%>" var="booking">
+            <c:forEach items="<%=bookinglist%>" var="booking">
                     <tr>
-                        <td>${booking.date}</td>
-                        <td>${booking.numBooking}</td>
-                        <td>${booking.state}</td>
                         <td>
-                            <form id="delete booking-form" name="delete booking-form" action = "<c:url value="/booking-delete"/>" method="DELETE">
-                                <input type="hidden" id="idAdvertisement" name="idAdvertisement" value="${booking.idAdvertisement}"/>
+                            <%=advertisementList.get(count).getDateStart()%>
+                        </td>
+                        <td>
+                            <%=advertisementList.get(count).getTitle()%>
+                        </td>
+                        <td> ${booking.numBooking} items booked  </td>
+                        <td>
+                            <form id="deleteBookingForm" name="deleteBookingForm" action = "<c:url value="/booking-delete"/>" method="DELETE">
+                                <input type="hidden" name="idAdvertisement" value="${booking.idAdvertisement}"/>
                                 <button type="submit" >Delete</button><br/>
                             </form>
                         </td>
+                        <%count++;%>
                     </tr>
             </c:forEach>
             </table>
         </c:when>
         <c:otherwise>
-            <table>
-                <tr>
-                    <td>Name</td>
-                    <td>Email</td>
-                    <td>Phone number</td>
-                    <td>Address</td>
-                    <td>City</td>
-                </tr>
-                <tr>
-                    <td><c:out value="${user.name}"/></td>
-                    <td><c:out value="${user.email}"/></td>
-                    <td><c:out value="${user.phoneNumber}"/></td>
-                    <td><c:out value="${user.address}"/></td>
-                    <td><c:out value="${user.idCity}"/></td>
-                </tr>
-            </table>
-            <form method="GET" action="<c:url value="/advertisement-do-create"/>">
+            </br>
+            <p>Name: ${user.name}</p>
+            <p>Email: ${user.email}</p>
+            <p>Phone number: ${user.phoneNumber}</p>
+            <p>Address: ${user.address}</p>
+            <p>City: ${user.idCity}</p>
+            </br>
+            </br>
+            <p>Click this button to create a new advertisement</p>
+            </br>
+            <form method="GET" action="<c:url value="/adv-do-create"/>">
                 <button type="submit">New advertisement</button>
             </form>
             <%
-                // TODO : get JSON ResourceList<Advertisement> and show: title, dateStart, dateEnd, numTotItem (>0) and price
-                List<Advertisement> advertisementList = null;
+                List<Advertisement> advertisementList = (List<Advertisement>) request.getAttribute("advertisementList");
             %>
+            </br>
+            <p>These are your active advertisements</p>
+            </br>
             <table>
             <c:forEach items="${advertisementList}" var="adv">
                     <tr>
-                        <td>${adv.title}</td>
-                        <td>${adv.dateStart}</td>
-                        <td>${adv.dateEnd}</td>
-                        <td>${adv.numTotItem}</td>
-                        <td>${adv.price}</td>
-                        <!-- TODO: inserire la lista delle immagini -->
+                        <td>${adv.title}   </td>
+                        <td>${adv.dateStart}   </td>
+                        <td>${adv.dateEnd}   </td>
+                        <td>${adv.numTotItem}   </td>
+                        <td>${adv.price}   </td>
                         <td>
                             <form id="gotoEditAdvertisementForm" name="gotoEditAdvertisementForm" method="GET"
-                                  action="<c:url value="/advertisement-edit"/>">
+                                  action="<c:url value="/adv-edit"/>">
                                 <input type="hidden" name="idAdvertisement" value="${adv.idAdvertisement}">
                                 <button type="submit">Edit</button><br/>
                             </form>
                         </td>
-                        <td><button type="submit" formaction="/advertisement/${adv.idAdvertisement}">Info</button></td>
                         <td>
-                            <form id="deleteAdvertisement" name="deleteAdvertisement" method="DELETE"
-                                  action="<c:url value="/advertisement/${adv.idAdvertisement}"/>">
+                            <form id="gotoShowAdvertisementForm" name="gotoShowAdvertisementForm" method="GET"
+                                  action="<c:url value="/adv-show/${adv.idAdvertisement}"/>" >
+                                <button type="submit">Info</button><br/>
+                            </form>
+                        </td>
+                        <td>
+                            <form id="deleteAdvertisementForm" name="deleteAdvertisementForm" method="DELETE"
+                                  action="<c:url value="/adv/${adv.idAdvertisement}"/>" >
                                 <button type="submit">Delete</button>
                             </form>
                         </td>

@@ -1,5 +1,4 @@
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.User" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.servlet.SessionCheckServlet" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -47,7 +46,9 @@ Since: 1.0
 
     <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
 </nav>
-
+<br/>
+<p>This is a mock page to login. Please insert your email and password.</p>
+<br/>
 <div>
 <form id="login-form" name="login-form" method="POST" action="<c:url value="/user/login"/>">
     <label for="email">email:</label>

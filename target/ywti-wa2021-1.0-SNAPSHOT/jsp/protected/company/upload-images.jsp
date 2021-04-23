@@ -58,13 +58,12 @@ Since: 1.0
 <div>
     <%
         String path = request.getRequestURI();
-        String idAdvertisement = path.substring(path.lastIndexOf("upload-images") + 14);
+        String idAdvertisement = path.substring(path.lastIndexOf("image-do-upload") + 16);
     %>
     <%= idAdvertisement %>
     <form id="uploadImagesForm" name="uploadImagesForm" method="post" enctype="multipart/form-data"
-          action="<c:url value="/adv-create" />" >
+          action="<c:url value="/image-upload" />" >
         <input type="hidden" name="idAdvertisement" value="<%= idAdvertisement %>" />
-        <input type="hidden" name="description" value="ciao" />
         <label for="image">image:</label>
         <input id="image" name="image" type="file" id="file" multiple/><br/><br/>
         <button type="submit" name="Submit" value="Submit">Upload</button><br/>

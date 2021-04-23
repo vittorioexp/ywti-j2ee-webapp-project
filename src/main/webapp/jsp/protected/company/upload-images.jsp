@@ -64,7 +64,6 @@ Since: 1.0
     <form id="uploadImagesForm" name="uploadImagesForm" method="post" enctype="multipart/form-data"
           action="<c:url value="/image-upload" />" >
         <input type="hidden" name="idAdvertisement" value="<%= idAdvertisement %>" />
-        <input type="hidden" name="description" value="ciao" />
         <label for="image">image:</label>
         <input id="image" name="image" type="file" id="file" multiple/><br/><br/>
         <button type="submit" name="Submit" value="Submit">Upload</button><br/>

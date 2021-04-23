@@ -28,6 +28,11 @@ import java.util.List;
 public class UploadImageServlet extends AbstractDatabaseServlet {
 
     /**
+     * The JSON UTF-8 MIME media type
+     */
+    private static final String JSON_UTF_8_MEDIA_TYPE = "application/json; charset=utf-8";
+
+    /**
      * Upload images from a multipart/form-data
      *
      * @param req the HTTP request from the client.
@@ -36,6 +41,7 @@ public class UploadImageServlet extends AbstractDatabaseServlet {
      */
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws IOException {
+        res.setContentType(JSON_UTF_8_MEDIA_TYPE);
         try {
             // check if a session is valid
 
@@ -87,9 +93,7 @@ public class UploadImageServlet extends AbstractDatabaseServlet {
                                     m.toJSON(res.getOutputStream());
                                     return;
                                 }
-                                break;
-                            case "description":
-                                description = value;
+                                description = AdvertisementDAO.searchAdvertisement(idAdvertisement).getTitle();
                                 break;
                             default:
                                 break;
@@ -148,6 +152,8 @@ public class UploadImageServlet extends AbstractDatabaseServlet {
                 }
 
                 res.setStatus(HttpServletResponse.SC_OK);
+                Message m = new Message("Images successfully uploaded!");
+                m.toJSON(res.getOutputStream());
             }
 
         } catch (Exception ex) {
