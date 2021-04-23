@@ -131,6 +131,7 @@
 	<filter-mapping>
 		<filter-name>AuthenticationCheck</filter-name>
 		<url-pattern>/user/do-logout</url-pattern>
+		<url-pattern>/user/do-edit</url-pattern>
 		<url-pattern>/user/edit</url-pattern>
 		<url-pattern>/user/profile</url-pattern>
 		<url-pattern>/booking-delete</url-pattern>
