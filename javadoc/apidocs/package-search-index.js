@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"it.unipd.dei.yourwaytoitaly.database"},{"l":"it.unipd.dei.yourwaytoitaly.filter"},{"l":"it.unipd.dei.yourwaytoitaly.resource"},{"l":"it.unipd.dei.yourwaytoitaly.rest"},{"l":"it.unipd.dei.yourwaytoitaly.servlet"},{"l":"it.unipd.dei.yourwaytoitaly.utils"}]
