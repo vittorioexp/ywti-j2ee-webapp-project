@@ -1,0 +1,11 @@
+"Score 10/10
+
+–Good idea the test file
+–Git OK, all members contributed
+–Maven OK
+–Good mockups and an overall good idea for an application
+–Good ER schema
+–Good sequence diagram
+–Good use of filters
+–Good organization of error codes
+–Good idea the use of a confirmation email"
