@@ -15,6 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 Author: Vittorio Esposito
+        Marco Basso
+        Matteo Piva
+        Francecso Giurisato
 Version: 1.0
 Since: 1.0
 -->
@@ -25,6 +28,9 @@ Since: 1.0
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="author" content="Basso Marco, Esposito Vittorio, Piva Matteo, Giurisato Francesco"> <!-- who wrote the page -->
+    <meta name="description" content="Login page"> <!-- a textual description of it -->
+    <meta name="keywords" content="login, loginpage, ywti, local, travel, italy"> <!-- some keywords to make your page more easily findable -->
     <title>login</title>
 </head>
 <body>
