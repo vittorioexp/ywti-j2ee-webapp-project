@@ -33,7 +33,9 @@ Since: 1.0
 </header>
 <nav>
     <a href="${pageContext.request.contextPath}/index">Home</a>
-
+    <div>
+        <img src="/utility/logo.png" alt="Logo">
+    </div>
     <c:choose>
         <c:when test="${empty sessionScope.Authorization}">
             <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
