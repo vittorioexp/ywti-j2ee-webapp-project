@@ -5,6 +5,45 @@
     <title>index.html of Your Way to Italy</title>
 </head>
 <body>
+    <div id="page">
+        <header>
+            <h1>Your Way to Italy</h1>
+            <nav>
+                <!-- TODO: fix Navigation links -->
+                <a href="/ywti_wa2021_war/index">Home</a>
+                <a href="/ywti_wa2021_war/html/contacts.html">Contacts</a>
+                <a href="/ywti_wa2021_war/user/do-login">Login</a>
+                <a href="/ywti_wa2021_war/user/do-register">Register</a>
+            </nav>
+        </header>
+        <div id="content">
+            <article>
+                <!-- TODO: fix Search fields -->
+                <form id="advertisementListForm" name="advertisementListForm" method="get" action="/adv" >
 
+                <label for="typeAdvertisement">typeAdvertisement:</label>
+                <input type="number" id="typeAdvertisement" name="typeAdvertisement" required
+                       size="10">
+
+                <label for="city">city:</label>
+                <input type="number" id="city" name="city" required
+                       size="10">
+
+                <label for="date">Start date:</label>
+                <input type="date" id="date" name="date" required>
+
+                <button type="submit">Start your journey</button><br/>
+
+                </form>
+            </article>
+            <article>
+                <!-- TODO: fix List of advertisements -->
+
+            </article>
+        </div>
+        <footer>
+
+        </footer>
+    </div>
 </body>
 </html>
