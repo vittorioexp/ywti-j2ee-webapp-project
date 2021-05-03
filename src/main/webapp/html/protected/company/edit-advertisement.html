@@ -2,9 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="author" content="Basso Marco, Esposito Vittorio, Piva Matteo, Giurisato Francesco"> <!-- who wrote the page -->
+    <meta name="description" content="Edit advertisement page"> <!-- a textual description of it -->
+    <meta name="keywords" content="edit, advertisement, ywti "> <!-- some keywords to make your page more easily findable -->
     <title>edit-advertisement.html of Your Way to Italy</title>
 </head>
 <body>
+<div id="page">
+    <header>
+        <h1>Your Way to Italy</h1>
+        <!-- TODO: import navbar.html -->
+        <!-- https://stackoverflow.com/a/31837264 -->
+        <div data-include="navbar"></div>
+    </header>
+    <main id="content">
+        <article>
+            <!-- TODO: fix Search fields -->
+            <form id="advertisementForm" name="advertisementForm" method="put" action="/adv/ID" >
 
+                <label for="title">title:</label>
+                <input id="title" name="title" type="text"/><br/><br/>
+
+                <label for="idType">type:</label>
+                <input id="idType" name="idType" type="number"/><br/><br/>
+
+                <label for="description">description:</label>
+                <input id="description" name="description" type="text"/><br/><br/>
+
+                <label for="price">price:</label>
+                <input id="price" name="price" type="number" /><br/><br/>
+
+                <label for="numTotItem">numTotItem:</label>
+                <input id="numTotItem" name="numTotItem" type="number" /><br/><br/>
+
+                <label for="dateStart">dateStart:</label>
+                <input id="dateStart" name="dateStart" type="date" /><br/><br/>
+
+                <label for="dateEnd">dateEnd:</label>
+                <input id="dateEnd" name="dateEnd" type="date" /><br/><br/>
+
+                <label for="timeStart">timeStart:</label>
+                <input id="timeStart" name="timeStart" type="time" value="05:00:00"/><br/><br/>
+
+                <label for="timeEnd">timeEnd:</label>
+                <input id="timeEnd" name="timeEnd" type="time" value="23:30:00"/><br/><br/>
+
+                <button type="submit">Edit</button><br/>
+            </form>
+        </article>
+    </main>
+    <!-- TODO: import footer.html -->
+    <!-- https://stackoverflow.com/a/31837264 -->
+    <div data-include="footer"></div>
+</div>
 </body>
 </html>
