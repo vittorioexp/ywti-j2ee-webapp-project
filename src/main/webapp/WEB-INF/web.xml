@@ -37,8 +37,8 @@
 	<!-- Servlets -->
 
 	<servlet>
-		<servlet-name>IndexPageJSP</servlet-name>
-		<jsp-file>/jsp/index.jsp</jsp-file>
+		<servlet-name>IndexPage</servlet-name>
+		<jsp-file>/html/index.html</jsp-file>
 	</servlet>
 
 	<servlet>
@@ -82,8 +82,8 @@
 	</servlet>
 
 	<servlet>
-		<servlet-name>ShowAdvertisementJSP</servlet-name>
-		<jsp-file>/jsp/show-advertisement.jsp</jsp-file>
+		<servlet-name>ShowAdvertisement</servlet-name>
+		<jsp-file>/html/show-advertisement.html</jsp-file>
 	</servlet>
 
 	<servlet>
@@ -92,8 +92,8 @@
 	</servlet>
 
 	<servlet>
-		<servlet-name>CreateAdvertisementJSP</servlet-name>
-		<jsp-file>/jsp/protected/company/create-advertisement.jsp</jsp-file>
+		<servlet-name>CreateAdvertisement</servlet-name>
+		<jsp-file>/html/protected/company/create-advertisement.html</jsp-file>
 	</servlet>
 
 	<servlet>
@@ -107,8 +107,8 @@
 	</servlet>
 
 	<servlet>
-		<servlet-name>EditAdvertisementJSP</servlet-name>
-		<jsp-file>/jsp/protected/company/edit-advertisement.jsp</jsp-file>
+		<servlet-name>EditAdvertisement</servlet-name>
+		<jsp-file>/html/protected/company/edit-advertisement.html</jsp-file>
 	</servlet>
 
 	<servlet>
@@ -174,7 +174,7 @@
 	<!-- Mapping between servlets and URIs -->
 
 	<servlet-mapping>
-		<servlet-name>IndexPageJSP</servlet-name>
+		<servlet-name>IndexPage</servlet-name>
 		<url-pattern>/index</url-pattern>
 	</servlet-mapping>
 
@@ -220,12 +220,12 @@
 
 
 	<servlet-mapping>
-		<servlet-name>EditAdvertisementJSP</servlet-name>
+		<servlet-name>EditAdvertisement</servlet-name>
 		<url-pattern>/adv-edit</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
-		<servlet-name>CreateAdvertisementJSP</servlet-name>
+		<servlet-name>CreateAdvertisement</servlet-name>
 		<url-pattern>/adv-do-create</url-pattern>
 	</servlet-mapping>
 
@@ -245,7 +245,7 @@
 	</servlet-mapping>
 
 	<servlet-mapping>
-		<servlet-name>ShowAdvertisementJSP</servlet-name>
+		<servlet-name>ShowAdvertisement</servlet-name>
 		<url-pattern>/adv-show/*</url-pattern>
 	</servlet-mapping>
 
