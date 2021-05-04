@@ -24,64 +24,63 @@ Since: 1.0
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="author" content="Basso Marco, Esposito Vittorio, Piva Matteo, Giurisato Francesco"> <!-- who wrote the page -->
-    <meta name="description" content="Edit profile"> <!-- a textual description of it -->
-    <meta name="keywords" content="edit profile, ywti, local, travel, italy"> <!-- some keywords to make your page more easily findable -->
-    <!-- The viewport meta element is the key to making a responsive site work. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Edit profile</title>
-</head>
-<body>
-<header>
-    <h1>Edit profile</h1>
-    <!-- TODO: import navbar.html (JS) -->
-    <!-- https://stackoverflow.com/a/31837264 -->
-    <div data-include="navbar"></div>
-</header>
-<nav>
-    <a href="${pageContext.request.contextPath}/index">Home</a>
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Basso Marco, Esposito Vittorio, Piva Matteo, Giurisato Francesco"> <!-- who wrote the page -->
+        <meta name="description" content="Edit profile"> <!-- a textual description of it -->
+        <meta name="keywords" content="edit profile, ywti, local, travel, italy"> <!-- some keywords to make your page more easily findable -->
+        <!-- The viewport meta element is the key to making a responsive site work. -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Edit profile</title>
+    </head>
+    <body>
+    <div id="page">
+        <header>
+            <h1>Edit profile</h1>
+            <!-- TODO: import navbar.html (JS) -->
+            <!-- https://stackoverflow.com/a/31837264 -->
+            <div data-include="navbar"></div>
+            <nav>
+                <a href="${pageContext.request.contextPath}/index">Home</a>
 
-    <c:choose>
-        <c:when test="${empty sessionScope.Authorization}">
-            <a href="${pageContext.request.contextPath}/user/do-login">Login</a>
-            <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
-        </c:when>
-        <c:otherwise>
-            <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
-            <a href="${pageContext.request.contextPath}/user/do-logout">Logout</a>
-        </c:otherwise>
-    </c:choose>
+                <c:choose>
+                    <c:when test="${empty sessionScope.Authorization}">
+                        <a href="${pageContext.request.contextPath}/user/do-login">Login</a>
+                        <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
+                        <a href="${pageContext.request.contextPath}/user/do-logout">Logout</a>
+                    </c:otherwise>
+                </c:choose>
 
-    <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
-</nav>
-</br>
-<p>This is a mock page to update your profile</p>
-</br>
-<div>
-    <form name="editProfileForm" id="editProfileForm" method="POST" action="<c:url value="/user/edit"/>">
+                <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
+            </nav>
+        </header>
+        <main id="content">
+            </br>
+            <p>This is a mock page to update your profile</p>
+            </br>
+                <form name="editProfileForm" id="editProfileForm" method="POST" action="<c:url value="/user/edit"/>">
 
-        <label for="password">new password:</label>
-        <input id="password" name="password" type="password" required/><br/><br/>
+                    <label for="password">new password:</label>
+                    <input id="password" name="password" type="password" required/><br/><br/>
 
-        <label for="phonenumber">Phone Number:</label>
-        <input id="phonenumber" name="phonenumber" type="text" required/><br/><br/>
+                    <label for="phonenumber">Phone Number:</label>
+                    <input id="phonenumber" name="phonenumber" type="text" required/><br/><br/>
 
-        <label for="address">Address:</label>
-        <input id="address" name="address" type="text" required/><br/><br/>
+                    <label for="address">Address:</label>
+                    <input id="address" name="address" type="text" required/><br/><br/>
 
-        <label for="idCity">Id City:</label>
-        <input id="idCity" name="idCity" type="number" required/><br/><br/>
-        <button type="submit">Edit</button><br/>
+                    <label for="idCity">Id City:</label>
+                    <input id="idCity" name="idCity" type="number" required/><br/><br/>
+                    <button type="submit">Edit</button><br/>
 
-    </form>
-    <br />
-</div>
-
-
-<div>
-    <c:import url="/jsp/include/show-message.jsp"/>
-</div>
-</body>
+                </form>
+        </main>
+        <!-- TODO: import footer.html (JS) -->
+        <!-- https://stackoverflow.com/a/31837264 -->
+        <div data-include="footer"></div>
+    </div>
+    </body>
 </html>
