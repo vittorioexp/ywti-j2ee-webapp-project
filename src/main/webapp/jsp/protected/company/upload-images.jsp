@@ -26,12 +26,20 @@ Since: 1.0
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="author" content="Basso Marco, Esposito Vittorio, Piva Matteo, Giurisato Francesco"> <!-- who wrote the page -->
+    <meta name="description" content="upload images page"> <!-- a textual description of it -->
+    <meta name="keywords" content="upload, upload images, ywti, local, travel, italy"> <!-- some keywords to make your page more easily findable -->
+    <!-- The viewport meta element is the key to making a responsive site work. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Create an advertisement</title>
 </head>
 <body>
 
 <header>
-    <h1>Create Advertisement</h1>
+    <h1>Upload images</h1>
+    <!-- TODO: import navbar.html (JS) -->
+    <!-- https://stackoverflow.com/a/31837264 -->
+    <div data-include="navbar"></div>
 </header>
 <nav>
     <a href="${pageContext.request.contextPath}/index">Home</a>
