@@ -26,51 +26,57 @@ Since: 1.0
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="author" content="Basso Marco, Esposito Vittorio, Piva Matteo, Giurisato Francesco"> <!-- who wrote the page -->
-    <meta name="description" content="Login page"> <!-- a textual description of it -->
-    <meta name="keywords" content="login, loginpage, ywti, local, travel, italy"> <!-- some keywords to make your page more easily findable -->
-    <title>login</title>
-</head>
-<body>
-<header>
-    <h1>Login</h1>
-</header>
-<nav>
-    <a href="${pageContext.request.contextPath}/index">Home</a>
-    <div>
-        <img src="/utility/logo.png" alt="Logo">
-    </div>
-    <c:choose>
-        <c:when test="${empty sessionScope.Authorization}">
-            <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
-        </c:when>
-        <c:otherwise>
-            <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
-            <a href="${pageContext.request.contextPath}/user/do-logout">Logout</a>
-        </c:otherwise>
-    </c:choose>
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Basso Marco, Esposito Vittorio, Piva Matteo, Giurisato Francesco"> <!-- who wrote the page -->
+        <meta name="description" content="Login page"> <!-- a textual description of it -->
+        <meta name="keywords" content="login, loginpage, ywti, local, travel, italy"> <!-- some keywords to make your page more easily findable -->
+        <!-- The viewport meta element is the key to making a responsive site work. -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>login</title>
+    </head>
+    <body>
+        <div id="page">
+            <header>
+                <h1>Login</h1>
+                <!-- TODO: import navbar.html (JS) -->
+                <!-- https://stackoverflow.com/a/31837264 -->
+                <div data-include="navbar"></div>
+                <nav>
+                    <a href="${pageContext.request.contextPath}/index">Home</a>
+                    <div>
+                        <img src="/utility/logo.png" alt="Logo">
+                    </div>
+                    <c:choose>
+                        <c:when test="${empty sessionScope.Authorization}">
+                            <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
+                            <a href="${pageContext.request.contextPath}/user/do-logout">Logout</a>
+                        </c:otherwise>
+                    </c:choose>
 
-    <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
-</nav>
-<br/>
-<p>This is a mock page to login. Please insert your email and password.</p>
-<br/>
-<div>
-<form id="login-form" name="login-form" method="POST" action="<c:url value="/user/login"/>">
-    <label for="email">email:</label>
-    <input id="email" name="email" type="text" required/><br/><br/>
-    <label for="password">password:</label>
-    <input id="password" name="password" type="password" required/><br/><br/>
-    <button type="submit">Submit</button><br/>
-</form>
-</div>
-
-<div>
-    <c:import url="/jsp/include/show-message.jsp"/>
-</div>
-</body>
+                    <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
+                </nav>
+            </header>
+            <main id="content">
+                <br/>
+                <p>This is a mock page to login. Please insert your email and password.</p>
+                <br/>
+                <form id="login-form" name="login-form" method="POST" action="<c:url value="/user/login"/>">
+                    <label for="email">email:</label>
+                    <input id="email" name="email" type="text" required/><br/><br/>
+                    <label for="password">password:</label>
+                    <input id="password" name="password" type="password" required/><br/><br/>
+                    <button type="submit">Submit</button><br/>
+                </form>
+            </main>
+            <!-- TODO: import footer.html (JS) -->
+            <!-- https://stackoverflow.com/a/31837264 -->
+            <div data-include="footer"></div>
+        </div>
+    </body>
 </html>
 
 

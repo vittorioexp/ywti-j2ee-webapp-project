@@ -5,19 +5,21 @@
     <meta name="author" content="Basso Marco, Esposito Vittorio, Piva Matteo, Giurisato Francesco"> <!-- who wrote the page -->
     <meta name="description" content="Home page"> <!-- a textual description of it -->
     <meta name="keywords" content="homepage, indexpage, ywti"> <!-- some keywords to make your page more easily findable -->
+    <!-- The viewport meta element is the key to making a responsive site work. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>index.html of Your Way to Italy</title>
 </head>
 <body>
     <div id="page">
         <header>
             <h1>Your Way to Italy</h1>
-            <!-- TODO: import navbar.html -->
+            <!-- TODO: import navbar.html (JS) -->
             <!-- https://stackoverflow.com/a/31837264 -->
             <div data-include="navbar"></div>
         </header>
         <main id="content">
-            <article>
-                <!-- TODO: fix Search fields -->
+            <section>
+                <!-- TODO: fix Search fields (JS) -->
                 <form id="advertisementListForm" name="advertisementListForm" method="get" action="/adv" >
 
                 <label for="typeAdvertisement">typeAdvertisement:</label>
@@ -34,13 +36,21 @@
                 <button type="submit">Start your journey</button><br/>
 
                 </form>
-            </article>
-            <article>
-                <!-- TODO: fix List of advertisements -->
-
-            </article>
+            </section>
+            <section>
+                <!-- TODO: fix List of advertisements (JS) -->
+                <article>
+                    a
+                </article>
+                <article>
+                    b
+                </article>
+                <article>
+                    c
+                </article>
+            </section>
         </main>
-        <!-- TODO: import footer.html -->
+        <!-- TODO: import footer.html (JS) -->
         <!-- https://stackoverflow.com/a/31837264 -->
         <div data-include="footer"></div>
     </div>
