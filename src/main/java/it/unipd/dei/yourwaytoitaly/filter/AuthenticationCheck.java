@@ -53,14 +53,14 @@ public class AuthenticationCheck implements Filter {
         final HttpSession session = req.getSession(false);
         //Checking session presence end eventually redirecting to login page
         if (session == null ){
-            req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+            req.getRequestDispatcher("/user/do-login").forward(req, res);
             return;
         }
         else{
             //checking session email is not empty
             if ( LoginServlet.checkSessionEmail(req, "") ) {
                 session.invalidate();
-                req.getRequestDispatcher("/jsp/login.jsp").forward(req, res);
+                req.getRequestDispatcher("/user/do-login").forward(req, res);
                 return;
             }
 
