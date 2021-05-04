@@ -16,6 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 Author: Vittorio Esposito
+Marco Basso
+Matteo Piva
+Francecso Giurisato
 Version: 1.0
 Since: 1.0
 -->
@@ -61,6 +64,7 @@ Since: 1.0
             </br>
             <p>This is a mock page to update your profile</p>
             </br>
+            <section>
                 <form name="editProfileForm" id="editProfileForm" method="POST" action="<c:url value="/user/edit"/>">
 
                     <label for="password">new password:</label>
@@ -77,6 +81,7 @@ Since: 1.0
                     <button type="submit">Edit</button><br/>
 
                 </form>
+            </section>
         </main>
         <!-- TODO: import footer.html (JS) -->
         <!-- https://stackoverflow.com/a/31837264 -->
