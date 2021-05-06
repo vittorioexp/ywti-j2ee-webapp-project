@@ -1,4 +1,4 @@
-// TODO: fix list-advertisements.js
+// TODO: fix index-page.js
 // TODO Vedere tutor repo: js/search-maintenance-page.js
 
 // self executing function here
@@ -35,9 +35,9 @@ function searchAdvertisements(){
     //url.searchParams.set("idType", document.getElementById("idType").value);
     //url.searchParams.set("idCity", document.getElementById("idCity").value);
     //url.searchParams.set("dateStart", document.getElementById("dateStart").value);
-    genericGETRequest(url, listAdvertisements);
+    genericGETRequest(url, indexPage);
 }
 
 // TODO: Gets and shows the list of advertisements
-function listAdvertisements(req){
+function indexPage(req){
 }
