@@ -6,39 +6,48 @@ document.addEventListener('DOMContentLoaded', function(event) {
     // your page initialization code here
     // the DOM will be available here
 
-    // Gets and shows the list of typeAdvertisements and Cities
-    getTypeAdvertisements();
-    getCities();
+    // Requests and shows the list of typeAdvertisements and Cities
+    getTypeAdvertisementList();
+    getCityList();
 
     // calls searchAdvertisements() when clicking the search button
-    document.getElementById("search-button").addEventListener("click", searchAdvertisements);
+    document.getElementById("search-button").addEventListener("click", getAdvertisementList);
 });
 
 // TODO: Request the list of available typeAdvertisement
-function getTypeAdvertisements() {
+function getTypeAdvertisementList() {
+    var url = new URL(contextPath+'/.....');
+    // put code here
+    genericGETRequest(url, showTypeAdvertisementList);
 }
 
-// TODO: Gets and shows the list of available typeAdvertisement
-function showTypeAdvertisements(req){
+// TODO: Shows the list of available typeAdvertisement just requested
+function showTypeAdvertisementList(req){
 }
 
 // TODO: Request the list of available cities
-function getCities(){
+function getCityList(){
+    var url = new URL(contextPath+'/.....');
+    // put code here
+    genericGETRequest(url, showCityList);
 }
 
-// TODO: Gets and shows the list of available cities
-function showCities(req){
+// TODO: Shows the list of available cities just requested
+function showCityList(req){
+    var url = new URL(contextPath+'/adv');
+    // put code here
+    genericGETRequest(url, showCityList);
 }
 
-// TODO: Converts the form in JSON format and sends a GET request to /adv
-function searchAdvertisements(){
+// TODO: Converts the form in JSON format and requests the list of advertisements
+function getAdvertisementList(){
     var url = new URL(contextPath+'/adv');
     //url.searchParams.set("idType", document.getElementById("idType").value);
     //url.searchParams.set("idCity", document.getElementById("idCity").value);
     //url.searchParams.set("dateStart", document.getElementById("dateStart").value);
-    genericGETRequest(url, indexPage);
+    genericGETRequest(url, showAdvertisementList);
 }
 
-// TODO: Gets and shows the list of advertisements
-function indexPage(req){
+// TODO: Shows the list of advertisements
+function showAdvertisementList(req){
 }
