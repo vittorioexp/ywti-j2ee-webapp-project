@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     // your page initialization code here
     // the DOM will be available here
 
+    // Gets and shows the list of typeAdvertisements and Cities
     getTypeAdvertisements();
     getCities();
 
