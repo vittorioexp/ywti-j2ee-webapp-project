@@ -69,8 +69,7 @@ function loadNavbar(data){
         for (var i = 0; i < list.length; i++) {
             list[i].setAttribute("class", 'logged d-block');
         }
-    }
-    if(!loggedIn){
+    } else {
 
         list = document.getElementsByClassName("logged");
         for (var i = 0; i < list.length; i++) {

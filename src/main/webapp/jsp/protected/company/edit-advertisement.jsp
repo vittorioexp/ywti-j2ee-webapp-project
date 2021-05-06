@@ -71,8 +71,6 @@
 
 </form>
 </div>
-    <div>
-        <c:import url="/jsp/include/show-message.jsp"/>
-    </div>
+
 </body>
 </html>

@@ -80,8 +80,6 @@ Since: 1.0
     </div>
         <br>
         <br>
-    <div>
-        <c:import url="/jsp/include/show-message.jsp"/>
-    </div>
+
     </body>
 </html>
