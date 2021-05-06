@@ -31,7 +31,7 @@
 	<description>Booking site for experiences in Italy</description>
 
 	<welcome-file-list>
-		<welcome-file>/jsp/index.jsp</welcome-file>
+		<welcome-file>/html/index.html</welcome-file>
 	</welcome-file-list>
 
 	<!-- Servlets -->
@@ -39,6 +39,11 @@
 	<servlet>
 		<servlet-name>IndexPage</servlet-name>
 		<jsp-file>/html/index.html</jsp-file>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ContactsPage</servlet-name>
+		<jsp-file>/html/contacts.html</jsp-file>
 	</servlet>
 
 	<servlet>
@@ -176,6 +181,11 @@
 	<servlet-mapping>
 		<servlet-name>IndexPage</servlet-name>
 		<url-pattern>/index</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ContactsPage</servlet-name>
+		<url-pattern>/contacts</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
