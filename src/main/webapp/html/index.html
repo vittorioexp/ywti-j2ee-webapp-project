@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Your Way to Italy</title>
     <script src="../js/utils.js"></script>
+    <script src="../js/list-advertisements.js"></script>
 </head>
 <body>
     <div id="page">
@@ -22,18 +23,18 @@
                 <!-- TODO: fix Search fields (JS) -->
                 <form id="advertisementListForm" name="advertisementListForm" method="get" action="/adv" >
 
-                <label for="typeAdvertisement">typeAdvertisement:</label>
-                <input type="number" id="typeAdvertisement" name="typeAdvertisement" required
+                <label for="idType">typeAdvertisement:</label>
+                <input type="number" id="idType" name="idType" required
                        size="10">
 
-                <label for="city">city:</label>
-                <input type="number" id="city" name="city" required
+                <label for="idCity">city:</label>
+                <input type="number" id="idCity" name="idCity" required
                        size="10">
 
-                <label for="date">Start date:</label>
-                <input type="date" id="date" name="date" required>
+                <label for="dateStart">Start date:</label>
+                <input type="date" id="dateStart" name="dateStart" required>
 
-                <button type="submit">Start your journey</button><br/>
+                <button type="submit" id="search-button">Start your journey</button><br/>
 
                 </form>
             </section>
