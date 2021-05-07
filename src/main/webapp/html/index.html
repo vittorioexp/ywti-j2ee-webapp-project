@@ -21,7 +21,7 @@
         <main id="content">
             <section>
                 <!-- TODO: fix Search fields (JS) -->
-                <form id="advertisementListForm" name="advertisementListForm" method="get" action="/adv" >
+                <form id="searchAdv" name="searchAdv" method="get" >
 
                 <label for="idType">typeAdvertisement:</label>
                 <input type="number" id="idType" name="idType" required
@@ -38,9 +38,8 @@
 
                 </form>
             </section>
-            <section>
+            <section id="advertisementList" class="d-none">
                 <!-- TODO: fix List of advertisements (JS) -->
-                <div id="selected-advertisement"></div>
                 <article>
                     a
                 </article>

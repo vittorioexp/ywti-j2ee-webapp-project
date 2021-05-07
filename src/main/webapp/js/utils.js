@@ -22,30 +22,6 @@ function fetchTemplate(){
     sendGenericGetRequest(footerUrl, loadFooter);
 }
 
-// Sends a generic HTTP GET request
-function sendGenericGetRequest(url, callback){
-    let httpRequest = new XMLHttpRequest();
-
-    if (!httpRequest) {
-        alert("Cannot create an XMLHTTP instance");
-        return false;
-    }
-    httpRequest.onreadystatechange = function () {
-        if (httpRequest.readyState === XMLHttpRequest.DONE) {
-            if (httpRequest.status === 200) {
-                callback(httpRequest.responseText);
-            }
-            else {
-                console.log(httpRequest.responseText);
-                alert("problem processing the request");
-            }
-        }
-
-    };
-    httpRequest.open("GET", url);
-    httpRequest.send();
-}
-
 // Loads the navbar
 function loadNavbar(data){
 
@@ -113,4 +89,69 @@ function loadNavbar(data){
 // Loads the footer
 function loadFooter(data){
     document.getElementById("footer-area").innerHTML=data;
+}
+
+
+// Sends a generic HTTP GET request
+function sendGenericGetRequest(url, callback){
+    let httpRequest = new XMLHttpRequest();
+
+    if (!httpRequest) {
+        alert("Cannot create an XMLHTTP instance");
+        return false;
+    }
+    httpRequest.onreadystatechange = function () {
+        if (httpRequest.readyState === XMLHttpRequest.DONE) {
+            if (httpRequest.status === 200) {
+                callback(httpRequest.responseText);
+            }
+            else {
+                console.log(httpRequest.responseText);
+                alert("problem processing the request");
+            }
+        }
+
+    };
+    httpRequest.open("GET", url);
+    httpRequest.send();
+}
+
+function sendJsonRequest(url, method, data, callback) {
+    let httpRequest = new XMLHttpRequest();
+
+    if (!httpRequest) {
+        alert("Cannot create an XMLHTTP instance");
+        return false;
+    }
+    httpRequest.onreadystatechange = function () {
+        if (httpRequest.readyState === XMLHttpRequest.DONE) {
+            if (httpRequest.status === 200) {
+                callback(httpRequest.responseText);
+            }
+            else {
+                console.log(httpRequest.responseText);
+                alert("problem processing the request");
+            }
+        }
+    };
+
+    switch (method) {
+        case "GET":
+            httpRequest.open(method, url);
+            httpRequest.setRequestHeader("Accept","application/json");
+            httpRequest.send(data);
+            break;
+        case "PUT":
+        case "POST":
+        case "DELETE":
+            httpRequest.open(method, url);
+            httpRequest.setRequestHeader("Accept","application/json");
+            httpRequest.setRequestHeader("Content-Type","application/json");
+            httpRequest.send(data);
+            break;
+        default:
+            alert("HTTP method not allowed!");
+            return false;
+    }
+
 }

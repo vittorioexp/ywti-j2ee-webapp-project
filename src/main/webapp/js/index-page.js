@@ -38,17 +38,24 @@ function loadCityList(req){
 // TODO: Converts the form in JSON format and fetches the list of advertisements
 function fetchAdvertisementList(){
     let url = new URL(contextPath+"/adv");
+    let method = "GET";
 
-    // Converts the form in JSON format
-    //url.searchParams.set("idType", document.getElementById("idType").value);
-    //url.searchParams.set("idCity", document.getElementById("idCity").value);
-    //url.searchParams.set("dateStart", document.getElementById("dateStart").value);
+    // TODO: chiedere come Converts the form in JSON format
+    // Es: "{\"searchParameters\":{\"idType\":\"6\",\"idCity\":\"28\",\"dateStart\":\"2021-04-20\"}}"
+    let data = "{\"searchParameters\":" + JSON.stringify($("#searchAdv").html()) + "}";
+
+    //var formData = $("form.classOfForm").serializeObject();
 
     // fetches the list of advertisements
-    sendGenericGetRequest(url, loadAdvertisementList);
+    sendJsonRequest(url, method, data, loadAdvertisementList);
 }
 
 // TODO: Loads the list of advertisements
 function loadAdvertisementList(req){
+    // make the section visible in index.html
+    let advertisementList = document.getElementById("advertisementList")
+    advertisementList.setAttribute("class", "d-block");
 
+    // TODO: display the list
+    document.getElementById("advertisementList").innerHTML = req;
 }
