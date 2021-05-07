@@ -4,11 +4,12 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
     // Fetches the list of typeAdvertisements and Cities
-    fetchTypeAdvList();
-    fetchCityList();
+    //fetchTypeAdvList();
+    //fetchCityList();
 
     // fetch the list of advertisements when clicking the search button
-    document.getElementById("search-button").addEventListener("click", fetchAdvertisementList);
+    //document.getElementById("search-button").addEventListener("click", fetchAdvertisementList);
+    //document.addEventListener("submit", fetchAdvertisementList);
 });
 
 // TODO: Fetches the list of available typeAdv
@@ -37,14 +38,17 @@ function loadCityList(req){
 
 // TODO: Converts the form in JSON format and fetches the list of advertisements
 function fetchAdvertisementList(){
+
     let url = new URL(contextPath+"/adv");
     let method = "GET";
 
-    // TODO: chiedere come Converts the form in JSON format
+    // Converts the form in JSON format
     // Es: "{\"searchParameters\":{\"idType\":\"6\",\"idCity\":\"28\",\"dateStart\":\"2021-04-20\"}}"
-    let data = "{\"searchParameters\":" + JSON.stringify($("#searchAdv").html()) + "}";
-
-    //var formData = $("form.classOfForm").serializeObject();
+    let idType = document.getElementById("idType").value;
+    let idCity = document.getElementById("idCity").value;
+    let dateStart = document.getElementById("dateStart").value.toString();
+    let data = "{\"searchParameters\":{\"idType\":\"" + idType +
+        "\",\"idCity\":\"" + idCity + "\",\"dateStart\":\"" + dateStart + "\"}}";
 
     // fetches the list of advertisements
     sendJsonRequest(url, method, data, loadAdvertisementList);
@@ -58,4 +62,11 @@ function loadAdvertisementList(req){
 
     // TODO: display the list
     document.getElementById("advertisementList").innerHTML = req;
+    /*
+    var jsonData = JSON.parse(req.responseText);
+            console.log(jsonData["description"]);
+            document.getElementById("description").value = jsonData["description"];
+            setPreselectedPark(jsonData['parkid']);
+            setPreselectedModel(jsonData['modelid']);
+     */
 }

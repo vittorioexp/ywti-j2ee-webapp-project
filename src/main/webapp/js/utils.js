@@ -1,6 +1,6 @@
 // TODO: fix utils.js
 
-const contextPath = "http://localhost:63342/ywti-wa2021";
+const contextPath = "http://localhost:8080/ywti_wa2021_war";
 
 function sanitize(str) {
     return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;")
@@ -10,13 +10,12 @@ function sanitize(str) {
 // TODO: salvare le richieste in delle variabili
 document.addEventListener("DOMContentLoaded", function(event) {
     fetchTemplate();
-});
+})
 
 // Fetches navbar and footer
 function fetchTemplate(){
-
-    let navbarUrl = new URL(contextPath+"/html/reusable-snippets/navbar.html");
-    let footerUrl = new URL(contextPath+"/html/reusable-snippets/footer.html");
+    let navbarUrl = new URL(contextPath + "/html/reusable-snippets/navbar.html");
+    let footerUrl = new URL(contextPath + "/html/reusable-snippets/footer.html");
 
     sendGenericGetRequest(navbarUrl, loadNavbar);
     sendGenericGetRequest(footerUrl, loadFooter);
@@ -116,6 +115,7 @@ function sendGenericGetRequest(url, callback){
     httpRequest.send();
 }
 
+// TODO: with HTTP GET, cannot send "data"
 function sendJsonRequest(url, method, data, callback) {
     let httpRequest = new XMLHttpRequest();
 
@@ -149,5 +149,5 @@ function sendJsonRequest(url, method, data, callback) {
             alert("HTTP method not allowed!");
             return false;
     }
-
+    alert("messaggio inviato");
 }

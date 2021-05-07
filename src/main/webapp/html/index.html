@@ -8,8 +8,8 @@
     <!-- The viewport meta element is the key to making a responsive site work. -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Your Way to Italy</title>
-    <script src="../js/utils.js"></script>
-    <script src="../js/index-page.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/index-page.js"></script>
 </head>
 <body>
     <div id="page">
@@ -21,7 +21,7 @@
         <main id="content">
             <section>
                 <!-- TODO: fix Search fields (JS) -->
-                <form id="searchAdv" name="searchAdv" method="get" >
+                <form id="searchAdv" name="searchAdv" method="get" onsubmit="fetchAdvertisementList()">
 
                 <label for="idType">typeAdvertisement:</label>
                 <input type="number" id="idType" name="idType" required

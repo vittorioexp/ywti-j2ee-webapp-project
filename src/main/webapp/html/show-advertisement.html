@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Your Way to Italy</title>
     <script src="../js/utils.js"></script>
+    <script src="../js/show-advertisement-page.js"></script>
 </head>
 <body>
     <div id="page">
@@ -42,13 +43,13 @@
                     <!-- TODO: allow to Leave a  Feedback -->
                     The following is a simple form to leave a feedback.
 
-                    <form id="createFeedbackForm" name="createFeedbackForm" method="POST" action="<c:url value="/feedback-create"/>">
+                    <form id="createFeedbackForm" name="createFeedbackForm" method="POST" action="/feedback-create">">
                     <label for="rateFeedback">rate:</label>
                     <input id="rateFeedback" name="rateFeedback" type="number" min="1" max="5" step="1" required/>
                     <label for="textFeedback">text:</label>
                     <input id="textFeedback" name="textFeedback" type="text"/>
-                    <input type="hidden" name="idAdvertisement" value="<%=idAdvertisement%>" />
-                    <button type="submit">Leave a feedback</button><br/>
+                    <input type="hidden" name="idAdvertisement" value="" />
+                    <button id="create-feedback" type="submit">Leave a feedback</button><br/>
                     </form>
                 </article>
                 <article>
@@ -73,11 +74,11 @@
                     <!-- TODO: allow to Book your journey -->
                     The following is a simple form to create a booking.
 
-                    <form id="createBookingForm" name="createBookingForm" method="POST" action="<c:url value="/booking-create"/>">
+                    <form id="createBookingForm" name="createBookingForm" method="POST" action="/booking-create">">
                     <label for="numBooking">numBooking:</label>
                     <input id="numBooking" name="numBooking" type="number" required/><br/><br/>
-                    <input type="hidden" name="idAdvertisement" value="<%=idAdvertisement%>" />
-                    <button type="submit">Book your journey</button><br/>
+                    <input type="hidden" name="idAdvertisement" value="" />
+                    <button id="create-booking" type="submit">Book your journey</button><br/>
                     </form>
                 </article>
                 <article>
