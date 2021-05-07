@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     //document.getElementById("idAdvFeedback").setAttribute("value", getIdAdvertisement());
     //document.getElementById("idAdvBooking").setAttribute("value", getIdAdvertisement());
-
     fetchAdvertisement();
     fetchRate();
     fetchFeedbackList();
@@ -28,11 +27,7 @@ function fetchAdvertisement() {
 
 function loadAdvertisement(req) {
     // write function body
-    // TODO: receive and display the adv
-    let obj = JSON.parse(req);
-    alert(obj.idAdvertisement);
-    //alert(req);
-    //document.getElementById("advInfo").innerHTML = req;
+
 }
 
 function fetchRate() {

@@ -8,7 +8,6 @@ import it.unipd.dei.yourwaytoitaly.resource.User;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -145,7 +144,10 @@ public class LoginServlet extends AbstractDatabaseServlet {
             if (session != null ){
                 if ( email.equals(LoginServlet.getUserEmail(req)) ){
                     // User is already properly logged in
-                    req.getRequestDispatcher("/jsp/index.jsp").forward(req, res);
+                    Message m = new Message("User is already properly logged in");
+                    res.setStatus(200);
+                    m.toJSON(res.getOutputStream());
+                    return;
                 }else
                     // invalidate session
                     session.invalidate();
@@ -188,14 +190,10 @@ public class LoginServlet extends AbstractDatabaseServlet {
             session = req.getSession(true);
             session.setAttribute( "Authorization", authHeader );
 
-            Cookie e = new Cookie("email",email);
-            res.addCookie(e);
-
-
-            Message success = new Message("Successful login!");
-            req.setAttribute("message", success);
+            //Message success = new Message("Successful login!");
+            //req.setAttribute("message", success);
             res.setStatus(HttpServletResponse.SC_OK);
-            res.sendRedirect(req.getContextPath() + "/index");
+            //res.sendRedirect(req.getContextPath() + "/index");
 
         }catch (Exception ex){
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

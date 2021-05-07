@@ -34,14 +34,14 @@ Since: 1.0
         <!-- The viewport meta element is the key to making a responsive site work. -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>login</title>
+        <script src="../js/utils.js"></script>
+        <script src="../js/login-page.js"></script>
     </head>
     <body>
         <div id="page">
             <header>
                 <h1>Login</h1>
-                <!-- TODO: import navbar.html (JS) -->
-                <!-- https://stackoverflow.com/a/31837264 -->
-                <div data-include="navbar"></div>
+                <div id="navbar-area"></div>
                 <nav>
                     <a href="${pageContext.request.contextPath}/index">Home</a>
                     <div>
@@ -64,17 +64,15 @@ Since: 1.0
                 <br/>
                 <p>This is a mock page to login. Please insert your email and password.</p>
                 <br/>
-                <form id="login-form" name="login-form" method="POST" action="<c:url value="/user/login"/>">
+                <form id="login-form" name="login-form" method="POST">
                     <label for="email">email:</label>
                     <input id="email" name="email" type="text" required/><br/><br/>
                     <label for="password">password:</label>
                     <input id="password" name="password" type="password" required/><br/><br/>
-                    <button type="submit">Submit</button><br/>
+                    <button id="login-button" type="submit">Submit</button><br/>
                 </form>
             </main>
-            <!-- TODO: import footer.html (JS) -->
-            <!-- https://stackoverflow.com/a/31837264 -->
-            <div data-include="footer"></div>
+            <div id="footer-area"></div>
         </div>
     </body>
 </html>

@@ -44,23 +44,12 @@ function loadNavbar(data){
     let i;
     let list;
 
+    let email = getCookie("email");
+
     // Checks if the user is logged in or not
-    // TODO: chiedere come accedere agli attributi della sessione da js
-    let authorization = sessionStorage.getItem("Authorization");
+    if (email!="") {
 
-    // Questo controllo e' sufficiente?
-    if (authorization!=null) {
-
-        let encodedAuth = authorization.substring(
-            authorization.lastIndexOf("Basic ") + 1,
-        );
-
-        let decodedAuth = atob(encodedAuth);
-
-        document.getElementById("user-email").innerHTML = decodedAuth.substring(
-            0,
-            decodedAuth.lastIndexOf(":")
-        );
+        document.getElementById("user-email").innerHTML = email;
 
         list = document.getElementsByClassName("unlogged")
         for (i = 0; i < list.length; i++) {
@@ -134,7 +123,6 @@ function sendJsonRequest(url, method, data, callback) {
             }
         }
     };
-
     switch (method) {
         case "GET":
         case "PUT":
@@ -149,5 +137,27 @@ function sendJsonRequest(url, method, data, callback) {
             alert("HTTP method not allowed!");
             return false;
     }
-    alert(method +" at "+ url);
+
+}
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }
