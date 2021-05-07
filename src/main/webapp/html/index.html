@@ -10,15 +10,18 @@
     <title>Your Way to Italy</title>
     <script src="js/utils.js"></script>
     <script src="js/index-page.js"></script>
+    <link href="css/style/ywti.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div id="page">
+    <div id="mainWrapper">
         <header>
             <h1>Your Way to Italy</h1>
             <!-- TODO: import navbar.html (JS) -->
             <div id="navbar-area"></div>
         </header>
-        <main id="content">
+        <main id="mainContent">
+
+            <nav class="searchbar">
             <section>
                 <!-- TODO: fix Search fields (JS) -->
                 <form id="searchAdv" name="searchAdv" method="get" >
@@ -37,6 +40,7 @@
                 <button type="submit" id="search-button">Start your journey</button><br/>
 
                 </form>
+            </nav>
             </section>
             <section id="advertisementList" class="d-none">
                 <!-- TODO: fix List of advertisements (JS) -->

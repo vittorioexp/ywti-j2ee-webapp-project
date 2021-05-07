@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+a:hover {
+    color: rgba(255,255,255,1.00);
+}
+/*header*/
+header {
+    font-family: 'Montserrat', sans-serif;
+    color: rgba(146,146,146,1.00);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+#offer {
+    font-family: 'Montserrat', sans-serif;
+    clear: both;
+    background-color: rgba(246,246,246,1.00);
+    color: rgba(146,146,146,1.00);
+    padding-left: 115px;
+    padding-top: 57px;
+    padding-bottom: 57px;
+}
+
+#content {
+    clear: both;
+    overflow: auto;
+    padding-top: 29px;
+}
+
+#content .mainContent {
+    float: left;
+    width: 70%;
+    text-align: center;
+    padding-left: 4%;
+}
+
+#content .searchbar {
+    float: left;
+    width: 70%;
+    text-align: center;
+    padding-left: 4%;
+}
