@@ -19,15 +19,15 @@
         </header>
         <main id="content">
             <section>
-                <article>
+                <article id="advTitle">
                     <!-- TODO: get the Title of the advertisement -->
                     Delicious dinner in the Dolomites, da Pino
                 </article>
-                <article>
+                <article id="advImages">
                     <!-- TODO: get the List of images -->
 
                 </article>
-                <article>
+                <article id="advInfo">
                     <!-- TODO: get the Info about the advertisement -->
                     <p> This is a mock advertisement. Requests to the REST web server will be made in order to show the desired advertisement. </p>
                     <p> Rated: 4.7/5</p>
@@ -39,20 +39,20 @@
             </section>
 
             <section>
-                <article>
+                <article id="createFeedback">
                     <!-- TODO: allow to Leave a  Feedback -->
                     The following is a simple form to leave a feedback.
 
-                    <form id="createFeedbackForm" name="createFeedbackForm" method="POST" action="/feedback-create">">
+                    <form id="createFeedbackForm" name="createFeedbackForm" method="POST" action="/ywti_wa2021_war/feedback-create">">
                     <label for="rateFeedback">rate:</label>
                     <input id="rateFeedback" name="rateFeedback" type="number" min="1" max="5" step="1" required/>
                     <label for="textFeedback">text:</label>
                     <input id="textFeedback" name="textFeedback" type="text"/>
-                    <input type="hidden" name="idAdvertisement" value="" />
+                    <input type="hidden" id="idAdvFeedback" name="idAdvertisement" value="" />
                     <button id="create-feedback" type="submit">Leave a feedback</button><br/>
                     </form>
                 </article>
-                <article>
+                <article id="feedbackList">
                     <!-- TODO: get the List of Feedback -->
                     <p> Here it will be shown a list of feedback.</p>
                     <p>
@@ -74,10 +74,10 @@
                     <!-- TODO: allow to Book your journey -->
                     The following is a simple form to create a booking.
 
-                    <form id="createBookingForm" name="createBookingForm" method="POST" action="/booking-create">">
+                    <form id="createBookingForm" name="createBookingForm" method="POST" action="/ywti_wa2021_war/booking-create">">
                     <label for="numBooking">numBooking:</label>
                     <input id="numBooking" name="numBooking" type="number" required/><br/><br/>
-                    <input type="hidden" name="idAdvertisement" value="" />
+                    <input type="hidden" id="idAdvBooking" name="idAdvertisement" value="" />
                     <button id="create-booking" type="submit">Book your journey</button><br/>
                     </form>
                 </article>

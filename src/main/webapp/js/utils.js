@@ -140,7 +140,7 @@ function sendJsonRequest(url, method, data, callback) {
         case "PUT":
         case "POST":
         case "DELETE":
-            httpRequest.open(method, url);
+            httpRequest.open(method,url);
             httpRequest.setRequestHeader("Accept","application/json");
             httpRequest.setRequestHeader("Content-Type","application/json");
             httpRequest.send(data);
@@ -149,5 +149,5 @@ function sendJsonRequest(url, method, data, callback) {
             alert("HTTP method not allowed!");
             return false;
     }
-    alert("messaggio inviato");
+    alert(method +" at "+ url);
 }

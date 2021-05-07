@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     //fetchCityList();
 
     // fetch the list of advertisements when clicking the search button
-    //document.getElementById("search-button").addEventListener("click", fetchAdvertisementList);
+    document.getElementById("search-button").addEventListener("click", fetchAdvertisementList);
     //document.addEventListener("submit", fetchAdvertisementList);
 });
 

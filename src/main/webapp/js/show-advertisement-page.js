@@ -1,37 +1,61 @@
 // TODO: fix this page
 
-let idAdvertisement;
-
 document.addEventListener("DOMContentLoaded", function(event) {
 
+    //document.getElementById("idAdvFeedback").setAttribute("value", getIdAdvertisement());
+    //document.getElementById("idAdvBooking").setAttribute("value", getIdAdvertisement());
+
     fetchAdvertisement();
+    fetchRate();
     fetchFeedbackList();
     fetchBookingList();
     fetchImageList();
-
-    document.getElementById("create-booking").addEventListener("click", createBooking);
-    document.getElementById("create-feedback").addEventListener("click", createFeedback);
 });
 
-function fetchAdvertisement() {
-   // write function body
+function getIdAdvertisement() {
+    let url = window.location.href;
+    url = url.substring(
+        url.lastIndexOf("adv-show/") + 9
+    );
+    // Checks if the ID makes sense
+    return url;
 }
 
-function loadAdvertisement() {
+function fetchAdvertisement() {
+    let url = new URL(contextPath+"/adv/" + getIdAdvertisement());
+    sendJsonRequest(url,"GET","",loadAdvertisement());
+}
+
+function loadAdvertisement(req) {
+    // write function body
+    // TODO: receive and display the adv
+    let obj = JSON.parse(req);
+    alert(obj.idAdvertisement);
+    //alert(req);
+    //document.getElementById("advInfo").innerHTML = req;
+}
+
+function fetchRate() {
+    let url = new URL(contextPath+"/adv/" + getIdAdvertisement()+"/rate");
+    sendJsonRequest(url,"GET","",loadRate());
+}
+
+function loadRate() {
     // write function body
 }
 
 function fetchFeedbackList() {
-    // write function body
+    let url = new URL(contextPath+"/adv/" + getIdAdvertisement()+"/feedback");
+    sendJsonRequest(url,"GET","",loadFeedbackList());
 }
 
 function loadFeedbackList() {
     // write function body
 }
 
-
 function fetchBookingList() {
-    // write function body
+    let url = new URL(contextPath+"/adv/" + getIdAdvertisement()+"/booking");
+    sendJsonRequest(url,"GET","",loadBookingList());
 }
 
 function loadBookingList() {
@@ -39,17 +63,10 @@ function loadBookingList() {
 }
 
 function fetchImageList() {
-    // write function body
+    let url = new URL(contextPath+"/adv/" + getIdAdvertisement()+"/image");
+    sendJsonRequest(url,"GET","",loadImageList());
 }
 
 function loadImageList() {
-    // write function body
-}
-
-function createBooking() {
-    // write function body
-}
-
-function createFeedback() {
     // write function body
 }
