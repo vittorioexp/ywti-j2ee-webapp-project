@@ -137,10 +137,6 @@ function sendJsonRequest(url, method, data, callback) {
 
     switch (method) {
         case "GET":
-            httpRequest.open(method, url);
-            httpRequest.setRequestHeader("Accept","application/json");
-            httpRequest.send(data);
-            break;
         case "PUT":
         case "POST":
         case "DELETE":
