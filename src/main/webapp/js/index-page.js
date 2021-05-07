@@ -1,53 +1,54 @@
 // TODO: fix index-page.js
 // TODO Vedere tutor repo: js/search-maintenance-page.js
 
-// self executing function here
 document.addEventListener("DOMContentLoaded", function(event) {
-    // your page initialization code here
-    // the DOM will be available here
 
     // Fetches the list of typeAdvertisements and Cities
-    fetchTypeAdvertisementList();
+    fetchTypeAdvList();
     fetchCityList();
 
-    // calls searchAdvertisements() when clicking the search button
+    // fetch the list of advertisements when clicking the search button
     document.getElementById("search-button").addEventListener("click", fetchAdvertisementList);
 });
 
-// TODO: Request the list of available typeAdvertisement
-function fetchTypeAdvertisementList() {
-    var url = new URL(contextPath+'/.....');
+// TODO: Fetches the list of available typeAdv
+function fetchTypeAdvList() {
+    let url = new URL(contextPath+"/.....");
     // put code here
-    genericGETRequest(url, showTypeAdvertisementList);
+    sendGenericGetRequest(url, loadTypeAdvList);
 }
 
-// TODO: Shows the list of available typeAdvertisement just requested
-function loadTypeAdvertisementList(req){
+// TODO: Loads the list of available type adv
+function loadTypeAdvList(req){
+    // put code here
 }
 
-// TODO: Request the list of available cities
+// TODO: Fetches the list of available cities
 function fetchCityList(){
-    var url = new URL(contextPath+'/.....');
+    let url = new URL(contextPath+"/.....");
     // put code here
-    genericGETRequest(url, showCityList);
+    sendGenericGetRequest(url, loadCityList);
 }
 
-// TODO: Shows the list of available cities just requested
+// TODO: Loads the list of available cities
 function loadCityList(req){
-    var url = new URL(contextPath+'/adv');
     // put code here
-    genericGETRequest(url, showCityList);
 }
 
-// TODO: Converts the form in JSON format and requests the list of advertisements
+// TODO: Converts the form in JSON format and fetches the list of advertisements
 function fetchAdvertisementList(){
-    var url = new URL(contextPath+'/adv');
+    let url = new URL(contextPath+"/adv");
+
+    // Converts the form in JSON format
     //url.searchParams.set("idType", document.getElementById("idType").value);
     //url.searchParams.set("idCity", document.getElementById("idCity").value);
     //url.searchParams.set("dateStart", document.getElementById("dateStart").value);
-    genericGETRequest(url, loadAdvertisementList);
+
+    // fetches the list of advertisements
+    sendGenericGetRequest(url, loadAdvertisementList);
 }
 
-// TODO: Shows the list of advertisements
+// TODO: Loads the list of advertisements
 function loadAdvertisementList(req){
+
 }

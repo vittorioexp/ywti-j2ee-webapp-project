@@ -7,10 +7,12 @@ function sanitize(str) {
         .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
+// TODO: salvare le richieste in delle variabili
 document.addEventListener("DOMContentLoaded", function(event) {
     fetchTemplate();
 });
 
+// Fetches navbar and footer
 function fetchTemplate(){
 
     let navbarUrl = new URL(contextPath+"/html/reusable-snippets/navbar.html");
@@ -20,6 +22,7 @@ function fetchTemplate(){
     sendGenericGetRequest(footerUrl, loadFooter);
 }
 
+// Sends a generic HTTP GET request
 function sendGenericGetRequest(url, callback){
     let httpRequest = new XMLHttpRequest();
 
@@ -43,6 +46,7 @@ function sendGenericGetRequest(url, callback){
     httpRequest.send();
 }
 
+// Loads the navbar
 function loadNavbar(data){
 
     document.getElementById("navbar-area")
@@ -65,19 +69,13 @@ function loadNavbar(data){
     let i;
     let list;
 
-    // TODO: use cookies https://www.w3schools.com/js/js_cookies.asp
-    let cookie = document.cookie;
-    let email = cookie.substring(
-        cookie.lastIndexOf("email=")+1,
-        cookie.indexOf(";", 0)
-    );
+    // Checks if the user is logged in or not
+    // TODO: chiedere come accedere agli attributi della sessione da js
+    let authorization = sessionStorage.getItem("Authorization");
 
-    //let authorization = sessionStorage.getItem("Authorization");
-    
-    if (email!=null) {
+    // Questo controllo e' sufficiente?
+    if (authorization!=null) {
 
-        /*
-        // Basic XXXXXXXX
         let encodedAuth = authorization.substring(
             authorization.lastIndexOf("Basic ") + 1,
         );
@@ -87,9 +85,7 @@ function loadNavbar(data){
         document.getElementById("user-email").innerHTML = decodedAuth.substring(
             0,
             decodedAuth.lastIndexOf(":")
-        );*/
-
-        document.getElementById("user-email").innerHTML = email;
+        );
 
         list = document.getElementsByClassName("unlogged")
         for (i = 0; i < list.length; i++) {
@@ -114,6 +110,7 @@ function loadNavbar(data){
     }
 }
 
+// Loads the footer
 function loadFooter(data){
-    document.getElementById("footer-area").innerHTML= data;
+    document.getElementById("footer-area").innerHTML=data;
 }
