@@ -8,6 +8,7 @@ import it.unipd.dei.yourwaytoitaly.resource.User;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -186,6 +187,10 @@ public class LoginServlet extends AbstractDatabaseServlet {
             String authHeader = "Basic " + new String( encodedAuth );
             session = req.getSession(true);
             session.setAttribute( "Authorization", authHeader );
+
+            Cookie e = new Cookie("email",email);
+            res.addCookie(e);
+
 
             Message success = new Message("Successful login!");
             req.setAttribute("message", success);
