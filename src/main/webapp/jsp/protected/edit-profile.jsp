@@ -37,6 +37,7 @@ Since: 1.0
         <title>Edit profile</title>
         <script src="/ywti_wa2021_war/js/utils.js"></script>
         <script src="/ywti_wa2021_war/js/edit-profile-page.js"></script>
+        <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
     </head>
     <body>
     <div id="page">

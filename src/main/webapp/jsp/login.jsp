@@ -34,8 +34,9 @@ Since: 1.0
         <!-- The viewport meta element is the key to making a responsive site work. -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>login</title>
-        <script src="../js/utils.js"></script>
-        <script src="../js/login-page.js"></script>
+        <script src="/ywti_wa2021_war/js/utils.js"></script>
+        <script src="/ywti_wa2021_war/js/login-page.js"></script>
+        <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
         <c:choose>
             <c:when test="${!empty sessionScope.Authorization}">
                 <script>
