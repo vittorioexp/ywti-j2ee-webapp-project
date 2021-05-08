@@ -1,9 +1,9 @@
-// TODO: fix this page
+// TODO: fix "load" functions
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
-    //document.getElementById("idAdvFeedback").setAttribute("value", getIdAdvertisement());
-    //document.getElementById("idAdvBooking").setAttribute("value", getIdAdvertisement());
+    document.getElementById("idAdvFeedback").setAttribute("value", getIdAdvertisement());
+    document.getElementById("idAdvBooking").setAttribute("value", getIdAdvertisement());
     fetchAdvertisement();
     fetchRate();
     fetchFeedbackList();
@@ -27,7 +27,6 @@ function fetchAdvertisement() {
 
 function loadAdvertisement(req) {
     // write function body
-
 }
 
 function fetchRate() {

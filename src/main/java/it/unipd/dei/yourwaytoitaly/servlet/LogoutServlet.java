@@ -65,10 +65,8 @@ public class LogoutServlet extends AbstractDatabaseServlet {
             HttpSession session = req.getSession(false);
             session.invalidate();
 
-            Message success = new Message("Successful logout.");
-            req.setAttribute("message", success);
             res.setStatus(HttpServletResponse.SC_OK);
-            res.sendRedirect(req.getContextPath() + "/index");
+            res.sendRedirect(req.getContextPath() + "/user/do-login");
 
         }catch (Exception ex){
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

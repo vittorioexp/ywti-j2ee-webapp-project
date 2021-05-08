@@ -36,6 +36,35 @@ Since: 1.0
         <title>login</title>
         <script src="../js/utils.js"></script>
         <script src="../js/login-page.js"></script>
+        <c:choose>
+            <c:when test="${!empty sessionScope.Authorization}">
+                <script>
+                    let auth = "${sessionScope.Authorization}";
+                    let authHeader = auth.substring(
+                        auth.lastIndexOf(" ") + 1,
+                    );
+                    authHeader = atob(authHeader);
+                    let email = authHeader.substring(
+                        0,
+                        authHeader.lastIndexOf(":")
+                    );
+                    let role = authHeader.substring(
+                        authHeader.lastIndexOf(":")+1
+                    );
+                    sessionStorage.setItem("loggedIn", true);
+                    sessionStorage.setItem("userEmail", email);
+                    sessionStorage.setItem("userRole", role);
+                    window.location.href = contextPath;
+                </script>
+            </c:when>
+            <c:otherwise>
+                <script>
+                    sessionStorage.removeItem("loggedIn");
+                    sessionStorage.removeItem("userEmail");
+                    sessionStorage.removeItem("userRole");
+                </script>
+            </c:otherwise>
+        </c:choose>
     </head>
     <body>
         <div id="page">
@@ -64,7 +93,7 @@ Since: 1.0
                 <br/>
                 <p>This is a mock page to login. Please insert your email and password.</p>
                 <br/>
-                <form id="login-form" name="login-form" method="POST">
+                <form id="login-form" name="login-form" method="POST" action="<c:url value="/user/login"/>">
                     <label for="email">email:</label>
                     <input id="email" name="email" type="text" required/><br/><br/>
                     <label for="password">password:</label>

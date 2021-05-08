@@ -35,6 +35,8 @@ Since: 1.0
     <!-- The viewport meta element is the key to making a responsive site work. -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Create an advertisement</title>
+    <script src="/ywti_wa2021_war/js/utils.js"></script>
+    <script src="/ywti_wa2021_war/js/upload-images-page.js"></script>
 </head>
 <body>
 <div id="page">

@@ -8,8 +8,8 @@
     <!-- The viewport meta element is the key to making a responsive site work. -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Your Way to Italy</title>
-    <script src="js/utils.js"></script>
-    <script src="js/show-advertisement-page.js"></script>
+    <script src="/ywti_wa2021_war/js/utils.js"></script>
+    <script src="/ywti_wa2021_war/js/show-advertisement-page.js"></script>
 </head>
 <body>
     <div id="page">
@@ -20,29 +20,23 @@
             <section>
                 <article id="advTitle">
                     <!-- TODO: get the Title of the advertisement -->
-                    Delicious dinner in the Dolomites, da Pino
+                    Adv title:
                 </article>
                 <article id="advImages">
                     <!-- TODO: get the List of images -->
-
+                    Adv images:
                 </article>
                 <article id="advInfo">
                     <!-- TODO: get the Info about the advertisement -->
-                    <p> This is a mock advertisement. Requests to the REST web server will be made in order to show the desired advertisement. </p>
-                    <p> Rated: 4.7/5</p>
-                    <p> At only 19 euro </p>
-                    <p> Starting from 19/04/2021 to 01/07/2021  </p>
-                    <p> Opening time: 18:30:00 - 23:30:00 </p>
-                    <p> Items available: 28 </p>
+                    Adv info:
                 </article>
             </section>
 
             <section>
                 <article id="createFeedback">
                     <!-- TODO: allow to Leave a  Feedback -->
-                    The following is a simple form to leave a feedback.
 
-                    <form id="createFeedbackForm" name="createFeedbackForm" method="POST" action="/ywti_wa2021_war/feedback-create">">
+                    <form id="createFeedbackForm" name="createFeedbackForm" method="POST" action="/ywti_wa2021_war/feedback-create">
                     <label for="rateFeedback">rate:</label>
                     <input id="rateFeedback" name="rateFeedback" type="number" min="1" max="5" step="1" required/>
                     <label for="textFeedback">text:</label>
@@ -53,27 +47,14 @@
                 </article>
                 <article id="feedbackList">
                     <!-- TODO: get the List of Feedback -->
-                    <p> Here it will be shown a list of feedback.</p>
-                    <p>
-                        Rate: 5/5, "Amazing experience!"
-                        Written on 30/04/2021
-                    </p>
-                    <p>
-                        Rate: 5/5, "This was super cool!"
-                        Written on 2/05/2021
-                    </p>
-                    <p>
-                        Rate: 4/5, "Good! I will surely come back"
-                        Written on 5/05/2021
-                    </p>
+                    Feedback List:
                 </article>
             </section>
             <section>
                 <article>
                     <!-- TODO: allow to Book your journey -->
-                    The following is a simple form to create a booking.
 
-                    <form id="createBookingForm" name="createBookingForm" method="POST" action="/ywti_wa2021_war/booking-create">">
+                    <form id="createBookingForm" name="createBookingForm" method="POST" action="/ywti_wa2021_war/booking-create">
                     <label for="numBooking">numBooking:</label>
                     <input id="numBooking" name="numBooking" type="number" required/><br/><br/>
                     <input type="hidden" id="idAdvBooking" name="idAdvertisement" value="" />
@@ -82,17 +63,7 @@
                 </article>
                 <article>
                     <!-- TODO: get the List of bookings (only for owner) -->
-                    <p>
-                        Here the owner of the advertisement will see the list of bookings.
-                    </p>
-                    <p>
-                        pippopasticcio@gmail.com booked for 2.
-                        29/04/2021 - 14:30
-                    </p>
-                    <p>
-                        filippo@gmail.com booked for 1.
-                        28/04/2021 - 12:33
-                    </p>
+                    Booking List:
                 </article>
             </section>
         </main>

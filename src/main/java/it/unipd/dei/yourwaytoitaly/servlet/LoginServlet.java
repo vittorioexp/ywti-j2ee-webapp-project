@@ -193,7 +193,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
             //Message success = new Message("Successful login!");
             //req.setAttribute("message", success);
             res.setStatus(HttpServletResponse.SC_OK);
-            //res.sendRedirect(req.getContextPath() + "/index");
+            res.sendRedirect(req.getContextPath() + "/user/do-login");
 
         }catch (Exception ex){
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

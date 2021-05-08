@@ -44,12 +44,15 @@ function loadNavbar(data){
     let i;
     let list;
 
-    let email = getCookie("email");
+    let loggedIn = sessionStorage.getItem("loggedIn");
+    let userAuthorization = sessionStorage.getItem("userRole");
 
     // Checks if the user is logged in or not
-    if (email!="") {
+    if (loggedIn) {
 
+        let email = sessionStorage.getItem("userEmail");
         document.getElementById("user-email").innerHTML = email;
+
 
         list = document.getElementsByClassName("unlogged")
         for (i = 0; i < list.length; i++) {
@@ -112,7 +115,7 @@ function sendJsonRequest(url, method, data, callback) {
         alert("Cannot create an XMLHTTP instance");
         return false;
     }
-    httpRequest.onreadystatechange = function () {
+    /*httpRequest.onreadystatechange = function () {
         if (httpRequest.readyState === XMLHttpRequest.DONE) {
             if (httpRequest.status === 200) {
                 callback(httpRequest.responseText);
@@ -122,7 +125,7 @@ function sendJsonRequest(url, method, data, callback) {
                 alert("problem processing the request");
             }
         }
-    };
+    };*/
     switch (method) {
         case "GET":
         case "PUT":
@@ -137,14 +140,14 @@ function sendJsonRequest(url, method, data, callback) {
             alert("HTTP method not allowed!");
             return false;
     }
-
+    alert(url + " " + method + " " + data);
 }
-
+/*
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     var expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/ywti_wa2021_war";
 }
 
 function getCookie(cname) {
@@ -160,4 +163,4 @@ function getCookie(cname) {
         }
     }
     return "";
-}
+}*/

@@ -33,7 +33,9 @@ Since: 1.0
         <meta name="keywords" content="login, loginpage, ywti, local, travel, italy"> <!-- some keywords to make your page more easily findable -->
         <!-- The viewport meta element is the key to making a responsive site work. -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>register</title>
+        <title>Register - Your Way to Italy</title>
+        <script src="/ywti_wa2021_war/js/utils.js"></script>
+        <script src="/ywti_wa2021_war/js/register-page.js"></script>
     </head>
     <body>
     <div id="page">

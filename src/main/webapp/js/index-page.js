@@ -40,7 +40,6 @@ function loadCityList(req){
 function fetchAdvertisementList(){
 
     let url = new URL(contextPath+"/adv");
-    let method = "GET";
 
     // Converts the form in JSON format
     // Es: "{\"searchParameters\":{\"idType\":\"6\",\"idCity\":\"28\",\"dateStart\":\"2021-04-20\"}}"
@@ -51,7 +50,7 @@ function fetchAdvertisementList(){
         "\",\"idCity\":\"" + idCity + "\",\"dateStart\":\"" + dateStart + "\"}}";
 
     // fetches the list of advertisements
-    sendJsonRequest(url, method, data, loadAdvertisementList);
+    sendJsonRequest(url, "GET", data, loadAdvertisementList);
 }
 
 // TODO: Loads the list of advertisements
