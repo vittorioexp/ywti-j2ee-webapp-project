@@ -1,4 +1,3 @@
-// TODO: fix "load" functions
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
@@ -16,7 +15,7 @@ function getIdAdvertisement() {
     url = url.substring(
         url.lastIndexOf("adv-show/") + 9
     );
-    // Checks if the ID makes sense
+    // TODO Checks if the ID makes sense
     return url;
 }
 
@@ -26,7 +25,7 @@ function fetchAdvertisement() {
 }
 
 function loadAdvertisement(req) {
-    // write function body
+    // TODO write function body
 }
 
 function fetchRate() {
@@ -35,7 +34,7 @@ function fetchRate() {
 }
 
 function loadRate() {
-    // write function body
+    // TODO write function body
 }
 
 function fetchFeedbackList() {
@@ -44,7 +43,7 @@ function fetchFeedbackList() {
 }
 
 function loadFeedbackList() {
-    // write function body
+    // TODO write function body
 }
 
 function fetchBookingList() {
@@ -53,7 +52,7 @@ function fetchBookingList() {
 }
 
 function loadBookingList() {
-    // write function body
+    // TODO write function body
 }
 
 function fetchImageList() {
@@ -62,5 +61,5 @@ function fetchImageList() {
 }
 
 function loadImageList() {
-    // write function body
+    // TODO write function body
 }

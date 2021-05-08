@@ -33,10 +33,10 @@ function fetchCityList(){
 
 // TODO: Loads the list of available cities
 function loadCityList(req){
-    // put code here
+    // TODO put code here
 }
 
-// TODO: Converts the form in JSON format and fetches the list of advertisements
+// Converts the form in JSON format and fetches the list of advertisements
 function fetchAdvertisementList(){
 
     let url = new URL(contextPath+"/adv");

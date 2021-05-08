@@ -115,7 +115,7 @@ function sendJsonRequest(url, method, data, callback) {
         alert("Cannot create an XMLHTTP instance");
         return false;
     }
-    /*httpRequest.onreadystatechange = function () {
+    httpRequest.onreadystatechange = function () {
         if (httpRequest.readyState === XMLHttpRequest.DONE) {
             if (httpRequest.status === 200) {
                 callback(httpRequest.responseText);
@@ -125,7 +125,7 @@ function sendJsonRequest(url, method, data, callback) {
                 alert("problem processing the request");
             }
         }
-    };*/
+    };
     switch (method) {
         case "GET":
         case "PUT":
