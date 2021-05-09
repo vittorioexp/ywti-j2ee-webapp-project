@@ -11,6 +11,15 @@ header {
     font-style: normal;
     font-weight: 400;
 }
+#logo {
+    float: left;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 139px;
+    text-align: center;
+    color: rgba(255,255,255,1.00);
+    background-color: rgba(190,190,190,1.00);
+}
 
 #offer {
     font-family: 'Montserrat', sans-serif;
@@ -40,4 +49,17 @@ header {
     width: 70%;
     text-align: center;
     padding-left: 4%;
+}
+
+nav {
+    font-family: 'Montserrat', sans-serif;
+    color: rgba(146,146,146,1.00);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+#mainWrapper {
+    width: 80%;
+    padding-left: 10%;
 }

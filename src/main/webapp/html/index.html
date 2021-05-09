@@ -10,16 +10,24 @@
     <title>Your Way to Italy</title>
     <script src="/ywti_wa2021_war/js/utils.js"></script>
     <script src="/ywti_wa2021_war/js/index-page.js"></script>
-    <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
+    <link href="css/style/ywti.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div id="mainWrapper">
         <header>
-            <h1>Your Way to Italy</h1>
-            <div id="navbar-area"></div>
+            <div id="logo">
+                YourWayToItaly </div>
         </header>
-        <main id="mainContent" >
-            <section class="searchbar">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+
+            <section class="mainContent">
+            <nav class="searchbar">
                 <form id="searchAdv" name="searchAdv" method="get" >
 
                 <label for="idType">typeAdvertisement:</label>
@@ -33,15 +41,16 @@
                 <label for="dateStart">Start date:</label>
                 <input type="date" id="dateStart" name="dateStart" required>
 
-                <button type="submit" id="search-button">Start your journey</button><br/>
+                <button type="submit" id="search-button" class="">Start your journey</button><br/>
 
                 </form>
-            </section>
+            </nav>
             <section id="advertisementList" class="d-none">
                 <!-- TODO: fix List of advertisements (JS) -->
 
             </section>
-        </main>
+        </section>
+
         <div id="footer-area"></div>
     </div>
 </body>
