@@ -137,7 +137,6 @@ function sendJsonRequest(url, method, data, callback) {
             alert("HTTP method not allowed!");
             return false;
     }
-    alert(url + " " + method + " " + data);
 }
 /*
 function setCookie(cname, cvalue, exdays) {

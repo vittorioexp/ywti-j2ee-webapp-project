@@ -21,45 +21,72 @@ function getIdAdvertisement() {
 
 function fetchAdvertisement() {
     let url = new URL(contextPath+"/adv/" + getIdAdvertisement());
-    sendJsonRequest(url,"GET","",loadAdvertisement());
+    sendJsonRequest(url,"GET","",loadAdvertisement);
 }
 
 function loadAdvertisement(req) {
-    // TODO write function body
+    // Parses the JSON obj
+    let jsonData = JSON.parse(req).advertisement;
+    let title = jsonData['title'];
+    let description = jsonData['description'];
+    let price = jsonData['price'];
+    let score = jsonData['score'];
+    let numTotItem = jsonData['numTotItem'];
+    let dateStart = jsonData['dateStart'];
+    let dateEnd = jsonData['dateEnd'];
+    let timeStart = jsonData['timeStart'];
+    let timeEnd = jsonData['timeEnd'];
+    let emailCompany = jsonData['emailCompany'];
+
+    // Presents the JSON obj
+    document.getElementById("advTitle").innerHTML = title;
+
+    let info = "<p>" + description + "</p><p>" + "Only " + price + " euro!" + "</p><p>" + "There are just " + numTotItem + " items available!"
+                + "</p><p>" + "The event is starting the day " + dateStart + " at " + timeStart + " until "
+                + dateEnd + " at " + timeEnd + "</p><br><p>" + "For more info: " + emailCompany + "</p>";
+
+    document.getElementById("advInfo").innerHTML = info;
+
 }
 
 function fetchRate() {
     let url = new URL(contextPath+"/adv/" + getIdAdvertisement()+"/rate");
-    sendJsonRequest(url,"GET","",loadRate());
+    sendJsonRequest(url,"GET","",loadRate);
 }
 
-function loadRate() {
-    // TODO write function body
+function loadRate(req) {
+    // Parses the JSON obj
+    let jsonData = JSON.parse(req).rate;
+    let rate = jsonData['rate'];
+
+    // Presents the JSON obj
+    let info = "<p>" + "Rated " + rate + "/5" + "</p>" + document.getElementById("advInfo").innerHTML;
+    document.getElementById("advInfo").innerHTML = info;
 }
 
 function fetchFeedbackList() {
     let url = new URL(contextPath+"/adv/" + getIdAdvertisement()+"/feedback");
-    sendJsonRequest(url,"GET","",loadFeedbackList());
+    sendJsonRequest(url,"GET","",loadFeedbackList);
 }
 
-function loadFeedbackList() {
+function loadFeedbackList(req) {
     // TODO write function body
 }
 
 function fetchBookingList() {
     let url = new URL(contextPath+"/adv/" + getIdAdvertisement()+"/booking");
-    sendJsonRequest(url,"GET","",loadBookingList());
+    sendJsonRequest(url,"GET","",loadBookingList);
 }
 
-function loadBookingList() {
+function loadBookingList(req) {
     // TODO write function body
 }
 
 function fetchImageList() {
     let url = new URL(contextPath+"/adv/" + getIdAdvertisement()+"/image");
-    sendJsonRequest(url,"GET","",loadImageList());
+    sendJsonRequest(url,"GET","",loadImageList);
 }
 
-function loadImageList() {
+function loadImageList(req) {
     // TODO write function body
 }
