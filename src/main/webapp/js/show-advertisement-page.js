@@ -70,7 +70,27 @@ function fetchFeedbackList() {
 }
 
 function loadFeedbackList(req) {
-    // TODO write function body
+    // Parses the JSON resourceList
+    let feedbackList = JSON.parse(req).resourceList;
+    let str;
+    if (feedbackList.length>0) {
+        str = "<h3>" + "Reviews" + "</h3>";
+        feedbackList.forEach(function(resource) {
+            let feedback = resource.feedback;
+            let emailTourist = feedback.emailTourist;
+            let idAdvertisement = feedback.idAdvertisement;
+            let rate = feedback.rate;
+            let text = feedback.text;
+            let date = feedback.date;
+            str += "<div class=" + "feedback" + ">"  + "<p>" + "\"" + text + "\"" + "</p>" +
+                "<p>" + "Rated " + rate +  "/5" + " - " + date + "</p>" + "</div><br>";
+        });
+    } else {
+        str = "<p>" + "No reviews found for this advertisement" + "</p>";
+    }
+    // Presents the JSON resourceList
+    document.getElementById("feedbackList").innerHTML += str;
+
 }
 
 function fetchBookingList() {
@@ -79,7 +99,28 @@ function fetchBookingList() {
 }
 
 function loadBookingList(req) {
-    // TODO write function body
+    // Parses the JSON resourceList
+    let bookingList = JSON.parse(req).resourceList;
+    let str;
+    if (bookingList.length>0) {
+        str = "<h3>" + "Bookings" + "</h3>";
+        bookingList.forEach(function(resource) {
+            let booking = resource.booking;
+            let emailTourist = booking.emailTourist;
+            let idAdvertisement = booking.idAdvertisement;
+            let date = booking.date;
+            let time = booking.time;
+            let numBooking = booking.numBooking;
+            let state = booking.state;
+
+            str += "<div class=" + "booking" + ">"  + "<p>" + emailTourist + " booked " + numBooking + " items" + " - "
+                + date + ", " + time + "</p>" + "</div><br>";
+        });
+    } else {
+        str = "<p>" + "No bookings found for this advertisement" + "</p>";
+    }
+    // Presents the JSON resourceList
+    document.getElementById("bookingList").innerHTML += str;
 }
 
 function fetchImageList() {
@@ -87,6 +128,22 @@ function fetchImageList() {
     sendJsonRequest(url,"GET","",loadImageList);
 }
 
+// TODO: fix the following
 function loadImageList(req) {
-    // TODO write function body
+    // Parses the JSON resourceList
+    let imageList = JSON.parse(req).resourceList;
+    let str = "";
+    if (imageList.length>0) {
+        imageList.forEach(function(resource) {
+            let image = resource.image;
+            let idImage = image.idImage;
+            let path = image.path;
+            let description = image.description;
+            let idAdvertisement = image.idAdvertisement;
+
+            str += "<img src=\"" + path + "\" width=\"320\" height=\"240\" />";
+        });
+    }
+    alert(str);
+    document.getElementById("advImages").children.innerHTML = str;
 }
