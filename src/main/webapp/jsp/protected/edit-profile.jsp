@@ -84,6 +84,23 @@ Since: 1.0
                     <button type="submit">Edit</button><br/>
 
                 </form>
+
+                <form name="ProfileForm" id="ProfileForm">
+
+                    <label for="passwordOld">new password:</label>
+                    <input id="passwordOld" name="passwordOld" type="password" required/><br/><br/>
+
+                    <label for="phonenumberOld">Phone Number:</label>
+                    <input id="phonenumberOld" name="phonenumberOld" type="text" required/><br/><br/>
+
+                    <label for="addressOld">Address:</label>
+                    <input id="addressOld" name="addressOld" type="text" required/><br/><br/>
+
+                    <label for="idCityOld">Id City:</label>
+                    <input id="idCityOld" name="idCityOld" type="number" required/><br/><br/>
+                    <button type="submit">Edit</button><br/>
+
+                </form>
             </section>
         </main>
         <!-- TODO: import footer.html (JS) -->
