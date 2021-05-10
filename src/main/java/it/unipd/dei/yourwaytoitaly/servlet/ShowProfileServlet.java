@@ -59,7 +59,7 @@ public class ShowProfileServlet extends AbstractDatabaseServlet {
                         Advertisement adv = AdvertisementDAO.searchAdvertisement(b.getIdAdvertisement());
                         advertisementList.add(adv);
                     }
-                    //Per vedere a quali annunci sono riferite le prenotazioni
+                    // shows more info about bookings
                     req.setAttribute("advertisementList", advertisementList);
                 } else if (u instanceof Company) {
                     req.setAttribute("userType",(Boolean) isTourist);
@@ -68,7 +68,7 @@ public class ShowProfileServlet extends AbstractDatabaseServlet {
                     List<Advertisement> advertisementList = AdvertisementDAO.searchAdvertisement(emailCompany);
                     req.setAttribute("advertisementList", advertisementList);
                 }
-                req.getRequestDispatcher("/jsp/protected/show-profile.jsp").forward(req, res);
+                req.getRequestDispatcher("/html/protected/show-profile.html").forward(req, res);
             break;
         default:
             ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;

@@ -7,20 +7,19 @@
     <meta name="keywords" content="profile, page, show, ywti"> <!-- some keywords to make your page more easily findable -->
     <!-- The viewport meta element is the key to making a responsive site work. -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>show-profile.html of Your Way to Italy</title>
+    <title>My profile - Your Way to Italy</title>
     <script src="/ywti_wa2021_war/js/utils.js"></script>
     <script src="/ywti_wa2021_war/js/show-profile-page.js"></script>
     <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
+    <link href="/ywti_wa2021_war/css/style/show-profile-page.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div id="page">
+    <div class="mainWrapper">
         <header>
-            <h1>Your Way to Italy</h1>
-            <!-- TODO: import navbar.html -->
-            <!-- https://stackoverflow.com/a/31837264 -->
-            <div data-include="navbar"></div>
+            <div id="navbar-area"></div>
         </header>
-        <main id="content">
+        <main class="mainContent" >
+            <p>hi</p>
             <section id="userInfoSection">
 
             </section>
@@ -34,8 +33,8 @@
 
             </section>
         </main>
-        <!-- TODO: import footer.html (JS) -->
-        <div data-include="footer"></div>
+        <!-- footer imported with javascript -->
+        <div id="footer-area"></div>
     </div>
 </body>
 </html>
