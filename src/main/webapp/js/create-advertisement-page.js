@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
-    // Fetches the list of typeAdvertisements and Cities
     //fetchTypeAdvList();
-    //fetchCityList();
 
     document.getElementById("create-button").addEventListener("click", createAdvertisement);
 });
@@ -17,18 +15,6 @@ function fetchTypeAdvList() {
 // TODO: Loads the list of available type adv
 function loadTypeAdvList(req){
     // put code here
-}
-
-// TODO: Fetches the list of available cities
-function fetchCityList(){
-    let url = new URL(contextPath+"/.....");
-    // put code here
-    sendGenericGetRequest(url, loadCityList);
-}
-
-// TODO: Loads the list of available cities
-function loadCityList(req){
-    // TODO put code here
 }
 
 function createAdvertisement() {
@@ -46,7 +32,7 @@ function createAdvertisement() {
     let timeStart = document.getElementById("timeStart").value.toString();
     let timeEnd = document.getElementById("timeEnd").value.toString();
     let idType = document.getElementById("idType").value.toString();
-    let emailCompany =  let email = sessionStorage.getItem("userEmail");
+    let emailCompany = sessionStorage.getItem("userEmail");
     let data = "{\"advertisement\":{\"idAvdertisement\":\"" + idAdvertisement.toString() + "\"," +
         "\"title\":\"" + title +
         "\",\"description\":\"" + description + "\"," +
@@ -60,7 +46,6 @@ function createAdvertisement() {
         "\"emailCompany\":\"" + emailCompany + "\"," +
         "\"idType\":\"" + idType + "\"}}";
 
-    //TODO callback
-    sendJsonRequest(url, "POST", data, );
+    sendJsonRequest(url, "POST", data, function(req){window.location.replace(contextPath + "/html/protected/show-profile.html");});
 
 }
