@@ -247,7 +247,8 @@ public class AdvertisementRestResource extends RestResource {
             advertisement = AdvertisementDAO.editAdvertisement(advertisement);
 
             res.setStatus(HttpServletResponse.SC_OK);
-            advertisement.toJSON(res.getOutputStream());
+            //Redirect to show-advertisement.html made on the client side
+            //advertisement.toJSON(res.getOutputStream());
 
             // for DEBUG if you want to receive the updated advertisement details
             //advertisement.toJSON(res.getOutputStream());
