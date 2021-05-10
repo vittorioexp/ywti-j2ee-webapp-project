@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
+    // Fetches the list of typeAdvertisements and Cities
     //fetchTypeAdvList();
     //fetchCityList();
 
@@ -37,20 +38,20 @@ function createAdvertisement() {
     let idAdvertisement = 0;
     let title = document.getElementById("title").value;
     let description = document.getElementById("description").value;
-    let price = document.getElementById("price").value;
-    let score = price/3.14;
-    let numTotItem = document.getElementById("numTotItem").value;
+    let price = document.getElementById("price").value.toString();
+    let score = (price/3.14);
+    let numTotItem = document.getElementById("numTotItem").value.toString();
     let dateStart = document.getElementById("dateStart").value.toString();
-    let dateEnd = document.getElementById("dateEnd").value;
+    let dateEnd = document.getElementById("dateEnd").value.toString();
     let timeStart = document.getElementById("timeStart").value.toString();
-    let timeEnd = document.getElementById("timeEnd").value;
-    let idType = document.getElementById("idType").value;
-    let emailCompany =
-    let data = "{\"advertisement\":{\"idAvdertisement\":\"" + idAdvertisement + "\"," +
+    let timeEnd = document.getElementById("timeEnd").value.toString();
+    let idType = document.getElementById("idType").value.toString();
+    let emailCompany =  let email = sessionStorage.getItem("userEmail");
+    let data = "{\"advertisement\":{\"idAvdertisement\":\"" + idAdvertisement.toString() + "\"," +
         "\"title\":\"" + title +
         "\",\"description\":\"" + description + "\"," +
         "\"price\":\"" + price + "\"," +
-        "\"score\":\"" + score + "\"," +
+        "\"score\":\"" + score.toString() + "\"," +
         "\"numTotItem\":\"" + numTotItem + "\"," +
         "\"dateStart\":\"" + dateStart + "\"," +
         "\"dateEnd\":\"" + dateEnd + "\"," +
@@ -59,8 +60,7 @@ function createAdvertisement() {
         "\"emailCompany\":\"" + emailCompany + "\"," +
         "\"idType\":\"" + idType + "\"}}";
 
-
-    sendJsonRequest(url, "POST", data);
-
+    //TODO callback
+    sendJsonRequest(url, "POST", data, );
 
 }
