@@ -1,16 +1,28 @@
 /* CSS HEX */
+:root {
+
+    --forest-green-web: #019127ff;
+    --malachite: #12d145ff;
+    --white: #fafafa;
+    --light-gray: #fafafa;
+    --red-pigment: #f22626ff;
+    --carnelian: #ba1a1aff;
+    --black:  #131313;
+
+}
+/*
 --forest-green-web: #019127ff;
 --malachite: #12d145ff;
 --white: #ffffffff;
 --red-pigment: #f22626ff;
 --carnelian: #ba1a1aff;
 
+--navbar-white: #fafafa;
+--navbar-black: #131313;
+--navbar-active-color: #fafafa;
+--navbar-bg-active-color: #ff9900;
+
 /* CSS HSL */
---forest-green-web: hsla(136, 99%, 29%, 1);
---malachite: hsla(136, 84%, 45%, 1);
---white: hsla(0, 0%, 100%, 1);
---red-pigment: hsla(0, 89%, 55%, 1);
---carnelian: hsla(0, 75%, 42%, 1);
 
 /*!* SCSS HEX *!
 $forest-green-web: #019127ff;

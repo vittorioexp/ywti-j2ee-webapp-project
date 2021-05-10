@@ -1,0 +1,27 @@
+#big-logo {
+    margin-top: 7%;
+    margin-bottom: 5%;
+    padding: 5%;
+    text-align: center;
+    position: relative;
+    border: 1px black solid;
+}
+
+.searchbar {
+    padding-top: 2%;
+    text-align: center;
+    position: relative;
+    border: 1px black solid;
+}
+
+.searchbar label {
+    padding-left: 3%;
+}
+
+#search-button {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 5%;
+    text-align: center;
+    position: relative;
+}

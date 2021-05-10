@@ -39,29 +39,13 @@ Since: 1.0
         <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-    <div id="page">
+    <div class="mainWrapper">
         <header>
             <h1>Register</h1>
-            <!-- TODO: import navbar.html (JS) -->
-            <!-- https://stackoverflow.com/a/31837264 -->
-            <div data-include="navbar"></div>
-            <nav>
-                <a href="${pageContext.request.contextPath}/index">Home</a>
-
-                <c:choose>
-                    <c:when test="${empty sessionScope.Authorization}">
-                        <a href="${pageContext.request.contextPath}/user/do-login">Login</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
-                        <a href="${pageContext.request.contextPath}/user/do-logout">Logout</a>
-                    </c:otherwise>
-                </c:choose>
-
-                <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
-            </nav>
+            <!-- navbar (which includes the logo) imported with javascript -->
+            <div id="navbar-area"></div>
         </header>
-        <main id="content">
+        <main class="mainContent" >
             <br/>
             <p>This is a mock page to register</p>
             <section>
@@ -121,9 +105,8 @@ Since: 1.0
                 </form>
             </section>
         </main>
-        <!-- TODO: import footer.html (JS) -->
-        <!-- https://stackoverflow.com/a/31837264 -->
-        <div data-include="footer"></div>
+        <!-- footer imported with javascript -->
+        <div id="footer-area"></div>
     </div>
     </body>
 </html>

@@ -24,10 +24,7 @@ function fetchTemplate(){
 // Loads the navbar
 function loadNavbar(data){
 
-    document.getElementById("navbar-area")
-        .innerHTML = data;
-    document.getElementById("logo-button")
-        .setAttribute("href", contextPath+"/index");
+    document.getElementById("navbar-area").innerHTML = data;
     document.getElementById("home-button")
         .setAttribute("href", contextPath+"/index");
     document.getElementById("profile-button")
@@ -51,7 +48,7 @@ function loadNavbar(data){
     if (loggedIn) {
 
         let email = sessionStorage.getItem("userEmail");
-        document.getElementById("user-email").innerHTML = email;
+        document.getElementById("user-email").innerHTML = "Logged in as " + email;
 
 
         list = document.getElementsByClassName("unlogged")

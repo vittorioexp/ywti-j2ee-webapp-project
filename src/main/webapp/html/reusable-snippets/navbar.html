@@ -1,33 +1,31 @@
 <!-- TODO: fix navbar -->
 <nav class='navbar navbar-dark fixed-top'>
 
-    <div class='container-fluid'>
+    <span class='container-fluid'>
 
-        <div class='navbar-header'>
-            <a class='navbar-brand' id="logo-button">Logo</a>
-        </div>
 
-        <a class="nav-link" id="home-button"><span class='fa ......'></span>home</a>
+        <a class="nav-link text-right" id="home-button"><span class='fa ......'></span>home</a>
 
-        <!-- Elements to be displayed when logged in -->
-        <div class="d-none logged">
-            <div class='nav navbar-nav navbar-right text-right'>
-                <div class="navbar-text">Logged in as <div id="user-email"></div></div>
+            <!-- Elements to be displayed when logged in -->
+        <span class="d-none logged">
+            <span class='nav navbar-nav text-right'>
                 <a class="nav-link" id="profile-button"><span class='fa ......'></span>profile</a>
                 <a class="nav-link" id="logout-button"><span class='fa fa-sign-out'></span>logout</a>
-            </div>
-        </div>
+            </span>
+        </span>
 
-        <!-- Elements to be displayed when NOT logged in -->
-        <div class="d-block unlogged">
-            <div class='nav navbar-nav navbar-right text-right'>
+            <!-- Elements to be displayed when NOT logged in -->
+        <span class="d-block unlogged">
+            <span class='nav navbar-nav text-right'>
                 <a class="nav-link" id="login-button"><span class='fa fa-sign-in'></span>login</a>
                 <a class="nav-link" id="register-button"><span class='fa fa-user-plus'></span>register</a>
-            </div>
-        </div>
+            </span>
+        </span>
 
         <a class="nav-link" id="contacts-button"><span class='fa ......'></span>contacts</a>
 
-    </div>
+        <div class="navbar-text"><div id="user-email"></div></div>
+
+    </span>
 
 </nav>

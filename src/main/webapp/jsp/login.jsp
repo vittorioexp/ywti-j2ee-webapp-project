@@ -68,32 +68,12 @@ Since: 1.0
         </c:choose>
     </head>
     <body>
-        <div id="page">
+        <div class="mainWrapper">
             <header>
-                <h1>Login</h1>
+                <!-- navbar (which includes the logo) imported with javascript -->
                 <div id="navbar-area"></div>
-                <nav>
-                    <a href="${pageContext.request.contextPath}/index">Home</a>
-                    <div>
-                        <img src="/utility/logo.png" alt="Logo">
-                    </div>
-                    <c:choose>
-                        <c:when test="${empty sessionScope.Authorization}">
-                            <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
-                            <a href="${pageContext.request.contextPath}/user/do-logout">Logout</a>
-                        </c:otherwise>
-                    </c:choose>
-
-                    <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
-                </nav>
             </header>
-            <main id="content">
-                <br/>
-                <p>This is a mock page to login. Please insert your email and password.</p>
-                <br/>
+            <main class="mainContent" >
                 <form id="login-form" name="login-form" method="POST" action="<c:url value="/user/login"/>">
                     <label for="email">email:</label>
                     <input id="email" name="email" type="text" required/><br/><br/>
