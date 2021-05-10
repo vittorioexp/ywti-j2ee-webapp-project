@@ -59,6 +59,7 @@ public class ShowProfileServlet extends AbstractDatabaseServlet {
                         Advertisement adv = AdvertisementDAO.searchAdvertisement(b.getIdAdvertisement());
                         advertisementList.add(adv);
                     }
+                    //Per vedere a quali annunci sono riferite le prenotazioni
                     req.setAttribute("advertisementList", advertisementList);
                 } else if (u instanceof Company) {
                     req.setAttribute("userType",(Boolean) isTourist);
