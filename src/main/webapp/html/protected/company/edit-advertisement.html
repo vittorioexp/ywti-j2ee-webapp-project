@@ -24,13 +24,10 @@
     <main id="content">
         <section>
             <!-- TODO: fix Search fields -->
-            <form id="editAdvertisementForm" name="editAdvertisementForm" method="put" action="/adv/ID" >
+            <form id="editAdvertisementForm" name="editAdvertisementForm" method="put">
 
                 <label for="title">title:</label>
                 <input id="title" name="title" type="text"/><br/><br/>
-
-                <label for="idType">type:</label>
-                <input id="idType" name="idType" type="number"/><br/><br/>
 
                 <label for="description">description:</label>
                 <input id="description" name="description" type="text"/><br/><br/>
@@ -53,7 +50,7 @@
                 <label for="timeEnd">timeEnd:</label>
                 <input id="timeEnd" name="timeEnd" type="time" value="23:30:00"/><br/><br/>
 
-                <button type="submit">Edit</button><br/>
+                <button type="submit" id="edit-button" class="">Edit</button><br/>
             </form>
         </section>
     </main>
