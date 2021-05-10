@@ -39,14 +39,16 @@ function loadAdvertisement(req) {
     let emailCompany = jsonData['emailCompany'];
 
     // Presents the JSON obj
-    document.getElementById("advTitle").innerHTML = title;
+    document.getElementById("advTitle").innerHTML = "<h1>" + title + "</h1>";
 
-    let info = "<p>" + description + "</p><p>" + "Only " + price + " euro!" + "</p><p>" + "There are just " + numTotItem + " items available!"
-                + "</p><p>" + "The event is starting the day " + dateStart + " at " + timeStart + " until "
-                + dateEnd + " at " + timeEnd + "</p><br><p>" + "For more info: " + emailCompany + "</p>";
+    let info =
+        "<p>" + description + "</p>" +
+        "<p>" + "Only " + price + " euro!" + "</p>" +
+        "<p>" + "There are just " + numTotItem + " items available!" + "</p>" +
+        "<p>" + "The event is starting the day " + dateStart + " at " + timeStart + " until " + dateEnd + " at " + timeEnd + "</p><br>" +
+        "<p>" + "For more info: " + emailCompany + "</p>";
 
     document.getElementById("advInfo").innerHTML = info;
-
 }
 
 function fetchRate() {
@@ -82,8 +84,11 @@ function loadFeedbackList(req) {
             let rate = feedback.rate;
             let text = feedback.text;
             let date = feedback.date;
-            str += "<div class=" + "feedback" + ">"  + "<p>" + "\"" + text + "\"" + "</p>" +
-                "<p>" + "Rated " + rate +  "/5" + " - " + date + "</p>" + "</div><br>";
+            str +=
+                "<div class=" + "feedback" + ">"  +
+                    "<p>" + "\"" + text + "\"" + "</p>" +
+                    "<p>" + "Rated " + rate +  "/5" + " - " + date + "</p>" +
+                "</div><br>";
         });
     } else {
         str = "<p>" + "No reviews found for this advertisement" + "</p>";
@@ -113,8 +118,10 @@ function loadBookingList(req) {
             let numBooking = booking.numBooking;
             let state = booking.state;
 
-            str += "<div class=" + "booking" + ">"  + "<p>" + emailTourist + " booked " + numBooking + " items" + " - "
-                + date + ", " + time + "</p>" + "</div><br>";
+            str +=
+                "<div class=" + "booking" + ">"  +
+                    "<p>" + emailTourist + " booked " + numBooking + " items" + " - " + date + ", " + time + "</p>" +
+                "</div><br>";
         });
     } else {
         str = "<p>" + "No bookings found for this advertisement" + "</p>";
@@ -141,9 +148,9 @@ function loadImageList(req) {
             let description = image.description;
             let idAdvertisement = image.idAdvertisement;
 
-            str += "<img src=\"" + path + "\" width=\"320\" height=\"240\" />";
+            //str += "<img src=\"" + "http://localhost:8080" + path + "\" width=\"320\" height=\"240\" alt=''/>\n";
+            str += "<img src=\"" + "" + path + "\" width=\"320\" height=\"240\" alt=''/>\n";
         });
     }
-    alert(str);
-    document.getElementById("advImages").children.innerHTML = str;
+    document.getElementById("advImages").innerHTML = str;
 }
