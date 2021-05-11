@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
     document.getElementById("email").addEventListener("input", formValidate);
+    document.getElementsByTagName("form")[0].addEventListener("submit", formValidateOnSubmit);
 
 });
 

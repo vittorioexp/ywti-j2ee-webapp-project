@@ -49,9 +49,21 @@ Since: 1.0
             <br/>
             <p>This is a mock page to register</p>
             <section>
+                <div>
+                    <input type="radio" id="touristUser" name="userType" value="tourist"
+                           checked>
+                    <label for="touristUser">Tourist Profile</label>
+                </div>
+
+                <div>
+                    <input type="radio" id="companyUser" name="userType" value="company">
+                    <label for="companyUser">Company Profile</label>
+                </div>
+            </section>
+            <section>
                 <p>Register as a tourist and start your journey!</p>
                 <br/>
-                <form method="POST" action="<c:url value="/user/register"/>">
+                <form id="register-form" name="register-form"method="POST" action="<c:url value="/user/register"/>">
 
                     <label for="email_t">email:</label>
                     <input name="email" type="text" id="email_t" required/><br/><br/>
