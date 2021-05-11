@@ -76,7 +76,9 @@ Since: 1.0
             <main class="mainContent" >
                 <form id="login-form" name="login-form" method="POST" action="<c:url value="/user/login"/>">
                     <label for="email">email:</label>
-                    <input id="email" name="email" type="text" required/><br/><br/>
+                    <input id="email" name="email" type="text" required/>
+                    <span class="error"></span>
+                    <br/><br/>
                     <label for="password">password:</label>
                     <input id="password" name="password" type="password" required/><br/><br/>
                     <button id="login-button" type="submit">Submit</button><br/>
