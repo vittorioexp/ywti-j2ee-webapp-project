@@ -150,7 +150,7 @@
 		<url-pattern>/adv-create</url-pattern>
 		<url-pattern>/image-do-upload/*</url-pattern>
 		<url-pattern>/image-upload</url-pattern>
-		<url-pattern>/adv-edit</url-pattern>
+		<url-pattern>/adv-edit/*</url-pattern>
 	</filter-mapping>
 
 	<filter-mapping>
@@ -231,7 +231,7 @@
 
 	<servlet-mapping>
 		<servlet-name>EditAdvertisement</servlet-name>
-		<url-pattern>/adv-edit</url-pattern>
+		<url-pattern>/adv-edit/*</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
