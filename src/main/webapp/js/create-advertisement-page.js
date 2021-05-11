@@ -46,6 +46,15 @@ function createAdvertisement() {
         "\"emailCompany\":\"" + emailCompany + "\"," +
         "\"idType\":\"" + idType + "\"}}";
 
-    sendJsonRequest(url, "POST", data, function(req){window.location.replace(contextPath + "/html/protected/show-profile.html");});
+    data = "{\"advertisement\":{\"idAdvertisement\":\"1\",\"title\":\"Capodanno sulle dolomiti\",\"description\":" +
+        "\"Sette giorni di relax in mezzo alla neve delle dolomiti in Trentino alto adige a" +
+        " capodanno\",\"score\":\"100\",\"price\":\"800\",\"numTotItem\":\"24\",\"dateStart\":\"2021-12-28" +
+        "\",\"dateEnd\":\"2021-12-28" +
+        "\",\"timeStart\":\"14:14:14\",\"timeEnd\":\"14:14:15\",\"emailCompany\":\"hotelcentrale@gmail.com\",\"idType\":\"6\"}}";
 
+    //alert(data);
+    //sendJsonRequest(url, "POST", data, function(req){window.location.replace(contextPath + "/html/protected/show-profile.html");});
+    sendJsonRequest(url, "POST", data, function(req){
+        alert("bravo");
+        });
 }
