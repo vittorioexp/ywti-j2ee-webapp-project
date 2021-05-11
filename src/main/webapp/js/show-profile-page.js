@@ -14,16 +14,17 @@ function fetchProfile(){
     let url = contextPath + "/user/profile";
 
     //TODO: Come ottenere i valori passati come setAttribute dalla ShowProfileServlet
-    let isTourist = '${userType}';
 
-    //let isTourist = req.getAttribute("userType");
+    let req = new XMLHttpRequest();
 
+    let isTourist = req.getAttribute("userType");
 
     let section = document.getElementById("userInfoSection");
 
     if(isTourist){
 
         //If he is a tourist certain parameters are shown
+
         let bookingList = req.getAttribute("bookingList");
         let advertisementList = req.getAttribute("advertisementList");
         let userObj = req.getAttribute("user");
@@ -44,11 +45,12 @@ function fetchProfile(){
         }
 
         // Button for edit profile
-        let par = document.createElement("div");
+        let div = document.createElement("div");
         let editUserButton = document.createElement("button");
         editUserButton.innerHTML = "Edit Profile";
         editUserButton.name = "edit-profile";
-        editUserButton.id = value.id;
+        div.appendChild(editUserButton);
+        section.appendChild(div);
 
 
         for(let i=0;i<bookingList.length;i++){
