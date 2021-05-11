@@ -1,8 +1,7 @@
-let idAdvertisement;
+
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
-    idAdvertisement = document.getElementById('idAdvertisement').value;
     document.getElementById("edit-button").addEventListener("click", fetchEditAdvertisement);
 
 });
@@ -12,6 +11,8 @@ function fetchEditAdvertisement(){
     let url = new URL(contextPath+"/adv/" + idAdvertisement);
 
     //TODO: Check the input field
+    let currentUrl = window.location.href;
+    let idAdvertisement =  currentUrl.substring(currentUrl.indexOf("adv-edit/")+9)
 
     let title = document.getElementById("title").value;
     let description = document.getElementById("description").value;
@@ -22,10 +23,9 @@ function fetchEditAdvertisement(){
     let price = document.getElementById("price").value.toString();
     let numTotItem = document.getElementById("numTotItem").value.toString();
 
-    let idAdvertisementString = idAdvertisement.toString();
     let emailCompany = sessionStorage.getItem("userEmail");
 
-    "{\"advertisement\": {\"idAdvertisement\":\"" + idAdvertisement.toString() + ",\"title\":\"" + title
+    "{\"advertisement\": {\"idAdvertisement\":\"" + idAdvertisement + ",\"title\":\"" + title
     + "\",\"description\":\"" + description + "\",\"score\":\"" + "" + "\",\"price\":\"" + price +
     "\",\"numTotItem\":\"" + numTotItem + "\",\"dateStart\":\"" + dateStart + "\",\"dateEnd\":\"" + dateEnd
     + "\",\"timeStart\":\"" + timeStart + "\",\"timeEnd\":\"" + timeEnd + "\",\"emailCompany\":\"" + emailCompany + "\",\"idType\":\"0\"}}"

@@ -104,28 +104,6 @@ function sendGenericGetRequest(url, callback){
     httpRequest.send();
 }
 
-function sendGenericDeleteRequest(url, callback){
-    let httpRequest = new XMLHttpRequest();
-
-    if (!httpRequest) {
-        alert("Cannot create an XMLHTTP instance");
-        return false;
-    }
-    httpRequest.onreadystatechange = function () {
-        if (httpRequest.readyState === XMLHttpRequest.DONE) {
-            if (httpRequest.status === 200) {
-                callback(httpRequest.responseText);
-            }
-            else {
-                console.log(httpRequest.responseText);
-                alert("problem processing the request");
-            }
-        }
-
-    };
-    httpRequest.open("DELETE", url);
-    httpRequest.send();
-}
 
 // Sends a generic HTTP GET request
 function sendRequest(url, method, data, callback) {

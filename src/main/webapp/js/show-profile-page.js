@@ -2,38 +2,28 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
     fetchProfile();
-    document.getElementById("edit-profile").addEventListener("click", function(){window.location.replace(contextPath + "/user/do-edit");});
-    document.getElementById("delete-booking").addEventListener("click", sendGenericDeleteRequest(contextPath+"/booking-delete",function(){}));
-    document.getElementsByName("delete-advertisement").addEventListener("click", fetchDeleteAdvertisement());
-    document.getElementsByName("info-advertisement").addEventListener("click", fetchInfoAdvertisement());
-    document.getElementsByName("edit-advertisement").addEventListener("click", fetchEditAdvertisement());
+    document.getElementById("edit-profile").addEventListener("click", window.location.replace((contextPath + "/user/do-edit")));
+    document.getElementByName("delete-booking").addEventListener("click", fetchDeleteBooking(document.getElementByName("delete-booking").id));
+    document.getElementsByName("delete-advertisement").addEventListener("click", fetchDeleteAdvertisement(document.getElementsByName("delete-advertisement").id));
+    document.getElementsByName("info-advertisement").addEventListener("click", fetchInfoAdvertisement(document.getElementsByName("info-advertisement").id));
+    document.getElementsByName("edit-advertisement").addEventListener("click", fetchEditAdvertisement(document.getElementsByName("edit-advertisement").id));
 
 });
 
-function fetchDeleteAdvertisement(){
-    //TODO: Retrieve the ID of the clicked button, call sendJsonRequest
-}
+function fetchProfile(){
+    let url = contextPath + "/user/profile";
 
-function fetchInfoAdvertisement(){
-    //TODO: Retrieve the ID of the clicked button, call sendJsonRequest
-}
+    //TODO: Come ottenere i valori passati come setAttribute dalla ShowProfileServlet
+    let isTourist = '${userType}';
 
-function fetchEditAdvertisement(){
-    //TODO: Retrieve the ID of the clicked button, call sendJsonRequest
-}
+    //let isTourist = req.getAttribute("userType");
 
-function fetchProfile() {
-    let url = new URL(contextPath+"/user/profile");
-    sendGenericGetRequest(url ,loadProfile());
-}
 
-function loadProfile(req){
-
-    let isTourist = req.getAttribute("userType");
     let section = document.getElementById("userInfoSection");
 
     if(isTourist){
 
+        //If he is a tourist certain parameters are shown
         let bookingList = req.getAttribute("bookingList");
         let advertisementList = req.getAttribute("advertisementList");
         let userObj = req.getAttribute("user");
@@ -53,10 +43,13 @@ function loadProfile(req){
             createElement(attributesName[i], attributesValue[i], section);
         }
 
-        let button = document.createElement("button");
-        button.innerHTML = "Edit Profile";
-        button.id = "edit-profile";
-        section.appendChild(button);
+        // Button for edit profile
+        let par = document.createElement("div");
+        let editUserButton = document.createElement("button");
+        editUserButton.innerHTML = "Edit Profile";
+        editUserButton.name = "edit-profile";
+        editUserButton.id = value.id;
+
 
         for(let i=0;i<bookingList.length;i++){
             createListBooking("Booking n. "+i,advertisementList[i],section)
@@ -64,7 +57,7 @@ function loadProfile(req){
 
     }
     else{
-
+        //If he is a company certain parameters are shown
         let advertisementList = req.getAttribute("advertisementList");
         let userObj = req.getAttribute("user");
         let name = userObj.name;
@@ -89,9 +82,57 @@ function loadProfile(req){
         for(let i=0;i<advertisementList.length;i++){
             createListAdvertisement(advertisementList[i], section)
         }
-
     }
+}
 
+function fetchDeleteBooking(id){
+
+    let url = contextPath + "/booking-delete";
+    let httpRequest = new XMLHttpRequest();
+
+    if (!httpRequest) {
+        alert("Cannot create an XMLHTTP instance");
+        return false;
+    }
+    httpRequest.onreadystatechange = function () {
+        if (httpRequest.readyState === XMLHttpRequest.DONE) {
+            if (httpRequest.status === 200) {
+                alert ( "Delete booking successful!");
+            }
+            else {
+                console.log(httpRequest.responseText);
+                alert("Problem processing the delete booking request!");
+            }
+        }
+    };
+    httpRequest.setAttribute( "idAdvertisement" ,id);
+    httpRequest.open("DELETE", url);
+    httpRequest.send();
+}
+
+function fetchDeleteAdvertisement(){
+    //TODO: Retrieve the ID of the clicked button, call sendJsonRequest
+    let idAdvertisement = id.substring(id.lastIndexOf("del-")+4);
+    let url = contextPath + "/adv/" + idAdvertisement;
+    sendJsonRequest(url, "DELETE", "", manageDelete);
+}
+
+function manageDelete(req){
+    window.location.replace(contextPath + "/user/profile");
+}
+
+function fetchInfoAdvertisement(id){
+    //TODO: Retrieve the ID of the clicked button, call sendJsonRequest
+    let idAdvertisement = id.substring(id.lastIndexOf("inf-")+4);
+    let url = contextPath + "/adv-show/" + idAdvertisement;
+    window.location.replace(url);
+}
+
+function fetchEditAdvertisement(){
+    //TODO: Retrieve the ID of the clicked button, call sendJsonRequest
+    let idAdvertisement = id.substring(id.lastIndexOf("edi-")+4);
+    let url = contextPath + "/adv-edit/" + idAdvertisement;
+    window.location.replace(url);
 }
 
 function getCityFromId(idCity) {
@@ -110,22 +151,17 @@ function createElement(name, value, section){
 }
 
 function createListBooking(name, value, section){
-    let form = document.createElement("form");
+
     let par = document.createElement("p");
     let parName = document.createTextNode(name + value.title);
-    let hiddenDelete = document.createElement("input");
-    hiddenDelete.setAttribute("type", "hidden");
-    hiddenDelete.setAttribute("idAdvertisement", value.id);
-    par.appendChild(hiddenDelete);
     let deleteBookingButton = document.createElement("button");
     deleteBookingButton.innerHTML = "Delete";
-    deleteBookingButton.name = "delete-advertisement";
-    deleteBookingButton.setAttribute("type", "submit");
+    deleteBookingButton.name = "delete-booking";
+    deleteBookingButton.id = value.id;
 
     par.appendChild(deleteBookingButton);
     par.appendChild(parName);
-    form.appendChild(par);
-    section.appendChild(form);
+    section.appendChild(par);
 
 }
 
@@ -134,10 +170,26 @@ function createListAdvertisement(advertisement, section){
     let parName = document.createTextNode(advertisement.title);
     let deleteAdvButton = document.createElement("button");
     deleteAdvButton.innerHTML = "Delete";
-    deleteAdvButton.name = "delete-advertisement"
-    deleteAdvButton.id = advertisement.id;
-    par.appendChild(deleteAdvButton);
+    deleteAdvButton.name = "delete-advertisement";
+    let str = "del-";
+    deleteAdvButton.id = str + advertisement.id;
+
+    let editAdvButton = document.createElement("button");
+    editAdvButton.innerHTML = "Edit";
+    editAdvButton.name = "edit-advertisement";
+    str = "edi-";
+    editAdvButton.id = str + advertisement.id;
+
+    let infoAdvButton = document.createElement("button");
+    infoAdvButton.innerHTML = "Info";
+    infoAdvButton.name = "info-advertisement";
+    str = "inf-";
+    infoAdvButton.id = str + advertisement.id;
+
     par.appendChild(parName);
+    par.appendChild(deleteAdvButton);
+    par.appendChild(editAdvButton);
+    par.appendChild(infoAdvButton);
     section.appendChild(par);
 }
 
