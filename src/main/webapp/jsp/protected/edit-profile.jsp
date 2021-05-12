@@ -67,41 +67,27 @@ Since: 1.0
             </br>
             <p>This is a mock page to update your profile</p>
             </br>
-            <section>
-                <form name="editProfileForm" id="editProfileForm" method="POST" action="<c:url value="/user/edit"/>">
 
-                    <label for="password">new password:</label>
-                    <input id="password" name="password" type="password" required/><br/><br/>
+            <label for="password">new password:</label>
+            <input id="password" name="password" type="password" required/><br/><br/>
 
-                    <label for="phonenumber">Phone Number:</label>
-                    <input id="phonenumber" name="phonenumber" type="text" required/><br/><br/>
+            <label for="phonenumber">Phone Number:</label>
+            <input id="phonenumber" name="phonenumber" type="text" required/><br/><br/>
 
-                    <label for="address">Address:</label>
-                    <input id="address" name="address" type="text" required/><br/><br/>
+            <label for="address">Address:</label>
+            <input id="address" name="address" type="text" required/><br/><br/>
 
-                    <label for="idCity">Id City:</label>
-                    <input id="idCity" name="idCity" type="number" required/><br/><br/>
-                    <button type="submit">Edit</button><br/>
+            <label for="idCity">Id City:</label>
+            <input id="idCity" name="idCity" type="number" required/><br/><br/>
+            <button id="button">Edit</button><br/>
 
-                </form>
 
-                <form name="ProfileForm" id="ProfileForm">
+<%--            TODO : understand how to get old profile parameters--%>
+<%--            <input id="passwordOld" name="passwordOld" type="hidden" value="${pageContext.request.contextPath}"/><br/><br/>--%>
+<%--            <input id="phonenumberOld" name="phonenumberOld" type="hidden" /><br/><br/>--%>
+<%--            <input id="addressOld" name="addressOld" type="hidden" /><br/><br/>--%>
+<%--            <input id="idCityOld" name="idCityOld" type="hidden" /><br/><br/>--%>
 
-                    <label for="passwordOld">new password:</label>
-                    <input id="passwordOld" name="passwordOld" type="password" required/><br/><br/>
-
-                    <label for="phonenumberOld">Phone Number:</label>
-                    <input id="phonenumberOld" name="phonenumberOld" type="text" required/><br/><br/>
-
-                    <label for="addressOld">Address:</label>
-                    <input id="addressOld" name="addressOld" type="text" required/><br/><br/>
-
-                    <label for="idCityOld">Id City:</label>
-                    <input id="idCityOld" name="idCityOld" type="number" required/><br/><br/>
-                    <button type="submit">Edit</button><br/>
-
-                </form>
-            </section>
         </main>
         <!-- TODO: import footer.html (JS) -->
         <!-- https://stackoverflow.com/a/31837264 -->

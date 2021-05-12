@@ -1,17 +1,20 @@
 
-import MD5 from "crypto-js/md5";
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
     fetchProfile();
+    document.getElementById("button").addEventListener("click", updateProfile);
+    // document.getElementById("password").addEventListener("change", checkValue);
+    // document.getElementById("address").addEventListener("change", checkValue);
+    // document.getElementById("idCity").addEventListener("change", checkValue);
+    // document.getElementById("phonenumber").addEventListener("change", checkValue);
 
 });
 
-const input = document.querySelector('input');
-const update = document.querySelector('#editProfileForm')
 
-input.addEventListener('change', checkValue);
-update.addEventListener("submit", updateProfile );
+
+
+
 
 
 function checkValue(e) {
@@ -19,11 +22,11 @@ function checkValue(e) {
         alert ( e.target.name + " field is empty!");
     }
     else{
-        if (e.target.id === "password")
-            if (e.target.value === MD5(document.getElementById( e.target.id + "Old").value) )
-                alert ( e.target.name + " field has not been modified!");
-            else if (e.target.value === document.getElementById( e.target.id + "Old").value)
-                alert ( e.target.name + " field has not been modified!");
+        if (e.target.id === "password") {}
+            // if (e.target.value === MD5(document.getElementById( e.target.id + "Old").value) )
+            //     alert ( e.target.name + " field has not been modified!");
+        if (e.target.value === document.getElementById( e.target.id + "Old").value)
+            alert ( e.target.name + " field has not been modified!");
     }
 }
 
@@ -34,41 +37,45 @@ function fetchProfile() {
 
 function loadPreviousProfile(req){
 
-    let userObj = req.getAttribute("user");
-    document.getElementById("passwordOld").value = userObj.password;
-    document.getElementById("idCityOld").value = userObj.idCity;
-    document.getElementById("addressOld").value = userObj.address;
-    document.getElementById("phonenumberOld").value = userObj.phonenumber;
+    // let userObj = req.getAttribute("user");
+    // document.getElementById("passwordOld").value = userObj.password;
+    // document.getElementById("idCityOld").value = userObj.idCity;
+    // document.getElementById("addressOld").value = userObj.address;
+    // document.getElementById("phonenumberOld").value = userObj.phonenumber;
 
 }
 
 function updateProfile() {
 
+    alert ("clicking");
     let url = new URL(contextPath + "/user/edit");
-    let httpRequest = new XMLHttpRequest();
+    let m = "post";
 
-    if (!httpRequest) {
-        alert("Cannot create an XMLHTTP instance");
-        return false;
+    // The rest of this code assumes you are not using a library.
+    // It can be made less verbose if you use one.
+    const form = document.createElement('form');
+    form.method = m;
+    form.action = url;
+
+    let p = document.getElementById("password");
+    let a = document.getElementById("address");
+    let pn = document.getElementById("phonenumber");
+    let id = document.getElementById("idCity");
+
+    let f = [ p , a , pn , id];
+
+    for ( let i=0; i<4; i++) {
+
+        const hiddenField = document.createElement('input');
+        hiddenField.type = 'hidden';
+        hiddenField.name = f[i].name;
+        hiddenField.value = f[i].value;
+        form.appendChild(hiddenField);
+
     }
-    httpRequest.onreadystatechange = function () {
-        if (httpRequest.readyState === XMLHttpRequest.DONE) {
-            if (httpRequest.status === 200) {
-                alert ( "edit successful ");
-            }
-            else {
-                console.log(httpRequest.responseText);
-                alert("problem processing the request");
-            }
-        }
+    document.body.appendChild(form);
+    form.submit();
 
-    };
-    httpRequest.setAttribute( "phonenumber" , document.getElementById("phonenumber").value );
-    httpRequest.setAttribute( "password" , document.getElementById("password").value );
-    httpRequest.setAttribute( "idCity" , document.getElementById("idCity").value );
-    httpRequest.setAttribute( "address" , document.getElementById("address").value );
-    httpRequest.open("POST", url);
-    httpRequest.send();
 
 }
 
