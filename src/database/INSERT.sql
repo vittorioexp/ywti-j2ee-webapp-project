@@ -131,22 +131,22 @@ INSERT INTO Type_advertisement (ID_type, type) VALUES
 
 
 INSERT INTO TOURIST (email_t, SURNAME, NAME, birth_date, phone_number, address, password, ID_city) 
-VALUES ('mariorossi@gmail.com', 'Rossi', 'Mario', '1998-03-10', '3287888901', 'Via Roma 10', MD5('prova'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
+VALUES ('mariorossi@gmail.com', 'Rossi', 'Mario', '1998-03-10', '3287888901', 'Via Roma 10', MD5('Abcde54321'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
 
 INSERT INTO TOURIST (email_t, SURNAME, NAME, birth_date, phone_number, address, password, ID_city)
-VALUES ('pluto@mail.com', 'pluto', 'pippo', '1998-03-10', '3287888901', 'Via Roma 10', MD5('prova'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
+VALUES ('pluto@mail.com', 'pluto', 'pippo', '1998-03-10', '3287888901', 'Via Roma 10', MD5('Abcde54321'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
 
 INSERT INTO TOURIST (email_t, SURNAME, NAME, birth_date, phone_number, address, password, ID_city)
-VALUES ('giovanna@mail.com', 'giovanna', 'mail', '1998-03-10', '3287888901', 'Via Roma 10', MD5('prova'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
+VALUES ('giovanna@mail.com', 'giovanna', 'mail', '1998-03-10', '3287888901', 'Via Roma 10', MD5('Abcde54321'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
 
 INSERT INTO TOURIST (email_t, SURNAME, NAME, birth_date, phone_number, address, password, ID_city)
-VALUES ('pippopasticcio@gmail.com', 'pippopasticcio', 'pippo', '1998-03-10', '3287888901', 'Via Roma 10', MD5('prova'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
+VALUES ('pippopasticcio@gmail.com', 'pippopasticcio', 'pippo', '1998-03-10', '3287888901', 'Via Roma 10', MD5('Abcde54321'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
 
 INSERT INTO TOURIST (email_t, SURNAME, NAME, birth_date, phone_number, address, password, ID_city)
-VALUES ('filippo@mail.com', 'filippo', 'mail', '1998-03-10', '3287888901', 'Via Roma 10', MD5('prova'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
+VALUES ('filippo@mail.com', 'filippo', 'mail', '1998-03-10', '3287888901', 'Via Roma 10', MD5('Abcde54321'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
 
 INSERT INTO COMPANY (email_c, name_c, phone_number, address, password, ID_city) 
-VALUES ('hotelcentrale@gmail.com', 'Hotel centrale', '0495341234', 'Via Venezia 48', MD5('prova_c'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
+VALUES ('hotelcentrale@gmail.com', 'Hotel centrale', '0495341234', 'Via Venezia 48', MD5('Abcde54321'), (SELECT ID_city FROM CITY WHERE CITY.name = 'Padova'));
 
 
 INSERT INTO Advertisement (title, DESCRIPTION, SCORE, PRICE, NUM_TOT_ITEM, DATE_START, DATE_END, TIME_START, TIME_END, email_c, ID_TYPE)

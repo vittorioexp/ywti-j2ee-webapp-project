@@ -43,12 +43,12 @@ Since: 1.0
     <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div id="mainWrapper">
+<div class="mainWrapper">
     <header>
         <div id="navbar-area"></div>
         <div id="user-email"></div>
     </header>
-    <main id="mainContent">
+    <main class="mainContent" >
         <section id="error"></section>
 
         <form id="edit-profile-form" name="edit-profile-form" method="POST" action="/ywti_wa2021_war/user/edit">
@@ -66,6 +66,7 @@ Since: 1.0
             <button type="submit" id="edit-profile-button">Edit</button><br/>
         </form>
     </main>
+    <!-- footer imported with javascript -->
     <div id="footer-area"></div>
 </div>
 </body>
