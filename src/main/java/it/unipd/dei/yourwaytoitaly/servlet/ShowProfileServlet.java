@@ -68,7 +68,7 @@ public class ShowProfileServlet extends AbstractDatabaseServlet {
                     List<Advertisement> advertisementList = AdvertisementDAO.searchAdvertisement(emailCompany);
                     req.setAttribute("advertisementList", advertisementList);
                 }
-                req.getRequestDispatcher("/html/protected/show-profile.html").forward(req, res);
+                req.getRequestDispatcher("/jsp/protected/show-profile.jsp").forward(req, res);
             break;
         default:
             ErrorCode ec = ErrorCode.OPERATION_UNKNOWN;
