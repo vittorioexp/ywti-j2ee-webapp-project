@@ -463,8 +463,8 @@ public class AdvertisementRestResource extends RestResource {
             AdvertisementDAO.deleteAdvertisement(idAdvertisement);
 
             res.setStatus(HttpServletResponse.SC_OK);
-            Message m = new Message("Advertisement successfully deleted!");
-            m.toJSON(res.getOutputStream());
+            //Message m = new Message("Advertisement successfully deleted!");
+            //m.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

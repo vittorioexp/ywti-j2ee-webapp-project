@@ -79,7 +79,6 @@ function loadFooter(data){
     document.getElementById("footer-area").innerHTML=data;
 }
 
-
 // Sends a generic HTTP GET request
 function sendGenericGetRequest(url, callback){
     let httpRequest = new XMLHttpRequest();
