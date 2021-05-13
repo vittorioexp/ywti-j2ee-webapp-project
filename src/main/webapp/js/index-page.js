@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 function fetchTypeAdvList() {
     let url = new URL(contextPath+"/.....");
     // put code here
-    sendGenericGetRequest(url, loadTypeAdvList);
 }
 
 // TODO: Loads the list of available type adv
@@ -28,7 +27,6 @@ function loadTypeAdvList(req){
 function fetchCityList(){
     let url = new URL(contextPath+"/.....");
     // put code here
-    sendGenericGetRequest(url, loadCityList);
 }
 
 // TODO: Loads the list of available cities

@@ -52,17 +52,17 @@ Since: 1.0
                     let role = authHeader.substring(
                         authHeader.lastIndexOf(":")+1
                     );
-                    sessionStorage.setItem("loggedIn", true);
-                    sessionStorage.setItem("userEmail", email);
-                    sessionStorage.setItem("userRole", role);
+                    localStorage.setItem("loggedIn", true);
+                    localStorage.setItem("userEmail", email);
+                    localStorage.setItem("userRole", role);
                     window.location.href = contextPath;
                 </script>
             </c:when>
             <c:otherwise>
                 <script>
-                    sessionStorage.removeItem("loggedIn");
-                    sessionStorage.removeItem("userEmail");
-                    sessionStorage.removeItem("userRole");
+                    localStorage.removeItem("loggedIn");
+                    localStorage.removeItem("userEmail");
+                    localStorage.removeItem("userRole");
                 </script>
             </c:otherwise>
         </c:choose>

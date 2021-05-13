@@ -15,11 +15,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function fetchEditAdvertisement(currentUrl){
 
+    let idAdvertisement =  currentUrl.substring(
+        currentUrl.lastIndexOf("adv-edit/")+9
+    );
+
     //TODO: Check the input field
-
-    console.log("current url: " + currentUrl.toString());
-    let idAdvertisement =  currentUrl.substring(currentUrl.lastIndexOf("adv-edit/")+9);
-
     let title = document.getElementById("title").value;
     let description = document.getElementById("description").value;
     let dateStart = document.getElementById("dateStart").value.toString();
@@ -29,20 +29,17 @@ function fetchEditAdvertisement(currentUrl){
     let price = document.getElementById("price").value.toString();
     let numTotItem = document.getElementById("numTotItem").value.toString();
 
-    let emailCompany = sessionStorage.getItem("userEmail");
+    let emailCompany = getUserEmail();
 
     let url = new URL(contextPath+"/adv/" + idAdvertisement);
 
     let data =
-    "{\"advertisement\": {\"idAdvertisement\":\"" + idAdvertisement + ",\"title\":\"" + title
-    + "\",\"description\":\"" + description + "\",\"score\":\"" + "" + "\",\"price\":\"" + price +
+    "{\"advertisement\": {\"idAdvertisement\":\"" + idAdvertisement + "\",\"title\":\"" + title
+    + "\",\"description\":\"" + description + "\",\"score\":\"" + "0" + "\",\"price\":\"" + price +
     "\",\"numTotItem\":\"" + numTotItem + "\",\"dateStart\":\"" + dateStart + "\",\"dateEnd\":\"" + dateEnd
     + "\",\"timeStart\":\"" + timeStart + "\",\"timeEnd\":\"" + timeEnd + "\",\"emailCompany\":\"" + emailCompany + "\",\"idType\":\"0\"}}";
 
-    console.log(data);
-    console.log(url);
     sendJsonRequest(url, "PUT", data, function(req){
-        alert(req);
         window.location.replace(contextPath + "/adv-show/" + idAdvertisement);
     });
 

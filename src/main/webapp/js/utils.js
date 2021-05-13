@@ -12,13 +12,25 @@ document.addEventListener("DOMContentLoaded", function(event) {
     fetchTemplate();
 })
 
+function isLoggedIn() {
+    return localStorage.getItem("loggedIn");
+}
+
+function getUserEmail() {
+    return localStorage.getItem("userEmail");
+}
+
+function getUserRole() {
+    return localStorage.getItem("userRole");
+}
+
 // Fetches navbar and footer
 function fetchTemplate(){
     let navbarUrl = new URL(contextPath + "/html/reusable-snippets/navbar.html");
     let footerUrl = new URL(contextPath + "/html/reusable-snippets/footer.html");
 
-    sendGenericGetRequest(navbarUrl, loadNavbar);
-    sendGenericGetRequest(footerUrl, loadFooter);
+    sendRequest(navbarUrl, "GET", "", loadNavbar);
+    sendRequest(footerUrl, "GET", "", loadFooter);
 }
 
 // Loads the navbar
@@ -41,13 +53,12 @@ function loadNavbar(data){
     let i;
     let list;
 
-    let loggedIn = sessionStorage.getItem("loggedIn");
-    let userAuthorization = sessionStorage.getItem("userRole");
+    let userAuthorization = getUserRole();
 
     // Checks if the user is logged in or not
-    if (loggedIn) {
+    if (isLoggedIn()) {
 
-        let email = sessionStorage.getItem("userEmail");
+        let email = getUserEmail();
         document.getElementById("user-email").innerHTML = "Logged in as " + email;
 
 
@@ -79,32 +90,7 @@ function loadFooter(data){
     document.getElementById("footer-area").innerHTML=data;
 }
 
-// Sends a generic HTTP GET request
-function sendGenericGetRequest(url, callback){
-    let httpRequest = new XMLHttpRequest();
-
-    if (!httpRequest) {
-        alert("Cannot create an XMLHTTP instance");
-        return false;
-    }
-    httpRequest.onreadystatechange = function () {
-        if (httpRequest.readyState === XMLHttpRequest.DONE) {
-            if (httpRequest.status === 200) {
-                callback(httpRequest.responseText);
-            }
-            else {
-                console.log(httpRequest.responseText);
-                alert("problem processing the request");
-            }
-        }
-
-    };
-    httpRequest.open("GET", url);
-    httpRequest.send();
-}
-
-
-// Sends a generic HTTP GET request
+// Sends a generic HTTP request
 function sendRequest(url, method, data, callback) {
     let httpRequest = new XMLHttpRequest();
 
