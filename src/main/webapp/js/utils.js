@@ -168,6 +168,7 @@ function sendJsonRequest(url, method, data, callback) {
         case "DELETE":
             httpRequest.open(method,url, true);
             httpRequest.setRequestHeader("Accept","application/json");
+            httpRequest.setRequestHeader("Accept","utf-8");
             httpRequest.setRequestHeader("Content-Type","application/json");
             httpRequest.send(data);
             break;

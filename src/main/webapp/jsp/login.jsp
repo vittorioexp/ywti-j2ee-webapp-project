@@ -72,6 +72,7 @@ Since: 1.0
             <header>
                 <!-- navbar (which includes the logo) imported with javascript -->
                 <div id="navbar-area"></div>
+                <div id="user-email"></div>
             </header>
             <main class="mainContent" >
                 <section id="error">

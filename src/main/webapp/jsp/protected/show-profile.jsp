@@ -51,6 +51,7 @@ Since: 1.0
         <div class="mainWrapper">
             <header>
                 <div id="navbar-area"></div>
+                <div id="user-email"></div>
             </header>
             <main class="mainContent" >
                 <c:choose>

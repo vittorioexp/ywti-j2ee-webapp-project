@@ -42,10 +42,8 @@ Since: 1.0
 <body>
 <div id="page">
     <header>
-        <h1>Upload images</h1>
-        <!-- TODO: import navbar.html (JS) -->
-        <!-- https://stackoverflow.com/a/31837264 -->
-        <div data-include="navbar"></div>
+        <div id="navbar-area"></div>
+        <div id="user-email"></div>
     </header>
     <nav>
         <a href="${pageContext.request.contextPath}/index">Home</a>

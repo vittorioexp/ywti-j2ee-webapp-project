@@ -46,6 +46,7 @@ Since: 1.0
 <div id="mainWrapper">
     <header>
         <div id="navbar-area"></div>
+        <div id="user-email"></div>
     </header>
     <main id="mainContent">
         <section id="error"></section>

@@ -2,17 +2,23 @@
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
-    document.getElementById("edit-button").addEventListener("click", fetchEditAdvertisement);
+    let currentUrl = window.location.href;
+
+    document.getElementById("edit-button").addEventListener(
+        "click",
+        function(event) {
+            event.preventDefault();
+            fetchEditAdvertisement(currentUrl);
+    });
 
 });
 
-function fetchEditAdvertisement(){
-
-    let url = new URL(contextPath+"/adv/" + idAdvertisement);
+function fetchEditAdvertisement(currentUrl){
 
     //TODO: Check the input field
-    let currentUrl = window.location.href;
-    let idAdvertisement =  currentUrl.substring(currentUrl.indexOf("adv-edit/")+9)
+
+    console.log("current url: " + currentUrl.toString());
+    let idAdvertisement =  currentUrl.substring(currentUrl.lastIndexOf("adv-edit/")+9);
 
     let title = document.getElementById("title").value;
     let description = document.getElementById("description").value;
@@ -25,12 +31,20 @@ function fetchEditAdvertisement(){
 
     let emailCompany = sessionStorage.getItem("userEmail");
 
+    let url = new URL(contextPath+"/adv/" + idAdvertisement);
+
+    let data =
     "{\"advertisement\": {\"idAdvertisement\":\"" + idAdvertisement + ",\"title\":\"" + title
     + "\",\"description\":\"" + description + "\",\"score\":\"" + "" + "\",\"price\":\"" + price +
     "\",\"numTotItem\":\"" + numTotItem + "\",\"dateStart\":\"" + dateStart + "\",\"dateEnd\":\"" + dateEnd
-    + "\",\"timeStart\":\"" + timeStart + "\",\"timeEnd\":\"" + timeEnd + "\",\"emailCompany\":\"" + emailCompany + "\",\"idType\":\"0\"}}"
+    + "\",\"timeStart\":\"" + timeStart + "\",\"timeEnd\":\"" + timeEnd + "\",\"emailCompany\":\"" + emailCompany + "\",\"idType\":\"0\"}}";
 
-    sendJsonRequest(url, "PUT", data, function(req){window.location.replace(contextPath + "/adv-show/" + idAdvertisement);});
+    console.log(data);
+    console.log(url);
+    sendJsonRequest(url, "PUT", data, function(req){
+        alert(req);
+        window.location.replace(contextPath + "/adv-show/" + idAdvertisement);
+    });
 
 }
 
