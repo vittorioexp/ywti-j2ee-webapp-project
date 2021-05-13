@@ -6,7 +6,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
         event.preventDefault();
         createAdvertisement();
     });
-    document.getElementsByTagName("form")[0].addEventListener("submit", validateCreation);
+    document.getElementsByTagName("form")[0].addEventListener("submit", function(event){
+        validateCreation(event);
+    });
 });
 
 // TODO: Fetches the list of available typeAdv
@@ -29,7 +31,6 @@ function createAdvertisement() {
     let title = document.getElementById("title").value;
     let description = document.getElementById("description").value;
     let price = document.getElementById("price").value.toString();
-    let score = (price/3.14);
     let numTotItem = document.getElementById("numTotItem").value.toString();
     let dateStart = document.getElementById("dateStart").value.toString();
     let dateEnd = document.getElementById("dateEnd").value.toString();
@@ -50,12 +51,18 @@ function createAdvertisement() {
         "\"idType\":\"" + idType + "\"}}";
 
     sendJsonRequest(url, "POST", data, function(req){
-        alert("very good");
+
+        // Parses the JSON obj
+        let jsonData = JSON.parse(req).advertisement;
+        let idAdvertisement = jsonData['idAdvertisement'];
+
+        // Sends to the upload images page
+        window.location.href = contextPath + "/image-do-upload/" + idAdvertisement;
     });
 }
 
 
-function validateCreation()
+function validateCreation(event)
 {
     let error = document.getElementById("error");
 
