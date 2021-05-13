@@ -126,9 +126,7 @@ Since: 1.0
                             <button name="editUserProfile">Edit Profile</button><br/>
                         </section>
                         <section id="createAdvertisement">
-                            <form method="GET" action="<c:url value="/adv-do-create"/>">
-                                <button type="submit">New advertisement</button>
-                            </form>
+                            <input type="button" id="createAdvertisementButton">Create new advertisement
                         </section>
                         <section>
                             <%
