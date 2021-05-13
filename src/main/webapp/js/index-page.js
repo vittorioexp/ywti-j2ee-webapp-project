@@ -50,6 +50,19 @@ function fetchAdvertisementList(){
     let data = "{\"searchParameters\":{\"idType\":\"" + idType +
         "\",\"idCity\":\"" + idCity + "\",\"dateStart\":\"" + dateStart + "\"}}";
 
+    // todo: TRY THIS
+    /*
+     $(document).ready(function () {
+
+		 $('#ajaxBtn').click(function(){
+
+			$.getJSON('/jquery/getjsondata', {name:'Steve'}, function (data, textStatus, jqXHR) {
+				$('p').append(data.firstName);
+			});
+		});
+    });
+     */
+
     // fetches the list of advertisements
     sendJsonRequest(url, "GET", data, loadAdvertisementList);
 }
