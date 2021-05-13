@@ -62,25 +62,29 @@ function loadNavbar(data){
         document.getElementById("user-email").innerHTML = "Logged in as " + email;
 
 
-        list = document.getElementsByClassName("unlogged")
+        list = document.getElementsByClassName("unlogged");
         for (i = 0; i < list.length; i++) {
             list[i].setAttribute("class", "unlogged d-none");
+            list[i].style.display = "none";
         }
 
         list = document.getElementsByClassName("logged");
         for (i = 0; i < list.length; i++) {
             list[i].setAttribute("class", "logged d-block");
+            list[i].style.display = "block";
         }
     } else {
 
         list = document.getElementsByClassName("logged");
         for (i = 0; i < list.length; i++) {
             list[i].setAttribute("class", "logged d-none");
+            list[i].style.display = "none";
         }
 
-        list = document.getElementsByClassName("unlogged")
+        list = document.getElementsByClassName("unlogged");
         for (i = 0; i < list.length; i++) {
             list[i].setAttribute("class", "unlogged d-block");
+            list[i].style.display = "block";
         }
     }
 }
