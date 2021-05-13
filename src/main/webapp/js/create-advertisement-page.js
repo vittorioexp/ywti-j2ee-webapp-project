@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     //fetchTypeAdvList();
 
     document.getElementById("create-button").addEventListener("click", createAdvertisement);
+    document.getElementsByTagName("form")[0].addEventListener("submit", validateCreation);
 });
 
 // TODO: Fetches the list of available typeAdv
@@ -55,6 +56,28 @@ function createAdvertisement() {
     //alert(data);
     //sendJsonRequest(url, "POST", data, function(req){window.location.replace(contextPath + "/html/protected/show-profile.html");});
     sendJsonRequest(url, "POST", data, function(req){
-        alert("bravo");
         });
+}
+
+
+function validateCreation()
+{
+    let error = document.getElementById("error");
+
+    let title = document.getElementById("title");
+    let description = document.getElementById("description");
+    let price = document.getElementById("price");
+    let numTotItem = document.getElementById("numTotItem");
+    let idType = document.getElementById("idType");
+
+    let test = title.value.length === 0 || description.value.length === 0 || price.value.length === 0 || numTotItem.value.length === 0 || idType.value.length === 0;
+
+    if (test) {
+        error.innerHTML = "One or more fields not filled!";
+        error.className = "error active";
+        event.preventDefault();
+    } else {
+        error.innerHTML = "";
+        error.className = "error";
+    }
 }
