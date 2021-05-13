@@ -67,6 +67,7 @@ Since: 1.0
                             <p>City: ${user.idCity}</p>
                             <p>Your score is ${score} </p>
                             </br>
+                            <button name="editUserProfile">Edit Profile</button><br/>
                         </section>
                         <section id="listBookings">
                             </br>
@@ -122,6 +123,7 @@ Since: 1.0
                             <p>Address: ${user.address}</p>
                             <p>City: ${user.idCity}</p>
                             </br>
+                            <button name="editUserProfile">Edit Profile</button><br/>
                         </section>
                         <section id="createAdvertisement">
                             <form method="GET" action="<c:url value="/adv-do-create"/>">

@@ -1,48 +1,40 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
     // Form validation while typing
-    document.getElementsById("password").addEventListener("keyup", function(event) {validatePassword(0)})
-    document.getElementsById("phonenumber").addEventListener("keyup", function(event) {validatePhoneNumber(0)})
-    document.getElementsById("address").addEventListener("keyup", function(event) {})
-    document.getElementsById("idCity").addEventListener("keyup", function(event) {validateIdCity})
-    document.getElementsById("edit-profile-button").addEventListener("click", fetchEditProfile)
+    document.getElementById("password").addEventListener("keyup", function(event) {validatePassword(0)});
+    document.getElementById("phonenumber").addEventListener("keyup", function(event) {validatePhoneNumber(0)});
+    //document.getElementById("address").addEventListener("keyup", function(event) {})
+    document.getElementById("idCity").addEventListener("keyup", function(event) {validateIdCity()});
+    document.getElementById("edit-profile-button").addEventListener(
+        "click",
+        function(event) {
+            event.preventDefault();
+            fetchEditProfile();
+    });
 
 });
 
 function fetchEditProfile(){
 
-    var elements = document.getElementById("edit-profile-form").elements;
+    let url = contextPath + "/user/edit";
+    let data =
+        "phonenumber=" + document.getElementById("phonenumber").value +"&"+
+        "password=" + document.getElementById("password").value +"&"+
+        "address=" + document.getElementById("address").value +"&"+
+        "idCity=" + document.getElementById("idCity").value;
 
-    //Field checking is performed only by javascript and servlet
-
-    for (var i = 0, element; element = elements[i++];) {
-        if (element.value === ""){
-            let error = document.getElementById("error");
-            element.className = "invalid";
-            error.innerHTML = "Complete all fields!";
-            error.className = "error";
-            break;
-        }
-    }
+    sendRequest(url, "POST", sanitize(data), function(req){});
 
 }
 
-
 function validateIdCity(){
-    let idCity = document.getElementsById("idCity").value;
+    let idCity = document.getElementById("idCity").value;
     if(idCity<0){
         let error = document.getElementById("error");
         idCity.className = "invalid";
-        error.innerHTML = "Invali ID";
+        error.innerHTML = "Invalid ID";
         error.className = "error";
     }
-    let url = contextPath + "/user/edit";
-    let data ="phonenumber="+document.getElementsById("idCity").value+"&"+
-        "password"+document.getElementsById("password").value+"&"+
-        "address"+document.getElementsById("address").value+"&"+
-        "idCity"+document.getElementsById("idCity").value;
-
-    sendRequest(url, "POST", data, function(req){});
 }
 
 

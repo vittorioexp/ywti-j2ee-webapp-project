@@ -120,9 +120,13 @@ function sendRequest(url, method, data, callback) {
         case "PUT":
         case "POST":
         case "DELETE":
-            httpRequest.open(method,url);
-            httpRequest.setRequestHeader("Accept","application/json");
-            httpRequest.setRequestHeader("Content-Type","application/json");
+            httpRequest.open(method,url, true);
+            httpRequest.setRequestHeader("Accept","utf-8");
+            httpRequest.setRequestHeader("Accept","text/html");
+            httpRequest.setRequestHeader("Accept","application/xhtml+xml");
+            httpRequest.setRequestHeader("Content-Type","utf-8");
+            httpRequest.setRequestHeader("Content-Type","text/html");
+            httpRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
             httpRequest.send(data);
             break;
         default:
@@ -174,26 +178,28 @@ function validatePhoneNumber(index) {
     let error = document.getElementById("error");
 
     let phonenumber = document.getElementsByName("phonenumber")[index];
-    let phonenumberRegExp = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
 
-    /*
-    Example phone number:
-    123-456-7890
-    (123) 456-7890
-    123 456 7890
-    123.456.7890
-    +91 (123) 456-7890
-     */
-
-    if (phonenumberRegExp.test(phonenumber.value)) {
-        phonenumber.className = "valid";
+    // Validate length
+    if(phonenumber.value.length >= 7 && phonenumber.value.length <= 14 ) {
         error.innerHTML = "";
         error.className = "error";
     } else {
-        phonenumber.className = "invalid";
-        error.innerHTML = "Invalid email";
+        error.innerHTML = "Invalid phonenumber";
         error.className = "error active";
+        return;
     }
+
+    // Validate numbers
+    let numbers = /^[0-9]*$/;
+    if(phonenumber.value.match(numbers)) {
+        error.innerHTML = "";
+        error.className = "error";
+    } else {
+        error.innerHTML = "Invalid phone number";
+        error.className = "error active";
+        return;
+    }
+
 }
 
 function validateEmail(index) {
