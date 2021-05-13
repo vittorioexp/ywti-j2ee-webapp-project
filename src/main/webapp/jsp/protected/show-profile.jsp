@@ -126,7 +126,7 @@ Since: 1.0
                             <button name="editUserProfile">Edit Profile</button><br/>
                         </section>
                         <section id="createAdvertisement">
-                            <input type="button" id="createAdvertisementButton">Create new advertisement
+                            <button id="createAdvertisementButton">Create new advertisement</button>
                         </section>
                         <section>
                             <%

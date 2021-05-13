@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             window.location.href = contextPath+"/user/do-edit"
         });
 
-    document.getElementsById("createAdvertisementButton").addEventListener(
+    document.getElementById("createAdvertisementButton").addEventListener(
         "click",
         function (event) {
             event.preventDefault();
