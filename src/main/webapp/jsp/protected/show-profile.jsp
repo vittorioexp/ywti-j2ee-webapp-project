@@ -146,7 +146,7 @@ Since: 1.0
                                             <td>Date End</td>
                                             <td>Item Available</td>
                                             <td>Price</td>
-                                            <td>Advertisement Option</td>
+                                            <td></td>
                                         </tr>
                                         <c:forEach items="${advertisementList}" var="adv">
                                             <tr>
