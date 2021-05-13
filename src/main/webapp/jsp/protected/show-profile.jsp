@@ -158,8 +158,7 @@ Since: 1.0
                                                 <td>
                                                     <span>
                                                         <form id="gotoEditAdvertisementForm" name="gotoEditAdvertisementForm" method="GET"
-                                                              action="<c:url value="/adv-edit" />" >
-                                                        <input type="hidden" name="idAdvertisement" id="idAdvertisement" value="${adv.idAdvertisement}">
+                                                              action="<c:url value="/adv-edit/${adv.idAdvertisement}"/>" >
                                                         <button type="submit">Edit</button><br/>
                                                     </form>
                                                     </span>
