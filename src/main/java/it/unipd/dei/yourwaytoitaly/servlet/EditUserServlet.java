@@ -22,6 +22,24 @@ import java.io.IOException;
  */
 
 public class EditUserServlet extends AbstractDatabaseServlet {
+    /**
+     * Edits an user
+     *
+     * @param req
+     *            the HTTP request from the client.
+     * @param res
+     *            the HTTP response from the server.
+     *
+     * @throws ServletException
+     *             if any error occurs while executing the servlet.
+     * @throws IOException
+     *             if any error occurs in the client/server communication.
+     */
+    public void doPut(HttpServletRequest req, HttpServletResponse res)
+            throws IOException {
+        doPost(req, res);
+    }
+
 
     /**
      * Edits an user

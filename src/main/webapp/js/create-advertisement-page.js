@@ -2,7 +2,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     //fetchTypeAdvList();
 
-    document.getElementById("create-button").addEventListener("click", createAdvertisement);
+    document.getElementById("create-button").addEventListener("click", function(event) {
+        event.preventDefault();
+        createAdvertisement();
+    });
     document.getElementsByTagName("form")[0].addEventListener("submit", validateCreation);
 });
 
@@ -33,30 +36,22 @@ function createAdvertisement() {
     let timeStart = document.getElementById("timeStart").value.toString();
     let timeEnd = document.getElementById("timeEnd").value.toString();
     let idType = document.getElementById("idType").value.toString();
-    let emailCompany = sessionStorage.getItem("userEmail");
     let data = "{\"advertisement\":{\"idAvdertisement\":\"" + idAdvertisement.toString() + "\"," +
         "\"title\":\"" + title +
         "\",\"description\":\"" + description + "\"," +
         "\"price\":\"" + price + "\"," +
-        "\"score\":\"" + score.toString() + "\"," +
+        "\"score\":\"" + 0 + "\"," +
         "\"numTotItem\":\"" + numTotItem + "\"," +
         "\"dateStart\":\"" + dateStart + "\"," +
         "\"dateEnd\":\"" + dateEnd + "\"," +
         "\"timeStart\":\"" + timeStart + "\"," +
         "\"timeEnd\":\"" + timeEnd + "\"," +
-        "\"emailCompany\":\"" + emailCompany + "\"," +
+        "\"emailCompany\":\"" + getUserEmail() + "\"," +
         "\"idType\":\"" + idType + "\"}}";
 
-    data = "{\"advertisement\":{\"idAdvertisement\":\"1\",\"title\":\"Capodanno sulle dolomiti\",\"description\":" +
-        "\"Sette giorni di relax in mezzo alla neve delle dolomiti in Trentino alto adige a" +
-        " capodanno\",\"score\":\"100\",\"price\":\"800\",\"numTotItem\":\"24\",\"dateStart\":\"2021-12-28" +
-        "\",\"dateEnd\":\"2021-12-28" +
-        "\",\"timeStart\":\"14:14:14\",\"timeEnd\":\"14:14:15\",\"emailCompany\":\"hotelcentrale@gmail.com\",\"idType\":\"6\"}}";
-
-    //alert(data);
-    //sendJsonRequest(url, "POST", data, function(req){window.location.replace(contextPath + "/html/protected/show-profile.html");});
     sendJsonRequest(url, "POST", data, function(req){
-        });
+        alert("very good");
+    });
 }
 
 

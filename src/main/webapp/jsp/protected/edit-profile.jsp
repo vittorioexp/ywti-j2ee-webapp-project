@@ -51,7 +51,7 @@ Since: 1.0
     <main id="mainContent">
         <section id="error"></section>
 
-        <form id="edit-profile-form" name="edit-profile-form" method="PUT" action="/ywti_wa2021_war/user/edit">
+        <form id="edit-profile-form" name="edit-profile-form" method="POST" action="/ywti_wa2021_war/user/edit">
             <label for="password">New password:</label>
             <input id="password" name="password" type="password" /><br/><br/>
 
