@@ -41,36 +41,31 @@ Since: 1.0
     <body>
     <div class="mainWrapper">
         <header>
-            <h1>Register</h1>
-            <!-- navbar (which includes the logo) imported with javascript -->
+            <!-- navbar (which includes the small logo) imported with javascript -->
             <div id="navbar-area"></div>
         </header>
         <main class="mainContent" >
             <br/>
-            <p>This is a mock page to register</p>
             <section>
-                <div>
-                    <input type="radio" id="touristUser" name="userType" value="tourist"
-                           checked>
-                    <label for="touristUser">Tourist Profile</label>
-                </div>
-
-                <div>
-                    <input type="radio" id="companyUser" name="userType" value="company">
-                    <label for="companyUser">Company Profile</label>
-                </div>
+                <input type="checkbox" id="userTypeCheckbox" name="userTypeCheckbox" value="company" onclick="checkUserType()">
+                <label for="userType"> I am a company</label><br>
             </section>
-            <section>
+            <section id="error">
+
+            </section>
+            <section id="touristRegistration">
                 <p>Register as a tourist and start your journey!</p>
                 <br/>
-                <form id="register-form" name="register-form"method="POST" action="<c:url value="/user/register"/>">
+                <form id="registerFormTourist" name="registerForm" method="POST" action="<c:url value="/user/register"/>">
 
                     <label for="email_t">email:</label>
-                    <input name="email" type="text" id="email_t" required/><br/><br/>
+                    <input name="email" type="email" id="email_t" required/><br/><br/>
                     <label for="password_t">password:</label>
-                    <input name="password" type="password" id="password_t" required/><br/><br/>
+                    <input name="password" type="password" id="password_t" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" required/><br/><br/>
                     <label for="rpassword_t">repeat password:</label>
-                    <input name="rpassword" type="password" id="rpassword_t" required/><br/><br/>
+                    <input name="rpassword" type="password" id="rpassword_t" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" required/><br/><br/>
                     <label for="name_t">name:</label>
                     <input name="name" type="text" id="name_t" required/><br/><br/>
                     <label for="surname_t">surname:</label>
@@ -90,25 +85,27 @@ Since: 1.0
 
                 </form>
             </section>
-            <section>
-                <p>Register as a company and create your event!</p>
+            <section id="companyRegistration">
+                <p>Register as a company and start to create your event!</p>
                 <br/>
-                <form method="POST" action="<c:url value="/user/register"/>">
+                <form id="registerFormCompany" name="registerForm" method="POST" action="<c:url value="/user/register"/>">
 
                     <label for="email_c">email:</label>
-                    <input name="email" type="text" id="email_c"/><br/><br/>
+                    <input name="email" type="email" id="email_c" required/><br/><br/>
                     <label for="password_c">password:</label>
-                    <input name="password" type="password" id="password_c"/><br/><br/>
+                    <input name="password" type="password" id="password_c" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" required/><br/><br/>
                     <label for="rpassword_c">repeat password:</label>
-                    <input name="rpassword" type="password" id="rpassword_c"/><br/><br/>
+                    <input name="rpassword" type="password" id="rpassword_c" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" required/><br/><br/>
                     <label for="name_c">name:</label>
-                    <input name="name" type="text" id="name_c"/><br/><br/>
+                    <input name="name" type="text" id="name_c" required/><br/><br/>
                     <label for="address_c">address:</label>
-                    <input name="address" type="text" id="address_c"/><br/><br/>
+                    <input name="address" type="text" id="address_c" required/><br/><br/>
                     <label for="phonenumber_c">phone number:</label>
-                    <input name="phone" type="text" id="phonenumber_c"/><br/><br/>
+                    <input name="phone" type="text" id="phonenumber_c" required/><br/><br/>
                     <label for="city">city:</label>
-                    <input name="city" type="number" id="city"/><br/><br/>
+                    <input name="city" type="number" id="city" required/><br/><br/>
 
                     <input type="hidden" name="userType" value="company">
 
