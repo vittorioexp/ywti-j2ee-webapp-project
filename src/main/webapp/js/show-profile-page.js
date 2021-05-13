@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     fetchPage();
 
-    document.getElementsByName("deleteAdvertisementButton").addEventListener("click", fetchDeleteAdvertisement());
+    document.getElementsByName("deleteAdvertisementButton").addEventListener("click", fetchDeleteAdvertisement(document.getElementsByName("deleteAdvertisementButton").value));
 
 });
 
@@ -16,8 +16,8 @@ function fetchPage(){
     sendGenericGetRequest(footerUrl, loadFooter);
 }
 
-function fetchDeleteAdvertisement(){
-    let url = contextPath + "/adv/${adv.idAdvertisement}"
+function fetchDeleteAdvertisement(idAdvertisement){
+    let url = contextPath + "/adv/" + idAdvertisement;
     sendJsonRequest(url, "DELETE", "", function(req){});
 }
 
