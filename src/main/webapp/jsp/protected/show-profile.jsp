@@ -158,15 +158,13 @@ Since: 1.0
                                                 <td>${adv.price}   </td>
                                                 <td>
                                                     <span>
-                                                        <form id="gotoEditAdvertisementForm" name="gotoEditAdvertisementForm" method="GET"
-                                                              action="<c:url value="/adv-edit/${adv.idAdvertisement}"/>" >
-                                                        <button type="submit">Edit</button><br/>
+                                                        <form id="gotoEditAdvertisementForm" name="gotoEditAdvertisementForm" method="GET"/>" >
+                                                        <button name="editAdvertisementButton" type="submit" value="${adv.idAdvertisement}">Edit</button><br/>
                                                     </form>
                                                     </span>
                                                     <span>
-                                                        <form id="gotoShowAdvertisementForm" name="gotoShowAdvertisementForm" method="GET"
-                                                              action="<c:url value="/adv-show/${adv.idAdvertisement}"/>" >
-                                                        <button type="submit">Info</button><br/>
+                                                        <form id="gotoShowAdvertisementForm" name="gotoShowAdvertisementForm" method="GET"/>
+                                                        <button name="showAdvertisementButton" type="submit" value="${adv.idAdvertisement}">Info</button><br/>
                                                     </form>
                                                     </span>
                                                     <span>
