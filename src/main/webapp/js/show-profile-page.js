@@ -1,26 +1,25 @@
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
-    fetchPage();
+    let deleteAdvButtons = document.getElementsByName("deleteAdvertisementButton");
 
-    document.getElementsByName("deleteAdvertisementButton").addEventListener("click", fetchDeleteAdvertisement(document.getElementsByName("deleteAdvertisementButton").value));
+
+    deleteAdvButtons.forEach(function(button, index) {
+
+        // Adds an event listener (on click) on each delete adv button
+        button.addEventListener(
+            "click",
+            function() {
+
+                // Send an http delete in JSON to the server
+                let idAdvertisement = button.value;
+                alert(idAdvertisement);
+                let url = contextPath + "/adv/" + idAdvertisement;
+                sendJsonRequest(url, "DELETE", "", function(req){});
+            });
+    });
 
 });
-
-
-
-function fetchPage(){
-    let navbarUrl = new URL(contextPath + "/html/reusable-snippets/navbar.html");
-    let footerUrl = new URL(contextPath + "/html/reusable-snippets/footer.html");
-    sendGenericGetRequest(navbarUrl, loadNavbar);
-    sendGenericGetRequest(footerUrl, loadFooter);
-}
-
-function fetchDeleteAdvertisement(idAdvertisement){
-    let url = contextPath + "/adv/" + idAdvertisement;
-    sendJsonRequest(url, "DELETE", "", function(req){});
-}
-
 
 
 
