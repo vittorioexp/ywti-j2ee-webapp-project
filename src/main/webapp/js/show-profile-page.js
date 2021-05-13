@@ -17,7 +17,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 // Send an http delete in JSON to the server
                 let idAdvertisement = button.value;
                 let url = contextPath + "/adv/" + idAdvertisement;
-                sendJsonRequest(url, "DELETE", "", function(req){});
+                sendJsonRequest(url, "DELETE", "", function(req){
+                    location.reload();
+                });
             });
     });
 

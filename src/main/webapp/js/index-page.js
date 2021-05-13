@@ -8,7 +8,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
     //fetchCityList();
 
     // fetch the list of advertisements when clicking the search button
-    document.getElementById("search-button").addEventListener("click", fetchAdvertisementList);
+    document.getElementById("search-button").addEventListener("click", function(event) {
+        event.preventDefault();
+        fetchAdvertisementList();
+    });
     //document.addEventListener("submit", fetchAdvertisementList);
 });
 
@@ -53,12 +56,18 @@ function fetchAdvertisementList(){
 
 // TODO: Loads the list of advertisements
 function loadAdvertisementList(req){
+
     // make the section visible in index.html
     let advertisementList = document.getElementById("advertisementList")
-    advertisementList.setAttribute("class", "d-block");
+    //advertisementList.setAttribute("class", "d-block");
+
+    // parses the json data
+    let jsonData = JSON.parse(req).resourceList;
+
+    alert(jsonData[0].advertisement.title);
 
     // TODO: display the list
-    document.getElementById("advertisementList").innerHTML = req;
+    //document.getElementById("advertisementList").innerHTML = req;
     /*
     var jsonData = JSON.parse(req.responseText);
             console.log(jsonData["description"]);

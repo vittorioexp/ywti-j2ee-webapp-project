@@ -8,8 +8,6 @@ import it.unipd.dei.yourwaytoitaly.resource.User;
 import it.unipd.dei.yourwaytoitaly.utils.EmailSender;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -291,7 +289,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             Message success = new Message("Successful registration!");
             req.setAttribute("message", success);
             res.setStatus(HttpServletResponse.SC_OK);
-            res.sendRedirect(req.getContextPath() + "/index");
+            res.sendRedirect(req.getContextPath() + "/user/do-login");
 
         }catch (Exception ex){
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
