@@ -66,9 +66,7 @@ Since: 1.0
             <button type="submit" id="edit-profile-button">Edit</button><br/>
         </form>
     </main>
-    <!-- TODO: import footer.html (JS) -->
-    <!-- https://stackoverflow.com/a/31837264 -->
-    <div data-include="footer"></div>
+    <div id="footer-area"></div>
 </div>
 </body>
 </html>

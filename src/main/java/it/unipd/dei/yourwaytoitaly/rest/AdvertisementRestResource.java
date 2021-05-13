@@ -460,6 +460,37 @@ public class AdvertisementRestResource extends RestResource {
                 m.toJSON(res.getOutputStream());
                 return;
             }
+
+            // Deletes all the associated bookings
+            List<Booking> bookingList = BookingDAO.searchBookingByAdvertisement(idAdvertisement);
+
+            for (Booking b : bookingList) {
+
+                // TODO: Sends an email to the tourist
+                String email = b.getEmailTourist();
+                /*
+                ServletContext sc = getServletContext();
+                String emailsite = sc.getInitParameter("emailSite");
+                String passEmail = sc.getInitParameter("passwordEmail");
+                // sending confirmation email
+                EmailSender mail= new EmailSender(email , emailsite , passEmail);
+
+                //send email and check if email is sent correctly
+                if (!mail.sendConfirmationEmail("YourWayToItaly:Booking deleted",
+                        "Your booking has just been deleted:")){
+                    ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+                    Message m = new Message(ec.getErrorMessage(),
+                            ec.getHTTPCode(), "Email not sent.");
+                    res.setStatus(ec.getHTTPCode());
+                    m.toJSON(res.getOutputStream());
+                    return;
+                }*/
+
+                // Deletes the booking
+                BookingDAO.deleteBooking(b);
+            }
+
+            // Deletes the advertisement
             AdvertisementDAO.deleteAdvertisement(idAdvertisement);
 
             res.setStatus(HttpServletResponse.SC_OK);

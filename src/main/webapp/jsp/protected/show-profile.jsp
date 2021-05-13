@@ -160,17 +160,17 @@ Since: 1.0
                                                     <span>
                                                         <form id="gotoEditAdvertisementForm" name="gotoEditAdvertisementForm" method="GET"/>
                                                         <button name="editAdvertisementButton" value="${adv.idAdvertisement}">Edit</button><br/>
-                                                    </form>
+                                                        </form>
                                                     </span>
                                                     <span>
                                                         <form id="gotoShowAdvertisementForm" name="gotoShowAdvertisementForm" method="GET"/>
                                                         <button name="showAdvertisementButton" value="${adv.idAdvertisement}">Info</button><br/>
-                                                    </form>
+                                                        </form>
                                                     </span>
                                                     <span>
                                                         <form id="deleteAdvertisementForm" name="deleteAdvertisementForm" method="DELETE">
                                                         <button name="deleteAdvertisementButton" value="${adv.idAdvertisement}">Delete</button>
-                                                    </form>
+                                                        </form>
                                                     </span>
                                                 </td>
                                             </tr>
