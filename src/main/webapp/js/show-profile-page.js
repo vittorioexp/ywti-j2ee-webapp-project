@@ -55,13 +55,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
             event.preventDefault();
             window.location.href = contextPath+"/user/do-edit"
         });
-    document.getElementsByName("editUserProfile")[1].addEventListener(
-        "click",
-        function (event) {
-            event.preventDefault();
-            window.location.href = contextPath+"/user/do-edit";
-        });
-
 
 });
 
