@@ -158,18 +158,18 @@ Since: 1.0
                                                 <td>${adv.price}   </td>
                                                 <td>
                                                     <span>
-                                                        <form id="gotoEditAdvertisementForm" name="gotoEditAdvertisementForm" method="GET"/>" >
-                                                        <button name="editAdvertisementButton" type="submit" value="${adv.idAdvertisement}">Edit</button><br/>
+                                                        <form id="gotoEditAdvertisementForm" name="gotoEditAdvertisementForm" method="GET"/>
+                                                        <button name="editAdvertisementButton" value="${adv.idAdvertisement}">Edit</button><br/>
                                                     </form>
                                                     </span>
                                                     <span>
                                                         <form id="gotoShowAdvertisementForm" name="gotoShowAdvertisementForm" method="GET"/>
-                                                        <button name="showAdvertisementButton" type="submit" value="${adv.idAdvertisement}">Info</button><br/>
+                                                        <button name="showAdvertisementButton" value="${adv.idAdvertisement}">Info</button><br/>
                                                     </form>
                                                     </span>
                                                     <span>
                                                         <form id="deleteAdvertisementForm" name="deleteAdvertisementForm" method="DELETE">
-                                                        <button name="deleteAdvertisementButton" value="${adv.idAdvertisement}" type="submit">Delete</button>
+                                                        <button name="deleteAdvertisementButton" value="${adv.idAdvertisement}">Delete</button>
                                                     </form>
                                                     </span>
                                                 </td>
