@@ -74,7 +74,9 @@ Since: 1.0
                 <div id="navbar-area"></div>
             </header>
             <main class="mainContent" >
-                <form id="login-form" name="login-form" method="POST" action="<c:url value="/user/login"/>">
+                <section id="error">
+                </section>
+                <form id="loginForm" name="loginForm" method="POST" action="<c:url value="/user/login"/>">
                     <label for="email">email:</label>
                     <input id="email" name="email" type="email" required/>
                     <span class="error"></span>
