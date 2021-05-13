@@ -1,24 +1,61 @@
+
+/*
+Author: Gabriele Del Fiume
+Version: 1.0
+Since: 1.0
+ */
 @charset "utf-8";
 
 html {
-    background-color: antiquewhite;
+    /* background-color: antiquewhite; */
+    /* background-color: #FCFCFC; */
+    background-color: white;
 }
 
+header {
+    background-color: #003B95;
+    height: 70px;
+}
 body {
-    font-family: 'Helvetica', sans-serif;
+    font-family: 'AmericanTypewriter', sans-serif;
     font-size: 20px;
     font-style: normal;
 }
 
 .mainWrapper {
-    margin: 5%;
-    border: 1px black solid;
+    background-color: undefined;
+    /* border: 1px black solid; */
+}
+
+#logo {
+    font-family: 'AmericanTypewriter', sans-serif;
+    float: left;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 2%;
+    width: 40%;
+    height: 50px;
+    text-align: left;	/* color: rgba(255,255,255,1.00); */
+    background-color: #003B95;
+    font-size: 30px;
+    color: white;
 }
 
 #navbar-area {
-    padding: 1%;
     float: right;
-    border: 1px black solid;
+    background-color: #003B95;
+    text-align: right;
+    padding-top: 20px;
+    padding-right: 5px;
+    height: 50px;
+}
+
+#navbar-area a {
+    text-decoration: none;
+    /* color: rgba(146,146,146,1.00); */
+    color: white;
+    padding-left: 50px;
+    font-size: 20px;
 }
 
 footer {

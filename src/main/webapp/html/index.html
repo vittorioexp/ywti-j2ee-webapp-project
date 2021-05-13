@@ -16,7 +16,11 @@
 <body>
 <div class="mainWrapper">
     <header>
-        <div id="navbar-area"></div>
+        <div id="logo">
+            Your Way To Italy</div>
+        <div id="navbar-area">
+            <a href="Login.html" title="Login">Login</a><a href="#" title="Register">Register</a><a href="#" title="Contacts">Contacts</a>
+        </div>
         <div id="user-email"></div>
     </header>
     <main class="mainContent" >
@@ -27,16 +31,14 @@
         <section class="searchbar">
             <form id="searchAdv" name="searchAdv" method="get" >
 
-                <label for="idType">What you search for</label>
-                <input type="number" id="idType" name="idType" required
+
+                <input placeholder="What you search for" type="number" id="idType" name="idType" required
                        size="10">
 
-                <label for="idCity">Where</label>
-                <input type="number" id="idCity" name="idCity" required
+                <input placeholder="Where" type="number" id="idCity" name="idCity" required
                        size="10">
 
-                <label for="dateStart">When</label>
-                <input type="date" id="dateStart" name="dateStart" required>
+                <input placeholder="When" type="date" id="dateStart" name="dateStart" required>
 
                 <button type="submit" id="search-button">Start your journey</button><br/>
 

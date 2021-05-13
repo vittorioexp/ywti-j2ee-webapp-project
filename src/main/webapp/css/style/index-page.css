@@ -1,27 +1,51 @@
+/*
+Author: Gabriele Del Fiume
+Version: 1.0
+Since: 1.0
+ */
+
 #big-logo {
-    margin-top: 7%;
-    margin-bottom: 5%;
-    padding: 5%;
     text-align: center;
     position: relative;
-    border: 1px black solid;
+    /*  border: 1px black solid; */
+    font-family: 'Zapfino', sans-serif;
+    font-size: 60px;
+    font-style: normal;
+
+}
+
+img{
+    max-width: 100%;
+    max-height: 100%;
+    display: block; /* remove extra space below image */
 }
 
 .searchbar {
-    padding-top: 2%;
+
     text-align: center;
     position: relative;
-    border: 1px black solid;
+    /* background-color: #F2F2F2; */
+    /*  border: 1px black solid; */
+    background-color: #fafafa;
 }
 
 .searchbar label {
     padding-left: 3%;
 }
 
+.searchbar input {
+    color: black;
+    height: 30px;
+    width: 170px;
+}
 #search-button {
     margin-top: 5%;
     margin-bottom: 5%;
     margin-left: 5%;
     text-align: center;
     position: relative;
+    font-size: 20px;
+    font-family: 'AmericanTypewriter', sans-serif;
+    color: white;
+    background-color: #003B95;
 }
