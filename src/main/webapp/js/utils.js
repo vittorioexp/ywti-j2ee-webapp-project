@@ -172,36 +172,6 @@ function sendJsonRequest(url, method, data, callback) {
     }
 }
 
-function validatePhoneNumber(index) {
-
-    // Error section
-    let error = document.getElementById("error");
-
-    let phonenumber = document.getElementsByName("phonenumber")[index];
-
-    // Validate length
-    if(phonenumber.value.length >= 7 && phonenumber.value.length <= 14 ) {
-        error.innerHTML = "";
-        error.className = "error";
-    } else {
-        error.innerHTML = "Invalid phonenumber";
-        error.className = "error active";
-        return;
-    }
-
-    // Validate numbers
-    let numbers = /^[0-9]*$/;
-    if(phonenumber.value.match(numbers)) {
-        error.innerHTML = "";
-        error.className = "error";
-    } else {
-        error.innerHTML = "Invalid phone number";
-        error.className = "error active";
-        return;
-    }
-
-}
-
 function validateEmail(index) {
 
     // Error section
@@ -271,3 +241,44 @@ function validatePassword(index) {
         return;
     }
 }
+
+function validatePhoneNumber(index) {
+
+    // Error section
+    let error = document.getElementById("error");
+
+    let phonenumber = document.getElementsByName("phonenumber")[index];
+
+    // Validate length
+    if(phonenumber.value.length >= 7 && phonenumber.value.length <= 14 ) {
+        error.innerHTML = "";
+        error.className = "error";
+    } else {
+        error.innerHTML = "Invalid phonenumber";
+        error.className = "error active";
+        return;
+    }
+
+    // Validate numbers
+    let numbers = /^[0-9]*$/;
+    if(phonenumber.value.match(numbers)) {
+        error.innerHTML = "";
+        error.className = "error";
+    } else {
+        error.innerHTML = "Invalid phone number";
+        error.className = "error active";
+        return;
+    }
+
+}
+
+function validateIdCity(){
+    let idCity = document.getElementById("idCity").value;
+    if(idCity<=0){
+        let error = document.getElementById("error");
+        idCity.className = "invalid";
+        error.innerHTML = "Invalid ID";
+        error.className = "error";
+    }
+}
+
