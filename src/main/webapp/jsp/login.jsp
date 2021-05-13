@@ -80,7 +80,8 @@ Since: 1.0
                     <span class="error"></span>
                     <br/><br/>
                     <label for="password">password:</label>
-                    <input id="password" name="password" type="password" required/><br/><br/>
+                    <input id="password" name="password" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" required/><br/><br/>
                     <button id="login-button" type="submit">Submit</button><br/>
                 </form>
             </main>
