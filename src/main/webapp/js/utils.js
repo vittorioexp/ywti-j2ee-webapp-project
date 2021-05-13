@@ -177,6 +177,34 @@ function sendJsonRequest(url, method, data, callback) {
     }
 }
 
+function validatePhoneNumber(index) {
+
+    // Error section
+    let error = document.getElementById("error");
+
+    let phonenumber = document.getElementsByName("phonenumber")[index];
+    let phonenumberRegExp = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
+
+    /*
+    Example phone number:
+    123-456-7890
+    (123) 456-7890
+    123 456 7890
+    123.456.7890
+    +91 (123) 456-7890
+     */
+
+    if (phonenumberRegExp.test(phonenumber.value)) {
+        phonenumber.className = "valid";
+        error.innerHTML = "";
+        error.className = "error";
+    } else {
+        phonenumber.className = "invalid";
+        error.innerHTML = "Invalid email";
+        error.className = "error active";
+    }
+}
+
 function validateEmail(index) {
 
     // Error section

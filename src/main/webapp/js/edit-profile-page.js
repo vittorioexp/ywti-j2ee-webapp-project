@@ -1,81 +1,48 @@
-
-
 document.addEventListener("DOMContentLoaded", function(event) {
 
-    fetchProfile();
-    document.getElementById("button").addEventListener("click", updateProfile);
-    // document.getElementById("password").addEventListener("change", checkValue);
-    // document.getElementById("address").addEventListener("change", checkValue);
-    // document.getElementById("idCity").addEventListener("change", checkValue);
-    // document.getElementById("phonenumber").addEventListener("change", checkValue);
+    // Form validation while typing
+    document.getElementsById("password").addEventListener("keyup", function(event) {validatePassword(0)})
+    document.getElementsById("phonenumber").addEventListener("keyup", function(event) {validatePhoneNumber(0)})
+    document.getElementsById("address").addEventListener("keyup", function(event) {})
+    document.getElementsById("idCity").addEventListener("keyup", function(event) {validateIdCity})
+    document.getElementsById("edit-profile-button").addEventListener("click", fetchEditProfile)
 
 });
 
+function fetchEditProfile(){
 
+    var elements = document.getElementById("edit-profile-form").elements;
 
+    //Field checking is performed only by javascript and servlet
 
-
-
-
-function checkValue(e) {
-    if (e.target.value ===""){
-        alert ( e.target.name + " field is empty!");
+    for (var i = 0, element; element = elements[i++];) {
+        if (element.value === ""){
+            let error = document.getElementById("error");
+            element.className = "invalid";
+            error.innerHTML = "Complete all fields!";
+            error.className = "error";
+            break;
+        }
     }
-    else{
-        if (e.target.id === "password") {}
-            // if (e.target.value === MD5(document.getElementById( e.target.id + "Old").value) )
-            //     alert ( e.target.name + " field has not been modified!");
-        if (e.target.value === document.getElementById( e.target.id + "Old").value)
-            alert ( e.target.name + " field has not been modified!");
+
+}
+
+
+function validateIdCity(){
+    let idCity = document.getElementsById("idCity").value;
+    if(idCity<0){
+        let error = document.getElementById("error");
+        idCity.className = "invalid";
+        error.innerHTML = "Invali ID";
+        error.className = "error";
     }
+    let url = contextPath + "/user/edit";
+    let data ="phonenumber="+document.getElementsById("idCity").value+"&"+
+        "password"+document.getElementsById("password").value+"&"+
+        "address"+document.getElementsById("address").value+"&"+
+        "idCity"+document.getElementsById("idCity").value;
+
+    sendRequest(url, "POST", data, function(req){});
 }
 
-function fetchProfile() {
-    let url = new URL(contextPath+"/user/profile");
-    sendGenericGetRequest(url ,loadPreviousProfile);
-}
-
-function loadPreviousProfile(req){
-
-    // let userObj = req.getAttribute("user");
-    // document.getElementById("passwordOld").value = userObj.password;
-    // document.getElementById("idCityOld").value = userObj.idCity;
-    // document.getElementById("addressOld").value = userObj.address;
-    // document.getElementById("phonenumberOld").value = userObj.phonenumber;
-
-}
-
-function updateProfile() {
-
-    alert ("clicking");
-    let url = new URL(contextPath + "/user/edit");
-    let m = "post";
-
-    // The rest of this code assumes you are not using a library.
-    // It can be made less verbose if you use one.
-    const form = document.createElement('form');
-    form.method = m;
-    form.action = url;
-
-    let p = document.getElementById("password");
-    let a = document.getElementById("address");
-    let pn = document.getElementById("phonenumber");
-    let id = document.getElementById("idCity");
-
-    let f = [ p , a , pn , id];
-
-    for ( let i=0; i<4; i++) {
-
-        const hiddenField = document.createElement('input');
-        hiddenField.type = 'hidden';
-        hiddenField.name = f[i].name;
-        hiddenField.value = f[i].value;
-        form.appendChild(hiddenField);
-
-    }
-    document.body.appendChild(form);
-    form.submit();
-
-
-}
 

@@ -1,3 +1,6 @@
+
+<!--
+
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Tourist" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.User" %>
 <!--
@@ -27,71 +30,45 @@ Since: 1.0
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="author" content="Basso Marco, Esposito Vittorio, Piva Matteo, Giurisato Francesco"> <!-- who wrote the page -->
-        <meta name="description" content="Edit profile"> <!-- a textual description of it -->
-        <meta name="keywords" content="edit profile, ywti, local, travel, italy"> <!-- some keywords to make your page more easily findable -->
-        <!-- The viewport meta element is the key to making a responsive site work. -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Edit profile</title>
-        <script src="/ywti_wa2021_war/js/utils.js"></script>
-        <script src="/ywti_wa2021_war/js/edit-profile-page.js"></script>
-        <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
-    </head>
-    <body>
-    <div id="page">
-        <header>
-            <h1>Edit profile</h1>
-            <!-- TODO: import navbar.html (JS) -->
-            <!-- https://stackoverflow.com/a/31837264 -->
-            <div data-include="navbar"></div>
-            <nav>
-                <a href="${pageContext.request.contextPath}/index">Home</a>
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Basso Marco, Esposito Vittorio, Piva Matteo, Giurisato Francesco"> <!-- who wrote the page -->
+    <meta name="description" content="Edit profile"> <!-- a textual description of it -->
+    <meta name="keywords" content="edit profile, ywti, local, travel, italy"> <!-- some keywords to make your page more easily findable -->
+    <!-- The viewport meta element is the key to making a responsive site work. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Edit profile</title>
+    <script src="/ywti_wa2021_war/js/utils.js"></script>
+    <script src="/ywti_wa2021_war/js/edit-profile-page.js"></script>
+    <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div id="mainWrapper">
+    <header>
+        <div id="navbar-area"></div>
+    </header>
+    <main id="mainContent">
+        <section id="error"></section>
 
-                <c:choose>
-                    <c:when test="${empty sessionScope.Authorization}">
-                        <a href="${pageContext.request.contextPath}/user/do-login">Login</a>
-                        <a href="${pageContext.request.contextPath}/user/do-register">Register</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
-                        <a href="${pageContext.request.contextPath}/user/do-logout">Logout</a>
-                    </c:otherwise>
-                </c:choose>
-
-                <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
-            </nav>
-        </header>
-        <main id="content">
-            </br>
-            <p>This is a mock page to update your profile</p>
-            </br>
-
-            <label for="password">new password:</label>
-            <input id="password" name="password" type="password" required/><br/><br/>
+        <form id="edit-profile-form" name="edit-profile-form"method="PUT">
+            <label for="password">New password:</label>
+            <input id="password" name="password" type="password" /><br/><br/>
 
             <label for="phonenumber">Phone Number:</label>
-            <input id="phonenumber" name="phonenumber" type="text" required/><br/><br/>
+            <input id="phonenumber" name="phonenumber" type="text" /><br/><br/>
 
             <label for="address">Address:</label>
-            <input id="address" name="address" type="text" required/><br/><br/>
+            <input id="address" name="address" type="text" /><br/><br/>
 
             <label for="idCity">Id City:</label>
-            <input id="idCity" name="idCity" type="number" required/><br/><br/>
-            <button id="button">Edit</button><br/>
-
-
-<%--            TODO : understand how to get old profile parameters--%>
-<%--            <input id="passwordOld" name="passwordOld" type="hidden" value="${pageContext.request.contextPath}"/><br/><br/>--%>
-<%--            <input id="phonenumberOld" name="phonenumberOld" type="hidden" /><br/><br/>--%>
-<%--            <input id="addressOld" name="addressOld" type="hidden" /><br/><br/>--%>
-<%--            <input id="idCityOld" name="idCityOld" type="hidden" /><br/><br/>--%>
-
-        </main>
-        <!-- TODO: import footer.html (JS) -->
-        <!-- https://stackoverflow.com/a/31837264 -->
-        <div data-include="footer"></div>
-    </div>
-    </body>
+            <input id="idCity" name="idCity" type="number" /><br/><br/>
+            <button type="submit" id="edit-profile-button">Edit</button><br/>
+        </form>
+    </main>
+    <!-- TODO: import footer.html (JS) -->
+    <!-- https://stackoverflow.com/a/31837264 -->
+    <div data-include="footer"></div>
+</div>
+</body>
 </html>
+
