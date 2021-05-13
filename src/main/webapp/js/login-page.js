@@ -5,5 +5,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.getElementById("email").addEventListener("keyup", function(event) {
         validateEmail(0)
     })
+    document.getElementById("password").addEventListener("keyup", function(event) {
+        validatePassword(0)
+    })
 });
 

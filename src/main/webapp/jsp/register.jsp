@@ -51,7 +51,6 @@ Since: 1.0
                 <label for="userType"> I am a company</label><br>
             </section>
             <section id="error">
-
             </section>
             <section id="touristRegistration">
                 <p>Register as a tourist and start your journey!</p>

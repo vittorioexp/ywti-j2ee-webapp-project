@@ -176,25 +176,73 @@ function sendJsonRequest(url, method, data, callback) {
             return false;
     }
 }
-/*
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/ywti_wa2021_war";
+
+function validateEmail(index) {
+
+    // Error section
+    let error = document.getElementById("error");
+
+    let email = document.getElementsByName("email")[index];
+    let emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    if (email.value.length === 0 || emailRegExp.test(email.value)) {
+        email.className = "valid";
+        error.innerHTML = "";
+        error.className = "error";
+    } else {
+        email.className = "invalid";
+        error.innerHTML = "Invalid email";
+        error.className = "error active";
+    }
 }
 
-function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
+function validatePassword(index) {
+
+    // Error section
+    let error = document.getElementById("error");
+
+    let password = document.getElementsByName("password")[index];
+
+    // Validate length
+    if(password.value.length >= 8) {
+        error.innerHTML = "";
+        error.className = "error";
+    } else {
+        error.innerHTML = "Invalid password: insert at least 8 characters";
+        error.className = "error active";
+        return;
     }
-    return "";
-}*/
+
+    // Validate lowercase letters
+    let lowerCaseLetters = /[a-z]/g;
+    if(password.value.match(lowerCaseLetters)) {
+        error.innerHTML = "";
+        error.className = "error";
+    } else {
+        error.innerHTML = "Invalid password: insert at least one lower case character";
+        error.className = "error active";
+        return;
+    }
+
+    // Validate capital letters
+    let upperCaseLetters = /[A-Z]/g;
+    if(password.value.match(upperCaseLetters)) {
+        error.innerHTML = "";
+        error.className = "error";
+    } else {
+        error.innerHTML = "Invalid password: insert at least one upper case character";
+        error.className = "error active";
+        return;
+    }
+
+    // Validate numbers
+    let numbers = /[0-9]/g;
+    if(password.value.match(numbers)) {
+        error.innerHTML = "";
+        error.className = "error";
+    } else {
+        error.innerHTML = "Invalid password: insert at least one number";
+        error.className = "error active";
+        return;
+    }
+}
