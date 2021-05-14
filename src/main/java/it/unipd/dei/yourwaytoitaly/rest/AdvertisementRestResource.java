@@ -707,13 +707,21 @@ public class AdvertisementRestResource extends RestResource {
         try {
             // list all the advertisements requested by the user
 
-            SearchParameters s = SearchParameters.fromJSON(req.getInputStream());
+            /*
+                SearchParameters s = SearchParameters.fromJSON(req.getInputStream());
+                int idCity = s.getIdCity();
+                int idType = s.getIdType();
+                Date date = s.getDateStart();
+            */
 
-            int idCity = s.getIdCity();
-            int idType = s.getIdType();
-            Date date = s.getDateStart();
 
-            if (date == null || idCity <= 0 || idType <= 0) {
+            int idType = Integer.parseInt(req.getParameter("idType").toString());
+            int idCity = Integer.parseInt(req.getParameter("idCity").toString());
+            Date dateStart = Date.valueOf(req.getParameter("dateStart").toString());
+
+            SearchParameters s = new SearchParameters(idType, idCity, dateStart);
+
+            if (dateStart == null || idCity <= 0 || idType <= 0) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
                         ec.getHTTPCode(), "Input value not valid.");
@@ -722,7 +730,7 @@ public class AdvertisementRestResource extends RestResource {
                 return;
             }
 
-            listAdvertisement = AdvertisementDAO.searchAdvertisement(idCity, idType, date);
+            listAdvertisement = AdvertisementDAO.searchAdvertisement(idCity, idType, dateStart);
 
             if(listAdvertisement.isEmpty()){
                 ErrorCode ec = ErrorCode.EMPTY_LIST;
