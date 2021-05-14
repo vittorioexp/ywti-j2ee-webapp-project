@@ -245,6 +245,14 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
                 default:
                     return false;
             }
+        } else if (URI.contains("city")) {
+            switch (method) {
+                case "GET":
+                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).getCity();
+                    break;
+                default:
+                    return false;
+            }
         }
         return true;
     }

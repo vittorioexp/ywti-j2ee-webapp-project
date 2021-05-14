@@ -814,4 +814,41 @@ public class AdvertisementRestResource extends RestResource {
             return;
         }
     }
+
+    /**
+     * Returns the city
+     *
+     * @throws IOException
+     *             if any error occurs in the client/server communication.
+     */
+    public void getCity() throws IOException {
+
+        try {
+            // list all the type_advertisements requested by the user
+
+            City c;
+            String in = req.getParameter("key");
+            int num = 0;
+
+            try {
+                num = Integer.parseInt(in);
+
+                // Key is a number
+                c = CityDAO.searchCity(num);
+            } catch (Exception e) {
+                // Key is NOT a number
+                c = CityDAO.searchCity(in);
+            }
+            res.setStatus(HttpServletResponse.SC_OK);
+            c.toJSON(res.getOutputStream());
+
+        } catch (Exception ex) {
+            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message(ec.getErrorMessage(),
+                    ec.getHTTPCode(), "Cannot show the list of cities:" + ex.toString());
+            res.setStatus(ec.getHTTPCode());
+            m.toJSON(res.getOutputStream());
+            return;
+        }
+    }
 }

@@ -1,9 +1,8 @@
-<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Tourist" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Company" %>
-<%@ page import="java.util.List" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Booking" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.database.CityDAO" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Advertisement" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Booking" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.User" %>
+<%@ page import="java.util.List" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -43,6 +42,8 @@ Since: 1.0
         <title>My profile - Your Way to Italy</title>
         <script src="/ywti_wa2021_war/js/utils.js"></script>
         <script src="/ywti_wa2021_war/js/show-profile-page.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
         <link href="/ywti_wa2021_war/css/style/show-profile-page.css" rel="stylesheet" type="text/css">
         <title>show profile</title>
@@ -64,7 +65,7 @@ Since: 1.0
                             <p>Phone number: ${user.phoneNumber}</p>
                             <p>Birth date: ${user.birthDate}</p>
                             <p>Address: ${user.address}</p>
-                            <p>City: ${user.idCity}</p>
+                            <p name="userCity" id="${user.idCity}"></p>
                             <p>Your score is ${score} </p>
                             </br>
                             <button name="editUserProfile">Edit Profile</button><br/>
@@ -121,7 +122,7 @@ Since: 1.0
                             <p>Email: ${user.email}</p>
                             <p>Phone number: ${user.phoneNumber}</p>
                             <p>Address: ${user.address}</p>
-                            <p>City: ${user.idCity}</p>
+                            <p name="userCity" id="${user.idCity}"></p>
                             </br>
                             <button name="editUserProfile">Edit Profile</button><br/>
                         </section>

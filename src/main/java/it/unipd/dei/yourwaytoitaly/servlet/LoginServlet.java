@@ -91,7 +91,7 @@ public class LoginServlet extends AbstractDatabaseServlet {
         String op = req.getRequestURI();
         op = op.substring(op.lastIndexOf("user") + 5);
 
-        if (op.equals ("login")) {
+        if (op.contains("login")) {
             // the requested operation is register
             login(req, res);
         }

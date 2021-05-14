@@ -40,7 +40,9 @@ Since: 1.0
     <title>Edit profile</title>
     <script src="/ywti_wa2021_war/js/utils.js"></script>
     <script src="/ywti_wa2021_war/js/edit-profile-page.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
 <div class="mainWrapper">
@@ -61,8 +63,8 @@ Since: 1.0
             <label for="address">Address:</label>
             <input id="address" name="address" type="text" /><br/><br/>
 
-            <select form="searchIdCity" id="searchIdCity" name="idCity">
-                <option value="0" disabled selected>City:</option>
+            <select form="edit-profile-form" id="idCity" name="idCity">
+                <option value="0" disabled selected>Where</option>
             </select>
 
             <button type="submit" id="edit-profile-button">Edit</button><br/>

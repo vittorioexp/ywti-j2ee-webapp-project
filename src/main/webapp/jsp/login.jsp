@@ -33,12 +33,11 @@ Since: 1.0
         <meta name="keywords" content="login, loginpage, ywti, local, travel, italy"> <!-- some keywords to make your page more easily findable -->
         <!-- The viewport meta element is the key to making a responsive site work. -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>login</title>
+        <title>Login - Your Way to Italy</title>
         <script src="/ywti_wa2021_war/js/utils.js"></script>
-        <script src="/ywti_wa2021_war/js/login-page.js"></script>
-        <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
         <c:choose>
             <c:when test="${!empty sessionScope.Authorization}">
+                <c:set var="context" value="${pageContext.request.contextPath}" />
                 <script>
                     let auth = "${sessionScope.Authorization}";
                     let authHeader = auth.substring(
@@ -66,6 +65,8 @@ Since: 1.0
                 </script>
             </c:otherwise>
         </c:choose>
+        <script src="/ywti_wa2021_war/js/login-page.js"></script>
+        <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <div class="mainWrapper">

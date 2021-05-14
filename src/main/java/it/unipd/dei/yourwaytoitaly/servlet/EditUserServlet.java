@@ -84,7 +84,7 @@ public class EditUserServlet extends AbstractDatabaseServlet {
             address = req.getParameter("address");
             idCity = Integer.parseInt(req.getParameter("idCity"));
 
-            if (phoneNumber==null || phoneNumber.length()<10 || phoneNumber.length()>15) {
+            if (phoneNumber==null || phoneNumber.length()<7 || phoneNumber.length()>14) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
                         ec.getHTTPCode(), "Phone number not valid.");

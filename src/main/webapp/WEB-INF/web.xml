@@ -194,6 +194,11 @@
 	</servlet-mapping>
 
 	<servlet-mapping>
+		<servlet-name>RestAdvertisementServlet</servlet-name>
+		<url-pattern>/city</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
 		<servlet-name>ContactsPage</servlet-name>
 		<url-pattern>/contacts</url-pattern>
 	</servlet-mapping>
