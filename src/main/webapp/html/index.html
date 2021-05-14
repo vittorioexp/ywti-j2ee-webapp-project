@@ -16,20 +16,34 @@
     <link href="/ywti_wa2021_war/css/style/index-page.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div class="mainWrapper">
+<div class="mainWrapper w3-main">
     <header>
         <div id="logo">
-            Your Way To Italy</div>
-        <div id="navbar-area"></div>
-        <div id="user-email"></div>
-    </header>
-    <main class="mainContent" >
-        <div id="big-logo">
-            <img src="/ywti_wa2021_war/css/image/logo.png">
+            <img id="small-logo" src="/ywti_wa2021_war/utility/logo.png" >
         </div>
-        <section class="searchbar w3-container">
-            <form id="searchAdv" name="searchAdv" method="get" >
+        <div id="navbar-area" class="w3-container" ></div>
+        <div id="user-email" class="w3-container w3-section"></div>
+    </header>
+    <main class="mainContent w3-container w3-section" >
+        <div id="big-logo">
+            <!-- <img src="/ywti_wa2021_war/css/image/logo.png"> -->
+            <div name="slideshow" class="w3-content w3-section" style="max-width:500px">
+                <img class="mySlides" src="/ywti_wa2021_war/utility/0.jpg" >
+                <img class="mySlides" src="/ywti_wa2021_war/utility/1.jpg" >
+                <img class="mySlides" src="/ywti_wa2021_war/utility/2.jpg" >
+                <img class="mySlides" src="/ywti_wa2021_war/utility/3.jpg" >
+                <img class="mySlides" src="/ywti_wa2021_war/utility/4.jpg" >
+                <img class="mySlides" src="/ywti_wa2021_war/utility/5.jpg" >
+                <img class="mySlides" src="/ywti_wa2021_war/utility/6.jpg" >
+            </div>
+        </div>
+        <section class="searchbar w3-container w3-section">
+            <div name="titles" class="w3-container w3-section">
+                <h1>Find deals on hotels, travels, dinners, and much more... </h1>
+                <h6>From amazing journeys in the dolomites to funky city dinners </h6>
+            </div>
 
+            <form id="searchAdv" name="searchAdv" method="get" >
 
                 <select class= "searchElement" form="searchAdv" id="idType" name="type" placeholder="">
                     <option value="0" disabled selected>What</option>
@@ -41,16 +55,16 @@
 
                 <input class= "searchElement" placeholder="When" type="date" id="dateStart" name="dateStart" required>
 
-                <button type="submit" id="search-button">Start your journey</button><br/>
+                <button type="submit" id="search-button" >Start your journey</button><br/>
 
             </form>
         </section>
-        <section id="advertisementList" class="advertisementList w3-container">
+        <section id="advertisementList" class="advertisementList w3-container w3-section">
 
         </section>
     </main>
     <!-- footer imported with javascript -->
-    <div id="footer-area"></div>
+    <div id="footer-area" class="w3-container w3-section"></div>
 </div>
 </body>
 </html>

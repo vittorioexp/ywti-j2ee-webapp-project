@@ -35,6 +35,8 @@ Since: 1.0
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Login - Your Way to Italy</title>
         <script src="/ywti_wa2021_war/js/utils.js"></script>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
         <c:choose>
             <c:when test="${!empty sessionScope.Authorization}">
                 <c:set var="context" value="${pageContext.request.contextPath}" />
@@ -69,27 +71,29 @@ Since: 1.0
         <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <div class="mainWrapper">
+        <div class="mainWrapper w3-main">
             <header>
                 <!-- navbar (which includes the logo) imported with javascript -->
-                <div id="navbar-area"></div>
-                <div id="user-email"></div>
+                <div id="navbar-area" class="w3-container"></div>
+                <div id="user-email" class="w3-container w3-section"></div>
             </header>
-            <main class="mainContent" >
-                <section id="error">
+            <main class="mainContent w3-container" >
+                <section id="error" class="w3-container w3-section">
                 </section>
-                <form id="loginForm" name="loginForm" method="POST" action="<c:url value="/user/login"/>">
-                    <label for="email">email:</label>
-                    <input id="email" name="email" type="email" required/>
-                    <span class="error"></span>
-                    <br/><br/>
-                    <label for="password">password:</label>
-                    <input id="password" name="password" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" required/><br/><br/>
-                    <button id="login-button" type="submit">Submit</button><br/>
-                </form>
+                <section class="w3-container w3-section">
+                    <form id="loginForm" name="loginForm" method="POST" action="<c:url value="/user/login"/>">
+                        <label for="email">email:</label>
+                        <input id="email" name="email" type="email" required/>
+                        <span class="error"></span>
+                        <br/><br/>
+                        <label for="password">password:</label>
+                        <input id="password" name="password" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                               title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" required/><br/><br/>
+                        <button id="login-button" type="submit">Submit</button><br/>
+                    </form>
+                </section>
             </main>
-            <div id="footer-area"></div>
+            <div id="footer-area" class="w3-container"></div>
         </div>
     </body>
 </html>

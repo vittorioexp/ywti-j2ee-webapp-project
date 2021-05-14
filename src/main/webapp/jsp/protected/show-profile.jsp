@@ -83,7 +83,7 @@ Since: 1.0
                                 </c:when>
                                 <c:otherwise>
                                     <h6>My bookings</h6>
-                                    <table>
+                                    <table class="w3-table">
                                         <tr>
                                             <td>Advertisement</td>
                                             <td>Date</td>
@@ -141,7 +141,7 @@ Since: 1.0
                                     <p name="emptyList">No advertisement created</p>
                                 </c:when>
                                 <c:otherwise>
-                                    <table>
+                                    <table class="w3-table">
                                         <tr>
                                             <td>Title Advertisement</td>
                                             <td>Date Start</td>

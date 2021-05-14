@@ -14,6 +14,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
         event.preventDefault();
         fetchAdvertisementList();
     });
+
+    loadSlideshow();
+
 });
 
 // Fetches the list of advertisements
@@ -71,7 +74,7 @@ function loadAdvertisementList(res){
             let dateEnd = adv.dateEnd;
 
             str +=
-                "<article class=advertisement>" +
+                "<article class=\"advertisement w3-container w3-section w3-panel w3-card-4\">" +
                     "<p>" + title + " - " + price + "euro" + "</p>" +
                     "<p>" + "starting " + dateStart + " - ending " + dateEnd + "</p>" +
                     "<span>" +
@@ -79,7 +82,7 @@ function loadAdvertisementList(res){
                             "<button name=showAdvertisementButton value=" + idAdv + ">Info</button>" +
                         "</form>" +
                     "</span>" +
-                "</article> </br> \n";
+                "</article> \n";
         });
     } else {
         str = "<p>" + "No advertisement found" + "</p>";
@@ -101,4 +104,21 @@ function loadAdvertisementList(res){
             });
     });
 
+}
+
+function loadSlideshow() {
+    let myIndex = 0;
+    carousel();
+
+    function carousel() {
+        let i;
+        let x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        myIndex++;
+        if (myIndex > x.length) {myIndex = 1}
+        x[myIndex-1].style.display = "block";
+        setTimeout(carousel, 5000); // Change image every 5 seconds
+    }
 }
