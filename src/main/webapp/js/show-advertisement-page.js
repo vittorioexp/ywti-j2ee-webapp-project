@@ -6,8 +6,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
     fetchAdvertisement();
     fetchRate();
     fetchFeedbackList();
-    fetchBookingList();
     fetchImageList();
+
+    // if a company is visiting show-advertisement.html, hide "leave a feedback" form
+    if (isLoggedIn() && getUserRole()==="company") {
+        document.getElementById("createFeedback").style.display = "none";
+        document.getElementById("createBooking").style.display = "none";
+    }
+
 });
 
 function getIdAdvertisement() {
@@ -49,6 +55,10 @@ function loadAdvertisement(req) {
         "<p>" + "For more info: " + emailCompany + "</p>";
 
     document.getElementById("advInfo").innerHTML = info;
+
+    if (isLoggedIn() && emailCompany==getUserEmail()) {
+        fetchBookingList();
+    }
 }
 
 function fetchRate() {
@@ -153,4 +163,8 @@ function loadImageList(req) {
         });
     }
     document.getElementById("advImages").innerHTML = str;
+
+    $("img").error(function () {
+        $(this).hide();
+    });
 }

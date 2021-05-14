@@ -1,12 +1,6 @@
 
 const contextPath = "http://localhost:8080/ywti_wa2021_war";
 
-function sanitize(str) {
-    return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-}
-
-// TODO: salvare le richieste in delle variabili
 document.addEventListener("DOMContentLoaded", function(event) {
     fetchTemplate();
 })

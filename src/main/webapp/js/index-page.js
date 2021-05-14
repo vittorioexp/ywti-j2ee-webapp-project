@@ -9,12 +9,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
         getCityList("idCity");
     });
 
+    // TODO: FIX BUTTON
     // fetch the list of advertisements when clicking the search button
     document.getElementById("search-button").addEventListener("click", function(event) {
         event.preventDefault();
         fetchAdvertisementList();
     });
-    //document.addEventListener("submit", fetchAdvertisementList);
 });
 
 // Fetches the list of advertisements

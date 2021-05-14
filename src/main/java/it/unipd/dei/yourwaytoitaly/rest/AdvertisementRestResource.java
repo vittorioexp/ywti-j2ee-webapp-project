@@ -748,15 +748,6 @@ public class AdvertisementRestResource extends RestResource {
 
             listAdvertisement = AdvertisementDAO.searchAdvertisement(idCity, idType, dateStart);
 
-            if(listAdvertisement.isEmpty()){
-                ErrorCode ec = ErrorCode.EMPTY_LIST;
-                Message m = new Message(ec.getErrorMessage(),
-                        ec.getHTTPCode(), "No results that match with the input parameters.");
-                res.setStatus(ec.getHTTPCode());
-                m.toJSON(res.getOutputStream());
-                return;
-            }
-
             res.setStatus(HttpServletResponse.SC_OK);
             new ResourceList(listAdvertisement).toJSON(res.getOutputStream());
 
