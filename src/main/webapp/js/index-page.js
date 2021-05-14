@@ -79,7 +79,7 @@ function loadAdvertisementList(res){
                     "<p>" + "starting " + dateStart + " - ending " + dateEnd + "</p>" +
                     "<span>" +
                         "<form name=gotoShowAdvertisementForm method=GET />" +
-                            "<button name=showAdvertisementButton value=" + idAdv + ">Info</button>" +
+                            "<button name=showAdvertisementButton class=\"w3-section showAdvertisementButton\" value=" + idAdv + ">Info</button>" +
                         "</form>" +
                     "</span>" +
                 "</article> \n";

@@ -57,10 +57,10 @@ Since: 1.0
             <main class="mainContent" >
                 <c:choose>
                     <c:when test="${userType}">
-                        <section id="userInfoSection">
+                        <section id="userInfoSection" class="w3-container w3-section ">
                             </br>
-                            <h3>${user.name} ${user.surname}</h3>
-                            <h6>My info</h6>
+                            <h1>${user.name} ${user.surname}</h1>
+                            <h2>My info</h2>
                             <p>Email: ${user.email}</p>
                             <p>Phone number: ${user.phoneNumber}</p>
                             <p>Birth date: ${user.birthDate}</p>
@@ -70,7 +70,7 @@ Since: 1.0
                             </br>
                             <button name="editUserProfile">Edit Profile</button><br/>
                         </section>
-                        <section id="listBookings">
+                        <section id="listBookings" class="w3-container w3-section">
                             </br>
                             <%
                                 List<Booking> bookingList = (List) request.getAttribute("bookingList");
@@ -82,8 +82,8 @@ Since: 1.0
                                     <p name="emptyList">Reservations not yet made!</p>
                                 </c:when>
                                 <c:otherwise>
-                                    <h6>My bookings</h6>
-                                    <table class="w3-table">
+                                    <h2>My bookings</h2>
+                                    <table class="w3-table w3-container w3-section ">
                                         <tr>
                                             <td>Advertisement</td>
                                             <td>Date</td>
@@ -115,10 +115,10 @@ Since: 1.0
 
                     </c:when>
                     <c:otherwise>
-                        <section id="userInfoSection">
+                        <section id="userInfoSection" class="w3-container w3-section ">
                             </br>
-                            <h3>${user.name}</h3>
-                            <h6>My info</h6>
+                            <h1>${user.name}</h1>
+                            <h2>My info</h2>
                             <p>Email: ${user.email}</p>
                             <p>Phone number: ${user.phoneNumber}</p>
                             <p>Address: ${user.address}</p>
@@ -126,7 +126,7 @@ Since: 1.0
                             </br>
                             <button name="editUserProfile">Edit Profile</button><br/>
                         </section>
-                        <section id="createAdvertisement">
+                        <section id="createAdvertisement" class="w3-container w3-section ">
                             <button id="createAdvertisementButton">Create new advertisement</button>
                         </section>
                         <section>
@@ -134,14 +134,14 @@ Since: 1.0
                                 List<Advertisement> advertisementList = (List<Advertisement>) request.getAttribute("advertisementList");
                             %>
                             </br>
-                            <h5>My advertisements</h5>
+                            <h2>My advertisements</h2>
                             </br>
                             <c:choose>
                                 <c:when test="${empty advertisementList}">
                                     <p name="emptyList">No advertisement created</p>
                                 </c:when>
                                 <c:otherwise>
-                                    <table class="w3-table">
+                                    <table class="w3-table w3-container w3-section ">
                                         <tr>
                                             <td>Title Advertisement</td>
                                             <td>Date Start</td>

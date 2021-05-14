@@ -81,15 +81,13 @@ Since: 1.0
                 <section id="error" class="w3-container w3-section">
                 </section>
                 <section class="w3-container w3-section">
-                    <form id="loginForm" name="loginForm" method="POST" action="<c:url value="/user/login"/>">
-                        <label for="email">email:</label>
-                        <input id="email" name="email" type="email" required/>
+                    <form class="w3-panel w3-card-4 w3-section" id="loginForm" name="loginForm" method="POST" action="<c:url value="/user/login"/>">
+                        <input id="email" name="email" type="email" class="w3-input w3-section" required placeholder="Email"/>
                         <span class="error"></span>
-                        <br/><br/>
-                        <label for="password">password:</label>
                         <input id="password" name="password" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                               title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" required/><br/><br/>
-                        <button id="login-button" type="submit">Submit</button><br/>
+                               title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters"
+                               class="w3-input w3-section" required placeholder="Password"/><br/><br/>
+                        <button id="login-button" type="submit" class="w3-section">Submit</button><br/>
                     </form>
                 </section>
             </main>
