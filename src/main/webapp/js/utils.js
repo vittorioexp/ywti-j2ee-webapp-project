@@ -109,7 +109,13 @@ function fetchTemplate(){
 // Loads the navbar
 function loadNavbar(data){
 
-    document.getElementById("navbar-area").innerHTML = data;
+    let navbar = document.getElementById("navbar-area");
+
+    if (navbar===null) {
+        return;
+    }
+
+    navbar.innerHTML = data;
     document.getElementById("home-button")
         .setAttribute("href", contextPath+"/index");
     document.getElementById("profile-button")
@@ -164,7 +170,11 @@ function loadNavbar(data){
 
 // Loads the footer
 function loadFooter(data){
-    document.getElementById("footer-area").innerHTML=data;
+    let footer = document.getElementById("footer-area");
+    if (footer===null) {
+        return;
+    }
+    footer.innerHTML=data;
 }
 
 // Sends a generic HTTP request
