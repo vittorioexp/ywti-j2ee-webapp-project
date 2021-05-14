@@ -713,6 +713,25 @@ public class AdvertisementRestResource extends RestResource {
                 int idType = s.getIdType();
                 Date date = s.getDateStart();
             */
+            /*
+            //Decode the URL
+            try {
+                String prevURL="";
+                String decodeURL=req.getRequestURI();
+                while(!prevURL.equals(decodeURL)) {
+                    prevURL=decodeURL;
+                    decodeURL= URLDecoder.decode( decodeURL, "UTF-8" );
+                }
+            }catch(Exception ex){
+                ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getHTTPCode(), "Cannot show the advertisement:" + ex.toString());
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
+            // decodeURL contains the right URL with data
+            */
 
 
             int idType = Integer.parseInt(req.getParameter("idType").toString());

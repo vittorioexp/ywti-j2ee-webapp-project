@@ -53,6 +53,20 @@ function fetchAdvertisementList(){
         "idCity": idCity,
         "dateStart": dateStart
     }
+    /*
+    //URL encoded
+    var xhr = new XMLHttpRequest();
+    var url = "url?data=" + encodeURIComponent(data);
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            alert(JSON.parse(xhr.responseText););
+            loadAdvertisementList(xhr)
+        }
+    };
+    xhr.send();
+     */
 
     $.getJSON(url, data, function (res) {
         loadAdvertisementList(res);
