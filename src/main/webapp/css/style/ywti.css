@@ -7,7 +7,6 @@ Since: 1.0
 @charset "utf-8";
 
 html {
-    /* background-color: antiquewhite; */
     /* background-color: #FCFCFC; */
     background-color: white;
 }
@@ -23,7 +22,7 @@ body {
 }
 
 .mainWrapper {
-    background-color: undefined;
+    background-color: lightgrey;
     /* border: 1px black solid; */
 }
 
