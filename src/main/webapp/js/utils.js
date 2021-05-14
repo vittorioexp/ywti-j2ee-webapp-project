@@ -172,7 +172,7 @@ function sendRequest(url, method, data, callback) {
     let httpRequest = new XMLHttpRequest();
 
     if (!httpRequest) {
-        alert("Cannot create an XMLHTTP instance");
+        console.log("Cannot create an XMLHTTP instance");
         return false;
     }
     httpRequest.onreadystatechange = function () {
@@ -182,7 +182,7 @@ function sendRequest(url, method, data, callback) {
             }
             else {
                 console.log(httpRequest.responseText);
-                alert("problem processing the request");
+                console.log("problem processing the request");
             }
         }
 
@@ -203,7 +203,7 @@ function sendRequest(url, method, data, callback) {
             httpRequest.send(data);
             break;
         default:
-            alert("HTTP method not allowed!");
+            console.log("HTTP method not allowed!");
             return false;
     }
 }
@@ -212,7 +212,7 @@ function sendJsonRequest(url, method, data, callback) {
     let httpRequest = new XMLHttpRequest();
 
     if (!httpRequest) {
-        alert("Cannot create an XMLHTTP instance");
+        console.log("Cannot create an XMLHTTP instance");
         return false;
     }
     httpRequest.onreadystatechange = function () {
@@ -222,7 +222,7 @@ function sendJsonRequest(url, method, data, callback) {
             }
             else {
                 console.log(httpRequest.responseText);
-                alert("problem processing the request");
+                console.log("problem processing the request");
             }
         }
     };
@@ -239,7 +239,7 @@ function sendJsonRequest(url, method, data, callback) {
             httpRequest.send(data);
             break;
         default:
-            alert("HTTP method not allowed!");
+            console.log("HTTP method not allowed!");
             return false;
     }
 }
