@@ -1,16 +1,89 @@
-// TODO: fix utils.js
 
 const contextPath = "http://localhost:8080/ywti_wa2021_war";
 
-function sanitize(str) {
-    return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-}
-
-// TODO: salvare le richieste in delle variabili
 document.addEventListener("DOMContentLoaded", function(event) {
     fetchTemplate();
 })
+
+function getTypeAdvList(elementId) {
+
+    let container = document.getElementById(elementId);
+    let str = "";
+
+    // Checks if the list is already in the storage
+    let storageList = localStorage.getItem("typeAdvList");
+
+    if (storageList===null || !storageList.includes("option")) {
+        // The list is not in the storage
+        let url = contextPath + "/typeAdv";
+        $.getJSON(url, function (res) {
+            let typeAdvList = res.resourceList;
+            if (typeAdvList.length>0) {
+                str = "<option value=\"\" disabled selected>What</option>\n";
+                typeAdvList.forEach(function(resource) {
+                    let typeAdv = resource.typeAdvertisement;
+                    let idType = typeAdv.idType;
+                    let type = typeAdv.type;
+
+                    str += "<option value=" + idType + ">" + type + "</option>\n";
+                });
+
+                // Save the list in the storage
+                localStorage.setItem("typeAdvList", str);
+
+            } else {
+                str = "<option value=" + 0 + ">Error</option>\n";
+            }
+            // Display the list
+            container.innerHTML = str;
+        });
+
+    } else {
+        // The list is in the storage
+        str = localStorage.getItem("typeAdvList");
+        container.innerHTML = str;
+    }
+}
+
+function getCityList(elementId) {
+
+    let container = document.getElementById(elementId);
+    let str = "";
+
+    // Checks if the list is already in the storage
+    let storageList = localStorage.getItem("cityList");
+
+    if (storageList===null || !storageList.includes("option")) {
+        // The list is not in the storage
+        let url = contextPath + "/cities";
+        $.getJSON(url, function (res) {
+            let cityList = res.resourceList;
+            if (cityList.length>0) {
+                str = "<option value=\"\" disabled selected>Where</option>\n";
+                cityList.forEach(function(resource) {
+                    let city = resource.city;
+                    let idCity = city.idCity;
+                    let idCityName = city.idCityName;
+
+                    str += "<option value=" + idCity + ">" + idCityName + "</option>\n";
+                });
+
+                // Save the list in the storage
+                localStorage.setItem("cityList", str);
+
+            } else {
+                str = "<option value=" + 0 + ">Error</option>\n";
+            }
+            // Display the list
+            container.innerHTML = str;
+        });
+
+    } else {
+        // The list is in the storage
+        str = localStorage.getItem("cityList");
+        container.innerHTML = str;
+    }
+}
 
 function isLoggedIn() {
     return localStorage.getItem("loggedIn");
@@ -99,7 +172,7 @@ function sendRequest(url, method, data, callback) {
     let httpRequest = new XMLHttpRequest();
 
     if (!httpRequest) {
-        alert("Cannot create an XMLHTTP instance");
+        console.log("Cannot create an XMLHTTP instance");
         return false;
     }
     httpRequest.onreadystatechange = function () {
@@ -109,7 +182,7 @@ function sendRequest(url, method, data, callback) {
             }
             else {
                 console.log(httpRequest.responseText);
-                alert("problem processing the request");
+                console.log("problem processing the request");
             }
         }
 
@@ -130,17 +203,16 @@ function sendRequest(url, method, data, callback) {
             httpRequest.send(data);
             break;
         default:
-            alert("HTTP method not allowed!");
+            console.log("HTTP method not allowed!");
             return false;
     }
 }
 
-// TODO: with HTTP GET, cannot send "data"
 function sendJsonRequest(url, method, data, callback) {
     let httpRequest = new XMLHttpRequest();
 
     if (!httpRequest) {
-        alert("Cannot create an XMLHTTP instance");
+        console.log("Cannot create an XMLHTTP instance");
         return false;
     }
     httpRequest.onreadystatechange = function () {
@@ -150,7 +222,7 @@ function sendJsonRequest(url, method, data, callback) {
             }
             else {
                 console.log(httpRequest.responseText);
-                alert("problem processing the request");
+                console.log("problem processing the request");
             }
         }
     };
@@ -167,7 +239,7 @@ function sendJsonRequest(url, method, data, callback) {
             httpRequest.send(data);
             break;
         default:
-            alert("HTTP method not allowed!");
+            console.log("HTTP method not allowed!");
             return false;
     }
 }

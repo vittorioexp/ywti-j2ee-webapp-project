@@ -1,5 +1,13 @@
 package it.unipd.dei.yourwaytoitaly.resource;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 /**
  * Class to define the objects which represents the City in the DB
  * @author Vittorio Esposito
@@ -7,7 +15,7 @@ package it.unipd.dei.yourwaytoitaly.resource;
  * @since 1.0
  */
 
-public final class City {
+public final class City extends Resource {
     private final int idCity;
     private final String idCityName;
 
@@ -20,5 +28,76 @@ public final class City {
     }
     public final String getIdCityName() {
         return idCityName;
+    }
+
+
+    /**
+     * Writes the JSON representation to the output stream.
+     *
+     * @param out the output stream
+     *
+     * @throws IOException if something goes wrong while parsing.
+     */
+    public final void toJSON(final OutputStream out) throws IOException {
+
+        final JsonGenerator jg = JSON_FACTORY.createGenerator(out);
+
+        jg.writeStartObject();
+        jg.writeFieldName("city");
+        jg.writeStartObject();
+
+        jg.writeStringField("idCity", String.valueOf(idCity));
+        jg.writeStringField("idCityName", idCityName);
+
+        jg.writeEndObject();
+        jg.writeEndObject();
+        jg.flush();
+    }
+
+    /**
+     * Creates a {@code City} from its JSON representation.
+     *
+     * @param in the input stream containing the JSON document.
+     *
+     * @return the {@code City} created from the JSON representation.
+     *
+     * @throws IOException if something goes wrong while parsing.
+     */
+    public static City fromJSON(final InputStream in) throws IOException {
+
+        // the fields read from JSON
+        int jidCity=-1;
+        String jidCityName=null;
+
+        final JsonParser jp = JSON_FACTORY.createParser(in);
+
+        // while we are not on the start of an element or the element is not
+        // a token element, advance to the next element (if any)
+        while (jp.getCurrentToken() != JsonToken.FIELD_NAME || "city".equals(jp.getCurrentName()) == false) {
+
+            // there are no more events
+            if (jp.nextToken() == null) {
+                throw new IOException("Unable to parse JSON: no advertisement object found.");
+            }
+        }
+
+        while (jp.nextToken() != JsonToken.END_OBJECT) {
+
+            if (jp.getCurrentToken() == JsonToken.FIELD_NAME) {
+
+                switch (jp.getCurrentName()) {
+                    case "idCity":
+                        jp.nextToken();
+                        jidCity = Integer.parseInt(jp.getValueAsString());
+                        break;
+                    case "idCityName":
+                        jp.nextToken();
+                        jidCityName = jp.getValueAsString();
+                        break;
+                }
+            }
+        }
+
+        return new City(jidCity, jidCityName);
     }
 }

@@ -10,8 +10,7 @@
     <title>Your Way to Italy</title>
     <script src="/ywti_wa2021_war/js/utils.js"></script>
     <script src="/ywti_wa2021_war/js/index-page.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
-    </script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
     <link href="/ywti_wa2021_war/css/style/index-page.css" rel="stylesheet" type="text/css">
@@ -26,48 +25,31 @@
     </header>
     <main class="mainContent" >
         <div id="big-logo">
-            <!-- TODO: insert big logo -->
-            <img src="/ywti_wa2021_war/css/image/logo.png">
+            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png">
         </div>
         <section class="searchbar">
             <form id="searchAdv" name="searchAdv" method="get" >
 
 
-                <select class="searchElement" form="searchAdv" id="idType" name="type" searchable="Search here..">
-                    <option value="0" disabled selected>Choose a type</option>
-                    <option value="1">Dance club</option>
-                    <option value="2">Cinema</option>
-                    <option value="3">Theater</option>
-                    <option value="4">Restaurant</option>
-                    <option value="5">Bar</option>
-                    <option value="6">Hotel</option>
-                    <option value="7">Pool</option>
-                    <option value="8">Museum</option>
-                    <option value="9">Stadium</option>
-                    <option value="10">Gym</option>
-                    <option value="11">Guided tour</option>
-                    <option value="12">Bike tour</option>
-                    <option value="13">Cooking lessons</option>
-                    <option value="14">Wine tour</option>
-                    <option value="15">Bed and breakfast</option>
+                <select form="searchAdv" id="idType" name="type" placeholder="">
+                    <option value="0" disabled selected>What</option>
                 </select>
 
-                <input class="searchElement" placeholder="Where" type="number" id="idCity" name="idCity" required
-                       size="10">
+                <select form="searchAdv" id="idCity" name="idCity">
+                    <option value="0" disabled selected>Where</option>
+                </select>
 
-                <input class="searchElement" placeholder="When" type="date" id="dateStart" name="dateStart" required>
+                <input placeholder="When" type="date" id="dateStart" name="dateStart" required>
 
                 <button type="submit" id="search-button">Start your journey</button><br/>
 
             </form>
         </section>
-        <section id="advertisementList" class="advertisementList d-none">
-            <!-- TODO: fix List of advertisements (JS) -->
+        <section id="advertisementList" class="advertisementList">
+
         </section>
     </main>
     <!-- footer imported with javascript -->
-
-    <br/><br/><br/><br/><br/><br/><br/>
     <div id="footer-area"></div>
 </div>
 </body>

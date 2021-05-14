@@ -1,9 +1,6 @@
 package it.unipd.dei.yourwaytoitaly.rest;
 
-import it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO;
-import it.unipd.dei.yourwaytoitaly.database.BookingDAO;
-import it.unipd.dei.yourwaytoitaly.database.FeedbackDAO;
-import it.unipd.dei.yourwaytoitaly.database.ImageDAO;
+import it.unipd.dei.yourwaytoitaly.database.*;
 import it.unipd.dei.yourwaytoitaly.resource.*;
 import it.unipd.dei.yourwaytoitaly.servlet.LoginServlet;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
@@ -713,6 +710,25 @@ public class AdvertisementRestResource extends RestResource {
                 int idType = s.getIdType();
                 Date date = s.getDateStart();
             */
+            /*
+            //Decode the URL
+            try {
+                String prevURL="";
+                String decodeURL=req.getRequestURI();
+                while(!prevURL.equals(decodeURL)) {
+                    prevURL=decodeURL;
+                    decodeURL= URLDecoder.decode( decodeURL, "UTF-8" );
+                }
+            }catch(Exception ex){
+                ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getHTTPCode(), "Cannot show the advertisement:" + ex.toString());
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
+            // decodeURL contains the right URL with data
+            */
 
 
             int idType = Integer.parseInt(req.getParameter("idType").toString());
@@ -732,15 +748,6 @@ public class AdvertisementRestResource extends RestResource {
 
             listAdvertisement = AdvertisementDAO.searchAdvertisement(idCity, idType, dateStart);
 
-            if(listAdvertisement.isEmpty()){
-                ErrorCode ec = ErrorCode.EMPTY_LIST;
-                Message m = new Message(ec.getErrorMessage(),
-                        ec.getHTTPCode(), "No results that match with the input parameters.");
-                res.setStatus(ec.getHTTPCode());
-                m.toJSON(res.getOutputStream());
-                return;
-            }
-
             res.setStatus(HttpServletResponse.SC_OK);
             new ResourceList(listAdvertisement).toJSON(res.getOutputStream());
 
@@ -748,6 +755,60 @@ public class AdvertisementRestResource extends RestResource {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
                     ec.getHTTPCode(), "Cannot show the advertisement:" + ex.toString());
+            res.setStatus(ec.getHTTPCode());
+            m.toJSON(res.getOutputStream());
+            return;
+        }
+    }
+
+
+    /**
+     * Returns the list of TypeAdvertisements
+     *
+     * @throws IOException
+     *             if any error occurs in the client/server communication.
+     */
+    public void listTypeAdvertisements() throws IOException {
+
+        try {
+            // list all the type_advertisements requested by the user
+
+            List<TypeAdvertisement> listTypeAdvertisement = TypeAdvertisementDAO.listTypeAdvertisement();
+
+            res.setStatus(HttpServletResponse.SC_OK);
+            new ResourceList(listTypeAdvertisement).toJSON(res.getOutputStream());
+
+        } catch (Exception ex) {
+            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message(ec.getErrorMessage(),
+                    ec.getHTTPCode(), "Cannot show the type of advertisements:" + ex.toString());
+            res.setStatus(ec.getHTTPCode());
+            m.toJSON(res.getOutputStream());
+            return;
+        }
+    }
+
+    /**
+     * Returns the list of cities
+     *
+     * @throws IOException
+     *             if any error occurs in the client/server communication.
+     */
+    public void listCities() throws IOException {
+        List<City> listCity = new ArrayList<City>();
+
+        try {
+            // list all the type_advertisements requested by the user
+
+            listCity = CityDAO.listCities();
+
+            res.setStatus(HttpServletResponse.SC_OK);
+            new ResourceList(listCity).toJSON(res.getOutputStream());
+
+        } catch (Exception ex) {
+            ErrorCode ec = ErrorCode.INTERNAL_ERROR;
+            Message m = new Message(ec.getErrorMessage(),
+                    ec.getHTTPCode(), "Cannot show the list of cities:" + ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;

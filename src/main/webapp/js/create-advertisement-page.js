@@ -11,18 +11,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
 });
 
-// TODO: Fetches the list of available typeAdv
-function fetchTypeAdvList() {
-    let url = new URL(contextPath+"/.....");
-    // put code here
-    sendGenericGetRequest(url, loadTypeAdvList);
-}
-
-// TODO: Loads the list of available type adv
-function loadTypeAdvList(req){
-    // put code here
-}
-
 function createAdvertisement() {
 
     let url = new URL(contextPath+"/adv-create");

@@ -45,7 +45,6 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
             if (!checkMethodMediaType(req, res)) {
                 return;
             }
-
             // if the requested resource was an Advertisement, delegate its processing and return
             if (processRequest(req, res)) {
                 return;
@@ -161,12 +160,10 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
         String URI = req.getRequestURI();
         Message m = null;
 
-        // the requested resource was not an advertisement
-        if (URI.lastIndexOf("/adv") <= 0) {
-            return false;
+        String path = "";
+        if (URI.contains("adv")) {
+            path = URI.substring(URI.lastIndexOf("adv"));
         }
-
-        String path = URI.substring(URI.lastIndexOf("adv"));
 
         if (path.equals("adv-create")) {
             switch (method) {
@@ -232,8 +229,22 @@ public final class RestAdvertisementServlet extends AbstractDatabaseServlet {
                 default:
                     return false;
             }
-        } else {
-            return false;
+        } else if (URI.contains("typeAdv")) {
+            switch (method) {
+                case "GET":
+                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).listTypeAdvertisements();
+                    break;
+                default:
+                    return false;
+            }
+        } else if (URI.contains("cities")) {
+            switch (method) {
+                case "GET":
+                    new AdvertisementRestResource(req, res, getDataSource().getConnection()).listCities();
+                    break;
+                default:
+                    return false;
+            }
         }
         return true;
     }

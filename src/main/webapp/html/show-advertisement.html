@@ -10,6 +10,7 @@
     <title>Your Way to Italy</title>
     <script src="/ywti_wa2021_war/js/utils.js"></script>
     <script src="/ywti_wa2021_war/js/show-advertisement-page.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
     <link href="/ywti_wa2021_war/css/style/show-advertisement-page.css" rel="stylesheet" type="text/css">
 </head>
@@ -49,7 +50,7 @@
                 </article>
             </span>
             <span class="booking-display">
-                <article>
+                <article id="createBooking">
                     <h3>Book your journey</h3>
                     <form id="createBookingForm" name="createBookingForm" method="POST" action="/ywti_wa2021_war/booking-create">
                     <label for="numBooking">No. of items</label>

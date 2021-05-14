@@ -184,6 +184,16 @@
 	</servlet-mapping>
 
 	<servlet-mapping>
+		<servlet-name>RestAdvertisementServlet</servlet-name>
+		<url-pattern>/typeAdv</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>RestAdvertisementServlet</servlet-name>
+		<url-pattern>/cities</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
 		<servlet-name>ContactsPage</servlet-name>
 		<url-pattern>/contacts</url-pattern>
 	</servlet-mapping>

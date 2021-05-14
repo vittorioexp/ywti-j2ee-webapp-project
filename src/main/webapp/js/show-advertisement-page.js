@@ -6,8 +6,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
     fetchAdvertisement();
     fetchRate();
     fetchFeedbackList();
-    fetchBookingList();
     fetchImageList();
+
+    // if a company is visiting show-advertisement.html, hide "leave a feedback" form
+    if (isLoggedIn() && getUserRole()==="company") {
+        document.getElementById("createFeedback").style.display = "none";
+        document.getElementById("createBooking").style.display = "none";
+    }
+
 });
 
 function getIdAdvertisement() {
@@ -49,6 +55,10 @@ function loadAdvertisement(req) {
         "<p>" + "For more info: " + emailCompany + "</p>";
 
     document.getElementById("advInfo").innerHTML = info;
+
+    if (isLoggedIn() && emailCompany==getUserEmail()) {
+        fetchBookingList();
+    }
 }
 
 function fetchRate() {
@@ -135,7 +145,6 @@ function fetchImageList() {
     sendJsonRequest(url,"GET","",loadImageList);
 }
 
-// TODO: fix the following
 function loadImageList(req) {
     // Parses the JSON resourceList
     let imageList = JSON.parse(req).resourceList;
@@ -148,9 +157,12 @@ function loadImageList(req) {
             let description = image.description;
             let idAdvertisement = image.idAdvertisement;
 
-            //str += "<img src=\"" + "http://localhost:8080" + path + "\" width=\"320\" height=\"240\" alt=''/>\n";
             str += "<img src=\"" + "" + path + "\" width=\"320\" height=\"240\" alt=''/>\n";
         });
     }
     document.getElementById("advImages").innerHTML = str;
+
+    $("img").error(function () {
+        $(this).hide();
+    });
 }

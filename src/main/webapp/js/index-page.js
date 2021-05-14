@@ -1,91 +1,104 @@
-// TODO: fix index-page.js
-// TODO Vedere tutor repo: js/search-maintenance-page.js
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
+    document.getElementById("advertisementList").style.display = "none";
+
     // Fetches the list of typeAdvertisements and Cities
-    //fetchTypeAdvList();
-    //fetchCityList();
+    $.getScript(contextPath + "/js/utils.js",function(){
+        getTypeAdvList("idType");
+        getCityList("idCity");
+    });
 
     // fetch the list of advertisements when clicking the search button
     document.getElementById("search-button").addEventListener("click", function(event) {
         event.preventDefault();
         fetchAdvertisementList();
     });
-    //document.addEventListener("submit", fetchAdvertisementList);
 });
 
-// TODO: Fetches the list of available typeAdv
-function fetchTypeAdvList() {
-    let url = new URL(contextPath+"/.....");
-    // put code here
-}
-
-// TODO: Loads the list of available type adv
-function loadTypeAdvList(req){
-    // put code here
-}
-
-// TODO: Fetches the list of available cities
-function fetchCityList(){
-    let url = new URL(contextPath+"/.....");
-    // put code here
-}
-
-// TODO: Loads the list of available cities
-function loadCityList(req){
-    // TODO put code here
-}
-
-// Converts the form in JSON format and fetches the list of advertisements
+// Fetches the list of advertisements
 function fetchAdvertisementList(){
 
     let url = new URL(contextPath+"/adv");
 
-    // Converts the form in JSON format
-    // Es: "{\"searchParameters\":{\"idType\":\"6\",\"idCity\":\"28\",\"dateStart\":\"2021-04-20\"}}"
     let idType = document.getElementById("idType").value;
     let idCity = document.getElementById("idCity").value;
     let dateStart = document.getElementById("dateStart").value.toString();
-    let data = "{\"searchParameters\":{\"idType\":\"" + idType +
-        "\",\"idCity\":\"" + idCity + "\",\"dateStart\":\"" + dateStart + "\"}}";
 
-    // todo: TRY THIS
+    let data = {
+        "idType": idType,
+        "idCity": idCity,
+        "dateStart": dateStart
+    }
     /*
-     $(document).ready(function () {
-
-		 $('#ajaxBtn').click(function(){
-
-			$.getJSON('/jquery/getjsondata', {name:'Steve'}, function (data, textStatus, jqXHR) {
-				$('p').append(data.firstName);
-			});
-		});
-    });
+    //URL encoded
+    var xhr = new XMLHttpRequest();
+    var url = "url?data=" + encodeURIComponent(data);
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            alert(JSON.parse(xhr.responseText););
+            loadAdvertisementList(xhr)
+        }
+    };
+    xhr.send();
      */
 
-    // fetches the list of advertisements
-    sendJsonRequest(url, "GET", data, loadAdvertisementList);
+    $.getJSON(url, data, function (res) {
+        loadAdvertisementList(res);
+    });
 }
 
-// TODO: Loads the list of advertisements
-function loadAdvertisementList(req){
+// Loads the list of advertisements
+function loadAdvertisementList(res){
 
     // make the section visible in index.html
-    let advertisementList = document.getElementById("advertisementList")
-    //advertisementList.setAttribute("class", "d-block");
+    let advertisementList = document.getElementById("advertisementList");
+    advertisementList.style.display = "block";
+    
+    // show the list of adv
+    let advList = res.resourceList;
+    let str;
+    if (advList.length>0) {
+        str = "<h3>" + "Advertisements" + "</h3>";
+        advList.forEach(function(resource) {
+            let adv = resource.advertisement;
+            let idAdv = adv.idAdvertisement;
+            let title = adv.title;
+            let price = adv.price;
+            let dateStart = adv.dateStart;
+            let dateEnd = adv.dateEnd;
 
-    // parses the json data
-    let jsonData = JSON.parse(req).resourceList;
+            str +=
+                "<article class=advertisement>" +
+                    "<p>" + title + " - " + price + "euro" + "</p>" +
+                    "<p>" + "starting " + dateStart + " - ending " + dateEnd + "</p>" +
+                    "<span>" +
+                        "<form name=gotoShowAdvertisementForm method=GET />" +
+                            "<button name=showAdvertisementButton value=" + idAdv + ">Info</button>" +
+                        "</form>" +
+                    "</span>" +
+                "</article> </br> \n";
+        });
+    } else {
+        str = "<p>" + "No advertisement found" + "</p>";
+    }
+    advertisementList.innerHTML = str;
 
-    alert(jsonData[0].advertisement.title);
+    let showAdvButtons = document.getElementsByName("showAdvertisementButton");
 
-    // TODO: display the list
-    //document.getElementById("advertisementList").innerHTML = req;
-    /*
-    var jsonData = JSON.parse(req.responseText);
-            console.log(jsonData["description"]);
-            document.getElementById("description").value = jsonData["description"];
-            setPreselectedPark(jsonData['parkid']);
-            setPreselectedModel(jsonData['modelid']);
-     */
+    showAdvButtons.forEach(function(button, index) {
+
+        // Adds an event listener (on click) on each show adv button
+        button.addEventListener(
+            "click",
+            function(event) {
+                event.preventDefault();
+
+                // Redirect to the show advertisement html
+                window.location.href = contextPath + "/adv-show/" + button.value;
+            });
+    });
+
 }
