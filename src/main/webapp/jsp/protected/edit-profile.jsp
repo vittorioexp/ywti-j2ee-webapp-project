@@ -61,9 +61,12 @@ Since: 1.0
             <label for="address">Address:</label>
             <input id="address" name="address" type="text" /><br/><br/>
 
-            <label for="idCity">Id City:</label>
-            <input id="idCity" name="idCity" type="number" /><br/><br/>
+            <select form="searchIdCity" id="searchIdCity" name="idCity">
+                <option value="0" disabled selected>City:</option>
+            </select>
+
             <button type="submit" id="edit-profile-button">Edit</button><br/>
+
         </form>
     </main>
     <!-- footer imported with javascript -->

@@ -6,6 +6,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
     //document.getElementById("address").addEventListener("keyup", function(event) {})
     document.getElementById("idCity").addEventListener("keyup", function(event) {validateIdCity()});
 
+    // Fetches the list of typeAdvertisements and Cities
+    $.getScript(contextPath + "/js/utils.js",function(){
+        getCityList("searchIdCity");
+    });
+
 });
 
 
