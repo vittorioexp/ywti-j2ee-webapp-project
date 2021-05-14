@@ -73,7 +73,7 @@ function fetchAdvertisementList(){
     });
 }
 
-// TODO: Loads the list of advertisements
+// Loads the list of advertisements
 function loadAdvertisementList(res){
 
     // make the section visible in index.html
@@ -87,6 +87,7 @@ function loadAdvertisementList(res){
         str = "<h3>" + "Advertisements" + "</h3>";
         advList.forEach(function(resource) {
             let adv = resource.advertisement;
+            let idAdv = adv.idAdvertisement;
             let title = adv.title;
             let price = adv.price;
             let dateStart = adv.dateStart;
@@ -96,12 +97,31 @@ function loadAdvertisementList(res){
                 "<article class=advertisement>" +
                     "<p>" + title + " - " + price + "euro" + "</p>" +
                     "<p>" + "starting " + dateStart + " - ending " + dateEnd + "</p>" +
+                    "<span>" +
+                        "<form name=gotoShowAdvertisementForm method=GET />" +
+                            "<button name=showAdvertisementButton value=" + idAdv + ">Info</button>" +
+                        "</form>" +
+                    "</span>" +
                 "</article> </br> \n";
-            // TODO: insert INFO button for each adv (or each adv can be a link to its adv-show page)
         });
     } else {
         str = "<p>" + "No advertisement found" + "</p>";
     }
     advertisementList.innerHTML = str;
+
+    let showAdvButtons = document.getElementsByName("showAdvertisementButton");
+
+    showAdvButtons.forEach(function(button, index) {
+
+        // Adds an event listener (on click) on each show adv button
+        button.addEventListener(
+            "click",
+            function(event) {
+                event.preventDefault();
+
+                // Redirect to the show advertisement html
+                window.location.href = contextPath + "/adv-show/" + button.value;
+            });
+    });
 
 }
