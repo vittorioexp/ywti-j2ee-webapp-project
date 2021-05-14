@@ -15,8 +15,9 @@ Since: 1.0
 }
 
 img{
-    max-width: 100%;
-    max-height: 100%;
+    width: 40%;
+    margin-right: auto;
+    margin-left: auto;
     display: block; /* remove extra space below image */
 }
 
@@ -24,24 +25,37 @@ img{
 
     text-align: center;
     position: relative;
+    width: 80%;
+    height : 50%;
+    margin-left: auto;
+    margin-right: auto ;
     /* background-color: #F2F2F2; */
     /*  border: 1px black solid; */
-    background-color: #fafafa;
 }
 
 .searchbar label {
     padding-left: 3%;
 }
 
-.searchbar input {
-    color: black;
-    height: 30px;
-    width: 170px;
+
+
+.searchElement{
+    float:left;
+    border-radius: 20px;
+    background-color: white;
+    color: dodgerblue;
+    height: 50px;
+    width: 220px;
+    margin-top: 4%;
+    margin-right: 2%;
+    margin-left: 2%;
 }
+
 #search-button {
-    margin-top: 5%;
-    margin-bottom: 5%;
-    margin-left: 5%;
+    height: 50px;
+    float:right;
+    border-radius: 20px;
+    margin: 4%;
     text-align: center;
     position: relative;
     font-size: 20px;
