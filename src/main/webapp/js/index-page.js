@@ -3,6 +3,8 @@
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
+    document.getElementById("advertisementList").style.display = "none";
+
     // Fetches the list of typeAdvertisements and Cities
     //fetchTypeAdvList();
     //fetchCityList();
@@ -37,55 +39,55 @@ function loadCityList(req){
     // TODO put code here
 }
 
-// Converts the form in JSON format and fetches the list of advertisements
+// Fetches the list of advertisements
 function fetchAdvertisementList(){
 
     let url = new URL(contextPath+"/adv");
 
-    // Converts the form in JSON format
-    // Es: "{\"searchParameters\":{\"idType\":\"6\",\"idCity\":\"28\",\"dateStart\":\"2021-04-20\"}}"
     let idType = document.getElementById("idType").value;
     let idCity = document.getElementById("idCity").value;
     let dateStart = document.getElementById("dateStart").value.toString();
-    let data = "{\"searchParameters\":{\"idType\":\"" + idType +
-        "\",\"idCity\":\"" + idCity + "\",\"dateStart\":\"" + dateStart + "\"}}";
 
-    // todo: TRY THIS
-    /*
-     $(document).ready(function () {
+    let data = {
+        "idType": idType,
+        "idCity": idCity,
+        "dateStart": dateStart
+    }
 
-		 $('#ajaxBtn').click(function(){
-
-			$.getJSON('/jquery/getjsondata', {name:'Steve'}, function (data, textStatus, jqXHR) {
-				$('p').append(data.firstName);
-			});
-		});
+    $.getJSON(url, data, function (res) {
+        loadAdvertisementList(res);
     });
-     */
-
-    // fetches the list of advertisements
-    sendJsonRequest(url, "GET", data, loadAdvertisementList);
 }
 
 // TODO: Loads the list of advertisements
-function loadAdvertisementList(req){
+function loadAdvertisementList(res){
 
     // make the section visible in index.html
-    let advertisementList = document.getElementById("advertisementList")
-    //advertisementList.setAttribute("class", "d-block");
+    let advertisementList = document.getElementById("advertisementList");
+    advertisementList.style.display = "block";
+    
+    // show the list of adv
+    let advList = res.resourceList;
+    let str;
+    if (advList.length>0) {
+        str = "<h3>" + "Advertisements" + "</h3>";
+        advList.forEach(function(resource) {
+            let adv = resource.advertisement;
+            let title = adv.title;
+            let price = adv.price;
+            let dateStart = adv.dateStart;
+            let dateEnd = adv.dateEnd;
 
-    // parses the json data
-    let jsonData = JSON.parse(req).resourceList;
+            str +=
+                "<article class=advertisement>" +
+                    "<p>" + title + " - " + price + "euro" + "</p>" +
+                    "<p>" + "starting " + dateStart + " - ending " + dateEnd + "</p>" +
+                "</article> </br> \n";
+            // TODO: insert INFO button for each adv (or each adv can be a link to its adv-show page)
+        });
+    } else {
+        str = "<p>" + "No advertisement found" + "</p>";
+    }
+    advertisementList.innerHTML = str;
 
-    alert(jsonData[0].advertisement.title);
-
-    // TODO: display the list
-    //document.getElementById("advertisementList").innerHTML = req;
-    /*
-    var jsonData = JSON.parse(req.responseText);
-            console.log(jsonData["description"]);
-            document.getElementById("description").value = jsonData["description"];
-            setPreselectedPark(jsonData['parkid']);
-            setPreselectedModel(jsonData['modelid']);
-     */
 }
