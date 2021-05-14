@@ -1,13 +1,13 @@
-// TODO: fix index-page.js
-// TODO Vedere tutor repo: js/search-maintenance-page.js
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
     document.getElementById("advertisementList").style.display = "none";
 
     // Fetches the list of typeAdvertisements and Cities
-    //fetchTypeAdvList();
-    //fetchCityList();
+    $.getScript(contextPath + "/js/utils.js",function(){
+        getTypeAdvList("idType");
+        getCityList("idCity");
+    });
 
     // fetch the list of advertisements when clicking the search button
     document.getElementById("search-button").addEventListener("click", function(event) {
@@ -16,28 +16,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
     //document.addEventListener("submit", fetchAdvertisementList);
 });
-
-// TODO: Fetches the list of available typeAdv
-function fetchTypeAdvList() {
-    let url = new URL(contextPath+"/.....");
-    // put code here
-}
-
-// TODO: Loads the list of available type adv
-function loadTypeAdvList(req){
-    // put code here
-}
-
-// TODO: Fetches the list of available cities
-function fetchCityList(){
-    let url = new URL(contextPath+"/.....");
-    // put code here
-}
-
-// TODO: Loads the list of available cities
-function loadCityList(req){
-    // TODO put code here
-}
 
 // Fetches the list of advertisements
 function fetchAdvertisementList(){

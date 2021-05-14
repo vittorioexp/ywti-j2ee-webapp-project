@@ -1,4 +1,3 @@
-// TODO: fix utils.js
 
 const contextPath = "http://localhost:8080/ywti_wa2021_war";
 
@@ -11,6 +10,86 @@ function sanitize(str) {
 document.addEventListener("DOMContentLoaded", function(event) {
     fetchTemplate();
 })
+
+function getTypeAdvList(elementId) {
+
+    let container = document.getElementById(elementId);
+    let str = "";
+
+    // Checks if the list is already in the storage
+    let storageList = localStorage.getItem("typeAdvList");
+
+    if (storageList===null || !storageList.includes("option")) {
+        // The list is not in the storage
+        let url = contextPath + "/typeAdv";
+        $.getJSON(url, function (res) {
+            let typeAdvList = res.resourceList;
+            if (typeAdvList.length>0) {
+                str = "<option value=\"\" disabled selected>What</option>\n";
+                typeAdvList.forEach(function(resource) {
+                    let typeAdv = resource.typeAdvertisement;
+                    let idType = typeAdv.idType;
+                    let type = typeAdv.type;
+
+                    str += "<option value=" + idType + ">" + type + "</option>\n";
+                });
+
+                // Save the list in the storage
+                localStorage.setItem("typeAdvList", str);
+
+            } else {
+                str = "<option value=" + 0 + ">Error</option>\n";
+            }
+            // Display the list
+            container.innerHTML = str;
+        });
+
+    } else {
+        // The list is in the storage
+        str = localStorage.getItem("typeAdvList");
+        container.innerHTML = str;
+    }
+}
+
+function getCityList(elementId) {
+
+    let container = document.getElementById(elementId);
+    let str = "";
+
+    // Checks if the list is already in the storage
+    let storageList = localStorage.getItem("cityList");
+
+    if (storageList===null || !storageList.includes("option")) {
+        // The list is not in the storage
+        let url = contextPath + "/cities";
+        $.getJSON(url, function (res) {
+            let cityList = res.resourceList;
+            if (cityList.length>0) {
+                str = "<option value=\"\" disabled selected>Where</option>\n";
+                cityList.forEach(function(resource) {
+                    let city = resource.city;
+                    let idCity = city.idCity;
+                    let idCityName = city.idCityName;
+
+                    str += "<option value=" + idCity + ">" + idCityName + "</option>\n";
+                });
+
+                // Save the list in the storage
+                localStorage.setItem("cityList", str);
+
+            } else {
+                str = "<option value=" + 0 + ">Error</option>\n";
+            }
+            // Display the list
+            container.innerHTML = str;
+        });
+
+    } else {
+        // The list is in the storage
+        str = localStorage.getItem("cityList");
+        container.innerHTML = str;
+    }
+}
 
 function isLoggedIn() {
     return localStorage.getItem("loggedIn");
