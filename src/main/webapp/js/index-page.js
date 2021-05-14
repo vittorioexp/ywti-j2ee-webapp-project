@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         getCityList("idCity");
     });
 
-    // TODO: FIX BUTTON
     // fetch the list of advertisements when clicking the search button
     document.getElementById("search-button").addEventListener("click", function(event) {
         event.preventDefault();

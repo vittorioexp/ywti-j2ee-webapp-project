@@ -208,7 +208,6 @@ function sendRequest(url, method, data, callback) {
     }
 }
 
-// TODO: with HTTP GET, cannot send "data"
 function sendJsonRequest(url, method, data, callback) {
     let httpRequest = new XMLHttpRequest();
 

@@ -145,7 +145,6 @@ function fetchImageList() {
     sendJsonRequest(url,"GET","",loadImageList);
 }
 
-// TODO: fix the following
 function loadImageList(req) {
     // Parses the JSON resourceList
     let imageList = JSON.parse(req).resourceList;
@@ -158,7 +157,6 @@ function loadImageList(req) {
             let description = image.description;
             let idAdvertisement = image.idAdvertisement;
 
-            //str += "<img src=\"" + "http://localhost:8080" + path + "\" width=\"320\" height=\"240\" alt=''/>\n";
             str += "<img src=\"" + "" + path + "\" width=\"320\" height=\"240\" alt=''/>\n";
         });
     }
