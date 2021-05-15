@@ -3,12 +3,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     //fetchTypeAdvList();
 
+    document.getElementById("title").addEventListener("keyup", validateTitle);
+
+    /*
     document.getElementById("create-button").addEventListener("click", function(event) {
         event.preventDefault();
         if(validateCreation()){
             createAdvertisement();
         }
     });
+    */
 
     //document.getElementById("title").addEventListener("keyup", function(event) {validateTitle()});
 });

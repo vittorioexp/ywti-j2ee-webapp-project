@@ -368,7 +368,9 @@ function validateIdCity(){
 function validateTitle(title){
     let regex = /[\{\"\}]/g;
     if(regex.test(title.value) || title.value.length===0){
-        return false;
+        let error = document.getElementById("error");
+        error.innerHTML = "Invalid Title";
+        error.className = "error active";
     }
     return true;
 }
