@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,19 +25,26 @@
 
                 <input id="title" name="title" type="text" placeholder="Title" required/><br/><br/>
 
-                <textarea id="description" name="description" placeholder="Insert description" required></textarea><br/><br/>
+                <label for="description">description:</label>
+                <textarea id="description" name="description" required></textarea><br/><br/>
 
-                <input id="price" name="price" type="number" placeholder="Price" required/><br/><br/>
+                <label for="price">price:</label>
+                <input id="price" name="price" type="number" required/><br/><br/>
 
-                <input id="numTotItem" name="numTotItem" type="number" placeholder="Number of items to sell" required/><br/><br/>
+                <label for="numTotItem">numTotItem:</label>
+                <input id="numTotItem" name="numTotItem" type="number" required/><br/><br/>
 
-                <input id="dateStart" name="dateStart" type="date" placeholder="Starting day" required/><br/><br/>
+                <label for="dateStart">dateStart:</label>
+                <input id="dateStart" name="dateStart" type="date" required/><br/><br/>
 
-                <input id="dateEnd" name="dateEnd" type="date" placeholder="Ending day" required/><br/><br/>
+                <label for="dateEnd">dateEnd:</label>
+                <input id="dateEnd" name="dateEnd" type="date" required/><br/><br/>
 
-                <input id="timeStart" name="timeStart" type="time" placeholder="Starting at" value="05:00:00"/><br/><br/>
+                <label for="timeStart">timeStart:</label>
+                <input id="timeStart" name="timeStart" type="time" value="05:00:00"/><br/><br/>
 
-                <input id="timeEnd" name="timeEnd" type="time" placeholder="Ending at" value="23:30:00"/><br/><br/>
+                <label for="timeEnd">timeEnd:</label>
+                <input id="timeEnd" name="timeEnd" type="time" value="23:30:00"/><br/><br/>
 
                 <label for="idType">Type:</label>
                 <select form="createAdvertisementForm" id="idType" name="type" searchable="Search here..">
@@ -63,9 +71,7 @@
             </form>
         </section>
 
-        <section id="error">
-
-        </section>
+        <section id="error"></section>
 
     </main>
     <div id="footer-area"></div>

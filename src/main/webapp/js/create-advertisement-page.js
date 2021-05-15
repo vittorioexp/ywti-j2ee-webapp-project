@@ -1,14 +1,15 @@
+
 document.addEventListener("DOMContentLoaded", function(event) {
 
     //fetchTypeAdvList();
 
     document.getElementById("create-button").addEventListener("click", function(event) {
         event.preventDefault();
+        validateCreation(event);
         createAdvertisement();
     });
-    document.getElementsByTagName("form")[0].addEventListener("submit", function(event){
-        validateCreation(event);
-    });
+
+    //document.getElementById("title").addEventListener("keyup", function(event) {validateTitle()});
 });
 
 function createAdvertisement() {
@@ -53,21 +54,27 @@ function createAdvertisement() {
 function validateCreation(event)
 {
     let error = document.getElementById("error");
-
     let title = document.getElementById("title");
     let description = document.getElementById("description");
     let price = document.getElementById("price");
     let numTotItem = document.getElementById("numTotItem");
-    let idType = document.getElementById("idType");
 
-    let test = title.value.length === 0 || description.value.length === 0 || price.value.length === 0 || numTotItem.value.length === 0 || idType.value.length === 0;
-
-    if (test) {
-        error.innerHTML = "One or more fields not filled!";
-        error.className = "error active";
-        event.preventDefault();
-    } else {
+    if(!validateTitle(title.value)){
+        errorCreateAdvertisement(error, event);
+    }else if(!validateDescription(description.value)){
+        errorCreateAdvertisement(error, event);
+    }else if(!validatePrice(price.value)){
+        errorCreateAdvertisement(error, event);
+    }else if(!validateNumTotItem(numTotItem.value)){
+        errorCreateAdvertisement(error, event);
+    }else {
         error.innerHTML = "";
         error.className = "error";
     }
+}
+
+function errorCreateAdvertisement(error, event){
+    error.innerHTML = "Value not correct";
+    error.className = "error active";
+    event.preventDefault();
 }
