@@ -37,6 +37,7 @@ Since: 1.0
         <script src="/ywti_wa2021_war/js/utils.js"></script>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
+        <link href="/ywti_wa2021_war/css/style/login-page.css" rel="stylesheet" type="text/css">
         <c:choose>
             <c:when test="${!empty sessionScope.Authorization}">
                 <c:set var="context" value="${pageContext.request.contextPath}" />
@@ -79,6 +80,7 @@ Since: 1.0
             </header>
             <main class="mainContent w3-container" >
                 <section id="error" class="w3-container w3-section">
+                    <h1>Login into your account</h1>
                 </section>
                 <section class="w3-container w3-section">
                     <form class="w3-panel w3-card-4 w3-section" id="loginForm" name="loginForm" method="POST" action="<c:url value="/user/login"/>">
@@ -86,8 +88,8 @@ Since: 1.0
                         <span class="error"></span>
                         <input id="password" name="password" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters"
-                               class="w3-input w3-section" required placeholder="Password"/><br/><br/>
-                        <button id="login-button" type="submit" class="w3-section">Submit</button><br/>
+                               class="w3-input w3-section" required placeholder="Password"/><br/>
+                        <button id="login-button"  type="submit" class="w3-section loginbutton">Login</button><br/>
                     </form>
                 </section>
             </main>
