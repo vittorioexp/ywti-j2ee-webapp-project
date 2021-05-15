@@ -42,19 +42,19 @@ Since: 1.0
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     </head>
     <body>
-    <div class="mainWrapper">
+    <div class="mainWrapper w3-main">
         <header>
             <!-- navbar (which includes the small logo) imported with javascript -->
             <div id="navbar-area"></div>
             <div id="user-email"></div>
         </header>
-        <main class="mainContent" >
+        <main class="mainContent w3-container" >
             <br/>
             <section>
                 <h1>Create your own account</h1>
             </section>
 
-            <section id ="companyornot" class="w3-panel w3-card-4 w3-section"><br/>
+            <section id ="companyornot" class="w3-container w3-panel w3-card-4 w3-section"><br/>
                 <input type="checkbox" id="userTypeCheckbox" name="userTypeCheckbox" value="company" onclick="checkUserType()">
                 <label for="userType"> I am a company</label><br/><br/>
             </section>
@@ -66,27 +66,27 @@ Since: 1.0
                 <form id="registerFormTourist" name="registerForm" method="POST" action="<c:url value="/user/register"/>">
 
 <%--                    <label for="email_t">email:</label>--%>
-                    <input class="w3-input" name="email" type="email" id="email_t" placeholder="Email"required/><br/>
+                    <input class="w3-input w3-section" name="email" type="email" id="email_t" placeholder="Email"required/>
 <%--                    <label for="password_t">password:</label>--%>
-                    <input class="w3-input" name="password" type="password" id="password_t" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Password" required/><br/>
+                    <input class="w3-input w3-section" name="password" type="password" id="password_t" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Password" required/>
 <%--                    <label for="rpassword_t">repeat password:</label>--%>
-                    <input class="w3-input" name="rpassword" type="password" id="rpassword_t" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Repeat password" required/><br/>
+                    <input class="w3-input w3-section" name="rpassword" type="password" id="rpassword_t" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Repeat password" required/>
 <%--                    <label for="name_t">name:</label>--%>
-                    <input class="w3-input" name="name" type="text" id="name_t"  placeholder="Insert name" required/><br/>
+                    <input class="w3-input w3-section" name="name" type="text" id="name_t"  placeholder="Insert name" required/>
 <%--                    <label for="surname_t">surname:</label>--%>
-                    <input class="w3-input" name="surname" type="text" id="surname_t" placeholder="Insert surname" required/><br/>
+                    <input class="w3-input w3-section" name="surname" type="text" id="surname_t" placeholder="Insert surname" required/>
 <%--                    <label for="address_t">address:</label>--%>
-                    <input class="w3-input" name="address" type="text" id="address_t" placeholder="Insert your address"  required/><br/>
+                    <input class="w3-input w3-section" name="address" type="text" id="address_t" placeholder="Insert your address"  required/>
 <%--                    <label for="phonenumber_t">phone number:</label>--%>
-                    <input class="w3-input" name="phone" type="text" id="phonenumber_t" placeholder="Insert your phone number" required/><br/>
+                    <input class="w3-input w3-section" name="phone" type="text" id="phonenumber_t" placeholder="Insert your phone number" required/>
 <%--                    <label for="city_t">city:</label>--%>
-                    <select class="w3-input" form="registerFormTourist" id="idCity" name="idCity">
+                    <select class="w3-input w3-section" form="registerFormTourist" id="idCity" name="idCity">
                         <option value="0" disabled selected>Choose your city</option>
-                    </select><br/>
+                    </select>
 <%--                    <label for="birthdate_t">birth date:</label>--%>
-                    <input class="w3-input" name="birthDate" type="Date" id="birthdate_t" placeholder="Insert your birthdate" required/><br/>
+                    <input class="w3-input w3-section" name="birthDate" type="Date" id="birthdate_t" placeholder="Insert your birthdate" required/><br/>
 
                     <input type="hidden" id="userType" name="userType" value="tourist">
 
@@ -100,21 +100,21 @@ Since: 1.0
                 <form id="registerFormCompany" name="registerForm" method="POST" action="<c:url value="/user/register"/>">
 
 <%--                    <label for="email_c">email:</label>--%>
-                    <input class="w3-input" name="email" type="email" id="email_c" placeholder="Insert Email" required/><br/>
+                    <input class="w3-input w3-section" name="email" type="email" id="email_c" placeholder="Insert Email" required/>
 <%--                    <label for="password_c">password:</label>--%>
-                    <input class="w3-input" name="password" type="password" id="password_c" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Insert password" required/><br/>
+                    <input class="w3-input w3-section" name="password" type="password" id="password_c" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Insert password" required/>
 <%--                    <label for="rpassword_c">repeat password:</label>--%>
-                    <input class="w3-input" name="rpassword" type="password" id="rpassword_c" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Repeat Password" required/><br/>
+                    <input class="w3-input w3-section" name="rpassword" type="password" id="rpassword_c" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Repeat Password" required/>
 <%--                    <label for="name_c">name:</label>--%>
-                    <input class="w3-input" name="name" type="text" id="name_c" placeholder="Insert company name" required/><br/>
+                    <input class="w3-input w3-section" name="name" type="text" id="name_c" placeholder="Insert company name" required/>
 <%--                    <label for="address_c">address:</label>--%>
-                    <input class="w3-input" name="address" type="text" id="address_c" placeholder="Insert company address" required/><br/>
+                    <input class="w3-input w3-section" name="address" type="text" id="address_c" placeholder="Insert company address" required/>
 <%--                    <label for="phonenumber_c">phone number:</label>--%>
-                    <input class="w3-input" name="phone" type="text" id="phonenumber_c" placeholder="Insert company phone number" required/><br/>
+                    <input class="w3-input w3-section" name="phone" type="text" id="phonenumber_c" placeholder="Insert company phone number" required/>
 <%--                    <label for="idCity_c">city:</label>--%>
-                    <select class="w3-input" form="companyRegistration" id="idCity_c" name="idCity">
+                    <select class="w3-input w3-section" form="companyRegistration" id="idCity_c" name="idCity">
                         <option value="0" disabled selected>Choose company location</option>
                     </select>
 
