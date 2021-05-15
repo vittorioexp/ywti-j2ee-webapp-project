@@ -72,28 +72,28 @@ Since: 1.0
         <link href="/ywti_wa2021_war/css/style/login-page.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <div class="mainWrapper w3-main">
-            <header>
-                <!-- navbar (which includes the logo) imported with javascript -->
-                <div id="navbar-area"></div>
-                <div id="user-email"></div>
-            </header>
-            <main class="mainContent w3-container" >
-                <section id="error" class="w3-container w3-section">
-                    <h1>Login into your account</h1>
-                </section>
-                <section class="w3-container w3-section">
-                    <form class="w3-panel w3-card-4 w3-section" id="loginForm" name="loginForm" method="POST" action="<c:url value="/user/login"/>">
-                        <input id="email" name="email" type="email" class="w3-input w3-section" required placeholder="Email"/>
-                        <span class="error"></span>
-                        <input id="password" name="password" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                               title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters"
-                               class="w3-input w3-section" required placeholder="Password"/><br/>
-                        <button id="login-button"  type="submit" class="w3-section loginbutton">Login</button><br/>
-                    </form>
-                </section>
+    <div class="mainWrapper w3-main">
+        <header class="">
+            <img id="small-logo" class="small-logo" src="/ywti_wa2021_war/utility/small-logo-transparent.png" >
+            <div id="navbar-area" class="nav-area w3-bar w33-container" ></div>
+        </header>
+        <main class="mainContent w3-container" >
+            <div id="user-email" class=""></div>
+            <h1>Login into your account</h1>
+            <section id="error" class="w3-container w3-section"></section>
+            <section class="w3-container w3-section">
+                <form class="w3-panel w3-card-4 w3-section" id="loginForm" name="loginForm" method="POST" action="<c:url value="/user/login"/>">
+                    <input id="email" name="email" type="email" class="w3-input w3-section" required placeholder="Email"/>
+                    <span class="error"></span>
+                    <input id="password" name="password" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters"
+                           class="w3-input w3-section" required placeholder="Password"/><br/>
+                    <button id="login-button"  type="submit" class="w3-section loginbutton">Login</button><br/>
+                </form>
+            </section>
             </main>
-            <div id="footer-area" class="w3-container"></div>
+            <!-- footer imported with javascript -->
+            <div id="footer-area" class="w3-container w3-section"></div>
         </div>
     </body>
 </html>

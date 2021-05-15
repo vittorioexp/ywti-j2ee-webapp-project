@@ -37,19 +37,18 @@ Since: 1.0
         <script src="/ywti_wa2021_war/js/utils.js"></script>
         <script src="/ywti_wa2021_war/js/register-page.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <link href="/ywti_wa2021_war/css/style/w3.css" rel="stylesheet" type="text/css">
         <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
         <link href="/ywti_wa2021_war/css/style/register-page.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     </head>
     <body>
     <div class="mainWrapper w3-main">
-        <header>
-            <!-- navbar (which includes the small logo) imported with javascript -->
-            <div id="navbar-area"></div>
-            <div id="user-email"></div>
+        <header class="">
+            <img id="small-logo" class="small-logo" src="/ywti_wa2021_war/utility/small-logo-transparent.png" >
+            <div id="navbar-area" class="nav-area w3-bar w33-container" ></div>
         </header>
         <main class="mainContent w3-container" >
-            <br/>
+            <div id="user-email" class=""></div>
             <section class="w3-container w3-section">
                 <h1>Create your own account</h1>
             </section>
@@ -129,7 +128,7 @@ Since: 1.0
             </section>
         </main>
         <!-- footer imported with javascript -->
-        <div id="footer-area"></div>
+        <div id="footer-area" class="w3-container w3-section"></div>
     </div>
     </body>
 </html>

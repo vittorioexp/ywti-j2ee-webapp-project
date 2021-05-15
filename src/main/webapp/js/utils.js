@@ -262,12 +262,12 @@ function validateEmail(index) {
     let email = document.getElementsByName("email")[index];
     let emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-    if (email.value.length === 0 || emailRegExp.test(email.value)) {
-        email.className = "valid";
+    if (email.value.length < 5 || emailRegExp.test(email.value)) {
+        //email.className = "valid";
         error.innerHTML = "";
         error.className = "error";
     } else {
-        email.className = "invalid";
+        //email.className = "invalid";
         error.innerHTML = "Invalid email";
         error.className = "error active";
     }
@@ -336,7 +336,7 @@ function validatePhoneNumber(index) {
         error.innerHTML = "";
         error.className = "error";
     } else {
-        error.innerHTML = "Invalid phonenumber";
+        error.innerHTML = "Invalid phone number";
         error.className = "error active";
         return;
     }
