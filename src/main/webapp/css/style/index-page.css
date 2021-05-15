@@ -4,22 +4,7 @@ Version: 1.0
 Since: 1.0
  */
 
-#big-logo {
-    text-align: center;
-    position: relative;
-    /*  border: 1px black solid; */
-    font-family: 'Zapfino', sans-serif;
-    font-size: 60px;
-    font-style: normal;
 
-}
-
-img{
-    width: 40%;
-    margin-right: auto;
-    margin-left: auto;
-    display: block; /* remove extra space below image */
-}
 
 .searchbar {
 
@@ -31,10 +16,6 @@ img{
     margin-right: auto ;
     /* background-color: #F2F2F2; */
     /*  border: 1px black solid; */
-}
-
-.searchbar label {
-    padding-left: 3%;
 }
 
 .searchElement{
