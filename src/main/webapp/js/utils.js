@@ -372,6 +372,7 @@ function validateTitle(){
     if(regex.test(title.value) || title.value.length===0){
         error.innerHTML +="<article>Invalid title</article>";
         error.className = "error active";
+        return;
     }
     error.innerHTML.replace('<article>Invalid title</article>','');
 }
@@ -383,6 +384,7 @@ function validateDescription(){
     if(regex.test(description.value) || description.value.length===0){
         error.innerHTML +="<article>Invalid description</article>";
         error.className = "error active";
+        return;
     }
     error.innerHTML.replace('<article>Invalid description</article>','');
 }
@@ -393,10 +395,9 @@ function validatePrice(){
     if(price.value<=0 || price.value.length===0){
         error.innerHTML += "<article>Invalid price</article>";
         error.className = "error active";
-        return false;
+        return;
     }
     error.innerHTML.replace('<article>Invalid price</article>','');
-    return true;
 }
 
 function validateNumTotItem(){
@@ -405,6 +406,7 @@ function validateNumTotItem(){
     if(numTotItem.value<=0 || numTotItem.value.length===0){
         error.innerHTML +="<article>Invalid numtotitem</article>";
         error.className = "error active";
+        return;
     }
     error.innerHTML.replace('<article>Invalid numtotitem</article>','');
 }
