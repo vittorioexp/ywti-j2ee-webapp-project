@@ -88,7 +88,7 @@ Since: 1.0
                     <input id="password" name="password" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters"
                            class="w3-input w3-section" required placeholder="Password"/><br/>
-                    <button id="login-button"  type="submit" class="w3-section loginbutton">Login</button><br/>
+                    <button id="login-button"  type="submit" class="w3-section button">Login</button><br/>
                 </form>
             </section>
             </main>

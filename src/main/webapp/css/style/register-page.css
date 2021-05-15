@@ -43,26 +43,3 @@ h1 {
     text-align:center;
 }
 
-.registerbutton {
-    transition: all .25s ease-in-out;
-    text-align: center;
-    box-sizing: border-box;
-    width: 100%;
-    justify-content: center;
-    padding: 11px 15px;
-    min-height: 48px;
-    min-width: 48px;
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 500;
-    border: 1px solid #0071c2;
-    border-radius: 2px;
-    align-items: center;
-    cursor: pointer;
-    font-family: inherit;
-    text-decoration: none;
-    vertical-align: middle;
-    position: relative;
-    color: #fff;
-    background-color: #0071c2;
-}
