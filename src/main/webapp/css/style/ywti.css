@@ -96,14 +96,17 @@ header {
     font-size: 16px;
     line-height: 24px;
     font-weight: 500;
-    border: 1px solid #0071c2;
+    background-color: #003B95;
     border-radius: 2px;
     align-items: center;
     cursor: pointer;
-    font-family: inherit;
     text-decoration: none;
     vertical-align: middle;
     position: relative;
     color: #fff;
-    background-color: #0071c2;
+    background-color: #003B95;
+}
+
+#footer-area {
+
 }

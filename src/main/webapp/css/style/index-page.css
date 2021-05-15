@@ -5,18 +5,13 @@ Version: 1.0
 Since: 1.0
  */
 
-
-
 .searchbar {
-
     text-align: center;
     position: relative;
     width: 70%;
     height : 50%;
     margin-left: auto;
     margin-right: auto ;
-    /* background-color: #F2F2F2; */
-    /*  border: 1px black solid; */
 }
 
 .searchElement{
