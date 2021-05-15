@@ -370,11 +370,11 @@ function validateTitle(){
     let regex = /[\{\"\}]/g;
     let error = document.getElementById("error");
     if(regex.test(title.value) || title.value.length===0){
-        error.innerHTML +="<article>Invalid title</article>";
+        error.textContent +="<article>Invalid title</article>";
         error.className = "error active";
         return;
     }
-    error.innerHTML.replace('<article>Invalid title</article>','');
+    error.textContent.replace('<article>Invalid title</article>','');
 }
 
 function validateDescription(){
@@ -382,31 +382,31 @@ function validateDescription(){
     let regex = /[\{\"\}]/g;
     let error = document.getElementById("error");
     if(regex.test(description.value) || description.value.length===0){
-        error.innerHTML +="<article>Invalid description</article>";
+        error.textContent +="<article>Invalid description</article>";
         error.className = "error active";
         return;
     }
-    error.innerHTML.replace('<article>Invalid description</article>','');
+    error.textContent.replace('<article>Invalid description</article>','');
 }
 
 function validatePrice(){
     let price = document.getElementById("price");
     let error = document.getElementById("error");
     if(price.value<=0 || price.value.length===0){
-        error.innerHTML += "<article>Invalid price</article>";
+        error.textContent += "<article>Invalid price</article>";
         error.className = "error active";
         return;
     }
-    error.innerHTML.replace('<article>Invalid price</article>','');
+    error.textContent.replace('<article>Invalid price</article>','');
 }
 
 function validateNumTotItem(){
     let numTotItem = document.getElementById("numTotItem");
     let error = document.getElementById("error");
     if(numTotItem.value<=0 || numTotItem.value.length===0){
-        error.innerHTML +="<article>Invalid numtotitem</article>";
+        error.textContent +="<article>Invalid numtotitem</article>";
         error.className = "error active";
         return;
     }
-    error.innerHTML.replace('<article>Invalid numtotitem</article>','');
+    error.textContent.replace('<article>Invalid numtotitem</article>','');
 }
