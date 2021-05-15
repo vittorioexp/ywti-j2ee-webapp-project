@@ -3,16 +3,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     //fetchTypeAdvList();
 
-    document.getElementById("title").addEventListener("keyup", validateTitle);
-
-    /*
-    document.getElementById("create-button").addEventListener("click", function(event) {
-        event.preventDefault();
-        if(validateCreation()){
-            createAdvertisement();
-        }
-    });
-    */
+    document.getElementById("title").addEventListener("focusout", validateTitle);
+    document.getElementById("description").addEventListener("focusout", validateDescription);
+    document.getElementById("price").addEventListener("focusout", validatePrice);
+    document.getElementById("numTotItem").addEventListener("focusout", validateNumTotItem);
 
     //document.getElementById("title").addEventListener("keyup", function(event) {validateTitle()});
 });
@@ -53,38 +47,4 @@ function createAdvertisement() {
         // Sends to the upload images page
         window.location.href = contextPath + "/image-do-upload/" + idAdvertisement;
     });
-}
-
-
-function validateCreation(){
-
-    let errorFound = false;
-    let error = document.getElementById("error");
-    let title = document.getElementById("title");
-    let description = document.getElementById("description");
-    let price = document.getElementById("price");
-    let numTotItem = document.getElementById("numTotItem");
-    let str;
-
-    if(!validateTitle(title)){
-        errorCreateAdvertisement("Tile invalid",error);
-        errorFound = true;
-    }else if(!validateDescription(description)){
-        errorCreateAdvertisement("Description invalid",error);
-        errorFound = true;
-    }else if(!validatePrice(price)){
-        errorCreateAdvertisement("Price invalid",error);
-        errorFound = true;
-    }else if(!validateNumTotItem(numTotItem)){
-        errorCreateAdvertisement("NumTotItem invalid",error);
-        errorFound = true;
-    }else {
-        error.innerHTML = "";
-        error.className = "error";
-    }
-    return errorFound;
-}
-
-function errorCreateAdvertisement(str, error){
-    error.innerHTML += str;
 }

@@ -365,34 +365,59 @@ function validateIdCity(){
 }
 
 
-function validateTitle(title){
+function validateTitle(){
+    let title = document.getElementById("title");
     let regex = /[\{\"\}]/g;
+    let error = document.getElementById("error");
     if(regex.test(title.value) || title.value.length===0){
-        let error = document.getElementById("error");
         error.innerHTML = "Invalid Title";
         error.className = "error active";
+        error.style.display = "block";
     }
+    error.innerHTML = "";
+    error.style.display = "none";
     return true;
 }
 
-function validateDescription(description){
+function validateDescription(){
+    let description = document.getElementById("description");
     let regex = /[\{\"\}]/g;
+    let error = document.getElementById("error");
     if(regex.test(description.value) || description.value.length===0){
+        error.innerHTML = "Invalid Title";
+        error.className = "error active";
+        error.style.display = "block";
         return false;
     }
+    error.innerHTML = "";
+    error.style.display = "none";
     return true;
 }
 
-function validatePrice(price){
+function validatePrice(){
+    let price = document.getElementById("price");
+    let error = document.getElementById("error");
     if(price.value<=0 || price.value.length===0){
+        error.innerHTML = "Invalid Title";
+        error.className = "error active";
+        error.style.display = "block";
         return false;
     }
+    error.innerHTML = "";
+    error.style.display = "none";
     return true;
 }
 
-function validateNumTotItem(numTotItem){
+function validateNumTotItem(){
+    let numTotItem = document.getElementById("numTotItem");
+    let error = document.getElementById("error");
     if(numTotItem.value<=0 || numTotItem.value.length===0){
+        error.innerHTML = "Invalid Title";
+        error.className = "error active";
+        error.style.display = "block";
         return false;
     }
+    error.innerHTML = "";
+    error.style.display = "none";
     return true;
 }
