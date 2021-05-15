@@ -34,6 +34,11 @@
 		<welcome-file>/html/index.html</welcome-file>
 	</welcome-file-list>
 
+	<error-page>
+		<error-code>404</error-code>
+		<location>/html/error.html</location>
+	</error-page>
+
 	<!-- Servlets -->
 
 	<servlet>

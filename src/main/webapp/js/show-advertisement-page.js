@@ -1,8 +1,14 @@
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
-    document.getElementById("idAdvFeedback").setAttribute("value", getIdAdvertisement());
-    document.getElementById("idAdvBooking").setAttribute("value", getIdAdvertisement());
+    let idAdv = getIdAdvertisement();
+
+    if (idAdv===-1) {
+        window.location.replace(contextPath + "/html/error.html");
+    }
+
+    document.getElementById("idAdvFeedback").setAttribute("value", idAdv);
+    document.getElementById("idAdvBooking").setAttribute("value", idAdv);
     fetchAdvertisement();
     fetchRate();
     fetchFeedbackList();
@@ -21,7 +27,10 @@ function getIdAdvertisement() {
     url = url.substring(
         url.lastIndexOf("adv-show/") + 9
     );
-    // TODO Checks if the ID makes sense
+    let id = parseInt(url,  10);
+    if (id<=0) {
+        return -1;
+    }
     return url;
 }
 

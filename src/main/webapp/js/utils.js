@@ -364,3 +364,20 @@ function validateIdCity(){
     }
 }
 
+
+function sanitizeString(str) {
+
+}
+
+//Sanitize JSON string before saving, so it can be read again.
+function sanitizeJSON(myJSONString){
+    return myJSONString
+        .replace(/\\n/g, "\\n")
+        .replace(/\\'/g, "\\'")
+        .replace(/\\"/g, '\\"')
+        .replace(/\\&/g, "\\&")
+        .replace(/\\r/g, "\\r")
+        .replace(/\\t/g, "\\t")
+        .replace(/\\b/g, "\\b")
+        .replace(/\\f/g, "\\f");
+}
