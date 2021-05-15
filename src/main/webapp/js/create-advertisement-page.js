@@ -3,11 +3,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     //fetchTypeAdvList();
 
+    document.getElementById("title").addEventListener("keyup", validateTitle);
+
+    /*
     document.getElementById("create-button").addEventListener("click", function(event) {
         event.preventDefault();
-        validateCreation(event);
-        createAdvertisement();
+        if(validateCreation()){
+            createAdvertisement();
+        }
     });
+    */
 
     //document.getElementById("title").addEventListener("keyup", function(event) {validateTitle()});
 });
@@ -51,30 +56,35 @@ function createAdvertisement() {
 }
 
 
-function validateCreation(event)
-{
+function validateCreation(){
+
+    let errorFound = false;
     let error = document.getElementById("error");
     let title = document.getElementById("title");
     let description = document.getElementById("description");
     let price = document.getElementById("price");
     let numTotItem = document.getElementById("numTotItem");
+    let str;
 
-    if(!validateTitle(title.value)){
-        errorCreateAdvertisement(error, event);
-    }else if(!validateDescription(description.value)){
-        errorCreateAdvertisement(error, event);
-    }else if(!validatePrice(price.value)){
-        errorCreateAdvertisement(error, event);
-    }else if(!validateNumTotItem(numTotItem.value)){
-        errorCreateAdvertisement(error, event);
+    if(!validateTitle(title)){
+        errorCreateAdvertisement("Tile invalid",error);
+        errorFound = true;
+    }else if(!validateDescription(description)){
+        errorCreateAdvertisement("Description invalid",error);
+        errorFound = true;
+    }else if(!validatePrice(price)){
+        errorCreateAdvertisement("Price invalid",error);
+        errorFound = true;
+    }else if(!validateNumTotItem(numTotItem)){
+        errorCreateAdvertisement("NumTotItem invalid",error);
+        errorFound = true;
     }else {
         error.innerHTML = "";
         error.className = "error";
     }
+    return errorFound;
 }
 
-function errorCreateAdvertisement(error, event){
-    error.innerHTML = "Value not correct";
-    error.className = "error active";
-    event.preventDefault();
+function errorCreateAdvertisement(str, error){
+    error.innerHTML += str;
 }

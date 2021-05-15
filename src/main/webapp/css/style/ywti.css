@@ -1,54 +1,92 @@
 
 /*
+Author: Esposito Vittorio
 Author: Gabriele Del Fiume
 Version: 1.0
 Since: 1.0
  */
 @charset "utf-8";
 
-header {
-    background-color: #003B95;
-    height: 70px;
-}
 
 body {
-    font-family: 'AmericanTypewriter', sans-serif;
+    font-family: "Avenir Next", Sans-serif;
     font-size: 15px;
     font-style: normal;
 }
 
-.mainWrapper {
-
-    /* border: 1px black solid; */
+header {
+    background-color: #003B95;
+    height: 70px;
+    position: relative;
+    left:0;
+    right:0;
 }
 
-#logo {
-    font-family: 'AmericanTypewriter', sans-serif;
-    float: left;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 2%;
-    width: 40%;
-    height: 50px;
-    text-align: left;	/* color: rgba(255,255,255,1.00); */
-    background-color: #003B95;
-    font-size: 30px;
+.small-logo {
+
+    /* horizontal alignment inside the container*/
+    text-align: left;
+    padding-left: 20px;
+    width:auto;
+    height:100%;
+
+    /* vertical alignment inside the container*/
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.nav-area {
+
     color: white;
-}
+    font-size: 16px;
+    font-weight: 500;
 
-#navbar-area {
-    float: right;
-    background-color: #003B95;
+    /* horizontal alignment inside the container*/
     text-align: right;
-    padding-top: 20px;
-    padding-right: 5px;
-    height: 50px;
+    padding-right: 15px;
+
+    /* vertical alignment inside the container*/
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
-#navbar-area a {
+.nav-link {
+
     text-decoration: none;
-    /* color: rgba(146,146,146,1.00); */
-    color: white;
-    padding-left: 50px;
-    font-size: 20px;
+
+    /* horizontal alignment inside the container*/
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.nav-link:hover {
+    color: #d5f3fe;
+}
+
+#user-email {
+    color: navy;
+
+    text-align: right;
+    padding-top: 5px;
+    padding-right: 15px;
+}
+
+#slideshow {
+    text-align: center;
+    position: relative;
+    padding-top: 20px;
+    width: 90%;
+}
+
+#slideshow img{
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
 }

@@ -367,33 +367,31 @@ function validateIdCity(){
 
 function validateTitle(title){
     let regex = /[\{\"\}]/g;
-    if(regex.test(title) || title.length===0){
-        alert("Title not valid.");
-        return false;
+    if(regex.test(title.value) || title.value.length===0){
+        let error = document.getElementById("error");
+        error.innerHTML = "Invalid Title";
+        error.className = "error active";
     }
     return true;
 }
 
 function validateDescription(description){
     let regex = /[\{\"\}]/g;
-    if(regex.test(description) || description.length===0){
-        alert("Description not valid.");
+    if(regex.test(description.value) || description.value.length===0){
         return false;
     }
     return true;
 }
 
 function validatePrice(price){
-    if(price<=0 || price.length===0){
-        alert("Price not valid.");
+    if(price.value<=0 || price.value.length===0){
         return false;
     }
     return true;
 }
 
 function validateNumTotItem(numTotItem){
-    if(numTotItem<=0 || numTotItem.length===0){
-        alert("NumTotItem not valid.");
+    if(numTotItem.value<=0 || numTotItem.value.length===0){
         return false;
     }
     return true;
