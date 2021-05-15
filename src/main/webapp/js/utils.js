@@ -370,7 +370,7 @@ function validateTitle(){
     let regex = /[\{\"\}]/g;
     let error = document.getElementById("error");
     if(regex.test(title.value) || title.value.length===0){
-        error.innerHTML = "Invalid Title";
+        error.innerHTML +="<article>Invalid title</article>";
         error.className = "error active";
         error.style.display = "block";
     }
@@ -384,7 +384,7 @@ function validateDescription(){
     let regex = /[\{\"\}]/g;
     let error = document.getElementById("error");
     if(regex.test(description.value) || description.value.length===0){
-        error.innerHTML = "Invalid Title";
+        error.innerHTML +="<article>Invalid description</article>";
         error.className = "error active";
         error.style.display = "block";
         return false;
@@ -398,7 +398,7 @@ function validatePrice(){
     let price = document.getElementById("price");
     let error = document.getElementById("error");
     if(price.value<=0 || price.value.length===0){
-        error.innerHTML = "Invalid Title";
+        error.innerHTML += "<article>Invalid price</article>";
         error.className = "error active";
         error.style.display = "block";
         return false;
@@ -412,12 +412,12 @@ function validateNumTotItem(){
     let numTotItem = document.getElementById("numTotItem");
     let error = document.getElementById("error");
     if(numTotItem.value<=0 || numTotItem.value.length===0){
-        error.innerHTML = "Invalid Title";
+        error.innerHTML +="<article>Invalid numtotitem</article>";
         error.className = "error active";
         error.style.display = "block";
         return false;
     }
-    error.innerHTML = "";
+    error.innerHTML.replace('<article>Invalid numtotitem</article>','');
     error.style.display = "none";
     return true;
 }
