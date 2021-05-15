@@ -1,0 +1,68 @@
+#touristRegistration {
+    width: 360px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#companyRegistration {
+    width: 360px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#companyornot {
+    width: 360px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+section {
+    text-align: center;
+}
+
+main {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.mainContent {
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    padding: 16px 16px 0;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px;
+    text-align:center;
+}
+
+.registerbutton {
+    transition: all .25s ease-in-out;
+    text-align: center;
+    box-sizing: border-box;
+    width: 100%;
+    justify-content: center;
+    padding: 11px 15px;
+    min-height: 48px;
+    min-width: 48px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    border: 1px solid #0071c2;
+    border-radius: 2px;
+    align-items: center;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: none;
+    vertical-align: middle;
+    position: relative;
+    color: #fff;
+    background-color: #0071c2;
+}
