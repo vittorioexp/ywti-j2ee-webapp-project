@@ -59,6 +59,7 @@ function getCityList(elementId) {
         $.getJSON(url, function (res) {
             let cityList = res.resourceList;
             if (cityList.length>0) {
+                //TODO: change "Where" keywords with "Birtdate" in register form
                 str = "<option value=\"\" disabled selected>Where</option>\n";
                 cityList.forEach(function(resource) {
                     let city = resource.city;
