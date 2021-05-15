@@ -22,7 +22,7 @@ header {
     right:0;
 }
 
-.small-logo {
+#small-logo {
 
     /* horizontal alignment inside the container*/
     text-align: left;
@@ -38,7 +38,7 @@ header {
     transform: translateY(-50%);
 }
 
-.nav-area {
+#navbar-area {
 
     color: white;
     font-size: 16px;
@@ -78,15 +78,32 @@ header {
 }
 
 #slideshow {
-    text-align: center;
-    position: relative;
-    padding-top: 20px;
-    width: 90%;
+    max-width:1080px;
 }
 
 #slideshow img{
-    width: 80%;
-    margin-right: auto;
-    margin-left: auto;
-    display: block;
+    width:100%;
+}
+
+.button {
+    transition: all .25s ease-in-out;
+    text-align: center;
+    box-sizing: border-box;
+    justify-content: center;
+    padding: 11px 15px;
+    height: 48px;
+    width: 200px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    border: 1px solid #0071c2;
+    border-radius: 2px;
+    align-items: center;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: none;
+    vertical-align: middle;
+    position: relative;
+    color: #fff;
+    background-color: #0071c2;
 }

@@ -1,4 +1,5 @@
 /*
+Author: Vittorio Esposito
 Author: Gabriele Del Fiume
 Version: 1.0
 Since: 1.0
@@ -28,17 +29,4 @@ Since: 1.0
     margin-top: 4%;
     margin-right: 2%;
     margin-left: 2%;
-}
-
-#search-button {
-    height: 50px;
-    float:right;
-    border-radius: 20px;
-    margin: 4%;
-    text-align: center;
-    position: relative;
-    font-size: 20px;
-    font-family: 'AmericanTypewriter', sans-serif;
-    color: white;
-    background-color: #003B95;
 }
