@@ -37,11 +37,11 @@
                 <article id="createFeedback">
                     <h3>Leave a feedback</h3>
                     <form id="createFeedbackForm" name="createFeedbackForm" method="POST" action="/ywti_wa2021_war/feedback-create">
-                    <label for="rateFeedback">Rate</label>
-                    <input id="rateFeedback" name="rateFeedback" type="number" min="1" max="5" step="1" required/>
+<!--                    <label for="rateFeedback">Rate</label>-->
+                    <input id="rateFeedback" name="rateFeedback" type="number" min="1" max="5" step="1" placeholder="Insert rating" required/>
                         <br>
-                    <label for="textFeedback">Comment</label>
-                    <input id="textFeedback" name="textFeedback" type="text"/>
+<!--                    <label for="textFeedback">Comment</label>-->
+                    <input id="textFeedback" name="textFeedback" type="text" placeholder="Insert feedback description"/>
                     <input type="hidden" id="idAdvFeedback" name="idAdvertisement" value="" />
                         <br>
                     <button id="create-feedback" type="submit">Leave a feedback</button><br/>
@@ -54,8 +54,8 @@
                 <article id="createBooking">
                     <h3>Book your journey</h3>
                     <form id="createBookingForm" name="createBookingForm" method="POST" action="/ywti_wa2021_war/booking-create">
-                    <label for="numBooking">No. of items</label>
-                    <input id="numBooking" name="numBooking" type="number" required/>
+<!--                    <label for="numBooking">Number of items</label>-->
+                    <input id="numBooking" name="numBooking" type="number" placeholder="Number of items" required/>
                         <br>
                     <input type="hidden" id="idAdvBooking" name="idAdvertisement" value="" />
                     <button id="create-booking" type="submit">Book your journey</button>

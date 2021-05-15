@@ -58,26 +58,28 @@ Since: 1.0
                 <br/>
                 <form id="registerFormTourist" name="registerForm" method="POST" action="<c:url value="/user/register"/>">
 
-                    <label for="email_t">email:</label>
-                    <input name="email" type="email" id="email_t" required/><br/><br/>
-                    <label for="password_t">password:</label>
+<%--                    <label for="email_t">email:</label>--%>
+                    <input name="email" type="email" id="email_t" placeholder="Email"required/><br/><br/>
+<%--                    <label for="password_t">password:</label>--%>
                     <input name="password" type="password" id="password_t" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" required/><br/><br/>
-                    <label for="rpassword_t">repeat password:</label>
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Password" required/><br/><br/>
+<%--                    <label for="rpassword_t">repeat password:</label>--%>
                     <input name="rpassword" type="password" id="rpassword_t" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" required/><br/><br/>
-                    <label for="name_t">name:</label>
-                    <input name="name" type="text" id="name_t" required/><br/><br/>
-                    <label for="surname_t">surname:</label>
-                    <input name="surname" type="text" id="surname_t" required/><br/><br/>
-                    <label for="address_t">address:</label>
-                    <input name="address" type="text" id="address_t" required/><br/><br/>
-                    <label for="phonenumber_t">phone number:</label>
-                    <input name="phone" type="text" id="phonenumber_t" required/><br/><br/>
-                    <label for="city_t">city:</label>
-                    <input name="city" type="number" id="city_t" required/><br/><br/>
-                    <label for="birthdate_t">birth date:</label>
-                    <input name="birthDate" type="Date" id="birthdate_t" required/><br/><br/>
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Repeat password" required/><br/><br/>
+<%--                    <label for="name_t">name:</label>--%>
+                    <input name="name" type="text" id="name_t"  placeholder="Insert name" required/><br/><br/>
+<%--                    <label for="surname_t">surname:</label>--%>
+                    <input name="surname" type="text" id="surname_t" placeholder="Insert surname" required/><br/><br/>
+<%--                    <label for="address_t">address:</label>--%>
+                    <input name="address" type="text" id="address_t" placeholder="Insert your address"  required/><br/><br/>
+<%--                    <label for="phonenumber_t">phone number:</label>--%>
+                    <input name="phone" type="text" id="phonenumber_t" placeholder="Insert your phone number" required/><br/><br/>
+<%--                    <label for="city_t">city:</label>--%>
+                    <select form="registerFormTourist" id="idCity" name="idCity">
+                        <option value="0" disabled selected>Choose your city</option>
+                    </select>
+<%--                    <label for="birthdate_t">birth date:</label>--%>
+                    <input name="birthDate" type="Date" id="birthdate_t" placeholder="Insert your birthdate" required/><br/><br/>
 
                     <input type="hidden" id="userType" name="userType" value="tourist">
 
@@ -90,22 +92,24 @@ Since: 1.0
                 <br/>
                 <form id="registerFormCompany" name="registerForm" method="POST" action="<c:url value="/user/register"/>">
 
-                    <label for="email_c">email:</label>
-                    <input name="email" type="email" id="email_c" required/><br/><br/>
-                    <label for="password_c">password:</label>
+<%--                    <label for="email_c">email:</label>--%>
+                    <input name="email" type="email" id="email_c" placeholder="Insert Email" required/><br/><br/>
+<%--                    <label for="password_c">password:</label>--%>
                     <input name="password" type="password" id="password_c" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" required/><br/><br/>
-                    <label for="rpassword_c">repeat password:</label>
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Insert password" required/><br/><br/>
+<%--                    <label for="rpassword_c">repeat password:</label>--%>
                     <input name="rpassword" type="password" id="rpassword_c" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" required/><br/><br/>
-                    <label for="name_c">name:</label>
-                    <input name="name" type="text" id="name_c" required/><br/><br/>
-                    <label for="address_c">address:</label>
-                    <input name="address" type="text" id="address_c" required/><br/><br/>
-                    <label for="phonenumber_c">phone number:</label>
-                    <input name="phone" type="text" id="phonenumber_c" required/><br/><br/>
-                    <label for="city">city:</label>
-                    <input name="city" type="number" id="city" required/><br/><br/>
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Repeat Password" required/><br/><br/>
+<%--                    <label for="name_c">name:</label>--%>
+                    <input name="name" type="text" id="name_c" placeholder="Insert company name" required/><br/><br/>
+<%--                    <label for="address_c">address:</label>--%>
+                    <input name="address" type="text" id="address_c" placeholder="Insert company address" required/><br/><br/>
+<%--                    <label for="phonenumber_c">phone number:</label>--%>
+                    <input name="phone" type="text" id="phonenumber_c" placeholder="Insert company phone number" required/><br/><br/>
+<%--                    <label for="idCity_c">city:</label>--%>
+                    <select form="companyRegistration" id="idCity_c" name="idCity">
+                        <option value="0" disabled selected>Choose company location</option>
+                    </select>
 
                     <input type="hidden" name="userType" value="company">
 

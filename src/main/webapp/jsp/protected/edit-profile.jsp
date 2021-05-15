@@ -54,14 +54,14 @@ Since: 1.0
         <section id="error"></section>
 
         <form id="edit-profile-form" name="edit-profile-form" method="POST" action="/ywti_wa2021_war/user/edit">
-            <label for="password">New password:</label>
-            <input id="password" name="password" type="password" /><br/><br/>
+<%--            <label for="password">New password:</label>--%>
+            <input id="password" name="password" type="password" placeholder="Insert new password"/><br/><br/>
 
-            <label for="phonenumber">Phone Number:</label>
-            <input id="phonenumber" name="phonenumber" type="text" /><br/><br/>
+<%--            <label for="phonenumber">Phone Number:</label>--%>
+            <input id="phonenumber" name="phonenumber" type="text" placeholder="Insert new phone number"/><br/><br/>
 
-            <label for="address">Address:</label>
-            <input id="address" name="address" type="text" /><br/><br/>
+<%--            <label for="address">Address:</label>--%>
+            <input id="address" name="address" type="text" placeholder="Insert new address"/><br/><br/>
 
             <select form="edit-profile-form" id="idCity" name="idCity">
                 <option value="0" disabled selected>Where</option>
