@@ -12,6 +12,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.getElementsByName("password")[0].addEventListener("keyup", function(event) {validatePassword(0)})
     document.getElementsByName("password")[1].addEventListener("keyup", function(event) {validatePassword(1)})
 
+    //getting the list of cities
+    $.getScript(contextPath + "/js/utils.js",function(){
+        getCityList("idCity");
+        getCityList("idCity_c");
+    });
+
 });
 
 // Checks the user type, and display a different form depending on the user type

@@ -365,19 +365,36 @@ function validateIdCity(){
 }
 
 
-function sanitizeString(str) {
-
+function validateTitle(title){
+    let regex = /[\{\"\}]/g;
+    if(regex.test(title) || title.length===0){
+        alert("Title not valid.");
+        return false;
+    }
+    return true;
 }
 
-//Sanitize JSON string before saving, so it can be read again.
-function sanitizeJSON(myJSONString){
-    return myJSONString
-        .replace(/\\n/g, "\\n")
-        .replace(/\\'/g, "\\'")
-        .replace(/\\"/g, '\\"')
-        .replace(/\\&/g, "\\&")
-        .replace(/\\r/g, "\\r")
-        .replace(/\\t/g, "\\t")
-        .replace(/\\b/g, "\\b")
-        .replace(/\\f/g, "\\f");
+function validateDescription(description){
+    let regex = /[\{\"\}]/g;
+    if(regex.test(description) || description.length===0){
+        alert("Description not valid.");
+        return false;
+    }
+    return true;
+}
+
+function validatePrice(price){
+    if(price<=0 || price.length===0){
+        alert("Price not valid.");
+        return false;
+    }
+    return true;
+}
+
+function validateNumTotItem(numTotItem){
+    if(numTotItem<=0 || numTotItem.length===0){
+        alert("NumTotItem not valid.");
+        return false;
+    }
+    return true;
 }
