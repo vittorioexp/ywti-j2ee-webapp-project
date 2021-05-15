@@ -35,9 +35,6 @@ Since: 1.0
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Login - Your Way to Italy</title>
         <script src="/ywti_wa2021_war/js/utils.js"></script>
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
-        <link href="/ywti_wa2021_war/css/style/login-page.css" rel="stylesheet" type="text/css">
         <c:choose>
             <c:when test="${!empty sessionScope.Authorization}">
                 <c:set var="context" value="${pageContext.request.contextPath}" />
@@ -69,7 +66,10 @@ Since: 1.0
             </c:otherwise>
         </c:choose>
         <script src="/ywti_wa2021_war/js/login-page.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <link href="/ywti_wa2021_war/css/style/w3.css" rel="stylesheet" type="text/css">
         <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
+        <link href="/ywti_wa2021_war/css/style/login-page.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <div class="mainWrapper w3-main">
