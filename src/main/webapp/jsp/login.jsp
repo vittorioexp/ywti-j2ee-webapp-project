@@ -75,8 +75,8 @@ Since: 1.0
         <div class="mainWrapper w3-main">
             <header>
                 <!-- navbar (which includes the logo) imported with javascript -->
-                <div id="navbar-area" class="w3-container"></div>
-                <div id="user-email" class="w3-container w3-section"></div>
+                <div id="navbar-area"></div>
+                <div id="user-email"></div>
             </header>
             <main class="mainContent w3-container" >
                 <section id="error" class="w3-container w3-section">
