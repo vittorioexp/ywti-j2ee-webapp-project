@@ -50,7 +50,7 @@ Since: 1.0
         </header>
         <main class="mainContent w3-container" >
             <br/>
-            <section>
+            <section class="w3-container w3-section">
                 <h1>Create your own account</h1>
             </section>
 
@@ -86,9 +86,10 @@ Since: 1.0
                         <option value="0" disabled selected>Choose your city</option>
                     </select>
 <%--                    <label for="birthdate_t">birth date:</label>--%>
-                    <input class="w3-input w3-section" name="birthDate" type="Date" id="birthdate_t" placeholder="Insert your birthdate" required/><br/>
+                    <input class="w3-input w3-section" name="birthDate" type="Date" id="birthdate_t" placeholder="Insert your birthdate" required/>
 
                     <input type="hidden" id="userType" name="userType" value="tourist">
+                    <br/><br/>
 
                     <button class="registerbutton"type="submit">Register</button><br/><br/>
 
