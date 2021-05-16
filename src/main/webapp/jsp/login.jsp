@@ -82,7 +82,7 @@ Since: 1.0
             <h1>Login into your account</h1>
             <section id="error" class="w3-container w3-section"></section>
             <section class="w3-container w3-section">
-                <form class="w3-panel w3-card-4 w3-section" id="loginForm" name="loginForm" method="POST"/>">
+                <form class="w3-panel w3-card-4 w3-section" id="loginForm" name="loginForm" method="POST"/>
                     <input id="email" name="email" type="email" class="w3-input w3-section" required placeholder="Email"/>
                     <span class="error"></span>
                     <input id="password" name="password" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
