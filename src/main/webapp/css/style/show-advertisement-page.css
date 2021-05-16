@@ -1,0 +1,34 @@
+
+.advInfoElement{
+    text-decoration: darkgreen;
+}
+
+#advTitle{
+    color: #3f51b5;
+}
+
+#infos{
+    float: right;
+    width: 50%;
+}
+
+#images{
+    float: left;
+    width: 50%;
+}
+
+.titled{
+
+}
+
+.feedbackElement{
+
+}
+
+.bookingElement{
+
+}
+
+.slide{
+
+}

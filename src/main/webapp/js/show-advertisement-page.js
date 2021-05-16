@@ -54,14 +54,14 @@ function loadAdvertisement(req) {
     let emailCompany = jsonData['emailCompany'];
 
     // Presents the JSON obj
-    document.getElementById("advTitle").innerHTML = "<h1>" + title + "</h1>";
+    document.getElementById("advTitle").innerHTML = "<h1 id=\"advTitle\">" + title + "</h1>";
 
     let info =
-        "<p>" + description + "</p>" +
-        "<p>" + "Only " + price + " euro!" + "</p>" +
-        "<p>" + "There are just " + numTotItem + " items available!" + "</p>" +
-        "<p>" + "The event is starting the day " + dateStart + " at " + timeStart + " until " + dateEnd + " at " + timeEnd + "</p><br>" +
-        "<p>" + "For more info: " + emailCompany + "</p>";
+        "<p class=\"w3-panel w3-card advInfoElement\">" + description + "" +
+        "<p class=\"w3-panel w3-card advInfoElement\">" + "Only " + price + " euro!" + "</p>" +
+        "<p class=\"w3-panel w3-card advInfoElement\">" + "There are just " + numTotItem + " items available!" + "</p>" +
+        "<p class=\"w3-panel w3-card advInfoElement\">" + "The event is starting the day " + dateStart + " at " + timeStart + " until " + dateEnd + " at " + timeEnd + "</p><br>" +
+        "<p class=\"w3-panel w3-card advInfoElement\">" + "For more info: " + emailCompany + "</p>";
 
     document.getElementById("advInfo").innerHTML = info;
 
@@ -81,7 +81,7 @@ function loadRate(req) {
     let rate = jsonData['rate'];
 
     // Presents the JSON obj
-    let info = "<p>" + "Rated " + rate + "/5" + "</p>" + document.getElementById("advInfo").innerHTML;
+    let info = "<p class=\"w3-panel w3-card advInfoElement\">" + "Rated " + rate + "/5" + "</p>" + document.getElementById("advInfo").innerHTML;
     document.getElementById("advInfo").innerHTML = info;
 }
 
@@ -95,7 +95,7 @@ function loadFeedbackList(req) {
     let feedbackList = JSON.parse(req).resourceList;
     let str;
     if (feedbackList.length>0) {
-        str = "<h3>" + "Reviews" + "</h3>";
+        str = "<h3 class=\"titled\">" + "Reviews" + "</h3>";
         feedbackList.forEach(function(resource) {
             let feedback = resource.feedback;
             let emailTourist = feedback.emailTourist;
@@ -104,13 +104,13 @@ function loadFeedbackList(req) {
             let text = feedback.text;
             let date = feedback.date;
             str +=
-                "<div class=" + "feedback" + ">"  +
-                    "<p>" + "\"" + text + "\"" + "</p>" +
-                    "<p>" + "Rated " + rate +  "/5" + " - " + date + "</p>" +
+                "<div class=\"feedback w3-container\">"  +
+                    "<p class=\"w3-card feedbackElement\">" + "\"" + text + "\"" + "</p>" +
+                    "<p class=\"w3-card feedbackElement\">" + "Rated " + rate +  "/5" + " - " + date + "</p>" +
                 "</div><br>";
         });
     } else {
-        str = "<p>" + "No reviews found for this advertisement" + "</p>";
+        str = "<p class=\"w3-card feedbackElement\">" + "No reviews found for this advertisement" + "</p>";
     }
     // Presents the JSON resourceList
     document.getElementById("feedbackList").innerHTML += str;
@@ -138,12 +138,12 @@ function loadBookingList(req) {
             let state = booking.state;
 
             str +=
-                "<div class=" + "booking" + ">"  +
-                    "<p>" + emailTourist + " booked " + numBooking + " items" + " - " + date + ", " + time + "</p>" +
+                "<div class=\"booking w3-container\">"  +
+                    "<p class=\"w3-card bookingElement\">" + emailTourist + " booked " + numBooking + " items" + " - " + date + ", " + time + "</p>" +
                 "</div><br>";
         });
     } else {
-        str = "<p>" + "No bookings found for this advertisement" + "</p>";
+        str = "<p class=\"w3-card bookingElement\">" + "No bookings found for this advertisement" + "</p>";
     }
     // Presents the JSON resourceList
     document.getElementById("bookingList").innerHTML += str;
@@ -166,7 +166,7 @@ function loadImageList(req) {
             let description = image.description;
             let idAdvertisement = image.idAdvertisement;
 
-            str += "<img src=\"" + "" + path + "\" width=\"320\" height=\"240\" alt=''/>\n";
+            str += "<img class=\"mySlides\" src=\"" + "" + path + "\" width=\"320\" height=\"240\" alt=''/>\n";
         });
     }
     document.getElementById("advImages").innerHTML = str;

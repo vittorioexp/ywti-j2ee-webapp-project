@@ -16,46 +16,47 @@
     <link href="/ywti_wa2021_war/css/style/w3.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div class="mainWrapper">
+    <div class="mainWrapper w3-container">
         <header>
             <div id="navbar-area"></div>
             <div id="user-email"></div>
         </header>
         <main class="mainContent" >
-            <section>
-                <div id="advTitle">
-                    Loading the title
-                </div>
-                <figure id="advImages">
-                </figure>
-                <article id="advInfo">
+            <div id="advTitle">
+                Loading the title
+            </div>
+            <section id="images">
+                <div name="slideshow" class="w3-content w3-section" id="advImages"></div>
+            </section>
+            <section id = "infos">
+                <article id="advInfo" class="w3-container">
                     Loading info
                 </article>
             </section>
 
-            <span class="feedback-display">
+            <span class="feedback-display w3-container">
                 <article id="createFeedback">
                     <h3>Leave a feedback</h3>
-                    <form id="createFeedbackForm" name="createFeedbackForm" method="POST" action="/ywti_wa2021_war/feedback-create">
+                    <form id="createFeedbackForm" name="createFeedbackForm" method="POST"  action="/ywti_wa2021_war/feedback-create">
 <!--                    <label for="rateFeedback">Rate</label>-->
-                    <input id="rateFeedback" name="rateFeedback" type="number" min="1" max="5" step="1" placeholder="Insert rating" required/>
+                    <input id="rateFeedback" name="rateFeedback" class="w3-input" type="number" min="1" max="5" step="1" placeholder="Insert rating" required/>
                         <br>
 <!--                    <label for="textFeedback">Comment</label>-->
-                    <input id="textFeedback" name="textFeedback" type="text" placeholder="Insert feedback description"/>
+                    <input id="textFeedback" name="textFeedback" type="text" class="w3-input" placeholder="Insert feedback description"/>
                     <input type="hidden" id="idAdvFeedback" name="idAdvertisement" value="" />
                         <br>
                     <button id="create-feedback" type="submit">Leave a feedback</button><br/>
                     </form>
                 </article>
-                <article id="feedbackList">
+                <article class="w3-container" id="feedbackList">
                 </article>
             </span>
-            <span class="booking-display">
+            <span class="booking-display w3-container">
                 <article id="createBooking">
                     <h3>Book your journey</h3>
                     <form id="createBookingForm" name="createBookingForm" method="POST" action="/ywti_wa2021_war/booking-create">
 <!--                    <label for="numBooking">Number of items</label>-->
-                    <input id="numBooking" name="numBooking" type="number" placeholder="Number of items" required/>
+                    <input id="numBooking" name="numBooking" type="number" class="w3-input" placeholder="Number of items" required/>
                         <br>
                     <input type="hidden" id="idAdvBooking" name="idAdvertisement" value="" />
                     <button id="create-booking" type="submit">Book your journey</button>
