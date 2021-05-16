@@ -42,10 +42,16 @@ function fetchEditAdvertisement(currentUrl){
     else if(!validatePriceOnSubmit(price)){
         messageError+="Price invalid"+"\n";
         errorOccured=true;
+        if(price === ""){
+            price = "-1";
+        }
     }
     else if(!validateNumTotItemOnSubmit(numTotItem)){
         messageError+="Total number of item invalid"+"\n";
         errorOccured=true;
+        if(numTotItem === ""){
+            numTotItem = "-1";
+        }
     }else{
         errorOccured = false;
     }
