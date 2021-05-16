@@ -12,6 +12,8 @@
     <script src="/ywti_wa2021_war/js/utils.js"></script>
     <script src="/ywti_wa2021_war/js/create-advertisement-page.js"></script>
     <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
+    <link href="/ywti_wa2021_war/css/style/register-page.css" rel="stylesheet" type="text/css">
+    <link href="/ywti_wa2021_war/css/style/w3.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="mainWrapper">
@@ -21,52 +23,54 @@
     </header>
     <main class="mainContent" >
         <section id="error"></section>
-        <section>
-            <form id="createAdvertisementForm" name="createAdvertisementForm" method="post" >
+        <section id="companyRegistration">
+            <article class="w3-container">
+                <form id="createAdvertisementForm" class="w3-panel w3-card" name="createAdvertisementForm" method="post" >
 
-                <input id="title" name="title" type="text" placeholder="Title" required/><br/><br/>
+                    <input id="title" name="title" type="text" placeholder="Title" required/><br/><br/>
 
-                <textarea id="description" name="description" placeholder="Description" required></textarea><br/><br/>
+                    <textarea id="description" name="description" placeholder="Description" required></textarea><br/><br/>
 
-                <input id="price" name="price" type="number" placeholder="Price" required/><br/><br/>
+                    <input id="price" name="price" type="number" placeholder="Price" required/><br/><br/>
 
-                <input id="numTotItem" name="numTotItem" type="number" placeholder="NumTotItem" required/><br/><br/>
+                    <input id="numTotItem" name="numTotItem" type="number" placeholder="NumTotItem" required/><br/><br/>
 
-                <label for="dateStart">dateStart:</label>
-                <input id="dateStart" name="dateStart" type="date" required/><br/><br/>
+                    <label for="dateStart">dateStart:</label>
+                    <input id="dateStart" name="dateStart" type="date" required/><br/><br/>
 
-                <label for="dateEnd">dateEnd:</label>
-                <input id="dateEnd" name="dateEnd" type="date" required/><br/><br/>
+                    <label for="dateEnd">dateEnd:</label>
+                    <input id="dateEnd" name="dateEnd" type="date" required/><br/><br/>
 
-                <label for="timeStart">timeStart:</label>
-                <input id="timeStart" name="timeStart" type="time" value="05:00:00"/><br/><br/>
+                    <label for="timeStart">timeStart:</label>
+                    <input id="timeStart" name="timeStart" type="time" value="05:00:00"/><br/><br/>
 
-                <label for="timeEnd">timeEnd:</label>
-                <input id="timeEnd" name="timeEnd" type="time" value="23:30:00"/><br/><br/>
+                    <label for="timeEnd">timeEnd:</label>
+                    <input id="timeEnd" name="timeEnd" type="time" value="23:30:00"/><br/><br/>
 
-                <label for="idType">Type:</label>
-                <select form="createAdvertisementForm" id="idType" name="type" searchable="Search here..">
-                    <option value="0" disabled selected>Choose a type</option>
-                    <option value="1">Dance club</option>
-                    <option value="2">Cinema</option>
-                    <option value="3">Theater</option>
-                    <option value="4">Restaurant</option>
-                    <option value="5">Bar</option>
-                    <option value="6">Hotel</option>
-                    <option value="7">Pool</option>
-                    <option value="8">Museum</option>
-                    <option value="9">Stadium</option>
-                    <option value="10">Gym</option>
-                    <option value="11">Guided tour</option>
-                    <option value="12">Bike tour</option>
-                    <option value="13">Cooking lessons</option>
-                    <option value="14">Wine tour</option>
-                    <option value="15">Bed and breakfast</option>
-                </select>
-                <br/><br/>
+                    <label for="idType">Type:</label>
+                    <select form="createAdvertisementForm" id="idType" name="type" searchable="Search here..">
+                        <option value="0" disabled selected>Choose a type</option>
+                        <option value="1">Dance club</option>
+                        <option value="2">Cinema</option>
+                        <option value="3">Theater</option>
+                        <option value="4">Restaurant</option>
+                        <option value="5">Bar</option>
+                        <option value="6">Hotel</option>
+                        <option value="7">Pool</option>
+                        <option value="8">Museum</option>
+                        <option value="9">Stadium</option>
+                        <option value="10">Gym</option>
+                        <option value="11">Guided tour</option>
+                        <option value="12">Bike tour</option>
+                        <option value="13">Cooking lessons</option>
+                        <option value="14">Wine tour</option>
+                        <option value="15">Bed and breakfast</option>
+                    </select>
+                    <br/><br/>
 
-                <button type="submit" id="create-button" name="Submit" value="Submit">Create</button><br/>
-            </form>
+                    <button type="submit" id="create-button" class="button" name="Submit" value="Submit">Create</button><br/>
+                </form>
+            </article>
         </section>
     </main>
     <div id="footer-area"></div>
