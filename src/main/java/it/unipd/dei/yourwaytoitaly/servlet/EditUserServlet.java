@@ -150,7 +150,9 @@ public class EditUserServlet extends AbstractDatabaseServlet {
             Message success = new Message("Profile successfully edited.");
             req.setAttribute("message", success);
             res.setStatus(HttpServletResponse.SC_OK);
-            res.sendRedirect(req.getContextPath()+"/user/profile");
+
+            // disabled feature, javascript handling.
+//            res.sendRedirect(req.getContextPath()+"/user/profile");
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

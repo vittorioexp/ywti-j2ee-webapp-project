@@ -57,11 +57,13 @@ function loadAdvertisement(req) {
     document.getElementById("advTitle").innerHTML = "<h1 id=\"advTitle\">" + title + "</h1>";
 
     let info =
-        "<p class=\"w3-panel w3-card advInfoElement\">" + description + "" +
-        "<p class=\"w3-panel w3-card advInfoElement\">" + "Only " + price + " euro!" + "</p>" +
-        "<p class=\"w3-panel w3-card advInfoElement\">" + "There are just " + numTotItem + " items available!" + "</p>" +
-        "<p class=\"w3-panel w3-card advInfoElement\">" + "The event is starting the day " + dateStart + " at " + timeStart + " until " + dateEnd + " at " + timeEnd + "</p><br>" +
-        "<p class=\"w3-panel w3-card advInfoElement\">" + "For more info: " + emailCompany + "</p>";
+        "<section class=\"w3-panel w3-card advInfoElement\">" +
+        "<p class=\"w3-panel advInfoElement\">" + description + "" +
+        "<p class=\"w3-panel advInfoElement\">" + "Only " + price + " euro!" + "</p>" +
+        "<p class=\"w3-panel advInfoElement\">" + "There are just " + numTotItem + " items available!" + "</p>" +
+        "<p class=\"w3-panel advInfoElement\">" + "The event is starting the day " + dateStart + " at " + timeStart + " until " + dateEnd + " at " + timeEnd + "</p><br>" +
+        "<p class=\"w3-panel advInfoElement\">" + "For more info: " + emailCompany + "</p>"+
+        "</section>";
 
     document.getElementById("advInfo").innerHTML = info;
 
@@ -81,7 +83,7 @@ function loadRate(req) {
     let rate = jsonData['rate'];
 
     // Presents the JSON obj
-    let info = "<p class=\"w3-panel w3-card advInfoElement\">" + "Rated " + rate + "/5" + "</p>" + document.getElementById("advInfo").innerHTML;
+    let info = "<section class=\"w3-panel w3-card advInfoElement\">" +"<p>" + "Users rated this: " + "</p>" + "<image src=\"/ywti_wa2021_war/css/image/" + rate + "s.jpg\" >" + "</section>" + document.getElementById("advInfo").innerHTML;
     document.getElementById("advInfo").innerHTML = info;
 }
 
@@ -104,13 +106,14 @@ function loadFeedbackList(req) {
             let text = feedback.text;
             let date = feedback.date;
             str +=
-                "<div class=\"feedback w3-container\">"  +
-                    "<p class=\"w3-card feedbackElement\">" + "\"" + text + "\"" + "</p>" +
-                    "<p class=\"w3-card feedbackElement\">" + "Rated " + rate +  "/5" + " - " + date + "</p>" +
+                "<div class=\"feedback w3-card\">"  +
+                    "<p class=\"feedbackElement\">" + "\"" + text + "\"" + "</p>" +
+                    "<p class=\"feedbackElement\">" + "Rated " + "</p>" +
+                    "<image src=\"/ywti_wa2021_war/css/image/" + rate + "s.jpg\" >" +
                 "</div><br>";
         });
     } else {
-        str = "<p class=\"w3-card feedbackElement\">" + "No reviews found for this advertisement" + "</p>";
+        str = "<p class=\"feedbackElement w3-card\">" + "No reviews found for this advertisement" + "</p>";
     }
     // Presents the JSON resourceList
     document.getElementById("feedbackList").innerHTML += str;
@@ -168,6 +171,9 @@ function loadImageList(req) {
 
             str += "<img class=\"mySlides\" src=\"" + "" + path + "\" width=\"320\" height=\"240\" alt=''/>\n";
         });
+    }
+    else{
+        str += "<img class=\"mySlides\" src=\"/ywti_wa2021_war/css/image/noImage.jpg\" width=\"320\" height=\"240\" alt=''/>\n";
     }
     document.getElementById("advImages").innerHTML = str;
 

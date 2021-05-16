@@ -21,8 +21,14 @@
 
 }
 
-.feedbackElement{
+.feedback-display{
+    float: left;
+    width : 50%
+}
 
+.booking-display{
+    float: right;
+    width : 50%;
 }
 
 .bookingElement{

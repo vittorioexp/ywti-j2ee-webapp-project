@@ -66,6 +66,7 @@ public class LogoutServlet extends AbstractDatabaseServlet {
             session.invalidate();
 
             res.setStatus(HttpServletResponse.SC_OK);
+
             res.sendRedirect(req.getContextPath() + "/user/do-login");
 
         }catch (Exception ex){

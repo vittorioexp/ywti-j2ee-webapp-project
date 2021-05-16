@@ -129,7 +129,8 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
             AdvertisementDAO.editAdvertisement(advertisement);
 
             res.setStatus(HttpServletResponse.SC_OK);
-            res.sendRedirect(req.getContextPath()+"/user/profile");
+            // disabled feature, javascript handling.
+//            res.sendRedirect(req.getContextPath()+"/user/profile");
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
