@@ -137,6 +137,8 @@ public class AdvertisementRestResource extends RestResource {
 
             //Checking if the attributes are changed and checking the integrity of the new values
             String title = advertisement.getTitle();
+            //TODO: se il campo "title" nel form è lasciato vuoto (quindi stringa vuota), quando si fa la conversione
+            // dal JSON, l'attributo "title" è "null" o è ""?
             if(title==null){
                 title = old_advertisement.getTitle();
             }
@@ -150,6 +152,8 @@ public class AdvertisementRestResource extends RestResource {
             }
 
             String description = advertisement.getDescription();
+            //TODO: se il campo "description" nel form è lasciato vuoto (quindi stringa vuota), quando si fa la conversione
+            // dal JSON, l'attributo "description" è "null" o è ""?
             if(description==null){
                 description = old_advertisement.getDescription();
             }

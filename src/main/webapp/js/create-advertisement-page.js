@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.getElementById("price").addEventListener("focusout", validatePrice);
     document.getElementById("numTotItem").addEventListener("focusout", validateNumTotItem);
 
-    //document.getElementById("title").addEventListener("keyup", function(event) {validateTitle()});
+    document.getElementById("create-button").addEventListener("cick", function(event) {createAdvertisement});
 });
 
 function createAdvertisement() {

@@ -24,13 +24,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 "click",
                 function(event) {
                     event.preventDefault();
-
-                    // Send an http delete in JSON to the server
-                    let idAdvertisement = button.value;
-                    let url = contextPath + "/adv/" + idAdvertisement;
-                    sendJsonRequest(url, "DELETE", "", function(req){
-                        location.reload();
-                    });
+                    if(confirm("Are you sure you want to cancel the advertisement?")){
+                        // Send an http delete in JSON to the server
+                        let idAdvertisement = button.value;
+                        let url = contextPath + "/adv/" + idAdvertisement;
+                        sendJsonRequest(url, "DELETE", "", function(req){
+                            location.reload();
+                        });
+                    }else{}
                 });
         });
 
@@ -68,6 +69,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 event.preventDefault();
                 window.location.href = contextPath+"/adv-do-create"
             });
+
+        //TODO: Da controllare
+        /*
+        document.getElementById("submit").addEventListener(
+            "click",
+            function (event) {
+                event.preventDefault();
+                if(confirm("Are you sure you want to cancel the reservation?")){
+                    let url = contextPath+"/booking-delete";
+                    let data = "idAdvertisement"+"="+${booking.idAdvertisement};
+                    sendRequest(url, "DELETE", data, function(){});
+                }
+                else{}
+            });
+         */
     }
 });
 
