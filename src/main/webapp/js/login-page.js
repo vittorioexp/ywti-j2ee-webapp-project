@@ -10,28 +10,32 @@ document.addEventListener("DOMContentLoaded", function(event) {
     })
 
     //Submit button
-    document.getElementById("login-button").addEventListener("cick", fetchLogin);
+    document.getElementById("login-button").addEventListener("click", fetchLogin);
 });
 
 function fetchLogin(){
-    let url = new URL(contextPath+"/user/login");
+
+    let url = contextPath+"/user/login";
 
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
-    let data = "email"+"="+email+"&"+"password"+"="+password;
 
-    sendRequest(url, "POST", data, function(req){
+    let data = {
+        "email": email,
+        "password": password
+    }
 
-        if(req.status === 200){
-           //Redirect made on the server side
+    $.getJSON(url, data, function (res) {
+
+        if(res.status === 200){
+            //Redirect made on the server side
         }else{
             // Parses the JSON obj
-            let jsonData = JSON.parse(req).message;
+            let jsonData = JSON.parse(res).message;
             let messageError = jsonData['message'];
             alert(messageError);
             document.getElementById("loginForm").reset();
         }
-
     });
 }
 
