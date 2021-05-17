@@ -259,7 +259,6 @@ function sendJsonRequest(url, method, data, callback) {
 }
 
 function validateEmail(index) {
-
     // Error section
     let error = document.getElementById("error");
 
