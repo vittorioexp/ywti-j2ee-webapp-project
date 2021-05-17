@@ -272,7 +272,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             EmailSender mail= new EmailSender(email , emailsite , passEmail);
 
             //send email and check if email is sent correctly
-            if (!mail.sendConfirmationEmail("YourWayToItaly - Account successfully registered",
+            if (!mail.sendConfirmationEmail("Your Way To Italy - Account successfully registered",
                     "Congratulations, your account has successfully been registered. " +
                             "You can now start your Journey!")){
                 ErrorCode ec = ErrorCode.INTERNAL_ERROR;
