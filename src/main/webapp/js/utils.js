@@ -391,16 +391,9 @@ function validateIdCity(){
 function validateTitle(){
     let title = document.getElementById("title");
     let error = document.getElementById("error");
-
-    if (title.value.length == 0) {
-        error.innerHTML = "";
-        error.className = "error";
-        return;
-    }
-
     let regex = /[\{\"\}]/g;
 
-    if(regex.test(title.value) || title.value.length < 5 || title.value.length > 100){
+    if (regex.test(title.value) || title.value.length < 5 || title.value.length > 100) {
         error.textContent +="<article>Invalid title.</article>";
         error.className = "error active";
         return;
@@ -411,16 +404,9 @@ function validateTitle(){
 function validateDescription(){
     let description = document.getElementById("description");
     let error = document.getElementById("error");
-
-    if (description.value.length == 0) {
-        error.innerHTML = "";
-        error.className = "error";
-        return;
-    }
-
     let regex = /[\{\"\}]/g;
 
-    if(regex.test(description.value) || description.value.length < 5  || description.value.length > 100){
+    if (regex.test(description.value) || description.value.length < 5  || description.value.length > 100) {
         error.textContent +="<article>Invalid description.</article>";
         error.className = "error active";
         return;
@@ -432,13 +418,7 @@ function validatePrice(){
     let price = document.getElementById("price");
     let error = document.getElementById("error");
 
-    if (price.value.length == 0) {
-        error.innerHTML = "";
-        error.className = "error";
-        return;
-    }
-
-    if(price.value<=0 || price.value.length===0){
+    if (price.value.length === 0 || price.value<=0) {
         error.textContent += "<article>Invalid price.</article>";
         error.className = "error active";
         return;
@@ -449,12 +429,6 @@ function validatePrice(){
 function validateNumTotItem(){
     let numTotItem = document.getElementById("numTotItem");
     let error = document.getElementById("error");
-
-    if (numTotItem.value.length == 0) {
-        error.innerHTML = "";
-        error.className = "error";
-        return;
-    }
 
     if(numTotItem.value<=0 || numTotItem.value.length===0){
         error.textContent +="<article>Invalid total number of item.</article>";
