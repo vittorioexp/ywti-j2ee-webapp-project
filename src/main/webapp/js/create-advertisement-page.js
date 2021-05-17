@@ -40,11 +40,13 @@ function createAdvertisement() {
         "\"emailCompany\":\"" + getUserEmail() + "\"," +
         "\"idType\":\"" + idType + "\"}}";
 
+    alert(data);
+
     sendJsonRequest(url, "POST", data, function(req){
 
         // Parses the JSON obj
         let jsonData = JSON.parse(req).advertisement;
-        let idAdvertisement = jsonData['idAdvertisement'];
+        let idAdvertisement = jsonData.idAdvertisement;
 
         // Sends to the upload images page
         window.location.href = contextPath + "/image-do-upload/" + idAdvertisement;

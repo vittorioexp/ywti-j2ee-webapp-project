@@ -10,14 +10,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
             window.location.href = contextPath+"/user/do-edit"
         });
 
-    if (getUserRole()=="company") {
+    if (getUserRole()==="company") {
 
         let deleteAdvButtons = document.getElementsByName("deleteAdvertisementButton");
         let editAdvButtons = document.getElementsByName("editAdvertisementButton");
         let showAdvButtons = document.getElementsByName("showAdvertisementButton");
 
         deleteAdvButtons.forEach(function(button, index) {
-
+            console.log(index);
             // Adds an event listener (on click) on each delete adv button
             button.addEventListener(
                 "click",
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                             url: url,
                             method: 'DELETE',
                             success: function(res) {
-                                location.reload();
+                                window.location.reload(true);
                             },
                             error: function(res) {
                                 let resMessage = res.responseJSON.message;
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 else{}
             });
          */
-    }else{
+    }else if (getUserRole()==="tourist"){
 
         let deleteBookingButtons = document.getElementsByName("deleteBookingButton");
 
@@ -128,6 +128,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     }else{}
                 });
         });
+    } else {
+        //
+        window.location.href = contextPath + "/user/do-login"
     }
 });
 
