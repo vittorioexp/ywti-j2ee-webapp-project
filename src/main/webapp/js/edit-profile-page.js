@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
     // Form validation while typing
-    document.getElementById("password").addEventListener("focusout", function(event) {validatePassword(0)});
-    document.getElementById("phonenumber").addEventListener("focusout", function(event) {validatePhoneNumber(0)});
+    //document.getElementById("password").addEventListener("focusout", function(event) {validatePassword(0)});
+    //document.getElementById("phonenumber").addEventListener("focusout", function(event) {validatePhoneNumber(0)});
     //document.getElementById("address").addEventListener("keyup", function(event) {})
     //document.getElementById("idCity").addEventListener("keyup", function(event) {validateIdCity()});
 
@@ -79,11 +79,12 @@ function validatePasswordOnSubmit(password){
 }
 
 function validatePhoneNumberOnSubmit(phonenumber){
-    return phonenumber.length < 7 || phonenumber.length > 14;
+    let numbers = /^[0-9]*$/;
+    return (phonenumber.value.match(numbers) || phonenumber.length < 7 || phonenumber.length > 14);
 }
 
 function validateAddressOnSubmit(address){
-    return address.length < 4 || address.length > 150;
+    return address.length < 4 || address.length > 150 ;
 }
 
 
