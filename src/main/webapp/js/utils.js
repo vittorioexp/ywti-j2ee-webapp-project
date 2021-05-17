@@ -333,7 +333,7 @@ function validatePhoneNumber(index) {
     // Error section
     let error = document.getElementById("error");
 
-    let phonenumber = document.getElementsByName("phonenumber")[index];
+    let phonenumber = document.getElementsByName("phonenumberphonenumber")[index];
 
     if (phonenumber.value.length === 0) {
         error.innerHTML = "";
