@@ -1,3 +1,4 @@
+let slideIndex = 1;
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
@@ -19,7 +20,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
         document.getElementById("createFeedback").style.display = "none";
         document.getElementById("createBooking").style.display = "none";
     }
-
+    //images slideshow
+    plusDivs(-1);
 });
 
 function getIdAdvertisement() {
@@ -113,7 +115,7 @@ function loadFeedbackList(req) {
                 "</div><br>";
         });
     } else {
-        str = "<p class=\"feedbackElement w3-card\">" + "No reviews found for this advertisement" + "</p>";
+        str = "<p class=\"feedbackElement\">" + "No reviews found for this advertisement" + "</p>";
     }
     // Presents the JSON resourceList
     document.getElementById("feedbackList").innerHTML += str;
@@ -161,7 +163,9 @@ function loadImageList(req) {
     // Parses the JSON resourceList
     let imageList = JSON.parse(req).resourceList;
     let str = "";
+    let str2 = "";
     if (imageList.length>0) {
+
         imageList.forEach(function(resource) {
             let image = resource.image;
             let idImage = image.idImage;
@@ -169,15 +173,34 @@ function loadImageList(req) {
             let description = image.description;
             let idAdvertisement = image.idAdvertisement;
 
-            str += "<img class=\"mySlides\" src=\"" + "" + path + "\" width=\"320\" height=\"240\" alt=''/>\n";
-        });
+            str += "<img class=\"mySlides w3-center\" src=\"" + "" + path + "\" width=\"320\" height=\"240\" alt=''/>";
+        })
+        str2 +=
+            "<button class=\"w3-button\" onclick=\"plusDivs(-1)\">&#10094;</button>"
+            + "<button class=\"w3-button \" onClick=\"plusDivs(+1)\">&#10095;</button>";
     }
     else{
-        str += "<img class=\"mySlides\" src=\"/ywti_wa2021_war/css/image/noImage.jpg\" width=\"320\" height=\"240\" alt=''/>\n";
+        str +="<img class=\"mySlides w3-center\" src=\"/ywti_wa2021_war/css/image/noImage.jpg\" width=\"320\" height=\"240\" alt=''/>\n" ;
     }
     document.getElementById("advImages").innerHTML = str;
+    document.getElementById("buttContainer").innerHTML = str2;
 
     $("img").error(function () {
         $(this).hide();
     });
+}
+
+function plusDivs(n) {
+    showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+    let i;
+    const x = document.getElementsByClassName("mySlides");
+    if (n > x.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = x.length;}
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+    }
+    x[slideIndex-1].style.display = "block";
 }

@@ -1,7 +1,4 @@
 
-.advInfoElement{
-    text-decoration: darkgreen;
-}
 
 #advTitle{
     color: #3f51b5;
@@ -21,20 +18,20 @@
 
 }
 
-.feedback-display{
-    float: left;
-    width : 50%
+#create-booking{
+    width: 50%;
+    float: right;
 }
 
-.booking-display{
-    float: right;
-    width : 50%;
+#create-feedback{
+    width: 50%;
+    float: left;
 }
 
 .bookingElement{
 
 }
 
-.slide{
-
+.mySlides{
+    width:80%;
 }
