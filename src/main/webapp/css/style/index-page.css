@@ -5,9 +5,8 @@ Version: 1.0
 Since: 1.0
  */
 
-/* TODO: enlarge images horizontally */
 #slideshow {
-    max-width:1080px;
+    max-width: 100%;
 }
 
 #slideshow img{
@@ -23,14 +22,6 @@ Since: 1.0
     margin-right: auto ;
 }
 
-.searchElement{
-    float:left;
-    border-radius: 20px;
-    background-color: white;
-    color: dodgerblue;
-    height: 50px;
-    width: 220px;
-    margin-top: 4%;
-    margin-right: 2%;
-    margin-left: 2%;
+#searchAdv > * {
+    margin: 0px 10px 10px 10px;
 }

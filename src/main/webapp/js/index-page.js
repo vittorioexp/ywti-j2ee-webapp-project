@@ -104,6 +104,10 @@ function loadAdvertisementList(res){
             });
     });
 
+    // smooth scroll to element
+    let element = document.querySelector("#advertisementList");
+    element.scrollIntoView({ behavior: 'smooth', block: 'start'});
+
 }
 
 function loadSlideshow() {
