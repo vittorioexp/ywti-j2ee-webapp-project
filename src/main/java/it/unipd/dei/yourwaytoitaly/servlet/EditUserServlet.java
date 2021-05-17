@@ -22,6 +22,12 @@ import java.io.IOException;
  */
 
 public class EditUserServlet extends AbstractDatabaseServlet {
+
+    /**
+     * The JSON UTF-8 MIME media type
+     */
+    private static final String JSON_UTF_8_MEDIA_TYPE = "application/json; charset=utf-8";
+
     /**
      * Edits an user
      *
@@ -57,6 +63,8 @@ public class EditUserServlet extends AbstractDatabaseServlet {
 
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws IOException {
+
+        res.setContentType(JSON_UTF_8_MEDIA_TYPE);
 
         String email;
         String password;
@@ -152,13 +160,10 @@ public class EditUserServlet extends AbstractDatabaseServlet {
             success.toJSON(res.getOutputStream());
 
 
-            // disabled feature, javascript handling.
-            //res.sendRedirect(req.getContextPath()+"/user/profile");
-
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getHTTPCode(), "Cannot edit the user profile.");
+                    ec.getHTTPCode(), "Cannot edit the user profile: "+ ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;

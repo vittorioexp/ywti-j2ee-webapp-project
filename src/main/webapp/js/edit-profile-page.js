@@ -44,7 +44,6 @@ function fetchEditProfile() {
         document.getElementById("address").value = document.getElementById("address").defaultValue;
         errorOccurred = true;
     }
-    console.log(city);
     if(validateCityOnSubmit(city)){
         messageError += "City invalid" + "\n";
         errorOccurred = true;
@@ -58,7 +57,8 @@ function fetchEditProfile() {
         let data = {
             "password": password,
             "phonenumber": phonenumber,
-            "address": address
+            "address": address,
+            "idCity": city
         }
 
         let url = contextPath + "/user/edit";
@@ -67,14 +67,13 @@ function fetchEditProfile() {
             data: data,
             method: 'POST',
             success: function(res) {
-                alert(resMessage.message + " " + resMessage.errorDetails);
+                alert(res.message.message);
                 window.location.href = contextPath + "/user/profile";
             },
             error: function(res) {
                 let resMessage = res.responseJSON.message;
                 alert(resMessage.message + " " + resMessage.errorDetails);
-                document.getElementById("loginForm").reset();
-                location.reload();
+                document.getElementById("edit-profile-form").reset();
             }
         });
     }
