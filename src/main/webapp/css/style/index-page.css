@@ -25,3 +25,48 @@ Since: 1.0
 #searchAdv > * {
     margin: 0px 10px 10px 10px;
 }
+
+.titleAdvList {
+    font-family: BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    font-weight: bold;
+}
+
+.advertisement {
+    width: 70%;
+    margin: auto;
+    height: 220px;
+    position: relative;
+    left:0;
+    right:0;
+}
+
+.advSmallImage {
+
+    /* horizontal alignment inside the container*/
+    float: left;
+    padding: 10px 20px 0 0;
+}
+
+.advSmallImage > img {
+    width: 200px;
+    height: 200px;
+}
+
+.advSummary {
+    font-family: BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+}
+
+.advSummary > h3 {
+    margin: 10px;
+}
+
+.gotoShowAdvertisement {
+
+    /* horizontal alignment inside the container*/
+    float: right;
+    margin: 10px;
+}
+
+.gotoShowAdvertisementForm {
+    padding-top: 80px;
+}
