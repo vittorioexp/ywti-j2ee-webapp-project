@@ -64,33 +64,32 @@ Since: 1.0
                 <br/>
                 <form id="registerFormTourist" name="registerForm" method="POST" action="<c:url value="/user/register"/>">
 
-<%--                    <label for="email_t">email:</label>--%>
                     <input class="w3-input w3-section" name="email" type="email" id="email_t" placeholder="Email"required/>
-<%--                    <label for="password_t">password:</label>--%>
+
                     <input class="w3-input w3-section" name="password" type="password" id="password_t" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Password" required/>
-<%--                    <label for="rpassword_t">repeat password:</label>--%>
+
                     <input class="w3-input w3-section" name="rpassword" type="password" id="rpassword_t" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Repeat password" required/>
-<%--                    <label for="name_t">name:</label>--%>
+
                     <input class="w3-input w3-section" name="name" type="text" id="name_t"  placeholder="Name" required/>
-<%--                    <label for="surname_t">surname:</label>--%>
+
                     <input class="w3-input w3-section" name="surname" type="text" id="surname_t" placeholder="Surname" required/>
-<%--                    <label for="address_t">address:</label>--%>
+
                     <input class="w3-input w3-section" name="address" type="text" id="address_t" placeholder="Address"  required/>
-<%--                    <label for="phonenumber_t">phone number:</label>--%>
+
                     <input class="w3-input w3-section" name="phone" type="text" id="phonenumber_t" placeholder="Phone number" required/>
-<%--                    <label for="city_t">city:</label>--%>
-                    <select class="w3-input w3-section" form="registerFormTourist" id="idCity" name="idCity">
-                        <option value="0" disabled selected>Choose your city</option>
+
+                    <select class="w3-input w3-section" form="registerFormTourist" id="idCity_t" name="idCity">
+                        <option value="0" disabled selected>City</option>
                     </select>
-<%--                    <label for="birthdate_t">birth date:</label>--%>
+
                     <input class="w3-input w3-section" name="birthDate" type="Date" id="birthdate_t" placeholder="Birthdate" required/>
 
                     <input type="hidden" id="userType" name="userType" value="tourist">
                     <br/><br/>
 
-                    <button class="button"type="submit">Register</button><br/><br/>
+                    <button name="register-button" class="button"type="submit">Register</button><br/><br/>
 
                 </form>
             </section>
@@ -99,30 +98,29 @@ Since: 1.0
                 <br/>
                 <form id="registerFormCompany" name="registerForm" method="POST" action="<c:url value="/user/register"/>">
 
-<%--                    <label for="email_c">email:</label>--%>
                     <input class="w3-input w3-section" name="email" type="email" id="email_c" placeholder="Email" required/>
-<%--                    <label for="password_c">password:</label>--%>
+
                     <input class="w3-input w3-section" name="password" type="password" id="password_c" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Password" required/>
-<%--                    <label for="rpassword_c">repeat password:</label>--%>
+
                     <input class="w3-input w3-section" name="rpassword" type="password" id="rpassword_c" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Repeat Password" required/>
-<%--                    <label for="name_c">name:</label>--%>
+
                     <input class="w3-input w3-section" name="name" type="text" id="name_c" placeholder="Company name" required/>
-<%--                    <label for="address_c">address:</label>--%>
+
                     <input class="w3-input w3-section" name="address" type="text" id="address_c" placeholder="Company address" required/>
-<%--                    <label for="phonenumber_c">phone number:</label>--%>
+
                     <input class="w3-input w3-section" name="phone" type="text" id="phonenumber_c" placeholder="Company phone number" required/>
-<%--                    <label for="idCity_c">city:</label>--%>
+
                     <select class="w3-input w3-section" form="companyRegistration" id="idCity_c" name="idCity">
-                        <option value="0" disabled selected>Choose company location</option>
+                        <option value="0" disabled selected>City</option>
                     </select>
 
                     <input type="hidden" name="userType" value="company">
 
                     <br/><br/>
 
-                    <button type="submit"class="button">Register</button><br/><br/>
+                    <button name="register-button" type="submit" class="button">Register</button><br/><br/>
 
                 </form>
             </section>
