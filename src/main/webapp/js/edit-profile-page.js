@@ -26,7 +26,7 @@ function fetchEditProfile() {
     let password = document.getElementById("password").value;
     let phonenumber = document.getElementById("phonenumber").value;
     let address = document.getElementById("address").value;
-    let city = document.getElementById("address").value;
+    let city = document.getElementById("idCity").value;
 
 
     if (validatePasswordOnSubmit(password)) {
