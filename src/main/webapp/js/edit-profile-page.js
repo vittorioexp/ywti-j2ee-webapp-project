@@ -80,7 +80,7 @@ function validatePasswordOnSubmit(password){
 
 function validatePhoneNumberOnSubmit(phonenumber){
     let numbers = /^[0-9]*$/;
-    return (phonenumber.value.match(numbers) || phonenumber.length < 7 || phonenumber.length > 14);
+    return (phonenumber.match(numbers) || phonenumber.length < 7 || phonenumber.length > 14);
 }
 
 function validateAddressOnSubmit(address){
