@@ -1,14 +1,16 @@
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
-    //fetchTypeAdvList();
+    $.getScript(contextPath + "/js/utils.js",function(){
+        getTypeAdvList("idType", "Type");
+    });
 
     document.getElementById("title").addEventListener("focusout", validateTitle);
     document.getElementById("description").addEventListener("focusout", validateDescription);
     document.getElementById("price").addEventListener("focusout", validatePrice);
     document.getElementById("numTotItem").addEventListener("focusout", validateNumTotItem);
 
-    document.getElementById("create-button").addEventListener("cick", function(event) {createAdvertisement});
+    document.getElementById("create-button").addEventListener("click", function(event) {createAdvertisement()});
 });
 
 function createAdvertisement() {

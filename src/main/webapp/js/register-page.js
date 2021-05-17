@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     //getting the list of cities
     $.getScript(contextPath + "/js/utils.js",function(){
-        getCityList("idCity");
-        getCityList("idCity_c");
+        getCityList("idCity", "City");
+        getCityList("idCity_c", "City");
     });
 
 });

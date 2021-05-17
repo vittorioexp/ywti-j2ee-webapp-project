@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     // Fetches the list of typeAdvertisements and Cities
     $.getScript(contextPath + "/js/utils.js",function(){
-        getTypeAdvList("idType");
-        getCityList("idCity");
+        getTypeAdvList("idType", "What");
+        getCityList("idCity", "Where");
     });
 
     // fetch the list of advertisements when clicking the search button

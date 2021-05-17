@@ -5,9 +5,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
     fetchTemplate();
 })
 
-function getTypeAdvList(elementId) {
+function getTypeAdvList(elementId, placeholder) {
 
     let container = document.getElementById(elementId);
+    let head = "";
     let str = "";
 
     // Checks if the list is already in the storage
@@ -19,7 +20,7 @@ function getTypeAdvList(elementId) {
         $.getJSON(url, function (res) {
             let typeAdvList = res.resourceList;
             if (typeAdvList.length>0) {
-                str = "<option value=\"\" disabled selected>What</option>\n";
+                head = "<option value=\"\" disabled selected>" + placeholder + "</option>\n";
                 typeAdvList.forEach(function(resource) {
                     let typeAdv = resource.typeAdvertisement;
                     let idType = typeAdv.idType;
@@ -32,22 +33,24 @@ function getTypeAdvList(elementId) {
                 localStorage.setItem("typeAdvList", str);
 
             } else {
-                str = "<option value=" + 0 + ">Error</option>\n";
+                head = "<option value=" + 0 + ">Error</option>\n";
             }
             // Display the list
-            container.innerHTML = str;
+            container.innerHTML = head + str;
         });
 
     } else {
         // The list is in the storage
+        head = "<option value=\"\" disabled selected>" + placeholder + "</option>\n";
         str = localStorage.getItem("typeAdvList");
-        container.innerHTML = str;
+        container.innerHTML = head + str;
     }
 }
 
-function getCityList(elementId) {
+function getCityList(elementId, placeholder) {
 
     let container = document.getElementById(elementId);
+    let head = "";
     let str = "";
 
     // Checks if the list is already in the storage
@@ -59,8 +62,7 @@ function getCityList(elementId) {
         $.getJSON(url, function (res) {
             let cityList = res.resourceList;
             if (cityList.length>0) {
-                //TODO: change "Where" keywords with "Your city" in register form
-                str = "<option value=\"\" disabled selected>Where</option>\n";
+                head = "<option value=\"\" disabled selected>" + placeholder + "</option>\n";
                 cityList.forEach(function(resource) {
                     let city = resource.city;
                     let idCity = city.idCity;
@@ -73,16 +75,17 @@ function getCityList(elementId) {
                 localStorage.setItem("cityList", str);
 
             } else {
-                str = "<option value=" + 0 + ">Error</option>\n";
+                head = "<option value=" + 0 + ">Error</option>\n";
             }
             // Display the list
-            container.innerHTML = str;
+            container.innerHTML = head + str;
         });
 
     } else {
         // The list is in the storage
+        head = "<option value=\"\" disabled selected>" + placeholder + "</option>\n";
         str = localStorage.getItem("cityList");
-        container.innerHTML = str;
+        container.innerHTML = head + str;
     }
 }
 

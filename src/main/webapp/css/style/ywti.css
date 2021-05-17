@@ -76,7 +76,7 @@ header {
     padding-top: 5px;
     padding-right: 15px;
 }
-
+/* TODO: enlarge images horizontally */
 #slideshow {
     max-width:1080px;
 }

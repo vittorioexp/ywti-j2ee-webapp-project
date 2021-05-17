@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     // Fetches the list of typeAdvertisements and Cities
     $.getScript(contextPath + "/js/utils.js",function(){
-        getCityList("idCity");
+        getCityList("idCity", "City");
     });
 
 });
