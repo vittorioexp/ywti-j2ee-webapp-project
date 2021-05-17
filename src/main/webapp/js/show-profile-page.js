@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                             }
                         });
 
-                    }else{}
+                    }
                 });
         });
 
@@ -78,22 +78,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 event.preventDefault();
                 window.location.href = contextPath+"/adv-do-create"
             });
-
-        //TODO: Da controllare
-        /*
-        document.getElementById("submit").addEventListener(
-            "click",
-            function (event) {
-                event.preventDefault();
-                if(confirm("Are you sure you want to cancel the reservation?")){
-                    let url = contextPath+"/booking-delete";
-                    let data = "idAdvertisement"+"="+${booking.idAdvertisement};
-                    sendRequest(url, "DELETE", data, function(){});
-                }
-                else{}
-            });
-         */
-    }else if (getUserRole()==="tourist"){
+    } else if (getUserRole()==="tourist") {
 
         let deleteBookingButtons = document.getElementsByName("deleteBookingButton");
 
@@ -108,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                         // Send an http delete to the server
                         let idAdvertisement = button.value;
                         let url = contextPath + "/booking-delete";
-                        data = {
+                        let data = {
                             "idAdvertisement": idAdvertisement,
                         }
 
