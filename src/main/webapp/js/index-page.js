@@ -64,30 +64,51 @@ function loadAdvertisementList(res){
     let advList = res.resourceList;
     let str;
     if (advList.length>0) {
-        str = "<h3>" + "Advertisements" + "</h3>";
+        str = "<h2 class=\"titleAdvList w3-center\">" + advList.length + " advertisements found" + "</h2>";
         advList.forEach(function(resource) {
             let adv = resource.advertisement;
             let idAdv = adv.idAdvertisement;
             let title = adv.title;
+            let description = adv.description;
             let price = adv.price;
             let dateStart = adv.dateStart;
             let dateEnd = adv.dateEnd;
 
+            let path = "";
+
             str +=
-                "<article class=\"advertisement w3-container w3-section w3-panel w3-card-4\">" +
-                    "<p>" + title + " - " + price + "euro" + "</p>" +
-                    "<p>" + "starting " + dateStart + " - ending " + dateEnd + "</p>" +
-                    "<span>" +
-                        "<form name=gotoShowAdvertisementForm method=GET />" +
-                            "<button name=showAdvertisementButton class=\"w3-section showAdvertisementButton\" value=" + idAdv + ">Info</button>" +
+                "<article class=\"advertisement w3-section w3-container w3-panel w3-card-4\">" +
+                    "<span class=\"advSmallImage\">" +
+                        "<img class=\"\" src=\"https://cf.bstatic.com/xdata/images/hotel/square600/226809345.webp?k=f78d142a274e06bf0a6a7356c7d6d98e41eeeb8a9e9e616c014ff2154d220d61&o=\" alt=''/>"+
+                    "</span>" +
+                    "<span class=\"gotoShowAdvertisement\" >" +
+                        "<form name=gotoShowAdvertisementForm class=\"gotoShowAdvertisementForm\" method=GET />" +
+                        "<button name=showAdvertisementButton class=\"button showAdvertisementButton\" value=" + idAdv + ">Info</button>" +
                         "</form>" +
                     "</span>" +
+                    "<span class=\"advSummary\">" +
+                        "<h3>" + title + "</h3>" +
+                        "<p>" + "Rated 5/5 - " + price + " euro" + "</p>" +
+                        "<p>" + description + "</p>" +
+                        "<p>" + "Starting " + dateStart + "</p>" +
+                        "<p>" + "Ending " + dateEnd + "</p>" +
+                    "</span>" +
                 "</article> \n";
+
         });
+
+        advertisementList.innerHTML = str;
+
+        // TODO For each adv, load the rate
+
+        // TODO For each adv, load an image
+
+
     } else {
         str = "<p>" + "No advertisement found" + "</p>";
+        advertisementList.innerHTML = str;
     }
-    advertisementList.innerHTML = str;
+
 
     let showAdvButtons = document.getElementsByName("showAdvertisementButton");
 
