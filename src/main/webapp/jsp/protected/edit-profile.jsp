@@ -53,22 +53,19 @@ Since: 1.0
     <main class="mainContent" >
         <section id="error"></section>
 
-        <form id="edit-profile-form" name="edit-profile-form" method="POST" action="/ywti_wa2021_war/user/edit">
-<%--            <label for="password">New password:</label>--%>
+        <form id="edit-profile-form" name="edit-profile-form" method="POST">
+
             <input id="password" name="password" type="password" placeholder="Insert new password"/><br/><br/>
 
-<%--            <label for="phonenumber">Phone Number:</label>--%>
             <input id="phonenumber" name="phonenumber" type="text" placeholder="Insert new phone number"/><br/><br/>
 
-<%--            <label for="address">Address:</label>--%>
             <input id="address" name="address" type="text" placeholder="Insert new address"/><br/><br/>
 
             <select form="edit-profile-form" id="idCity" name="idCity">
                 <option value="0" disabled selected>Where</option>
             </select>
 
-            <button type="submit" id="edit-profile-button">Edit</button><br/>
-
+            <button type="submit" class="button" id="edit-profile-button">Edit</button><br/>
         </form>
     </main>
     <!-- footer imported with javascript -->

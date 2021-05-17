@@ -101,7 +101,7 @@ Since: 1.0
                                                 <td> ${booking.numBooking} items  </td>
                                                 <td>
                                                     <form id="deleteBookingForm" name="deleteBookingForm" method="DELETE">
-                                                        <button name="deleteBookingButton" value="${adv.idAdvertisement}">Delete</button>
+                                                        <button name="deleteBookingButton" value="${adv.idAdvertisement}" class="button">Delete</button>
                                                     </form>
                                                 </td>
                                                 <%count++;%>
@@ -123,10 +123,10 @@ Since: 1.0
                             <p>Address: ${user.address}</p>
                             <p name="userCity" id="${user.idCity}"></p>
                             </br>
-                            <button name="editUserProfile">Edit Profile</button><br/>
+                            <button name="editUserProfile" class="button">Edit Profile</button><br/>
                         </section>
                         <section id="createAdvertisement" class="w3-container w3-section ">
-                            <button id="createAdvertisementButton">Create new advertisement</button>
+                            <button id="createAdvertisementButton" class="button">Create new advertisement</button>
                         </section>
                         <section>
                             <%
@@ -159,17 +159,17 @@ Since: 1.0
                                                 <td>
                                                     <span>
                                                         <form id="gotoEditAdvertisementForm" name="gotoEditAdvertisementForm" method="GET"/>
-                                                        <button name="editAdvertisementButton" value="${adv.idAdvertisement}">Edit</button><br/>
+                                                        <button name="editAdvertisementButton" value="${adv.idAdvertisement}" class="button">Edit</button><br/>
                                                         </form>
                                                     </span>
                                                     <span>
                                                         <form id="gotoShowAdvertisementForm" name="gotoShowAdvertisementForm" method="GET"/>
-                                                        <button name="showAdvertisementButton" value="${adv.idAdvertisement}">Info</button><br/>
+                                                        <button name="showAdvertisementButton" value="${adv.idAdvertisement}" class="button">Info</button><br/>
                                                         </form>
                                                     </span>
                                                     <span>
                                                         <form id="deleteAdvertisementForm" name="deleteAdvertisementForm" method="DELETE">
-                                                        <button name="deleteAdvertisementButton" value="${adv.idAdvertisement}">Delete</button>
+                                                        <button name="deleteAdvertisementButton" value="${adv.idAdvertisement}" class="button">Delete</button>
                                                         </form>
                                                     </span>
                                                 </td>
