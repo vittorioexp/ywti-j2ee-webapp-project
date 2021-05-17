@@ -266,7 +266,6 @@ function validateEmail(index) {
 
     if (email.value.length === 0) {
         error.innerHTML = "";
-        error.className = "error";
         return;
     }
 
@@ -275,11 +274,9 @@ function validateEmail(index) {
     if (emailRegExp.test(email.value)) {
         //email.className = "valid";
         error.innerHTML = "";
-        error.className = "error";
     } else {
         //email.className = "invalid";
         error.innerHTML = "Invalid email";
-        error.className = "error active";
     }
 }
 
@@ -292,17 +289,14 @@ function validatePassword(index) {
 
     if (password.value.length === 0) {
         error.innerHTML = "";
-        error.className = "error";
         return;
     }
 
     // Validate length
     if(password.value.length >= 8) {
         error.innerHTML = "";
-        error.className = "error";
     } else {
         error.innerHTML = "Invalid password: insert at least 8 characters";
-        error.className = "error active";
         return;
     }
 
@@ -310,10 +304,8 @@ function validatePassword(index) {
     let lowerCaseLetters = /[a-z]/g;
     if(password.value.match(lowerCaseLetters)) {
         error.innerHTML = "";
-        error.className = "error";
     } else {
         error.innerHTML = "Invalid password: insert at least one lower case character";
-        error.className = "error active";
         return;
     }
 
@@ -321,10 +313,8 @@ function validatePassword(index) {
     let upperCaseLetters = /[A-Z]/g;
     if(password.value.match(upperCaseLetters)) {
         error.innerHTML = "";
-        error.className = "error";
     } else {
         error.innerHTML = "Invalid password: insert at least one upper case character";
-        error.className = "error active";
         return;
     }
 
@@ -332,10 +322,8 @@ function validatePassword(index) {
     let numbers = /[0-9]/g;
     if(password.value.match(numbers)) {
         error.innerHTML = "";
-        error.className = "error";
     } else {
         error.innerHTML = "Invalid password: insert at least one number";
-        error.className = "error active";
         return;
     }
 }
@@ -349,17 +337,14 @@ function validatePhoneNumber(index) {
 
     if (phonenumber.value.length === 0) {
         error.innerHTML = "";
-        error.className = "error";
         return;
     }
 
     // Validate length
     if(phonenumber.value.length >= 7 && phonenumber.value.length <= 14 ) {
         error.innerHTML = "";
-        error.className = "error";
     } else {
         error.innerHTML = "Invalid phone number";
-        error.className = "error active";
         return;
     }
 
@@ -367,10 +352,8 @@ function validatePhoneNumber(index) {
     let numbers = /^[0-9]*$/;
     if(phonenumber.value.match(numbers)) {
         error.innerHTML = "";
-        error.className = "error";
     } else {
         error.innerHTML = "Invalid phone number";
-        error.className = "error active";
         return;
     }
 
@@ -382,7 +365,6 @@ function validateIdCity(){
         let error = document.getElementById("error");
         idCity.className = "invalid";
         error.innerHTML = "Invalid ID";
-        error.className = "error";
     }
 }
 
@@ -394,7 +376,6 @@ function validateTitle(){
 
     if (title.value.length === 0) {
         error.innerHTML = "";
-        error.className = "error idle";
         return;
     }
 
@@ -403,7 +384,6 @@ function validateTitle(){
             return;
         } else if(!error.innerHTML.includes("<article>Invalid title.</article>")){
             error.innerHTML +="<article>Invalid title.</article>";
-            error.className = "error active";
             return;
         }
     }
@@ -417,7 +397,6 @@ function validateDescription(){
 
     if (description.value.length === 0) {
         error.innerHTML = "";
-        error.className = "error idle";
         return;
     }
 
@@ -426,7 +405,6 @@ function validateDescription(){
             return;
         } else if(!error.innerHTML.includes("<article>Invalid description.</article>")){
             error.innerHTML +="<article>Invalid description.</article>";
-            error.className = "error active";
             return;
         }
     }
@@ -439,7 +417,6 @@ function validatePrice(){
 
     if (price.value.length === 0) {
         error.innerHTML = "";
-        error.className = "error idle";
         return;
     }
 
@@ -448,7 +425,6 @@ function validatePrice(){
             return;
         } else if(!error.innerHTML.includes("<article>Invalid price.</article>")){
             error.innerHTML += "<article>Invalid price.</article>";
-            error.className = "error active";
             return;
         }
     }
@@ -461,7 +437,6 @@ function validateNumTotItem(){
 
     if (numTotItem.value.length === 0) {
         error.innerHTML = "";
-        error.className = "error idle";
         return;
     }
 
@@ -470,7 +445,6 @@ function validateNumTotItem(){
             return;
         } else if(!error.innerHTML.includes("<article>Invalid total number of item.</article>")){
             error.innerHTML +="<article>Invalid total number of item.</article>";
-            error.className = "error active";
             return;
         }
     }
