@@ -100,9 +100,8 @@ Since: 1.0
                                                 </td>
                                                 <td> ${booking.numBooking} items  </td>
                                                 <td>
-                                                    <form id="deleteBookingForm" name="deleteBookingForm" action = "<c:url value="/booking-delete"/>" method="DELETE">
-                                                        <input type="hidden" name="idAdvertisement" value="${booking.idAdvertisement}"/>
-                                                        <button type="submit" >Delete</button><br/>
+                                                    <form id="deleteBookingForm" name="deleteBookingForm" method="DELETE">
+                                                        <button name="deleteBookingButton" value="${adv.idAdvertisement}">Delete</button>
                                                     </form>
                                                 </td>
                                                 <%count++;%>

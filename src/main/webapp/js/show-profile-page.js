@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         let editAdvButtons = document.getElementsByName("editAdvertisementButton");
         let showAdvButtons = document.getElementsByName("showAdvertisementButton");
 
-
         deleteAdvButtons.forEach(function(button, index) {
 
             // Adds an event listener (on click) on each delete adv button
@@ -28,9 +27,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
                         // Send an http delete in JSON to the server
                         let idAdvertisement = button.value;
                         let url = contextPath + "/adv/" + idAdvertisement;
-                        sendJsonRequest(url, "DELETE", "", function(req){
-                            location.reload();
+
+                        $.ajax({
+                            url: url,
+                            method: 'DELETE',
+                            success: function(res) {
+                                location.reload();
+                            },
+                            error: function(res) {
+                                let resMessage = res.responseJSON.message;
+                                alert(resMessage.message + " " + resMessage.errorDetails);
+                            }
                         });
+
                     }else{}
                 });
         });
@@ -84,6 +93,41 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 else{}
             });
          */
+    }else{
+
+        let deleteBookingButtons = document.getElementsByName("deleteBookingButton");
+
+        deleteBookingButtons.forEach(function(button, index) {
+
+            // Adds an event listener (on click) on each delete booking button
+            button.addEventListener(
+                "click",
+                function(event) {
+                    event.preventDefault();
+                    if(confirm("Are you sure you want to cancel the reservation?")){
+                        // Send an http delete to the server
+                        let idAdvertisement = button.value;
+                        let url = contextPath + "/booking-delete";
+                        data = {
+                            "idAdvertisement": idAdvertisement,
+                        }
+
+                        $.ajax({
+                            url: url,
+                            data: data,
+                            method: 'DELETE',
+                            success: function(res) {
+                                location.reload();
+                            },
+                            error: function(res) {
+                                let resMessage = res.responseJSON.message;
+                                alert(resMessage.message + " " + resMessage.errorDetails);
+                            }
+                        });
+
+                    }else{}
+                });
+        });
     }
 });
 
