@@ -62,7 +62,7 @@ Since: 1.0
             <section id="touristRegistration" class="w3-panel w3-card-4 w3-section">
                 <p>Register as a tourist and start your journey!</p>
                 <br/>
-                <form id="registerFormTourist" name="registerForm" method="POST" action="<c:url value="/user/register"/>">
+                <form id="registerFormTourist" name="registerForm" method="POST">
 
                     <input class="w3-input w3-section" name="email" type="email" id="email_t" placeholder="Email"required/>
 
@@ -96,7 +96,7 @@ Since: 1.0
             <section id="companyRegistration" class="w3-panel w3-card-4 w3-section">
                 <p>Register as a company and start to create your event!</p>
                 <br/>
-                <form id="registerFormCompany" name="registerForm" method="POST" action="<c:url value="/user/register"/>">
+                <form id="registerFormCompany" name="registerForm" method="POST">
 
                     <input class="w3-input w3-section" name="email" type="email" id="email_c" placeholder="Email" required/>
 

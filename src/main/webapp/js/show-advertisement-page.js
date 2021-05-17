@@ -8,8 +8,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         window.location.replace(contextPath + "/html/error.html");
     }
 
-    document.getElementById("idAdvFeedback").setAttribute("value", idAdv);
-    document.getElementById("idAdvBooking").setAttribute("value", idAdv);
     fetchAdvertisement();
     fetchRate();
     fetchFeedbackList();
@@ -24,20 +22,26 @@ document.addEventListener("DOMContentLoaded", function(event) {
     slideIndex = 1;
     showDivs(-1);
 
-    document.getElementById("createFeedbackButton").addEventListener("click", fetchCreateFeedback());
-
-    //link to obtain the id: /adv-show/*
-
 });
 
+
+
 function fetchCreateFeedback(){
+
     let rateFeedback = document.getElementById("rateFeedback").value;
+
+    if(rateFeedback<=0 || rateFeedback>= 6){
+        let errorObj = document.getElementById("errorCreateFeedback");
+        errorObj.innerHTML="Invalid rate.";
+        errorObj.value="";
+        return;
+    }
 
     let url = contextPath+"/feedback-create";
     let idAdvertisement = window.location.href.substring(window.location.href.indexOf("adv/")+4);
     let data = {
         "idAdvertisement": idAdvertisement,
-        "numBooking":numBooking
+        "rateFeedback":rateFeedback
     }
 
     $.ajax({
@@ -45,7 +49,7 @@ function fetchCreateFeedback(){
         data: data,
         method: 'POST',
         success: function(res) {
-            window.location.href = contextPath + "/user/do-login";
+            alert(res.responseJSON.message.message);
         },
         error: function(res) {
             let resMessage = res.responseJSON.message;
@@ -101,7 +105,46 @@ function loadAdvertisement(req) {
 
     if (isLoggedIn() && emailCompany==getUserEmail()) {
         fetchBookingList();
+    }else if(isLoggedIn() && getUserRole()==="tourist"){
+        document.getElementById("createBookingButton").addEventListener("click", function(event){
+            event.preventDefault();
+            fetchCreateBooking(event)
+        });
+        document.getElementById("createFeedbackButton").addEventListener("click", function(event){
+            event.preventDefault();
+            fetchCreateFeedback()
+        });
     }
+}
+
+ function fetchCreateBooking(event){
+
+     let numBooking = document.getElementById("numBooking").value;
+     if(numBooking<=0){
+         let errorObj = document.getElementById("errorCreateBooking");
+         errorObj.innerHTML="Invalid total number of item.";
+         errorObj.value="";
+         return;
+     }
+     let url = contextPath+"/booking-create";
+     let idAdvertisement = window.location.href.substring(window.location.href.indexOf("adv/")+4);
+     let data = {
+         "idAdvertisement": idAdvertisement,
+         "numBooking": numBooking
+     }
+
+     $.ajax({
+         url: url,
+         data: data,
+         method: 'POST',
+         success: function(res) {
+             alert(res.responseJSON.message.message);
+         },
+         error: function(res) {
+             let resMessage = res.responseJSON.message;
+             alert(resMessage.message + " " + resMessage.errorDetails);
+         }
+     });
 }
 
 function fetchRate() {

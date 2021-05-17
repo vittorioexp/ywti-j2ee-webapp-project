@@ -39,6 +39,7 @@
 <!--            Feedback-->
             <section id="createFeedback">
                 <article class="w3-container">
+                    <section id="errorCreateFeedback"></section>
                     <form id="createFeedbackForm" class="w3-panel w3-card" name="createFeedbackForm" method="POST" >
                         <h3>Leave a feedback</h3>
 <!--                    <label for="rateFeedback">Rate</label>-->
@@ -59,12 +60,12 @@
 <!--            Booking-->
             <section id="createBooking ">
                 <article class="w3-container">
-                    <form id="createBookingForm" class="w3-panel w3-card" name="createBookingForm" method="POST" action="/ywti_wa2021_war/booking-create">
+                    <section id="errorCreateBooking"></section>
+                    <form id="createBookingForm" class="w3-panel w3-card" name="createBookingForm" method="POST">
                         <h3>Book your journey</h3>
                         <!--                    <label for="numBooking">Number of items</label>-->
                         <input id="numBooking" name="numBooking" type="number" class="w3-input" placeholder="Number of items" required/>
                         <br>
-                        <input type="hidden" id="idAdvBooking" name="idAdvertisement" value="" />
                         <button id="createBookingButton" class="button" type="submit">Book your journey</button>
                         <br>
 
