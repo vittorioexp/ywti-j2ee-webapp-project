@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                             url: url,
                             method: 'DELETE',
                             success: function(res) {
-                                location.reload();
+                                window.location.reload(false);
                             },
                             error: function(res) {
                                 let resMessage = res.responseJSON.message;
@@ -79,20 +79,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 window.location.href = contextPath+"/adv-do-create"
             });
 
-        //TODO: Da controllare
-        /*
-        document.getElementById("submit").addEventListener(
-            "click",
-            function (event) {
-                event.preventDefault();
-                if(confirm("Are you sure you want to cancel the reservation?")){
-                    let url = contextPath+"/booking-delete";
-                    let data = "idAdvertisement"+"="+${booking.idAdvertisement};
-                    sendRequest(url, "DELETE", data, function(){});
-                }
-                else{}
-            });
-         */
     }else{
 
         let deleteBookingButtons = document.getElementsByName("deleteBookingButton");
@@ -117,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                             data: data,
                             method: 'DELETE',
                             success: function(res) {
-                                location.reload();
+                                location.reload()
                             },
                             error: function(res) {
                                 let resMessage = res.responseJSON.message;

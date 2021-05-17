@@ -23,7 +23,36 @@ document.addEventListener("DOMContentLoaded", function(event) {
     //images slideshow
     slideIndex = 1;
     showDivs(-1);
+
+    document.getElementById("createFeedbackButton").addEventListener("click", fetchCreateFeedback());
+
+    //link to obtain the id: /adv-show/*
+
 });
+
+function fetchCreateFeedback(){
+    let rateFeedback = document.getElementById("rateFeedback").value;
+
+    let url = contextPath+"/feedback-create";
+    let idAdvertisement = window.location.href.substring(window.location.href.indexOf("adv/")+4);
+    let data = {
+        "idAdvertisement": idAdvertisement,
+        "numBooking":numBooking
+    }
+
+    $.ajax({
+        url: url,
+        data: data,
+        method: 'POST',
+        success: function(res) {
+            window.location.href = contextPath + "/user/do-login";
+        },
+        error: function(res) {
+            let resMessage = res.responseJSON.message;
+            alert(resMessage.message + " " + resMessage.errorDetails);
+        }
+    });
+}
 
 function getIdAdvertisement() {
     let url = window.location.href;
