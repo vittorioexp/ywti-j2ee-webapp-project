@@ -128,18 +128,18 @@ public final class Advertisement extends Resource{
     public static Advertisement fromJSON(final InputStream in) throws IOException {
 
         // the fields read from JSON
-        int jidAdvertisement=-1;
+        int jidAdvertisement=0;
         String jtitle=null;
         String jdescription=null;
-        int jscore=-1;
-        int jprice=-1;
+        int jscore=0;
+        int jprice=0;
         int jnumTotItem=-1;
         Date jdateStart=null;
         Date jdateEnd=null;
         Time jtimeStart=null;
         Time jtimeEnd=null;
         String jemailCompany=null;
-        int jidType=-1;
+        int jidType=0;
 
         final JsonParser jp = JSON_FACTORY.createParser(in);
 
@@ -184,11 +184,17 @@ public final class Advertisement extends Resource{
                         break;
                     case "dateStart":
                         jp.nextToken();
-                        jdateStart = Date.valueOf(jp.getValueAsString());
+                        String tmpDateStart = jp.getValueAsString();
+                        if (!tmpDateStart.equals("")) {
+                            jdateStart = Date.valueOf(tmpDateStart);
+                        }
                         break;
                     case "dateEnd":
                         jp.nextToken();
-                        jdateEnd = Date.valueOf(jp.getValueAsString());
+                        String tmpDateEnd = jp.getValueAsString();
+                        if (!tmpDateEnd.equals("")) {
+                            jdateEnd = Date.valueOf(tmpDateEnd);
+                        }
                         break;
                     case "timeStart":
                         jp.nextToken();

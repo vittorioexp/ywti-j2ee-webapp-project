@@ -137,8 +137,7 @@ public class AdvertisementRestResource extends RestResource {
 
             //Checking if the attributes are changed and checking the integrity of the new values
             String title = advertisement.getTitle();
-            //TODO: se il campo "title" nel form è lasciato vuoto (quindi stringa vuota), quando si fa la conversione
-            // dal JSON, l'attributo "title" è "null" o è ""?
+
             if(title==null || title.equals("")){
                 title = old_advertisement.getTitle();
             }
@@ -152,8 +151,7 @@ public class AdvertisementRestResource extends RestResource {
             }
 
             String description = advertisement.getDescription();
-            //TODO: se il campo "description" nel form è lasciato vuoto (quindi stringa vuota), quando si fa la conversione
-            // dal JSON, l'attributo "description" è "null" o è ""?
+
             if(description==null || description.equals("")){
                 description = old_advertisement.getDescription();
             }
@@ -202,10 +200,10 @@ public class AdvertisementRestResource extends RestResource {
 
 
             int price = advertisement.getPrice();
-            if(price == -1) {
+            if(price == 0) {
                 price = old_advertisement.getPrice();
             }
-            if(price<0 || price>50000){
+            if(price<0 || price>2000){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
                         ec.getHTTPCode(),"Price not valid.");
@@ -215,10 +213,10 @@ public class AdvertisementRestResource extends RestResource {
             }
 
             int numTotItem = advertisement.getNumTotItem();
-            if(numTotItem == -1 ) {
+            if(numTotItem == 0 ) {
                 numTotItem = old_advertisement.getNumTotItem();
             }
-            if(numTotItem<0 || numTotItem>1000){
+            if(numTotItem<0 || numTotItem>2000){
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
                         ec.getHTTPCode(),"Number of items not valid.");
@@ -248,12 +246,6 @@ public class AdvertisementRestResource extends RestResource {
             advertisement = AdvertisementDAO.editAdvertisement(advertisement);
 
             res.setStatus(HttpServletResponse.SC_OK);
-            //Redirect to show-advertisement.html made on the client side
-            //advertisement.toJSON(res.getOutputStream());
-
-            // for DEBUG if you want to receive the updated advertisement details
-            //advertisement.toJSON(res.getOutputStream());
-            //res.sendRedirect(req.getContextPath() + "/adv-show/" + String.valueOf(idAdvertisement));
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

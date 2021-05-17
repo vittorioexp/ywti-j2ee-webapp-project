@@ -421,30 +421,13 @@ function validateNumTotItem(){
     error.textContent = error.textContent.replace('<article>Invalid total number of item.</article>','');
 }
 
-function validateTitleOnSubmit(title){
+function validateStringOnSubmit(str) {
     let regex = /[\{\"\}]/g;
-    if(regex.test(title) || title.length < 5 || title.length > 100){
-        return false;
-    }
-    return true;
-}
-function validateDescriptionOnSubmit(description){
-    let regex = /[\{\"\}]/g;
-    if(regex.test(description) || description.length < 5 || description.length > 100){
-        return false;
-    }
-    return true;
+    return !regex.test(str);
 }
 
-function validatePriceOnSubmit(price){
-    if(price <= 0 || price > 50000){
-        return false;
-    }
-    return true;
-}
-
-function validateNumTotItemOnSubmit(numTotItem){
-    if(numTotItem <= 0 || numTotItem > 1000){
+function validateIntegerOnSubmit(num) {
+    if(num < 0 || num > 2000){
         return false;
     }
     return true;

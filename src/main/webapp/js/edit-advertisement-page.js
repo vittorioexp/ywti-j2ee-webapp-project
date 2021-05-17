@@ -29,33 +29,34 @@ function fetchEditAdvertisement(currentUrl){
     let price = document.getElementById("price").value.toString();
     let numTotItem = document.getElementById("numTotItem").value.toString();
 
-    let messageError = "";
-    let errorOccured;
-    if(!validateTitleOnSubmit(title)){
+    if (price.length===0) { price = "0";}
+    if (numTotItem.length===0) { numTotItem = "0";}
+
+    let messageError="";
+    let errorOccurred=false;
+
+    if(!validateStringOnSubmit(title)){
         messageError+="Title invalid"+"\n";
-        errorOccured=true;
+        document.getElementById("title").value = document.getElementById("title").defaultValue;
+        errorOccurred=true;
     }
-    else if(!validateDescriptionOnSubmit(description)){
+    if(!validateStringOnSubmit(description)){
         messageError+="Description invalid"+"\n";
-        errorOccured=true;
+        document.getElementById("description").value = document.getElementById("description").defaultValue;
+        errorOccurred=true;
     }
-    else if(!validatePriceOnSubmit(price)){
+    if(!validateIntegerOnSubmit(price)){
         messageError+="Price invalid"+"\n";
-        errorOccured=true;
-        if(price === ""){
-            price = "-1";
-        }
+        document.getElementById("price").value = document.getElementById("price").defaultValue;
+        errorOccurred=true;
     }
-    else if(!validateNumTotItemOnSubmit(numTotItem)){
+    if(!validateIntegerOnSubmit(numTotItem)){
         messageError+="Total number of item invalid"+"\n";
-        errorOccured=true;
-        if(numTotItem === ""){
-            numTotItem = "-1";
-        }
-    }else{
-        errorOccured = false;
+        document.getElementById("numTotItem").value = document.getElementById("numTotItem").defaultValue;
+        errorOccurred=true;
     }
-    if(errorOccured){
+
+    if(errorOccurred){
         alert("Error found:"+"\n"+messageError);
         document.getElementById("editAdvertisementForm").reset();
         return;
@@ -67,8 +68,12 @@ function fetchEditAdvertisement(currentUrl){
         let data =
             "{\"advertisement\": {\"idAdvertisement\":\"" + idAdvertisement + "\",\"title\":\"" + title
             + "\",\"description\":\"" + description + "\",\"score\":\"" + "0" + "\",\"price\":\"" + price +
-            "\",\"numTotItem\":\"" + numTotItem + "\",\"dateStart\":\"" + dateStart + "\",\"dateEnd\":\"" + dateEnd
+            "\",\"numTotItem\":\"" + numTotItem + "\"," +
+            "\"dateStart\":\"" + dateStart + "\"," +
+            "\"dateEnd\":\"" + dateEnd
             + "\",\"timeStart\":\"" + timeStart + "\",\"timeEnd\":\"" + timeEnd + "\",\"emailCompany\":\"" + emailCompany + "\",\"idType\":\"0\"}}";
+
+        alert(data);
 
         sendJsonRequest(url, "PUT", data, function(req){
             window.location.replace(contextPath + "/adv-show/" + idAdvertisement);
