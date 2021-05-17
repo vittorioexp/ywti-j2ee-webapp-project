@@ -22,43 +22,44 @@
         <div id="navbar-area"></div>
         <div id="user-email"></div>
     </header>
-    <main class="mainContent" >
+    <main class="mainContent w3-container">
+        <section class="w3-container w3-section">
+            <h1>Create a new advertisement</h1>
+        </section>
         <section id="error"></section>
-        <section id="companyRegistration">
-            <article class="w3-container">
-                <form id="createAdvertisementForm" class="w3-panel w3-card" name="createAdvertisementForm" method="post" >
+        <section id="advertisementCreation" class="w3-panel w3-card-4 w3-section"><br/>
+                <form id="createAdvertisementForm" name="createAdvertisementForm" method="post" >
 
-                    <input id="title" name="title" type="text" placeholder="Title" required/><br/><br/>
+                    <input class="w3-input w3-section" id="title" name="title" type="text" placeholder="Title" required/>
 
-                    <textarea id="description" name="description" placeholder="Description" required></textarea><br/><br/>
+                    <textarea class="w3-input w3-section" id="description" name="description" placeholder="Description" required></textarea>
 
-                    <input id="price" name="price" type="number" placeholder="Price" required/><br/><br/>
+                    <input class="w3-input w3-section" id="price" name="price" type="number" placeholder="Price" required/>
 
-                    <input id="numTotItem" name="numTotItem" type="number" placeholder="NumTotItem" required/><br/><br/>
+                    <input class="w3-input w3-section" id="numTotItem" name="numTotItem" type="number" placeholder="NumTotItem" required/>
 
                     <label for="dateStart">dateStart:</label>
-                    <input id="dateStart" name="dateStart" type="date" required/><br/><br/>
+                    <input class="w3-input w3-section" id="dateStart" name="dateStart" type="date" required/>
 
                     <label for="dateEnd">dateEnd:</label>
-                    <input id="dateEnd" name="dateEnd" type="date" required/><br/><br/>
+                    <input class="w3-input w3-section" id="dateEnd" name="dateEnd" type="date" required/>
 
                     <label for="timeStart">timeStart:</label>
-                    <input id="timeStart" name="timeStart" type="time" value="05:00:00"/><br/><br/>
+                    <input class="w3-input w3-section" id="timeStart" name="timeStart" type="time" value="05:00:00"/>
 
                     <label for="timeEnd">timeEnd:</label>
-                    <input id="timeEnd" name="timeEnd" type="time" value="23:30:00"/><br/><br/>
+                    <input class="w3-input w3-section" id="timeEnd" name="timeEnd" type="time" value="23:30:00"/>
 
                     <label for="idType">Type:</label>
 
-                    <select class= "" form="createAdvertisementForm" id="idType" name="type">
+                    <select class="w3-input w3-section" class= "" form="createAdvertisementForm" id="idType" name="type">
                         <option value="0" disabled selected>Type</option>
                     </select>
 
                     <br/><br/>
 
-                    <button type="submit" id="create-button" class="button" name="Submit" value="Submit">Create</button><br/>
+                    <button type="submit" id="create-button" class="button" name="Submit" value="Submit">Create</button><br/><br/>
                 </form>
-            </article>
         </section>
     </main>
     <div id="footer-area"></div>
