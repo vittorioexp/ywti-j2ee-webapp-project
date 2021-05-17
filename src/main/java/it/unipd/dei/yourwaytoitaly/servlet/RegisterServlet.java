@@ -105,8 +105,6 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
     public void register (HttpServletRequest req, HttpServletResponse res)  throws IOException ,ServletException {
 
-        res.setContentType(JSON_UTF_8_MEDIA_TYPE);
-
         try {
             String userType = req.getParameter("userType");
             String email = req.getParameter("email");
@@ -274,7 +272,7 @@ public class RegisterServlet extends AbstractDatabaseServlet {
             EmailSender mail= new EmailSender(email , emailsite , passEmail);
 
             //send email and check if email is sent correctly
-            if (!mail.sendConfirmationEmail("YourWayToItaly:Account successfully registered",
+            if (!mail.sendConfirmationEmail("Your Way To Italy - Account successfully registered",
                     "Congratulations, your account has successfully been registered. " +
                             "You can now start your Journey!")){
                 ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -287,9 +285,8 @@ public class RegisterServlet extends AbstractDatabaseServlet {
 
             //everything went fine
             Message success = new Message("Successful registration!");
-            req.setAttribute("message", success);
+            success.toJSON(res.getOutputStream());
             res.setStatus(HttpServletResponse.SC_OK);
-            res.sendRedirect(req.getContextPath() + "/user/do-login");
 
         }catch (Exception ex){
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

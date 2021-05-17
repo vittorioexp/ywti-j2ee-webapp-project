@@ -18,8 +18,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function fetchLogin(){
 
-    let url = contextPath+"/user/login";
-
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
 
@@ -32,11 +30,11 @@ function fetchLogin(){
         url: contextPath+"/user/login",
         data: data,
         method: 'GET',
-        success: function(data) {
+        success: function(res) {
             location.reload();
         },
-        error: function(data) {
-            let resMessage = data.responseJSON.message;
+        error: function(res) {
+            let resMessage = res.responseJSON.message;
             alert(resMessage.message + " " + resMessage.errorDetails);
             document.getElementById("loginForm").reset();
             location.reload();

@@ -120,10 +120,6 @@ public class LoginServlet extends AbstractDatabaseServlet {
      */
     public void login (HttpServletRequest req, HttpServletResponse res)  throws IOException ,ServletException {
 
-
-        res.setContentType(JSON_UTF_8_MEDIA_TYPE);
-
-
         try {
             String email = req.getParameter("email");
             String password = req.getParameter("password");
