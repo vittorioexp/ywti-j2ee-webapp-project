@@ -58,7 +58,6 @@ function fetchEditAdvertisement(currentUrl){
 
     if(errorOccurred){
         alert("Error found:"+"\n"+messageError);
-        document.getElementById("editAdvertisementForm").reset();
         return;
     }else{
         let emailCompany = getUserEmail();
