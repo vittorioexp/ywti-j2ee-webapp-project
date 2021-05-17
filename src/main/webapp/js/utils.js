@@ -265,7 +265,7 @@ function validateEmail(index) {
 
     let email = document.getElementsByName("email")[index];
 
-    if (email.value.length == 0) {
+    if (email.value.length === 0) {
         error.innerHTML = "";
         error.className = "error";
         return;
@@ -291,7 +291,7 @@ function validatePassword(index) {
 
     let password = document.getElementsByName("password")[index];
 
-    if (password.value.length == 0) {
+    if (password.value.length === 0) {
         error.innerHTML = "";
         error.className = "error";
         return;
@@ -348,7 +348,7 @@ function validatePhoneNumber(index) {
 
     let phonenumber = document.getElementsByName("phonenumber")[index];
 
-    if (phonenumber.value.length == 0) {
+    if (phonenumber.value.length === 0) {
         error.innerHTML = "";
         error.className = "error";
         return;
@@ -393,6 +393,12 @@ function validateTitle(){
     let error = document.getElementById("error");
     let regex = /[\{\"\}]/g;
 
+    if (title.value.length === 0) {
+        error.innerHTML = "";
+        error.className = "error idle";
+        return;
+    }
+
     if (regex.test(title.value) || title.value.length < 5 || title.value.length > 100) {
         if(error.innerHTML.includes("<article>Invalid title.</article>")){
             return;
@@ -410,6 +416,12 @@ function validateDescription(){
     let error = document.getElementById("error");
     let regex = /[\{\"\}]/g;
 
+    if (description.value.length === 0) {
+        error.innerHTML = "";
+        error.className = "error idle";
+        return;
+    }
+
     if (regex.test(description.value) || description.value.length < 5  || description.value.length > 100) {
         if(error.innerHTML.includes("<article>Invalid description.</article>")){
             return;
@@ -426,6 +438,12 @@ function validatePrice(){
     let price = document.getElementById("price");
     let error = document.getElementById("error");
 
+    if (price.value.length === 0) {
+        error.innerHTML = "";
+        error.className = "error idle";
+        return;
+    }
+
     if (price.value.length === 0 || price.value<=0) {
         if(error.innerHTML.includes("<article>Invalid price.</article>")){
             return;
@@ -441,6 +459,12 @@ function validatePrice(){
 function validateNumTotItem(){
     let numTotItem = document.getElementById("numTotItem");
     let error = document.getElementById("error");
+
+    if (numTotItem.value.length === 0) {
+        error.innerHTML = "";
+        error.className = "error idle";
+        return;
+    }
 
     if(numTotItem.value<=0 || numTotItem.value.length===0){
         if(error.innerHTML.includes("<article>Invalid total number of item.</article>")){
