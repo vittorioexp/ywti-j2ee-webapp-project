@@ -44,6 +44,7 @@ function fetchEditProfile() {
         document.getElementById("address").value = document.getElementById("address").defaultValue;
         errorOccurred = true;
     }
+    console.log(city);
     if(validateCityOnSubmit(city)){
         messageError += "City invalid" + "\n";
         errorOccurred = true;
@@ -94,7 +95,7 @@ function validateAddressOnSubmit(address){
 }
 
 function validateCityOnSubmit(city){
-    return city === 0;
+    return city==="" || city < 1;
 }
 
 
