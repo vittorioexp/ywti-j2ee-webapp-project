@@ -4,6 +4,10 @@
     color: #3f51b5;
 }
 
+#advImages{
+    height: 470px;
+}
+
 #infos{
     float: right;
     width: 50%;
@@ -14,24 +18,19 @@
     width: 50%;
 }
 
-.titled{
-
-}
-
-#create-booking{
+#createBooking{
     width: 50%;
-    float: right;
 }
 
-#create-feedback{
+#createFeedback{
     width: 50%;
-    float: left;
 }
 
-.bookingElement{
-
-}
 
 .mySlides{
-    width:80%;
+    width: -webkit-fill-available;
+    height: fit-content;
+    margin-top: 3%;
+    display: none;
+
 }

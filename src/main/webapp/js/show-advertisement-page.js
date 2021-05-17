@@ -21,7 +21,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
         document.getElementById("createBooking").style.display = "none";
     }
     //images slideshow
-    plusDivs(-1);
+    slideIndex = 1;
+    showDivs(-1);
 });
 
 function getIdAdvertisement() {
@@ -108,14 +109,16 @@ function loadFeedbackList(req) {
             let text = feedback.text;
             let date = feedback.date;
             str +=
-                "<div class=\"feedback w3-card\">"  +
+                "<div class=\"feedbackElement w3-panel w3-card\">"  +
                     "<p class=\"feedbackElement\">" + "\"" + text + "\"" + "</p>" +
                     "<p class=\"feedbackElement\">" + "Rated " + "</p>" +
                     "<image src=\"/ywti_wa2021_war/css/image/" + rate + "s.jpg\" >" +
                 "</div><br>";
         });
     } else {
-        str = "<p class=\"feedbackElement\">" + "No reviews found for this advertisement" + "</p>";
+        str = "<section class='\"w3-panel w3-card\"'><br/>" +
+            "<p class=\"feedbackElement \">" + "No reviews found for this advertisement" + "</p>"
+            +"<br/></section>";
     }
     // Presents the JSON resourceList
     document.getElementById("feedbackList").innerHTML += str;
@@ -144,11 +147,11 @@ function loadBookingList(req) {
 
             str +=
                 "<div class=\"booking w3-container\">"  +
-                    "<p class=\"w3-card bookingElement\">" + emailTourist + " booked " + numBooking + " items" + " - " + date + ", " + time + "</p>" +
+                    "<p class=\"w3-panel w3-card bookingElement\">" + emailTourist + " booked " + numBooking + " items" + " - " + date + ", " + time + "</p>" +
                 "</div><br>";
         });
     } else {
-        str = "<p class=\"w3-card bookingElement\">" + "No bookings found for this advertisement" + "</p>";
+        str = "<section class='\"w3-panel w3-card\"'><br/><p class=\"w3-panel w3-card bookingElement\">" + "No bookings found for this advertisement" + "</p><br/></section>";
     }
     // Presents the JSON resourceList
     document.getElementById("bookingList").innerHTML += str;
@@ -173,7 +176,7 @@ function loadImageList(req) {
             let description = image.description;
             let idAdvertisement = image.idAdvertisement;
 
-            str += "<img class=\"mySlides w3-center\" src=\"" + "" + path + "\" width=\"320\" height=\"240\" alt=''/>";
+            str += "<img class=\"mySlides \" src=\"" + "" + path + "\" width=\"320\" height=\"240\" alt=''/>";
         })
         str2 +=
             "<button class=\"w3-button\" onclick=\"plusDivs(-1)\">&#10094;</button>"
@@ -184,6 +187,9 @@ function loadImageList(req) {
     }
     document.getElementById("advImages").innerHTML = str;
     document.getElementById("buttContainer").innerHTML = str2;
+
+    let i = document.getElementsByClassName("mySlides");
+    i[0].style.display= "block";
 
     $("img").error(function () {
         $(this).hide();

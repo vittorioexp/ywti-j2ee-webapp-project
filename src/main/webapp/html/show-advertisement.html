@@ -9,11 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Your Way to Italy</title>
     <script src="/ywti_wa2021_war/js/utils.js"></script>
-    <script src="/ywti_wa2021_war/js/show-advertisement-page.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
     <link href="/ywti_wa2021_war/css/style/show-advertisement-page.css" rel="stylesheet" type="text/css">
     <link href="/ywti_wa2021_war/css/style/w3.css" rel="stylesheet" type="text/css">
+    <script src="/ywti_wa2021_war/js/show-advertisement-page.js"></script>
 </head>
 <body>
     <div class="mainWrapper w3-container">
@@ -25,16 +25,39 @@
             <div id="advTitle" class="w3-center">
                 Loading the title
             </div>
+<!--            Images-->
             <section class="w3-container" id="images">
-                <div name="slideshow" class="w3-panel w3-card" id="advImages"></div>
+                <div name="slideshow" class="w3-panel w3-card w3-center" id="advImages"></div>
                 <div id="buttContainer" class="w3-center"  ></div>
             </section>
+<!--            Informations-->
             <section id = "infos">
                 <article id="advInfo" class="w3-container">
                     Loading info
                 </article>
             </section>
+<!--            Feedback-->
+            <section id="createFeedback">
+                <article class="w3-container">
+                    <form id="createFeedbackForm" class="w3-panel w3-card" name="createFeedbackForm" method="POST"  action="/ywti_wa2021_war/feedback-create">
+                        <h3>Leave a feedback</h3>
+<!--                    <label for="rateFeedback">Rate</label>-->
+                        <input id="rateFeedback" name="rateFeedback" class="w3-input" type="number" min="1" max="5" step="1" placeholder="Insert rating" required/>
+                            <br>
+    <!--                    <label for="textFeedback">Comment</label>-->
+                        <input id="textFeedback" name="textFeedback" type="text" class="w3-input" placeholder="Insert feedback description"/>
+                        <input type="hidden" id="idAdvFeedback" name="idAdvertisement" value="" />
+                            <br>
+                        <button id="create-feedback" class="button" type="submit">Leave a feedback</button><br/>
 
+                    </form>
+                </article>
+            </section>
+
+            <section class="w3-container" id="feedbackList">
+            </section>
+
+<!--            Booking-->
             <section id="createBooking ">
                 <article class="w3-container">
                     <form id="createBookingForm" class="w3-panel w3-card" name="createBookingForm" method="POST" action="/ywti_wa2021_war/booking-create">
@@ -45,33 +68,12 @@
                         <input type="hidden" id="idAdvBooking" name="idAdvertisement" value="" />
                         <button id="create-booking" class="button" type="submit">Book your journey</button>
                         <br>
-                        <section id="bookingList ">
-                            <br>
-                        </section>
+
                     </form>
                 </article>
             </section>
-
-            <span class="w3-container">
-                <section id="createFeedback">
-                    <article class="w3-container">
-                        <form id="createFeedbackForm" class="w3-panel w3-card" name="createFeedbackForm" method="POST"  action="/ywti_wa2021_war/feedback-create">
-                            <h3>Leave a feedback</h3>
-    <!--                    <label for="rateFeedback">Rate</label>-->
-                            <input id="rateFeedback" name="rateFeedback" class="w3-input" type="number" min="1" max="5" step="1" placeholder="Insert rating" required/>
-                                <br>
-        <!--                    <label for="textFeedback">Comment</label>-->
-                            <input id="textFeedback" name="textFeedback" type="text" class="w3-input" placeholder="Insert feedback description"/>
-                            <input type="hidden" id="idAdvFeedback" name="idAdvertisement" value="" />
-                                <br>
-                            <button id="create-feedback" class="button" type="submit">Leave a feedback</button><br/>
-                            <section class="w3-container" id="feedbackList">
-                            </section>
-                        </form>
-                    </article>
-                </section>
-
-            </span>
+            <section id="bookingList ">
+            </section>
         </main>
         <!-- footer imported with javascript -->
         <div id="footer-area"></div>
