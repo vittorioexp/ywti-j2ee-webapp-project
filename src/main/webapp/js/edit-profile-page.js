@@ -44,6 +44,7 @@ function fetchEditProfile() {
         errorOccurred = true;
     }
 
+
     if (errorOccurred) {
         alert("Error found:" + "\n" + messageError);
         return;
@@ -79,7 +80,7 @@ function validatePasswordOnSubmit(password){
 }
 
 function validatePhoneNumberOnSubmit(phonenumber){
-    let numbers = /^[0-9]*$/;
+    let numbers = /^[0-9]$/;
     return (phonenumber.match(numbers) || phonenumber.length < 7 || phonenumber.length > 14);
 }
 
