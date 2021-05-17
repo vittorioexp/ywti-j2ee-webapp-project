@@ -76,14 +76,6 @@ header {
     padding-top: 5px;
     padding-right: 15px;
 }
-/* TODO: enlarge images horizontally */
-#slideshow {
-    max-width:1080px;
-}
-
-#slideshow img{
-    width:100%;
-}
 
 .button {
     transition: all .25s ease-in-out;

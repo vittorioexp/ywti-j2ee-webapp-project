@@ -5,6 +5,15 @@ Version: 1.0
 Since: 1.0
  */
 
+/* TODO: enlarge images horizontally */
+#slideshow {
+    max-width:1080px;
+}
+
+#slideshow img{
+    width:100%;
+}
+
 .searchbar {
     text-align: center;
     position: relative;
