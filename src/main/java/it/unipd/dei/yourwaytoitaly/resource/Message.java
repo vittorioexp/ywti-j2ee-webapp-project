@@ -52,10 +52,10 @@ public class Message extends Resource {
         jg.writeStartObject();
         jg.writeStringField("message", message);
         if(errorCode != 0) {
-            jg.writeNumberField("error-code", errorCode);
+            jg.writeNumberField("errorCode", errorCode);
         }
         if(errorDetails != null) {
-            jg.writeStringField("error-details", errorDetails);
+            jg.writeStringField("errorDetails", errorDetails);
         }
         jg.writeEndObject();
         jg.writeEndObject();

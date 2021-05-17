@@ -10,7 +10,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
     })
 
     //Submit button
-    document.getElementById("login-button").addEventListener("click", fetchLogin);
+    document.getElementById("login-button").addEventListener("click", function(event) {
+        event.preventDefault();
+        fetchLogin();
+    });
 });
 
 function fetchLogin(){
@@ -25,16 +28,18 @@ function fetchLogin(){
         "password": password
     }
 
-    $.getJSON(url, data, function (res) {
-
-        if(res.status === 200){
-            //Redirect made on the server side
-        }else{
-            // Parses the JSON obj
-            let jsonData = JSON.parse(res).message;
-            let messageError = jsonData['message'];
-            alert(messageError);
+    $.ajax({
+        url: contextPath+"/user/login",
+        data: data,
+        method: 'GET',
+        success: function(data) {
+            location.reload();
+        },
+        error: function(data) {
+            let resMessage = data.responseJSON.message;
+            alert(resMessage.message + " " + resMessage.errorDetails);
             document.getElementById("loginForm").reset();
+            location.reload();
         }
     });
 }

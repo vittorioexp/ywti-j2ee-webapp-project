@@ -281,6 +281,12 @@ function validatePassword(index) {
 
     let password = document.getElementsByName("password")[index];
 
+    if (password.value.length == 0) {
+        error.innerHTML = "";
+        error.className = "error";
+        return;
+    }
+
     // Validate length
     if(password.value.length >= 8) {
         error.innerHTML = "";

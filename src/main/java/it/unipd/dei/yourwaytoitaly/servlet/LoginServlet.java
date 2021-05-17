@@ -190,12 +190,11 @@ public class LoginServlet extends AbstractDatabaseServlet {
             session = req.getSession(true);
             session.setAttribute( "Authorization", authHeader );
 
-            //Message success = new Message("Successful login!");
-            //req.setAttribute("message", success);
             res.setStatus(HttpServletResponse.SC_OK);
 
-            // Send the user back to the login page to adjust the session scope
-            res.sendRedirect(req.getContextPath() + "/user/do-login");
+            Message success = new Message("Successful login!");
+            success.toJSON(res.getOutputStream());
+
 
         }catch (Exception ex){
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
