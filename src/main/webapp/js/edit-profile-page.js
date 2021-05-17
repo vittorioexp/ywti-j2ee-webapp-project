@@ -26,6 +26,7 @@ function fetchEditProfile() {
     let password = document.getElementById("password").value;
     let phonenumber = document.getElementById("phonenumber").value;
     let address = document.getElementById("address").value;
+    let city = document.getElementById("address").value;
 
 
     if (validatePasswordOnSubmit(password)) {
@@ -41,6 +42,10 @@ function fetchEditProfile() {
     if (validateAddressOnSubmit(address)) {
         messageError += "Address invalid" + "\n";
         document.getElementById("address").value = document.getElementById("address").defaultValue;
+        errorOccurred = true;
+    }
+    if(validateCityOnSubmit(city)){
+        messageError += "City invalid" + "\n";
         errorOccurred = true;
     }
 
@@ -86,6 +91,10 @@ function validatePhoneNumberOnSubmit(phonenumber){
 
 function validateAddressOnSubmit(address){
     return address.length < 4 || address.length > 150 ;
+}
+
+function validateCityOnSubmit(city){
+    return city === 0;
 }
 
 
