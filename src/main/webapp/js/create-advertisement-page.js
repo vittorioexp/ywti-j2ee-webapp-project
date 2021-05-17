@@ -10,7 +10,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.getElementById("price").addEventListener("focusout", validatePrice);
     document.getElementById("numTotItem").addEventListener("focusout", validateNumTotItem);
 
-    document.getElementById("create-button").addEventListener("click", function(event) {createAdvertisement()});
+    document.getElementById("create-button").addEventListener("click", function(event) {
+        event.preventDefault();
+        createAdvertisement()
+    });
 });
 
 function createAdvertisement() {
@@ -27,7 +30,9 @@ function createAdvertisement() {
     let timeStart = document.getElementById("timeStart").value.toString();
     let timeEnd = document.getElementById("timeEnd").value.toString();
     let idType = document.getElementById("idType").value.toString();
-    let data = "{\"advertisement\":{\"idAvdertisement\":\"" + idAdvertisement.toString() + "\"," +
+
+    let data = "{\"advertisement\":" +
+        "{\"idAvdertisement\":\"" + idAdvertisement.toString() + "\"," +
         "\"title\":\"" + title +
         "\",\"description\":\"" + description + "\"," +
         "\"price\":\"" + price + "\"," +
