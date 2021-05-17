@@ -39,16 +39,15 @@
 <!--            Feedback-->
             <section id="createFeedback">
                 <article class="w3-container">
-                    <form id="createFeedbackForm" class="w3-panel w3-card" name="createFeedbackForm" method="POST"  action="/ywti_wa2021_war/feedback-create">
+                    <form id="createFeedbackForm" class="w3-panel w3-card" name="createFeedbackForm" method="POST" >
                         <h3>Leave a feedback</h3>
 <!--                    <label for="rateFeedback">Rate</label>-->
                         <input id="rateFeedback" name="rateFeedback" class="w3-input" type="number" min="1" max="5" step="1" placeholder="Insert rating" required/>
                             <br>
     <!--                    <label for="textFeedback">Comment</label>-->
                         <input id="textFeedback" name="textFeedback" type="text" class="w3-input" placeholder="Insert feedback description"/>
-                        <input type="hidden" id="idAdvFeedback" name="idAdvertisement" value="" />
                             <br>
-                        <button id="create-feedback" class="button" type="submit">Leave a feedback</button><br/>
+                        <button id="createFeedbackButton" class="button" type="submit">Leave a feedback</button><br/>
 
                     </form>
                 </article>
@@ -66,7 +65,7 @@
                         <input id="numBooking" name="numBooking" type="number" class="w3-input" placeholder="Number of items" required/>
                         <br>
                         <input type="hidden" id="idAdvBooking" name="idAdvertisement" value="" />
-                        <button id="create-booking" class="button" type="submit">Book your journey</button>
+                        <button id="createBookingButton" class="button" type="submit">Book your journey</button>
                         <br>
 
                     </form>
