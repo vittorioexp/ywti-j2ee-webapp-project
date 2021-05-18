@@ -392,7 +392,7 @@ public class AdvertisementRestResource extends RestResource {
             }
 
             res.setStatus(HttpServletResponse.SC_OK);
-            //advertisement.toJSON(res.getOutputStream());
+            advertisement.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -822,7 +822,7 @@ public class AdvertisementRestResource extends RestResource {
         try {
             // list all the type_advertisements requested by the user
 
-            City c;
+            City city = null;
             String in = req.getParameter("key");
             int num = 0;
 
@@ -830,13 +830,13 @@ public class AdvertisementRestResource extends RestResource {
                 num = Integer.parseInt(in);
 
                 // Key is a number
-                c = CityDAO.searchCity(num);
+                city = CityDAO.searchCity(num);
             } catch (Exception e) {
                 // Key is NOT a number
-                c = CityDAO.searchCity(in);
+                city = CityDAO.searchCity(in);
             }
             res.setStatus(HttpServletResponse.SC_OK);
-            c.toJSON(res.getOutputStream());
+            city.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
