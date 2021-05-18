@@ -82,7 +82,7 @@ public class AdvertisementRestResource extends RestResource {
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getHTTPCode(), "Cannot show the advertisement.");
+                    ec.getHTTPCode(), "Cannot show the advertisement: " + ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -252,7 +252,7 @@ public class AdvertisementRestResource extends RestResource {
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getHTTPCode(), "Cannot edit the advertisement:" + ex.toString());
+                    ec.getHTTPCode(), "Cannot edit the advertisement: " + ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -397,7 +397,7 @@ public class AdvertisementRestResource extends RestResource {
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getHTTPCode(), "Cannot create the advertisement.");
+                    ec.getHTTPCode(), "Cannot create the advertisement: " + ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -469,8 +469,8 @@ public class AdvertisementRestResource extends RestResource {
                 EmailSender mail= new EmailSender(email , emailsite , passEmail);
 
                 //send email and check if email is sent correctly
-                if (!mail.sendConfirmationEmail("YourWayToItaly:Booking deleted",
-                        "Your booking has just been deleted:")){
+                if (!mail.sendConfirmationEmail("Your Way To Italy: Booking deleted",
+                        "Your booking has just been deleted: " + a.getTitle())){
                     ErrorCode ec = ErrorCode.INTERNAL_ERROR;
                     Message m = new Message(ec.getErrorMessage(),
                             ec.getHTTPCode(), "Email not sent.");
@@ -487,13 +487,13 @@ public class AdvertisementRestResource extends RestResource {
             AdvertisementDAO.deleteAdvertisement(idAdvertisement);
 
             res.setStatus(HttpServletResponse.SC_OK);
-            //Message m = new Message("Advertisement successfully deleted!");
-            //m.toJSON(res.getOutputStream());
+            Message m = new Message("Advertisement successfully deleted!");
+            m.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getHTTPCode(), "Cannot delete the advertisement.");
+                    ec.getHTTPCode(), "Cannot delete the advertisement: " + ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -536,7 +536,7 @@ public class AdvertisementRestResource extends RestResource {
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getHTTPCode(), "Cannot show list of images.");
+                    ec.getHTTPCode(), "Cannot show list of images: " + ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -556,7 +556,7 @@ public class AdvertisementRestResource extends RestResource {
             // The URI should be .../adv/ID/feedback
 
             // get idAdvertisement from URI
-            String op = URI.substring(URI.lastIndexOf("adv") + 4, URI.lastIndexOf("/feedback"));
+            String op = URI.substring(URI.lastIndexOf("adv/") + 4, URI.lastIndexOf("/feedback"));
             int idAdvertisement = Integer.parseInt(op);
 
             if(idAdvertisement <= 0){
@@ -577,7 +577,7 @@ public class AdvertisementRestResource extends RestResource {
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getHTTPCode(), "Cannot show list of feedback.");
+                    ec.getHTTPCode(), "Cannot show list of feedback: " + ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -627,7 +627,7 @@ public class AdvertisementRestResource extends RestResource {
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getHTTPCode(), "Cannot show the list of bookings.");
+                    ec.getHTTPCode(), "Cannot show the list of bookings: " + ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -680,7 +680,7 @@ public class AdvertisementRestResource extends RestResource {
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getHTTPCode(), "Cannot show the advertisement. ");
+                    ec.getHTTPCode(), "Cannot show the advertisement: " + ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
@@ -699,34 +699,6 @@ public class AdvertisementRestResource extends RestResource {
 
         try {
             // list all the advertisements requested by the user
-
-            /*
-                SearchParameters s = SearchParameters.fromJSON(req.getInputStream());
-                int idCity = s.getIdCity();
-                int idType = s.getIdType();
-                Date date = s.getDateStart();
-            */
-            /*
-            //Decode the URL
-            try {
-                String prevURL="";
-                String decodeURL=req.getRequestURI();
-                while(!prevURL.equals(decodeURL)) {
-                    prevURL=decodeURL;
-                    decodeURL= URLDecoder.decode( decodeURL, "UTF-8" );
-                }
-            }catch(Exception ex){
-                ErrorCode ec = ErrorCode.INTERNAL_ERROR;
-                Message m = new Message(ec.getErrorMessage(),
-                        ec.getHTTPCode(), "Cannot show the advertisement:" + ex.toString());
-                res.setStatus(ec.getHTTPCode());
-                m.toJSON(res.getOutputStream());
-                return;
-            }
-            // decodeURL contains the right URL with data
-            */
-
-
             int idType = Integer.parseInt(req.getParameter("idType").toString());
             int idCity = Integer.parseInt(req.getParameter("idCity").toString());
             Date dateStart = Date.valueOf(req.getParameter("dateStart").toString());

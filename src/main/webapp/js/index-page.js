@@ -138,6 +138,9 @@ function loadSlideshow() {
     function carousel() {
         let i;
         let x = document.getElementsByClassName("mySlides");
+        if (x.length===0) {
+            return;
+        }
         for (i = 0; i < x.length; i++) {
             x[i].style.display = "none";
         }

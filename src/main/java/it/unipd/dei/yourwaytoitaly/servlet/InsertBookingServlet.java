@@ -27,6 +27,11 @@ import java.util.Calendar;
 public final class InsertBookingServlet extends AbstractDatabaseServlet {
 
     /**
+     * The JSON UTF-8 MIME media type
+     */
+    private static final String JSON_UTF_8_MEDIA_TYPE = "application/json; charset=utf-8";
+
+    /**
      * Creates a booking
      *
      * @param req
@@ -39,6 +44,8 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
      */
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws IOException {
+
+        res.setContentType(JSON_UTF_8_MEDIA_TYPE);
 
         // The user must give these parameters
         int numBooking;
@@ -174,8 +181,8 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
                 message = new Message("Congratulation, booking is successful!" + "\n" + "You have unlocked a 10% discount on this booking!");
             }
 
-            message.toJSON(res.getOutputStream());
             res.setStatus(HttpServletResponse.SC_OK);
+            message.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

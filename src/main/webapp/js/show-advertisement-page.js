@@ -26,24 +26,25 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 });
 
+function validateRateFeedback(rateFeedback){
+    return rateFeedback<=0 || rateFeedback>= 6;
+}
 
+function fetchCreateBooking(){
 
-function fetchCreateFeedback(){
-
-    let rateFeedback = document.getElementById("rateFeedback").value;
-
-    if(rateFeedback<=0 || rateFeedback>= 6){
-        let errorObj = document.getElementById("errorCreateFeedback");
-        errorObj.innerHTML="Invalid rate.";
+    let numBooking = document.getElementById("numBooking").value;
+    if(validateNumBooking(numBooking)){
+        let errorObj = document.getElementById("errorCreateBooking");
+        errorObj.innerHTML="Invalid total number of item.";
         errorObj.value="";
+        document.getElementById("numBooking").value = document.getElementById("numBooking").defaultValue;
         return;
     }
 
-    let url = contextPath+"/feedback-create";
-    let idAdvertisement = window.location.href.substring(window.location.href.indexOf("adv/")+4);
+    let url = contextPath+"/booking-create";
     let data = {
-        "idAdvertisement": idAdvertisement,
-        "rateFeedback":rateFeedback
+        "idAdvertisement": getIdAdvertisement(),
+        "numBooking": numBooking
     }
 
     $.ajax({
@@ -51,11 +52,48 @@ function fetchCreateFeedback(){
         data: data,
         method: 'POST',
         success: function(res) {
-            alert(res.responseJSON.message.message);
+            alert(res.message.message);
+            window.location.href = contextPath + "/user/profile";
         },
         error: function(res) {
             let resMessage = res.responseJSON.message;
             alert(resMessage.message + " " + resMessage.errorDetails);
+        }
+    });
+}
+
+function fetchCreateFeedback(){
+
+    let rateFeedback = document.getElementById("rateFeedback").value;
+
+    if(validateRateFeedback(rateFeedback)){
+        let errorObj = document.getElementById("errorCreateFeedback");
+        errorObj.innerHTML="Invalid rate.";
+        errorObj.value="";
+        document.getElementById("rateFeedback").value = document.getElementById("rateFeedback").defaultValue;
+        return;
+    }
+
+    let textFeedback = document.getElementById("textFeedback").value;
+
+    let url = contextPath+"/feedback-create";
+    let data = {
+        "idAdvertisement": getIdAdvertisement(),
+        "rateFeedback":rateFeedback,
+        "textFeedback":textFeedback
+    }
+
+    $.ajax({
+        url: url,
+        data: data,
+        method: 'POST',
+        success: function(res) {
+            fetchFeedbackList();
+            fetchRate();
+        },
+        error: function(res) {
+            let resMessage = res.responseJSON.message;
+            alert(resMessage.message);
         }
     });
 }
@@ -95,13 +133,11 @@ function loadAdvertisement(req) {
     document.getElementById("advTitle").innerHTML = "<h1 id=\"advTitle\">" + title + "</h1>";
 
     let info =
-        "<section class=\"w3-panel w3-card advInfoElement\">" +
         "<p class=\"w3-panel advInfoElement\">" + description + "" +
         "<p class=\"w3-panel advInfoElement\">" + "Only " + price + " euro!" + "</p>" +
         "<p class=\"w3-panel advInfoElement\">" + "There are just " + numTotItem + " items available!" + "</p>" +
         "<p class=\"w3-panel advInfoElement\">" + "The event is starting the day " + dateStart + " at " + timeStart + " until " + dateEnd + " at " + timeEnd + "</p><br>" +
-        "<p class=\"w3-panel advInfoElement\">" + "For more info: " + emailCompany + "</p>"+
-        "</section>";
+        "<p class=\"w3-panel advInfoElement\">" + "For more info: " + emailCompany + "</p>";
 
     document.getElementById("advInfo").innerHTML = info;
 
@@ -110,7 +146,7 @@ function loadAdvertisement(req) {
     }else if(isLoggedIn() && getUserRole()==="tourist"){
         document.getElementById("createBookingButton").addEventListener("click", function(event){
             event.preventDefault();
-            fetchCreateBooking(event)
+            fetchCreateBooking()
         });
         document.getElementById("createFeedbackButton").addEventListener("click", function(event){
             event.preventDefault();
@@ -119,34 +155,8 @@ function loadAdvertisement(req) {
     }
 }
 
- function fetchCreateBooking(event){
-
-     let numBooking = document.getElementById("numBooking").value;
-     if(numBooking<=0){
-         let errorObj = document.getElementById("errorCreateBooking");
-         errorObj.innerHTML="Invalid total number of item.";
-         errorObj.value="";
-         return;
-     }
-     let url = contextPath+"/booking-create";
-     let idAdvertisement = window.location.href.substring(window.location.href.indexOf("adv/")+4);
-     let data = {
-         "idAdvertisement": idAdvertisement,
-         "numBooking": numBooking
-     }
-
-     $.ajax({
-         url: url,
-         data: data,
-         method: 'POST',
-         success: function(res) {
-             alert(res.responseJSON.message.message);
-         },
-         error: function(res) {
-             let resMessage = res.responseJSON.message;
-             alert(resMessage.message + " " + resMessage.errorDetails);
-         }
-     });
+function validateNumBooking(numBooking){
+    return numBooking <= 0;
 }
 
 function fetchRate() {
@@ -160,7 +170,7 @@ function loadRate(req) {
     let rate = jsonData['rate'];
 
     // Presents the JSON obj
-    let info = "<section class=\"w3-panel w3-card advInfoElement\">" +"<p>" + "Users rated this: " + "</p>" + "<image src=\"/ywti_wa2021_war/css/image/" + rate + "s.jpg\" >" + "</section>" + document.getElementById("advInfo").innerHTML;
+    let info = "<img src=\"/ywti_wa2021_war/css/image/" + rate + "s.jpg\" />\n" + document.getElementById("advInfo").innerHTML;
     document.getElementById("advInfo").innerHTML = info;
 }
 
@@ -171,10 +181,10 @@ function fetchFeedbackList() {
 
 function loadFeedbackList(req) {
     // Parses the JSON resourceList
+    let isEmpty = true;
     let feedbackList = JSON.parse(req).resourceList;
     let str;
     if (feedbackList.length>0) {
-        str = "<h3 class=\"titled\">" + "Reviews" + "</h3>";
         feedbackList.forEach(function(resource) {
             let feedback = resource.feedback;
             let emailTourist = feedback.emailTourist;
@@ -182,20 +192,27 @@ function loadFeedbackList(req) {
             let rate = feedback.rate;
             let text = feedback.text;
             let date = feedback.date;
-            str +=
-                "<div class=\"feedbackElement w3-panel w3-card\">"  +
-                    "<p class=\"feedbackElement\">" + "\"" + text + "\"" + "</p>" +
-                    "<p class=\"feedbackElement\">" + "Rated " + "</p>" +
-                    "<image src=\"/ywti_wa2021_war/css/image/" + rate + "s.jpg\" >" +
-                "</div><br>";
+
+            if (text!=="" && text!==" ") {
+                if (isEmpty===true) {
+                    str = "<h3 class=\"titled\">" + "Reviews" + "</h3>";
+                    isEmpty=false;
+                }
+                str +=
+                    "<div class=\"feedbackElement w3-panel w3-card\">"  +
+                        "<p class=\"feedbackElement\">" + "\"" + text + "\"" + "</p>" +
+                        "<p class=\"feedbackElement\">" + "" + "</p>" +
+                        "<img src=\"/ywti_wa2021_war/css/image/" + rate + "s.jpg\" >" +
+                    "</div>\n";
+            }
+
+
         });
     } else {
-        str = "<section class='\"w3-panel w3-card\"'><br/>" +
-            "<p class=\"feedbackElement \">" + "No reviews found for this advertisement" + "</p>"
-            +"<br/></section>";
+        str = "<p class=\"feedbackElement\">" + "No reviews found for this advertisement" + "</p>\n";
     }
     // Presents the JSON resourceList
-    document.getElementById("feedbackList").innerHTML += str;
+    document.getElementById("feedbackList").innerHTML = str;
 
 }
 
@@ -225,7 +242,7 @@ function loadBookingList(req) {
                 "</div><br>";
         });
     } else {
-        str = "<section class='\"w3-panel w3-card\"'><br/><p class=\"w3-panel w3-card bookingElement\">" + "No bookings found for this advertisement" + "</p><br/></section>";
+        str = "<p class=\"bookingElement\">" + "No bookings found for this advertisement" + "</p>";
     }
     // Presents the JSON resourceList
     document.getElementById("bookingList").innerHTML += str;
@@ -268,7 +285,6 @@ function loadImageList(req) {
 
     // Removes broken images
     $("img").error(function () {
-        console.log("Error!");
         $(this).remove();
 
         // If all img were removed: show default img and then remove buttons

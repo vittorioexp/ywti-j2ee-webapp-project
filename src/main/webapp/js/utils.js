@@ -269,6 +269,14 @@ function validateEmail(index) {
         return;
     }
 
+    email.replace("\b"," ")
+        .replace("\f"," ")
+        .replace("\n"," ")
+        .replace("\r"," ")
+        .replace("\t"," ")
+        .replace("\"", " ")
+        .replace("\\"," ");
+
     let emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     if (emailRegExp.test(email.value)) {
@@ -291,6 +299,14 @@ function validatePassword(index) {
         error.innerHTML = "";
         return;
     }
+
+    password.replace("\b"," ")
+        .replace("\f"," ")
+        .replace("\n"," ")
+        .replace("\r"," ")
+        .replace("\t"," ")
+        .replace("\"", " ")
+        .replace("\\"," ");
 
     // Validate length
     if(password.value.length >= 8) {
@@ -379,6 +395,14 @@ function validateTitle(){
         return;
     }
 
+    title.replace("\b"," ")
+        .replace("\f"," ")
+        .replace("\n"," ")
+        .replace("\r"," ")
+        .replace("\t"," ")
+        .replace("\"", " ")
+        .replace("\\"," ");
+
     if (regex.test(title.value) || title.value.length < 5 || title.value.length > 200) {
         if(error.innerHTML.includes("<article>Invalid title.</article>")){
             return;
@@ -387,6 +411,7 @@ function validateTitle(){
             return;
         }
     }
+
     error.innerHTML = error.innerHTML.replace('<article>Invalid title.</article>','');
 }
 
@@ -399,6 +424,14 @@ function validateDescription(){
         error.innerHTML = "";
         return;
     }
+
+    description.replace("\b"," ")
+        .replace("\f"," ")
+        .replace("\n"," ")
+        .replace("\r"," ")
+        .replace("\t"," ")
+        .replace("\"", " ")
+        .replace("\\"," ");
 
     if (regex.test(description.value) || description.value.length < 5  || description.value.length > 10000) {
         if(error.innerHTML.includes("<article>Invalid description.</article>")){
@@ -452,6 +485,13 @@ function validateNumTotItem(){
 }
 function validateStringOnSubmit(str) {
     let regex = /[\{\"\}]/g;
+    str.replace("\b"," ")
+        .replace("\f"," ")
+        .replace("\n"," ")
+        .replace("\r"," ")
+        .replace("\t"," ")
+        .replace("\"", " ")
+        .replace("\\"," ");
     return !regex.test(str);
 }
 

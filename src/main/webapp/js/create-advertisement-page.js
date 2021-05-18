@@ -45,8 +45,6 @@ function createAdvertisement() {
         "\"emailCompany\":\"" + getUserEmail() + "\"," +
         "\"idType\":\"" + idType + "\"}}";
 
-    alert(data);
-
     sendJsonRequest(url, "POST", data, function(req){
 
         // Parses the JSON obj

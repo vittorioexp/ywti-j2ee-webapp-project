@@ -28,6 +28,11 @@ import java.util.Calendar;
 public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
 
     /**
+     * The JSON UTF-8 MIME media type
+     */
+    private static final String JSON_UTF_8_MEDIA_TYPE = "application/json; charset=utf-8";
+
+    /**
      * Creates a feedback
      *
      * @param req
@@ -40,6 +45,8 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
      */
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws  IOException {
+
+        res.setContentType(JSON_UTF_8_MEDIA_TYPE);
 
         int idAdvertisement = 0;
         String emailTourist="";
@@ -116,7 +123,9 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
 
             feedback = FeedbackDAO.createFeedback(feedback);
 
+            Message m = new Message("Feedback inserted correctly.");
             res.setStatus(HttpServletResponse.SC_OK);
+            m.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

@@ -27,6 +27,11 @@ import java.util.Calendar;
 public class DeleteBookingServlet extends AbstractDatabaseServlet{
 
     /**
+     * The JSON UTF-8 MIME media type
+     */
+    private static final String JSON_UTF_8_MEDIA_TYPE = "application/json; charset=utf-8";
+
+    /**
      * Marks a booking as DELETED
      *
      * @param req
@@ -41,6 +46,8 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
      */
     public void doDelete(HttpServletRequest req, HttpServletResponse res)
             throws IOException {
+
+        res.setContentType(JSON_UTF_8_MEDIA_TYPE);
 
         int idAdvertisement = 0;
         Date date = null;
