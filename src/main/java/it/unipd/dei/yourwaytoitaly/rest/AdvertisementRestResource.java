@@ -390,7 +390,7 @@ public class AdvertisementRestResource extends RestResource {
             }
 
             res.setStatus(HttpServletResponse.SC_OK);
-            advertisement.toJSON(res.getOutputStream());
+            //advertisement.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

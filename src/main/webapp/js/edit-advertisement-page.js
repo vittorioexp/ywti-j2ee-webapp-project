@@ -72,8 +72,6 @@ function fetchEditAdvertisement(currentUrl){
             "\"dateEnd\":\"" + dateEnd
             + "\",\"timeStart\":\"" + timeStart + "\",\"timeEnd\":\"" + timeEnd + "\",\"emailCompany\":\"" + emailCompany + "\",\"idType\":\"0\"}}";
 
-        alert(data);
-
         sendJsonRequest(url, "PUT", data, function(req){
             window.location.replace(contextPath + "/adv-show/" + idAdvertisement);
         });
