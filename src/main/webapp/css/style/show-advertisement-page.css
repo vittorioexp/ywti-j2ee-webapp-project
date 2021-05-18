@@ -8,6 +8,14 @@
     height: 470px;
 }
 
+#advImages > img {
+    width: auto;
+    height: 95%;
+    margin: auto;
+    padding-top: 20px;
+    display: none;
+}
+
 #infos{
     float: right;
     width: 50%;
@@ -26,11 +34,3 @@
     width: 50%;
 }
 
-
-.mySlides{
-    width: -webkit-fill-available;
-    height: fit-content;
-    margin-top: 3%;
-    display: none;
-
-}

@@ -8,16 +8,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
         window.location.replace(contextPath + "/html/error.html");
     }
 
-    fetchAdvertisement();
-    fetchRate();
-    fetchFeedbackList();
-    fetchImageList();
-
     // if a company is visiting show-advertisement.html, hide "leave a feedback" form
     if (isLoggedIn() && getUserRole()==="company") {
         document.getElementById("createFeedback").style.display = "none";
         document.getElementById("createBooking").style.display = "none";
     }
+
+    fetchAdvertisement();
+    fetchRate();
+    fetchFeedbackList();
+    fetchImageList();
+
+
     //images slideshow
     slideIndex = 1;
     showDivs(-1);
@@ -248,24 +250,38 @@ function loadImageList(req) {
             let description = image.description;
             let idAdvertisement = image.idAdvertisement;
 
-            str += "<img class=\"mySlides \" src=\"" + "" + path + "\" width=\"320\" height=\"240\" alt=''/>";
+            str += "<img class=\"mySlides \" src=\"" + "" + path + "\" alt=''/>";
         })
         str2 +=
             "<button class=\"w3-button\" onclick=\"plusDivs(-1)\">&#10094;</button>"
             + "<button class=\"w3-button \" onClick=\"plusDivs(+1)\">&#10095;</button>";
+    } else {
+        str = "<img class=\"mySlides w3-center\" src=\"/ywti_wa2021_war/css/image/noImage.jpg\" alt=''/>\n" ;
+        str2 = "";
     }
-    else{
-        str +="<img class=\"mySlides w3-center\" src=\"/ywti_wa2021_war/css/image/noImage.jpg\" width=\"320\" height=\"240\" alt=''/>\n" ;
-    }
+
     document.getElementById("advImages").innerHTML = str;
     document.getElementById("buttContainer").innerHTML = str2;
 
-    let i = document.getElementsByClassName("mySlides");
-    i[0].style.display= "block";
-
+    // Removes broken images
     $("img").error(function () {
-        $(this).hide();
+        console.log("Error!");
+        $(this).remove();
+
+        // If all img were removed: show default img and then remove buttons
+        let slides = document.getElementsByClassName("mySlides");
+        if (slides.length===0) {
+            str ="<img class=\"mySlides w3-center\" src=\"/ywti_wa2021_war/css/image/noImage.jpg\" alt=''/>\n" ;
+            str2 = "";
+            document.getElementById("advImages").innerHTML = str;
+            document.getElementById("buttContainer").innerHTML = str2;
+        }
     });
+
+
+
+    slides[0].style.display= "block";
+
 }
 
 function plusDivs(n) {
@@ -275,6 +291,7 @@ function plusDivs(n) {
 function showDivs(n) {
     let i;
     const x = document.getElementsByClassName("mySlides");
+    if (x.length===0) {return;}
     if (n > x.length) {slideIndex = 1}
     if (n < 1) {slideIndex = x.length;}
     for (i = 0; i < x.length; i++) {
