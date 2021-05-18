@@ -469,8 +469,8 @@ public class AdvertisementRestResource extends RestResource {
                 EmailSender mail= new EmailSender(email , emailsite , passEmail);
 
                 //send email and check if email is sent correctly
-                if (!mail.sendConfirmationEmail("YourWayToItaly:Booking deleted",
-                        "Your booking has just been deleted:")){
+                if (!mail.sendConfirmationEmail("Your Way To Italy: Booking deleted",
+                        "Your booking has just been deleted: " + a.getTitle())){
                     ErrorCode ec = ErrorCode.INTERNAL_ERROR;
                     Message m = new Message(ec.getErrorMessage(),
                             ec.getHTTPCode(), "Email not sent.");
@@ -487,8 +487,8 @@ public class AdvertisementRestResource extends RestResource {
             AdvertisementDAO.deleteAdvertisement(idAdvertisement);
 
             res.setStatus(HttpServletResponse.SC_OK);
-            //Message m = new Message("Advertisement successfully deleted!");
-            //m.toJSON(res.getOutputStream());
+            Message m = new Message("Advertisement successfully deleted!");
+            m.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
