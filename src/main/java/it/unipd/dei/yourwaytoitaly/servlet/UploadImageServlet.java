@@ -153,8 +153,6 @@ public class UploadImageServlet extends AbstractDatabaseServlet {
 
                 res.setStatus(HttpServletResponse.SC_OK);
                 res.sendRedirect(req.getContextPath() + "/adv-show/" + idAdvertisement);
-                //Message m = new Message("Images successfully uploaded!");
-                //m.toJSON(res.getOutputStream());
             }
 
         } catch (Exception ex) {

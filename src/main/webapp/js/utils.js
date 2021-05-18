@@ -379,7 +379,7 @@ function validateTitle(){
         return;
     }
 
-    if (regex.test(title.value) || title.value.length < 5 || title.value.length > 100) {
+    if (regex.test(title.value) || title.value.length < 5 || title.value.length > 200) {
         if(error.innerHTML.includes("<article>Invalid title.</article>")){
             return;
         } else if(!error.innerHTML.includes("<article>Invalid title.</article>")){
@@ -400,7 +400,7 @@ function validateDescription(){
         return;
     }
 
-    if (regex.test(description.value) || description.value.length < 5  || description.value.length > 100) {
+    if (regex.test(description.value) || description.value.length < 5  || description.value.length > 10000) {
         if(error.innerHTML.includes("<article>Invalid description.</article>")){
             return;
         } else if(!error.innerHTML.includes("<article>Invalid description.</article>")){
