@@ -1,0 +1,34 @@
+
+#editFields{
+    float: left;
+    width: 65%;
+    padding: 3%;
+}
+
+.buttonSection {
+    float: right;
+}
+
+.infoButtons{
+    margin-top: 1%;
+    margin-left: 7%;
+    margin-bottom: 1%;
+}
+
+input{
+    padding: 3%;
+}
+
+textarea{
+    resize: none;
+    height: 100px;
+}
+
+.row {
+    display: flex;
+}
+
+.col {
+    margin : 4%;
+    flex: 1;
+}

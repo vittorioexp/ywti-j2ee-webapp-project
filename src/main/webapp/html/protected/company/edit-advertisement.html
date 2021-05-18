@@ -10,7 +10,12 @@
     <title>Edit my advertisement - Your Way to Italy</title>
     <script src="/ywti_wa2021_war/js/utils.js"></script>
     <script src="/ywti_wa2021_war/js/edit-advertisement-page.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
+    <link href="/ywti_wa2021_war/css/style/w3.css" rel="stylesheet" type="text/css">
+    <link href="/ywti_wa2021_war/css/style/edit-advertisement-page.css" rel="stylesheet" type="text/css">
+
+
 </head>
 <body>
 <div class="mainWrapper">
@@ -18,29 +23,29 @@
         <div id="navbar-area"></div>
         <div id="user-email"></div>
     </header>
-    <main class="mainContent" >
-        <section>
+    <main class="mainContent w3-container" >
+
+        <section class="w3-panel">
             <form id="editAdvertisementForm" name="editAdvertisementForm" method="POST">
+                <div class="row">
+                    <div id="editFields" class="col w3-section w3-card-4">
 
-                <input id="title" name="title" type="text" placeholder="Title"/><br/><br/>
+                        <input class="w3-input w3-section" id="title" name="title" type="text" placeholder="Title"/>
+                        <textarea class="w3-input w3-section" id="description" name="description" type="text" placeholder="Insert description"></textarea>
+                        <input class="w3-input w3-section" id="price" name="price" type="number" placeholder="Price"/>
+                        <input class="w3-input w3-section" id="numTotItem" name="numTotItem" type="number" placeholder="Number of items to sell"/>
+                        <input class="w3-input w3-section " id="dateStart" name="dateStart" type="date" placeholder="Starting day"/>
+                        <input class="w3-input w3-section" id="dateEnd" name="dateEnd" type="date" placeholder="Ending day"/>
+                        <input class="w3-input w3-section" id="timeStart" name="timeStart" type="time" value="05:00:00" placeholder="Starting at"/>
+                        <input class="w3-input w3-section" id="timeEnd" name="timeEnd" type="time" value="23:30:00" placeholder="Ending at"/>
 
-                <textarea id="description" name="description" type="text" placeholder="Insert description"></textarea> <br/><br/>
+                    </div>
 
-                <input id="price" name="price" type="number" placeholder="Price"/><br/><br/>
-
-                <input id="numTotItem" name="numTotItem" type="number" placeholder="Number of items to sell"/><br/><br/>
-
-                <input id="dateStart" name="dateStart" type="date" placeholder="Starting day"/><br/><br/>
-
-                <input id="dateEnd" name="dateEnd" type="date" placeholder="Ending day"/><br/><br/>
-
-                <input id="timeStart" name="timeStart" type="time" value="05:00:00" placeholder="Starting at"/><br/><br/>
-
-                <input id="timeEnd" name="timeEnd" type="time" value="23:30:00" placeholder="Ending at"/><br/><br/>
-
-                <button type="submit" id="edit-button" class="">Edit</button><br/>
-
-                <button type="reset" id="reset-button" class="button">Reset</button><br/>
+                    <div class=" col buttonSection w3-section w3-card-4">
+                        <button type="submit" id="edit-button" class="button infoButtons">Edit</button><br/>
+                        <button type="reset" id="reset-button" class="button infoButtons">Reset</button><br/>
+                    </div>
+                </div>
             </form>
         </section>
     </main>
