@@ -26,16 +26,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 });
 
-
+function validateRateFeedback(rateFeedback){
+    return rateFeedback<=0 || rateFeedback>= 6;
+}
 
 function fetchCreateFeedback(){
 
     let rateFeedback = document.getElementById("rateFeedback").value;
 
-    if(rateFeedback<=0 || rateFeedback>= 6){
+    if(validateRateFeedback(rateFeedback)){
         let errorObj = document.getElementById("errorCreateFeedback");
         errorObj.innerHTML="Invalid rate.";
         errorObj.value="";
+        document.getElementById("rateFeedback").value = document.getElementById("rateFeedback").defaultValue;
         return;
     }
 
@@ -98,6 +101,7 @@ function loadAdvertisement(req) {
         "<section class=\"w3-panel w3-card advInfoElement\">" +
         "<p class=\"w3-panel advInfoElement\">" + description + "" +
         "<p class=\"w3-panel advInfoElement\">" + "Only " + price + " euro!" + "</p>" +
+        "<p class=\"w3-panel advInfoElement\">" + "Your score is " + score + "</p>" +
         "<p class=\"w3-panel advInfoElement\">" + "There are just " + numTotItem + " items available!" + "</p>" +
         "<p class=\"w3-panel advInfoElement\">" + "The event is starting the day " + dateStart + " at " + timeStart + " until " + dateEnd + " at " + timeEnd + "</p><br>" +
         "<p class=\"w3-panel advInfoElement\">" + "For more info: " + emailCompany + "</p>"+
@@ -119,15 +123,21 @@ function loadAdvertisement(req) {
     }
 }
 
+function validateNumBooking(numBooking){
+    return numBooking <= 0;
+}
+
  function fetchCreateBooking(event){
 
      let numBooking = document.getElementById("numBooking").value;
-     if(numBooking<=0){
+     if(validateNumBooking(numBooking)){
          let errorObj = document.getElementById("errorCreateBooking");
          errorObj.innerHTML="Invalid total number of item.";
          errorObj.value="";
+         document.getElementById("numBooking").value = document.getElementById("numBooking").defaultValue;
          return;
      }
+
      let url = contextPath+"/booking-create";
      let idAdvertisement = window.location.href.substring(window.location.href.indexOf("adv/")+4);
      let data = {
@@ -141,6 +151,7 @@ function loadAdvertisement(req) {
          method: 'POST',
          success: function(res) {
              alert(res.responseJSON.message.message);
+             window.location.href = contextPath + "/user/profile";
          },
          error: function(res) {
              let resMessage = res.responseJSON.message;

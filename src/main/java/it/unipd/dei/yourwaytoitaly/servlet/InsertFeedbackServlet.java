@@ -116,7 +116,9 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
 
             feedback = FeedbackDAO.createFeedback(feedback);
 
+            Message m = new Message("Feedback inserted correctly.");
             res.setStatus(HttpServletResponse.SC_OK);
+            m.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
