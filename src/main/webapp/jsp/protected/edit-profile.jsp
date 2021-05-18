@@ -43,6 +43,7 @@ Since: 1.0
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="/ywti_wa2021_war/css/style/edit-profile.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="mainWrapper">
@@ -50,22 +51,23 @@ Since: 1.0
         <div id="navbar-area"></div>
         <div id="user-email"></div>
     </header>
-    <main class="mainContent" >
+    <main class="mainContent w3-container" >
+        <h1>Edit profile</h1>
+        <section id="EditSection" class="w3-panel w3-card-4 w3-section">
         <section id="error"></section>
-
         <form id="edit-profile-form" name="edit-profile-form" method="POST">
 
-            <input id="password" name="password" type="password" placeholder="Insert new password"/><br/><br/>
+            <input class="w3-input w3-section" id="password" name="password" type="password" placeholder="Insert new password"/>
 
-            <input id="phonenumber" name="phonenumber" type="text" placeholder="Insert new phone number"/><br/><br/>
+            <input class="w3-input w3-section" id="phonenumber" name="phonenumber" type="text" placeholder="Insert new phone number"/>
 
-            <input id="address" name="address" type="text" placeholder="Insert new address"/><br/><br/>
+            <input class="w3-input w3-section" id="address" name="address" type="text" placeholder="Insert new address"/>
 
-            <select form="edit-profile-form" id="idCity" name="idCity">
+            <select class="w3-input w3-section" form="edit-profile-form" id="idCity" name="idCity">
                 <option value="0" disabled selected>Where</option>
             </select>
 
-            <button type="submit" class="button" id="edit-profile-button">Edit</button><br/>
+            <button type="submit" class="button" id="edit-profile-button">Edit</button><br/></br>
         </form>
     </main>
     <!-- footer imported with javascript -->

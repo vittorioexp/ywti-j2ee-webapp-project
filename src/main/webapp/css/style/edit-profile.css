@@ -1,0 +1,30 @@
+#EditSection {
+    width: 360px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+section {
+    text-align: center;
+}
+
+main {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.mainContent {
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    padding: 16px 16px 0;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px;
+    text-align:center;
+}
