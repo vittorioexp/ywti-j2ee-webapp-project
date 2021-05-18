@@ -133,13 +133,13 @@ function loadAdvertisement(req) {
     document.getElementById("advTitle").innerHTML = "<h1 id=\"advTitle\">" + title + "</h1>";
 
     let info =
-        "<p class=\"w3-panel advInfoElement\">" + description + "" +
-        "<p class=\"w3-panel advInfoElement\">" + "Only " + price + " euro!" + "</p>" +
-        "<p class=\"w3-panel advInfoElement\">" + "There are just " + numTotItem + " items available!" + "</p>" +
-        "<p class=\"w3-panel advInfoElement\">" + "The event is starting the day " + dateStart + " at " + timeStart + " until " + dateEnd + " at " + timeEnd + "</p><br>" +
-        "<p class=\"w3-panel advInfoElement\">" + "For more info: " + emailCompany + "</p>";
+        "<p class=\"advInfoElement\">" + description + "</p>" +
+        "<p class=\"advInfoElement\">" + "Only " + price + " euro!" + "</p>" +
+        "<p class=\"advInfoElement\">" + "There are just " + numTotItem + " items available!" + "</p>" +
+        "<p class=\"advInfoElement\">" + "The event is starting the day " + dateStart + " at " + timeStart + " until " + dateEnd + " at " + timeEnd + "</p><br>" +
+        "<p class=\"advInfoElement\">" + "For more info: " + emailCompany + "</p>";
 
-    document.getElementById("advInfo").innerHTML = info;
+    document.getElementById("infoSection").innerHTML = info;
 
     if (isLoggedIn() && emailCompany==getUserEmail()) {
         fetchBookingList();
@@ -170,8 +170,8 @@ function loadRate(req) {
     let rate = jsonData['rate'];
 
     // Presents the JSON obj
-    let info = "<img src=\"/ywti_wa2021_war/css/image/" + rate + "s.jpg\" />\n" + document.getElementById("advInfo").innerHTML;
-    document.getElementById("advInfo").innerHTML = info;
+    let info = "<img src=\"/ywti_wa2021_war/css/image/" + rate + "s.jpg\" />\n" + document.getElementById("infoSection").innerHTML;
+    document.getElementById("infoSection").innerHTML = info;
 }
 
 function fetchFeedbackList() {
@@ -195,14 +195,14 @@ function loadFeedbackList(req) {
 
             if (text!=="" && text!==" ") {
                 if (isEmpty===true) {
-                    str = "<h3 class=\"titled\">" + "Reviews" + "</h3>";
+                    str = "<h3 class=\"sectionTitle\">" + "Reviews" + "</h3>";
                     isEmpty=false;
                 }
                 str +=
-                    "<div class=\"feedbackElement w3-panel w3-card\">"  +
+                    "<div class=\"feedbackElement\">"  +
                         "<p class=\"feedbackElement\">" + "\"" + text + "\"" + "</p>" +
                         "<p class=\"feedbackElement\">" + "" + "</p>" +
-                        "<img src=\"/ywti_wa2021_war/css/image/" + rate + "s.jpg\" >" +
+                        "<img src=\"/ywti_wa2021_war/css/image/" + rate + "s.jpg\"  alt=\"\" />" +
                     "</div>\n";
             }
 
@@ -226,7 +226,7 @@ function loadBookingList(req) {
     let bookingList = JSON.parse(req).resourceList;
     let str;
     if (bookingList.length>0) {
-        str = "<h3>" + "Bookings" + "</h3>";
+        str = "<h3 class=\"sectionTitle\">" + "Bookings" + "</h3>";
         bookingList.forEach(function(resource) {
             let booking = resource.booking;
             let emailTourist = booking.emailTourist;
@@ -237,8 +237,8 @@ function loadBookingList(req) {
             let state = booking.state;
 
             str +=
-                "<div class=\"booking w3-container\">"  +
-                    "<p class=\"w3-panel w3-card bookingElement\">" + emailTourist + " booked " + numBooking + " items" + " - " + date + ", " + time + "</p>" +
+                "<div class=\"booking\">"  +
+                    "<p class=\"bookingElement\">" + emailTourist + " booked " + numBooking + " items" + " - " + date + ", " + time + "</p>" +
                 "</div><br>";
         });
     } else {
@@ -267,13 +267,13 @@ function loadImageList(req) {
             let description = image.description;
             let idAdvertisement = image.idAdvertisement;
 
-            str += "<img class=\"mySlides \" style=\"display: none;\" src=\"" + "" + path + "\" alt=''/>";
+            str += "<img class=\"mySlides\" style=\"display: none;\" src=\"" + "" + path + "\" alt='' />";
         })
         str2 +=
             "<button class=\"w3-button\" onclick=\"plusDivs(-1)\">&#10094;</button>"
             + "<button class=\"w3-button \" onClick=\"plusDivs(+1)\">&#10095;</button>";
     } else {
-        str = "<img class=\"mySlides w3-center\" src=\"/ywti_wa2021_war/css/image/noImage.jpg\" alt=''/>\n" ;
+        str = "<img class=\"mySlides\" src=\"/ywti_wa2021_war/css/image/noImage.jpg\" alt=''/>\n" ;
         str2 = "";
     }
 
@@ -281,7 +281,7 @@ function loadImageList(req) {
     document.getElementById("buttContainer").innerHTML = str2;
 
     let slides = document.getElementsByClassName("mySlides");
-    slides[0].style.display= "block";
+    slides[0].style.display= "inline";
 
     // Removes broken images
     $("img").error(function () {
@@ -290,11 +290,11 @@ function loadImageList(req) {
         // If all img were removed: show default img and then remove buttons
         slides = document.getElementsByClassName("mySlides");
         if (slides.length===0) {
-            str ="<img class=\"mySlides w3-center\" src=\"/ywti_wa2021_war/css/image/noImage.jpg\" alt=''/>\n" ;
+            str ="<img class=\"mySlides\" src=\"/ywti_wa2021_war/css/image/noImage.jpg\" alt='' />\n" ;
             str2 = "";
             document.getElementById("advImages").innerHTML = str;
             document.getElementById("buttContainer").innerHTML = str2;
-            slides[0].style.display= "block";
+            slides[0].style.display= "inline";
         }
     });
 
@@ -315,5 +315,5 @@ function showDivs(n) {
     for (i = 0; i < x.length; i++) {
         x[i].style.display = "none";
     }
-    x[slideIndex-1].style.display = "block";
+    x[slideIndex-1].style.display = "inline";
 }

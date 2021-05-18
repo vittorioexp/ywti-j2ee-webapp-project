@@ -16,66 +16,57 @@
     <script src="/ywti_wa2021_war/js/show-advertisement-page.js"></script>
 </head>
 <body>
-    <div class="mainWrapper w3-container">
-        <header>
-            <div id="navbar-area"></div>
-            <div id="user-email"></div>
-        </header>
-        <main class="mainContent w3-container" >
+<div class="mainWrapper w3-main">
+    <header class="">
+        <img id="small-logo" class="small-logo" src="/ywti_wa2021_war/utility/small-logo-transparent.png" >
+        <div id="navbar-area" class="nav-area w3-bar w33-container" ></div>
+    </header>
+    <main class="mainContent w3-container" >
+        <div id="user-email" class=""></div>
             <div id="advTitle" class="w3-center">
                 Loading the title
             </div>
-<!--            Images-->
-            <section class="w3-container" id="images">
-                <div name="slideshow" class="w3-panel w3-card w3-center" id="advImages"></div>
+
+            <section id="imageSection" class="w3-half w3-container">
+                <div name="slideshow" class="" id="advImages"></div>
                 <div id="buttContainer" class="w3-center"  ></div>
             </section>
-<!--            Informations-->
-            <section id = "infos">
-                <article id="advInfo" class="w3-container w3-panel w3-card">
-                    Loading info
-                </article>
-            </section>
-<!--            Feedback-->
-            <section id="createFeedback">
-                <article class="w3-container">
+
+            <section id ="infoSection" class="advInfo w3-half w3-container"></section>
+
+            <section id="createFeedback" class="createFeedback w3-half w3-container">
                     <section id="errorCreateFeedback"></section>
-                    <form id="createFeedbackForm" class="w3-panel w3-card" name="createFeedbackForm" method="POST" >
+                    <form id="createFeedbackForm" class="" name="createFeedbackForm" method="POST" >
                         <h3>Leave a feedback</h3>
-<!--                    <label for="rateFeedback">Rate</label>-->
-                        <input id="rateFeedback" name="rateFeedback" class="w3-input" type="number" min="1" max="5" step="1" placeholder="Insert rating" required/>
+                        <input id="rateFeedback" name="rateFeedback" class="w3-input" type="number"
+                               min="1" max="5" step="1" placeholder="Rating" required/>
                             <br>
-    <!--                    <label for="textFeedback">Comment</label>-->
-                        <input id="textFeedback" name="textFeedback" type="text" class="w3-input" placeholder="Insert feedback description"/>
+                        <input id="textFeedback" name="textFeedback" type="text" class="w3-input"
+                               placeholder="Description"/>
                             <br>
                         <button id="createFeedbackButton" class="button" type="submit">Leave a feedback</button><br/>
-
                     </form>
-                </article>
             </section>
 
-            <section id="feedbackList" class="feedbackList w3-container w3-section w3-panel w3-card">
-            </section>
+            <section id="feedbackList" class="feedbackList w3-half w3-container"></section>
 
-            <!-- Booking-->
-            <section id="createBooking">
-                <article class="">
+            <section id="createBooking" class="createBooking w3-half w3-container">
                     <section id="errorCreateBooking"></section>
-                    <form id="createBookingForm" class="w3-panel w3-card" name="createBookingForm" method="POST">
+                    <form id="createBookingForm" class="" name="createBookingForm" method="POST">
                         <h3>Book your journey</h3>
                         <input id="numBooking" name="numBooking" type="number" class="w3-input" placeholder="Number of items" required/>
 
                         <button id="createBookingButton" class="button" type="submit">Book your journey</button>
                     </form>
-                </article>
             </section>
 
-            <section id="bookingList" class="bookingList w3-container w3-section w3-panel w3-card">
-            </section>
+            <section id="bookingList" class="bookingList w3-half w3-container"></section>
+
+
 
         </main>
-        <!-- footer imported with javascript -->
-        <div id="footer-area"></div>
-    </div>
+    <!-- footer imported with javascript -->
+    <div id="footer-area" class="w3-container w3-section"></div>
+</div>
 </body>
 </html>

@@ -2,34 +2,53 @@
 
 #advTitle{
     color: #3f51b5;
+    font-weight: bold;
+    color: #333;
+    line-height: 1.2;
 }
 
-#advImages{
+.sectionTitle {
+    padding-bottom: 10px;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 600;
+    color: #333;
+}
+
+main {
+    font-size: 14px;
+    line-height: 1.4;
+    font-family: BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    color: #333;
+}
+
+#createFeedback, #feedbackList, #createBooking, #bookingList {
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+#rateFeedback, #textFeedback, #createBookingForm {
+    width: 40%;
+    height: auto;
+}
+
+#imageSection{
     height: 470px;
 }
 
-#advImages > img {
+#imageSection > img {
     width: auto;
     height: 95%;
     margin: auto;
     padding-top: 20px;
 }
 
-#infos{
-    float: right;
-    width: 50%;
+.createBooking {
+    border-top: 1px solid #cd8900;
+    background: #ffe08a;
+    border-bottom: 1px solid #cd8900;
 }
 
-#images{
-    float: left;
-    width: 50%;
+.createFeedback {
+    background-color: #ebf3ff;
 }
-
-#createBooking{
-    width: 50%;
-}
-
-#createFeedback{
-    width: 50%;
-}
-
