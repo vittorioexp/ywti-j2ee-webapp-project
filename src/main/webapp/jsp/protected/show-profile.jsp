@@ -59,7 +59,7 @@ Since: 1.0
             <c:choose>
                 <c:when test="${userType}">
                     <h1 class="usernameTitle w3-center">${user.name} ${user.surname}</h1>
-                    <section id="userInfoSection" class="w3-section w3-container w3-panel w3-card-4">
+                    <section class="userInfoSection w3-section w3-container w3-panel w3-card-4">
                         <h2>My info</h2>
                         <p>Email: ${user.email}</p>
                         <p>Phone number: ${user.phoneNumber}</p>
@@ -68,11 +68,10 @@ Since: 1.0
                         <p name="userCity" id="${user.idCity}"></p>
                         <p>Your score is ${score} </p>
                         </br>
+                        <button name="editUserProfile" class="button w3-section w3-container w3-center">Edit Profile</button>
+                        <br/>
                     </section>
-                    <section class="buttonSection w3-center">
-                        <button name="editUserProfile" class="button w3-section w3-container">Edit Profile</button><br/>
-                    </section>
-                    <section id="listBookings" class="w3-section w3-container w3-panel w3-card-4">
+                    <section class="bookings w3-section w3-container w3-panel w3-card-4">
                         <%
                             List<Booking> bookingList = (List) request.getAttribute("bookingList");
                             List<Advertisement> advertisementList = (List) request.getAttribute("advertisementList");
@@ -116,63 +115,58 @@ Since: 1.0
                 </c:when>
                 <c:otherwise>
                     <h1 class="usernameTitle w3-center">${user.name}</h1>
-                    <section id="userInfoSection" class="w3-section w3-container w3-panel w3-card-4">
+                    <section class="w3-section w3-container w3-panel w3-card-4 userInfoSection">
                         <h2 class="sectionTitle">My info</h2>
                         <p>Email: ${user.email}</p>
                         <p>Phone number: ${user.phoneNumber}</p>
                         <p>Address: ${user.address}</p>
                         <p name="userCity" id="${user.idCity}"></p>
+
+                        <section class="w3-center">
+                            <button name="editUserProfile" class="button infoButtons w3-section w3-container">Edit Profile</button>
+                        </section>
+
                     </section>
-                    <section class="buttonSection w3-center">
-                        <button name="editUserProfile" class="button w3-section w3-container">Edit Profile</button>
-                        <button id="createAdvertisementButton" name="createAdvertisementButton" class="button w3-section w3-container">New advertisement</button>
-                    </section>
-                    <section class="w3-section w3-container w3-panel w3-card-4">
+
+
+
+                    <section class="bookings w3-section w3-container w3-panel w3-card-4">
                         <%
                             List<Advertisement> advertisementList = (List<Advertisement>) request.getAttribute("advertisementList");
                         %>
                         <h2 class="sectionTitle">My advertisements</h2>
+                        <form action="/ywti_wa2021_war/adv-do-create" >
+                            <button type="submit" name="createAdvertisementButton" class="button infoButtons w3-section w3-container">New advertisement</button>
+                        </form>
                         <c:choose>
                             <c:when test="${empty advertisementList}">
                                 <p name="emptyList">No advertisement created</p>
                             </c:when>
                             <c:otherwise>
-                                <table class="w3-table w3-container w3-section ">
-                                    <tr>
-                                        <td>Title Advertisement</td>
-                                        <td>Date Start</td>
-                                        <td>Date End</td>
-                                        <td>Item Available</td>
-                                        <td>Price</td>
-                                        <td></td>
-                                    </tr>
-                                    <c:forEach items="${advertisementList}" var="adv">
+                                <c:forEach items="${advertisementList}" var="adv">
+                                    <table class="w3-table w3-container w3-section w3-panel w3-card">
                                         <tr>
-                                            <td>${adv.title}   </td>
-                                            <td>${adv.dateStart}   </td>
-                                            <td>${adv.dateEnd}   </td>
-                                            <td>${adv.numTotItem}   </td>
-                                            <td>${adv.price}   </td>
-                                            <td>
-                                                <span>
-                                                    <form id="gotoEditAdvertisementForm" name="gotoEditAdvertisementForm" method="GET"/>
-                                                    <button name="editAdvertisementButton" value="${adv.idAdvertisement}" class="button">Edit</button><br/>
-                                                    </form>
-                                                </span>
-                                                <span>
-                                                    <form id="gotoShowAdvertisementForm" name="gotoShowAdvertisementForm" method="GET"/>
-                                                    <button name="showAdvertisementButton" value="${adv.idAdvertisement}" class="button">Info</button><br/>
-                                                    </form>
-                                                </span>
-                                                <span>
-                                                    <form id="deleteAdvertisementForm" name="deleteAdvertisementForm" method="DELETE">
-                                                    <button name="deleteAdvertisementButton" value="${adv.idAdvertisement}" class="button">Delete</button>
-                                                    </form>
-                                                </span>
+                                            <td class="titleAdv"><p class="w3-small w3-light-blue">Title : </p>${adv.title}   </td>
+                                            <td class="smallColumn"><p class="w3-small w3-light-blue">Starting : </p>${adv.dateStart}   </td>
+                                            <td class="smallColumn"><p class="w3-small w3-light-blue"> Ending : </p>${adv.dateEnd}   </td>
+                                            <td class="smallColumn"><p class="w3-small w3-light-blue"> # of Items : </p>${adv.numTotItem}   </td>
+                                            <td class="smallColumn"><p class="w3-small w3-light-blue"> Pricing € : </p> ${adv.price}   </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">
+                                                <form id="gotoEditAdvertisementForm" class="buttonSection" name="gotoEditAdvertisementForm" method="GET"/>
+                                                <button name="editAdvertisementButton" value="${adv.idAdvertisement}" class="button listButtons">Edit</button><br/>
+                                                </form>
+                                                <form id="gotoShowAdvertisementForm" class="buttonSection" name="gotoShowAdvertisementForm" method="GET"/>
+                                                <button name="showAdvertisementButton" value="${adv.idAdvertisement}" class="button listButtons">Info</button><br/>
+                                                </form>
+                                                <form id="deleteAdvertisementForm" class="buttonSection" name="deleteAdvertisementForm" method="DELETE">
+                                                    <button name="deleteAdvertisementButton" value="${adv.idAdvertisement}" class="button listButtons">Delete</button>
+                                                </form>
                                             </td>
                                         </tr>
-                                    </c:forEach>
-                                </table>
+                                    </table>
+                                </c:forEach>
                             </c:otherwise>
                         </c:choose>
                     </section>

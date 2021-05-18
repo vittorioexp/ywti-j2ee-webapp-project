@@ -99,7 +99,10 @@ header {
     vertical-align: middle;
     position: relative;
     color: #fff;
-    background-color: #003B95;
+}
+
+.button:hover{
+    background-color: #032e4e;
 }
 
 #footer-area {
