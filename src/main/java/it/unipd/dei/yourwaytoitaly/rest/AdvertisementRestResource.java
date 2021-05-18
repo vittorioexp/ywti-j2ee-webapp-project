@@ -3,9 +3,11 @@ package it.unipd.dei.yourwaytoitaly.rest;
 import it.unipd.dei.yourwaytoitaly.database.*;
 import it.unipd.dei.yourwaytoitaly.resource.*;
 import it.unipd.dei.yourwaytoitaly.servlet.LoginServlet;
+import it.unipd.dei.yourwaytoitaly.utils.EmailSender;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
 import javax.naming.NamingException;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -459,10 +461,8 @@ public class AdvertisementRestResource extends RestResource {
 
             for (Booking b : bookingList) {
 
-                // TODO: Sends an email to the tourist
                 String email = b.getEmailTourist();
-                /*
-                ServletContext sc = getServletContext();
+                ServletContext sc = req.getServletContext();
                 String emailsite = sc.getInitParameter("emailSite");
                 String passEmail = sc.getInitParameter("passwordEmail");
                 // sending confirmation email
@@ -477,7 +477,7 @@ public class AdvertisementRestResource extends RestResource {
                     res.setStatus(ec.getHTTPCode());
                     m.toJSON(res.getOutputStream());
                     return;
-                }*/
+                }
 
                 // Deletes the booking
                 BookingDAO.deleteBooking(b);
