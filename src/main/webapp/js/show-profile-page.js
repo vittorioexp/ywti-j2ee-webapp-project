@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         let showAdvButtons = document.getElementsByName("showAdvertisementButton");
 
         deleteAdvButtons.forEach(function(button, index) {
-            console.log(index);
             // Adds an event listener (on click) on each delete adv button
             button.addEventListener(
                 "click",

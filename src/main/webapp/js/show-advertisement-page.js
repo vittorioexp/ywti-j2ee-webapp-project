@@ -261,7 +261,7 @@ function loadImageList(req) {
             let description = image.description;
             let idAdvertisement = image.idAdvertisement;
 
-            str += "<img class=\"mySlides \" src=\"" + "" + path + "\" alt=''/>";
+            str += "<img class=\"mySlides \" style=\"display: none;\" src=\"" + "" + path + "\" alt=''/>";
         })
         str2 +=
             "<button class=\"w3-button\" onclick=\"plusDivs(-1)\">&#10094;</button>"
@@ -274,24 +274,26 @@ function loadImageList(req) {
     document.getElementById("advImages").innerHTML = str;
     document.getElementById("buttContainer").innerHTML = str2;
 
+    let slides = document.getElementsByClassName("mySlides");
+    slides[0].style.display= "block";
+
     // Removes broken images
     $("img").error(function () {
         console.log("Error!");
         $(this).remove();
 
         // If all img were removed: show default img and then remove buttons
-        let slides = document.getElementsByClassName("mySlides");
+        slides = document.getElementsByClassName("mySlides");
         if (slides.length===0) {
             str ="<img class=\"mySlides w3-center\" src=\"/ywti_wa2021_war/css/image/noImage.jpg\" alt=''/>\n" ;
             str2 = "";
             document.getElementById("advImages").innerHTML = str;
             document.getElementById("buttContainer").innerHTML = str2;
+            slides[0].style.display= "block";
         }
     });
 
 
-
-    slides[0].style.display= "block";
 
 }
 

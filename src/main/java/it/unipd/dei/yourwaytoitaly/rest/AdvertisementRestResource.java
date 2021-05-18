@@ -3,9 +3,11 @@ package it.unipd.dei.yourwaytoitaly.rest;
 import it.unipd.dei.yourwaytoitaly.database.*;
 import it.unipd.dei.yourwaytoitaly.resource.*;
 import it.unipd.dei.yourwaytoitaly.servlet.LoginServlet;
+import it.unipd.dei.yourwaytoitaly.utils.EmailSender;
 import it.unipd.dei.yourwaytoitaly.utils.ErrorCode;
 
 import javax.naming.NamingException;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -390,7 +392,7 @@ public class AdvertisementRestResource extends RestResource {
             }
 
             res.setStatus(HttpServletResponse.SC_OK);
-            //advertisement.toJSON(res.getOutputStream());
+            advertisement.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -459,25 +461,23 @@ public class AdvertisementRestResource extends RestResource {
 
             for (Booking b : bookingList) {
 
-                // TODO: Sends an email to the tourist
                 String email = b.getEmailTourist();
-                /*
-                ServletContext sc = getServletContext();
+                ServletContext sc = req.getServletContext();
                 String emailsite = sc.getInitParameter("emailSite");
                 String passEmail = sc.getInitParameter("passwordEmail");
                 // sending confirmation email
                 EmailSender mail= new EmailSender(email , emailsite , passEmail);
 
                 //send email and check if email is sent correctly
-                if (!mail.sendConfirmationEmail("YourWayToItaly:Booking deleted",
-                        "Your booking has just been deleted:")){
+                if (!mail.sendConfirmationEmail("Your Way To Italy: Booking deleted",
+                        "Your booking has just been deleted: " + a.getTitle())){
                     ErrorCode ec = ErrorCode.INTERNAL_ERROR;
                     Message m = new Message(ec.getErrorMessage(),
                             ec.getHTTPCode(), "Email not sent.");
                     res.setStatus(ec.getHTTPCode());
                     m.toJSON(res.getOutputStream());
                     return;
-                }*/
+                }
 
                 // Deletes the booking
                 BookingDAO.deleteBooking(b);
@@ -487,8 +487,8 @@ public class AdvertisementRestResource extends RestResource {
             AdvertisementDAO.deleteAdvertisement(idAdvertisement);
 
             res.setStatus(HttpServletResponse.SC_OK);
-            //Message m = new Message("Advertisement successfully deleted!");
-            //m.toJSON(res.getOutputStream());
+            Message m = new Message("Advertisement successfully deleted!");
+            m.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
@@ -822,7 +822,7 @@ public class AdvertisementRestResource extends RestResource {
         try {
             // list all the type_advertisements requested by the user
 
-            City c;
+            City city = null;
             String in = req.getParameter("key");
             int num = 0;
 
@@ -830,13 +830,13 @@ public class AdvertisementRestResource extends RestResource {
                 num = Integer.parseInt(in);
 
                 // Key is a number
-                c = CityDAO.searchCity(num);
+                city = CityDAO.searchCity(num);
             } catch (Exception e) {
                 // Key is NOT a number
-                c = CityDAO.searchCity(in);
+                city = CityDAO.searchCity(in);
             }
             res.setStatus(HttpServletResponse.SC_OK);
-            c.toJSON(res.getOutputStream());
+            city.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
