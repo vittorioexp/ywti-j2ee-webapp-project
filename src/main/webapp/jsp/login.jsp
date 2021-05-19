@@ -97,8 +97,8 @@ Since: 1.0
             </section>
             </main>
             <!-- footer imported with javascript -->
-            <div id="footer-area" class="w3-container w3-section"></div>
         </div>
+        <div id="footer-area"></div>
     </body>
 </html>
 
