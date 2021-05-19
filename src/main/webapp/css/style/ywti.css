@@ -24,7 +24,7 @@ header {
     right:0;
 }
 
-#small-logo {
+.small-logo {
 
     /* horizontal alignment inside the container*/
     text-align: left;
@@ -64,6 +64,46 @@ header {
 
 .topnav a:hover {
     color: #3c99dc;
+}
+
+.topnav .icon {
+    display: none;
+}
+
+@media screen and (max-width: 900px) {
+    .small-logo.responsive {
+        display: inline;
+    }
+    .topnav .topnav-right {
+        float: right;
+    }
+    .topnav a {display: none;}
+    .topnav a.icon {
+        float: right;
+        display: inline;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .small-logo.responsive {
+        display: none;
+    }
+    .topnav.responsive {
+        position: relative;
+    }
+    .topnav.responsive .topnav-right {
+        float: none;
+    }
+    .topnav.responsive .icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    .topnav.responsive a {
+        float: none;
+        display: block;
+        text-align: left;
+    }
 }
 
 #user-email {

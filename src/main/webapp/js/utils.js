@@ -5,6 +5,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
     fetchTemplate();
 })
 
+function loadHamburger() {
+    let x = document.getElementById("navbar-area");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+    x = document.getElementById("small-logo");
+    if (x.className === "small-logo") {
+        x.className += " responsive";
+    } else {
+        x.className = "small-logo";
+    }
+}
+
+
 function getTypeAdvList(elementId, placeholder) {
 
     let container = document.getElementById(elementId);
