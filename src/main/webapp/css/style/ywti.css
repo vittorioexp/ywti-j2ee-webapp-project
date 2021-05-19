@@ -71,7 +71,9 @@ header {
 }
 
 @media screen and (max-width: 900px) {
-    .small-logo.responsive {
+
+    /* Hamburger not clicked */
+    .small-logo {
         display: inline;
     }
     .topnav .topnav-right {
@@ -82,9 +84,8 @@ header {
         float: right;
         display: inline;
     }
-}
 
-@media screen and (max-width: 900px) {
+    /* Hamburger clicked */
     .small-logo.responsive {
         display: none;
     }
@@ -94,16 +95,17 @@ header {
     .topnav.responsive .topnav-right {
         float: none;
     }
-    .topnav.responsive .icon {
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
     .topnav.responsive a {
         float: none;
         display: block;
         text-align: left;
     }
+    .topnav.responsive .icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
 }
 
 #user-email {
