@@ -6,17 +6,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 })
 
 function loadHamburger() {
-    let x = document.getElementById("navbar-area");
-    if (x.className === "topnav") {
-        x.className += " responsive";
+    let x = document.getElementById("header-bar");
+    if (x.className === "") {
+        x.className += "responsive";
     } else {
-        x.className = "topnav";
-    }
-    x = document.getElementById("small-logo");
-    if (x.className === "small-logo") {
-        x.className += " responsive";
-    } else {
-        x.className = "small-logo";
+        x.className = "";
     }
 }
 

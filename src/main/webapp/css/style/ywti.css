@@ -75,34 +75,42 @@ header {
 @media screen and (max-width: 900px) {
 
     /* Hamburger not clicked */
-    .small-logo {
+    #header-bar {
+        height: 60px;
+    }
+    #header-bar .small-logo {
         display: inline;
     }
-    .topnav .topnav-right {
+    #header-bar .topnav-right {
         float: right;
     }
-    .topnav a {display: none;}
-    .topnav a.icon {
+    #header-bar a {
+        display: none;
+    }
+    #header-bar .icon {
         float: right;
         display: inline;
     }
 
     /* Hamburger clicked */
-    .small-logo.responsive {
+    #header-bar.responsive {
+        height: auto;
+    }
+    #header-bar.responsive .small-logo {
         display: none;
     }
-    .topnav.responsive {
+    #header-bar.responsive .topnav {
         position: relative;
     }
-    .topnav.responsive .topnav-right {
+    #header-bar.responsive .topnav-right {
         float: none;
     }
-    .topnav.responsive a {
+    #header-bar.responsive a {
         float: none;
         display: block;
         text-align: left;
     }
-    .topnav.responsive .icon {
+    #header-bar.responsive .icon {
         position: absolute;
         right: 0;
         top: 0;

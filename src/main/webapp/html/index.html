@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="mainWrapper w3-main">
-    <header class="">
+    <header id="header-bar" class="">
         <img id="small-logo" class="small-logo" src="/ywti_wa2021_war/utility/small-logo-transparent.png" >
         <div id="navbar-area" class="topnav" ></div>
     </header>
@@ -46,19 +46,19 @@
                 <h6>From amazing journeys in the dolomites to funky city dinners </h6>
             </div>
 
-            <form class="row" id="searchAdv" name="searchAdv" method="get" >
+            <form class="form-group" id="searchAdv" name="searchAdv" method="get" >
 
-                <select class="form-select" form="searchAdv" id="idType" name="type">
+                <select class="form-control" form="searchAdv" id="idType" name="type">
                     <option value="0" disabled selected>What</option>
                 </select>
 
-                <select class="column form-select" form="searchAdv" id="idCity" name="idCity">
+                <select class="form-control" form="searchAdv" id="idCity" name="idCity">
                     <option value="0" disabled selected>Where</option>
                 </select>
 
-                <input class="column form-control" placeholder="When" type="date" id="dateStart" name="dateStart" required>
+                <input class="form-control" placeholder="When" type="date" id="dateStart" name="dateStart" required>
 
-                <button type="submit" id="search-button" class="button column" >Start your journey</button><br/>
+                <button type="submit" id="search-button" class="button" >Start your journey</button><br/>
 
             </form>
         </section>
