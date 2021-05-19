@@ -20,6 +20,7 @@ body {
 header {
     background-color: #003B95;
     position: relative;
+    height: 60px;
     left:0;
     right:0;
 }
@@ -68,6 +69,7 @@ header {
 
 .topnav .icon {
     display: none;
+    padding: 14px 16px;
 }
 
 @media screen and (max-width: 900px) {
