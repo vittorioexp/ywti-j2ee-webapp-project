@@ -19,7 +19,6 @@ body {
 
 header {
     background-color: #003B95;
-    height: 70px;
     position: relative;
     left:0;
     right:0;
@@ -41,35 +40,30 @@ header {
     transform: translateY(-50%);
 }
 
-#navbar-area {
+.topnav {
 
     color: white;
     font-size: 16px;
     font-weight: 500;
 
-    /* horizontal alignment inside the container*/
-    text-align: right;
-    padding-right: 15px;
-
-    /* vertical alignment inside the container*/
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+    overflow: hidden;
 }
 
-.nav-link {
+.topnav-right {
+    float: right;
+}
 
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
     text-decoration: none;
-
-    /* horizontal alignment inside the container*/
-    padding-right: 15px;
-    padding-left: 15px;
+    font-size: 17px;
 }
 
-.nav-link:hover {
-    color: #d5f3fe;
+.topnav a:hover {
+    color: #3c99dc;
 }
 
 #user-email {
