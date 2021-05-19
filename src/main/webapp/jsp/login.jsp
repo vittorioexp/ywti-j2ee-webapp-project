@@ -33,6 +33,7 @@ Since: 1.0
         <meta name="keywords" content="login, loginpage, ywti, local, travel, italy"> <!-- some keywords to make your page more easily findable -->
         <!-- The viewport meta element is the key to making a responsive site work. -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <title>Login - Your Way to Italy</title>
         <script src="/ywti_wa2021_war/js/utils.js"></script>
         <c:choose>
@@ -66,10 +67,13 @@ Since: 1.0
             </c:otherwise>
         </c:choose>
         <script src="/ywti_wa2021_war/js/login-page.js"></script>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <link href="/ywti_wa2021_war/css/style/w3.css" rel="stylesheet" type="text/css">
         <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
         <link href="/ywti_wa2021_war/css/style/login-page.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </head>
     <body>
     <div class="mainWrapper w3-main">
