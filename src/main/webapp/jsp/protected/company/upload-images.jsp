@@ -1,5 +1,7 @@
 <%@ page import="it.unipd.dei.yourwaytoitaly.utils.ErrorCode" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Message" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Advertisement" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -34,7 +36,7 @@ Since: 1.0
     <meta name="keywords" content="upload, upload images, ywti, local, travel, italy">
     <!-- The viewport meta element is the key to making a responsive site work. -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Create an advertisement</title>
+    <title>Upload Images</title>
     <!-- Common libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -66,17 +68,27 @@ Since: 1.0
         <%
             String path = request.getRequestURI();
             String idAdvertisement = path.substring(path.lastIndexOf("image-do-upload") + 16);
+            int id = Integer.parseInt(idAdvertisement);
+            Advertisement a = AdvertisementDAO.searchAdvertisement(id);
         %>
-        <%= idAdvertisement %>
-        <section>
-            <form id="uploadImagesForm" name="uploadImagesForm" method="post" enctype="multipart/form-data"
-                  action="<c:url value="/image-upload" />" >
-                <input type="hidden" name="idAdvertisement" value="<%= idAdvertisement %>" />
-                <label for="image">image:</label>
-                <input id="image" name="image" type="file" id="file" multiple/><br/><br/>
-                <button type="submit" name="Submit" value="Submit">Upload</button><br/>
-            </form>
-        </section>
+        <h1 id="advTitle">Upload images for <%= a.getTitle() %></h1>
+        <div class="rowImg">
+            <section id="mainPanel" class="rowImg 2 w3-panel w3-card">
+                <form id="uploadImagesForm" class="w3-center" name="uploadImagesForm" method="post" enctype="multipart/form-data"
+                      action="<c:url value="/image-upload" />" >
+                    <input type="hidden" name="idAdvertisement" value="<%= idAdvertisement %>" />
+                    <label id="upload" for="image">
+                        <i class="fa fa-cloud-upload"></i>
+                        Choose images
+                    </label>
+                    <br>
+                    <br>
+                    <div id="previews"></div>
+                    <input id="image" name="image" class="button" type="file" id="file" onChange="readURL(this);" multiple/><br/><br/>
+                    <button type="submit" name="Submit" class="button" value="Submit">Upload</button><br/>
+                </form>
+            </section>
+        </div>
     </main>
     <!-- footer imported with javascript -->
     <div id="footer-area"></div>
