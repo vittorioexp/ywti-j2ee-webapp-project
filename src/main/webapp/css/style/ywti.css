@@ -120,15 +120,13 @@ header {
     padding-right: 15px;
 }
 
-/* TODO: fix button dimension, it must be dynamic (no fixed height/width) */
 .button {
+    display: inline-block;
     transition: all .25s ease-in-out;
     text-align: center;
     box-sizing: border-box;
     justify-content: center;
-    padding: 11px 15px;
-    height: 48px;
-    width: 200px;
+    padding: 5px 20px;
     font-size: 16px;
     line-height: 24px;
     font-weight: 500;
