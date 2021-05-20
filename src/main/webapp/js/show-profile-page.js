@@ -26,12 +26,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
                         // Send an http delete in JSON to the server
                         let idAdvertisement = button.value;
                         let url = contextPath + "/adv/" + idAdvertisement;
-
                         $.ajax({
                             url: url,
                             method: 'DELETE',
                             success: function(res) {
-                                window.location.href = contextPath;
+                                event.preventDefault();
+                                alert("Reload the page to see your information updated.");
                             },
                             error: function(res) {
                                 let resMessage = res.responseJSON.message;
@@ -89,9 +89,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 "click",
                 function(event) {
                     event.preventDefault();
-                    // Redirect to the show advertisement html
-                    let idAdvertisement = button.value;
-                    window.location.href = contextPath + "/adv-show/" + idAdvertisement;
+                    alert("Reload the page to see your information updated.");
                 });
         });
 
