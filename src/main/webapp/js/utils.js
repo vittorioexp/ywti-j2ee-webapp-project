@@ -500,7 +500,7 @@ function validateStringOnSubmit(str) {
 Returns true if the number is ready to be send in JSON, false otherwise
  */
 function validateIntegerOnSubmit(num) {
-    if (isNaN(num)) {
+    if (typeof num != "number") {
         return false;
     }
     if(num < 0 || num > 2000){

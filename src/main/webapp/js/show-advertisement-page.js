@@ -109,12 +109,22 @@ function getIdAdvertisement() {
 
 function fetchAdvertisement() {
     let url = new URL(contextPath+"/adv/" + getIdAdvertisement());
+    $.ajax({
+        url: url,
+        method: 'GET',
+        success: function(res) {
+            loadAdvertisement(res);
+        },
+        error: function(res) {
+            window.location.href=contextPath+"/html/error.html";
+        }
+    });
     sendJsonRequest(url,"GET","",loadAdvertisement);
 }
 
 function loadAdvertisement(req) {
     // Parses the JSON obj
-    let jsonData = JSON.parse(req).advertisement;
+    /*let jsonData = JSON.parse(req).advertisement;
     let title = jsonData['title'];
     let description = jsonData['description'];
     let price = jsonData['price'];
@@ -124,7 +134,18 @@ function loadAdvertisement(req) {
     let dateEnd = jsonData['dateEnd'];
     let timeStart = jsonData['timeStart'];
     let timeEnd = jsonData['timeEnd'];
-    let emailCompany = jsonData['emailCompany'];
+    let emailCompany = jsonData['emailCompany'];*/
+    let adv = req.advertisement;
+    let title = adv['title'];
+    let description = adv['description'];
+    let price = adv['price'];
+    let score = adv['score'];
+    let numTotItem = adv['numTotItem'];
+    let dateStart = adv['dateStart'];
+    let dateEnd = adv['dateEnd'];
+    let timeStart = adv['timeStart'];
+    let timeEnd = adv['timeEnd'];
+    let emailCompany = adv['emailCompany'];
 
     // Presents the JSON obj
     document.getElementById("advTitle").innerHTML = "<h1 id=\"advTitle\">" + title + "</h1>";
