@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                             url: url,
                             method: 'DELETE',
                             success: function(res) {
-                                window.location.reload(true);
+                                window.location.href = contextPath;
                             },
                             error: function(res) {
                                 let resMessage = res.responseJSON.message;
@@ -102,8 +102,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                             data: data,
                             method: 'GET',
                             success: function(res) {
-                                window.location.reload(true);
-                                //window.location.href = window.location.href;
+                                window.location.href = contextPath;
                             },
                             error: function(res) {
                                 let resMessage = res.responseJSON.message;
