@@ -65,8 +65,8 @@ function fetchEditAdvertisement(currentUrl){
         let url = new URL(contextPath+"/adv/" + idAdvertisement);
 
         let data =
-            "{\"advertisement\": {\"idAdvertisement\":\"" + idAdvertisement + "\",\"title\":\"" + title
-            + "\",\"description\":\"" + description + "\",\"score\":\"" + "0" + "\",\"price\":\"" + price +
+            "{\"advertisement\": {\"idAdvertisement\":\"" + idAdvertisement + "\",\"title\":\"" + sanitizeString(title)
+            + "\",\"description\":\"" + sanitizeString(description) + "\",\"score\":\"" + "0" + "\",\"price\":\"" + price +
             "\",\"numTotItem\":\"" + numTotItem + "\"," +
             "\"dateStart\":\"" + dateStart + "\"," +
             "\"dateEnd\":\"" + dateEnd

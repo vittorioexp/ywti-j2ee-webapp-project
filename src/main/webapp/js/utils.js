@@ -287,13 +287,6 @@ function validateEmail(index) {
 
     if (typeof email === "string" || email instanceof String) {
         // it's a string
-        email.replace("\b"," ")
-            .replace("\f"," ")
-            .replace("\n"," ")
-            .replace("\r"," ")
-            .replace("\t"," ")
-            .replace("\"", " ")
-            .replace("\\"," ");
 
         let emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -321,14 +314,6 @@ function validatePassword(index) {
         error.innerHTML = "";
         return;
     }
-
-    password.replace("\b"," ")
-        .replace("\f"," ")
-        .replace("\n"," ")
-        .replace("\r"," ")
-        .replace("\t"," ")
-        .replace("\"", " ")
-        .replace("\\"," ");
 
     // Validate length
     if(password.length >= 8) {
@@ -412,20 +397,15 @@ function validateIdCity(){
 function validateTitle(){
     let title = document.getElementById("title").value;
     let error = document.getElementById("error");
-    let regex = /[\{\"\}]/g;
+    let regex = /[\{\}]/g;
 
     if (title.length === 0) {
         error.innerHTML = "";
         return;
     }
 
-    title.replace("\b"," ")
-        .replace("\f"," ")
-        .replace("\n"," ")
-        .replace("\r"," ")
-        .replace("\t"," ")
-        .replace("\"", " ")
-        .replace("\\"," ");
+    document.getElementById("title").value = title;
+    document.getElementById("title").innerText = title;
 
     if (regex.test(title) || title.length < 5 || title.length > 200) {
         if(error.innerHTML.includes("<p>Invalid title.</p>")){
@@ -443,20 +423,12 @@ function validateTitle(){
 function validateDescription(){
     let description = document.getElementById("description").value;
     let error = document.getElementById("error");
-    let regex = /[\{\"\}]/g;
+    let regex = /[\{\}]/g;
 
     if (description.length === 0) {
         error.innerHTML = "";
         return;
     }
-
-    description.replace("\b"," ")
-        .replace("\f"," ")
-        .replace("\n"," ")
-        .replace("\r"," ")
-        .replace("\t"," ")
-        .replace("\"", " ")
-        .replace("\\"," ");
 
     if (regex.test(description) || description.length < 5  || description.length > 10000) {
         if(error.innerHTML.includes("<p>Invalid description.</p>")){
@@ -508,19 +480,29 @@ function validateNumTotItem(){
     }
     error.innerHTML = error.innerHTML.replace('<p>Invalid number of item.</p>','');
 }
+
+/*
+Returns a string ready to be send in JSON
+ */
+function sanitizeString(str) {
+    return str.replace(/(?:\r|\n|\r\n)/g," ").replace(/["]/g, "'");
+}
+
+/*
+Returns true if the string is ready to be send in JSON, false otherwise
+ */
 function validateStringOnSubmit(str) {
-    let regex = /[\{\"\}]/g;
-    str.replace("\b"," ")
-        .replace("\f"," ")
-        .replace("\n"," ")
-        .replace("\r"," ")
-        .replace("\t"," ")
-        .replace("\"", " ")
-        .replace("\\"," ");
+    let regex = /[\{\}]/g;
     return !regex.test(str);
 }
 
+/*
+Returns true if the number is ready to be send in JSON, false otherwise
+ */
 function validateIntegerOnSubmit(num) {
+    if (isNaN(num)) {
+        return false;
+    }
     if(num < 0 || num > 2000){
         return false;
     }

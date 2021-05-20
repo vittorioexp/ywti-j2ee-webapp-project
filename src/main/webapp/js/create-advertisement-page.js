@@ -31,8 +31,8 @@ function createAdvertisement() {
 
     let data = "{\"advertisement\":" +
         "{\"idAvdertisement\":\"" + idAdvertisement.toString() + "\"," +
-        "\"title\":\"" + title +
-        "\",\"description\":\"" + description + "\"," +
+        "\"title\":\"" + sanitizeString(title) +
+        "\",\"description\":\"" + sanitizeString(description) + "\"," +
         "\"price\":\"" + price + "\"," +
         "\"score\":\"" + 0 + "\"," +
         "\"numTotItem\":\"" + numTotItem + "\"," +
