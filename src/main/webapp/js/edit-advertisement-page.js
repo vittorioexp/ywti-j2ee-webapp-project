@@ -29,8 +29,8 @@ function fetchEditAdvertisement(currentUrl){
     let price = document.getElementById("price").value.toString();
     let numTotItem = document.getElementById("numTotItem").value.toString();
 
-    if (price.length===0) { price = 0;}
-    if (numTotItem.length===0) { numTotItem = 0;}
+    if (price.length===0) { price = "0";}
+    if (numTotItem.length===0) { numTotItem = "0";}
 
     let messageError="";
     let errorOccurred=false;

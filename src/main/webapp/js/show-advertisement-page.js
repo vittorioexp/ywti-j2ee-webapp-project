@@ -119,22 +119,9 @@ function fetchAdvertisement() {
             window.location.href=contextPath+"/html/error.html";
         }
     });
-    sendJsonRequest(url,"GET","",loadAdvertisement);
 }
 
 function loadAdvertisement(req) {
-    // Parses the JSON obj
-    /*let jsonData = JSON.parse(req).advertisement;
-    let title = jsonData['title'];
-    let description = jsonData['description'];
-    let price = jsonData['price'];
-    let score = jsonData['score'];
-    let numTotItem = jsonData['numTotItem'];
-    let dateStart = jsonData['dateStart'];
-    let dateEnd = jsonData['dateEnd'];
-    let timeStart = jsonData['timeStart'];
-    let timeEnd = jsonData['timeEnd'];
-    let emailCompany = jsonData['emailCompany'];*/
     let adv = req.advertisement;
     let title = adv['title'];
     let description = adv['description'];
