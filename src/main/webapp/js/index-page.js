@@ -3,11 +3,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     document.getElementById("advertisementList").style.display = "none";
 
-    // Fetches the list of typeAdvertisements and Cities
-    $.getScript(contextPath + "/js/utils.js",function(){
-        getTypeAdvList("idType", "What");
-        getCityList("idCity", "Where");
-    });
+    getTypeAdvList("idType", "What");
+    getCityList("idCity", "Where");
 
     // fetch the list of advertisements when clicking the search button
     document.getElementById("search-button").addEventListener("click", function(event) {

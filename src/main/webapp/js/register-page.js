@@ -12,11 +12,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.getElementsByName("password")[0].addEventListener("focusout", function(event) {validatePassword(0)})
     document.getElementsByName("password")[1].addEventListener("focusout", function(event) {validatePassword(1)})
 
-    //getting the list of cities
-    $.getScript(contextPath + "/js/utils.js",function(){
-        getCityList("idCity_t", "City");
-        getCityList("idCity_c", "City");
-    });
+    getCityList("idCity_t", "City");
+    getCityList("idCity_c", "City");
 
     //Submit buttons
     let registerButton = document.getElementsByName("register-button");

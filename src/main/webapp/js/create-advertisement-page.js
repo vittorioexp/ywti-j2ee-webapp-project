@@ -1,9 +1,7 @@
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
-    $.getScript(contextPath + "/js/utils.js",function(){
-        getTypeAdvList("idType", "Type");
-    });
+    getTypeAdvList("idType", "Type");
 
     document.getElementById("title").addEventListener("focusout", validateTitle);
     document.getElementById("description").addEventListener("focusout", validateDescription);
