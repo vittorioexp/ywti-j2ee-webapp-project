@@ -35,10 +35,27 @@ Since: 1.0
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Login - Your Way to Italy</title>
 
+        <!-- Common libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+        <!-- Common CSS -->
+        <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
+
+        <!-- Custom CSS -->
+        <link href="/ywti_wa2021_war/css/style/login-page.css" rel="stylesheet" type="text/css">
+
+        <!-- Common JS -->
+        <script src="/ywti_wa2021_war/js/utils.js"></script>
+
         <c:choose>
             <c:when test="${!empty sessionScope.Authorization}">
                 <c:set var="context" value="${pageContext.request.contextPath}" />
                 <script>
+                    // if a session is active, save user info in the storage
                     let auth = "${sessionScope.Authorization}";
                     let authHeader = auth.substring(
                         auth.lastIndexOf(" ") + 1,
@@ -59,28 +76,13 @@ Since: 1.0
             </c:when>
             <c:otherwise>
                 <script>
+                    // if a session is NOT active, delete user info from the storage
                     localStorage.removeItem("loggedIn");
                     localStorage.removeItem("userEmail");
                     localStorage.removeItem("userRole");
                 </script>
             </c:otherwise>
         </c:choose>
-
-        <!-- Common libraries -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
-        <!-- Common CSS -->
-        <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
-
-        <!-- Custom CSS -->
-        <link href="/ywti_wa2021_war/css/style/login-page.css" rel="stylesheet" type="text/css">
-
-        <!-- Common JS -->
-        <script src="/ywti_wa2021_war/js/utils.js"></script>
 
         <!-- Custom JS -->
         <script src="/ywti_wa2021_war/js/login-page.js"></script>

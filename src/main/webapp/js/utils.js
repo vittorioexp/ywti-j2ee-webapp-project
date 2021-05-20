@@ -100,14 +100,20 @@ function getCityList(elementId, placeholder) {
 }
 
 function isLoggedIn() {
-    return localStorage.getItem("loggedIn");
+    return localStorage.getItem("loggedIn")===true || localStorage.getItem("loggedIn")==="true";
 }
 
 function getUserEmail() {
+    if (!isLoggedIn()) {
+        return "";
+    }
     return localStorage.getItem("userEmail");
 }
 
 function getUserRole() {
+    if (!isLoggedIn()) {
+        return "";
+    }
     return localStorage.getItem("userRole");
 }
 
@@ -272,29 +278,35 @@ function validateEmail(index) {
     // Error section
     let error = document.getElementById("error");
 
-    let email = document.getElementsByName("email")[index];
-
-    if (email.value.length === 0) {
+    let email = document.getElementsByName("email")[index].value;
+    console.log(email);
+    if (email.length === 0) {
         error.innerHTML = "";
         return;
     }
 
-    email.replace("\b"," ")
-        .replace("\f"," ")
-        .replace("\n"," ")
-        .replace("\r"," ")
-        .replace("\t"," ")
-        .replace("\"", " ")
-        .replace("\\"," ");
+    if (typeof email === "string" || email instanceof String) {
+        // it's a string
+        email.replace("\b"," ")
+            .replace("\f"," ")
+            .replace("\n"," ")
+            .replace("\r"," ")
+            .replace("\t"," ")
+            .replace("\"", " ")
+            .replace("\\"," ");
 
-    let emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        let emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-    if (emailRegExp.test(email.value)) {
-        //email.className = "valid";
-        error.innerHTML = "";
+        if (emailRegExp.test(email)) {
+            error.innerHTML = "";
+        } else {
+            error.innerHTML = "Invalid email";
+            return;
+        }
     } else {
-        //email.className = "invalid";
+        // it's not a string
         error.innerHTML = "Invalid email";
+        return;
     }
 }
 
@@ -303,9 +315,9 @@ function validatePassword(index) {
     // Error section
     let error = document.getElementById("error");
 
-    let password = document.getElementsByName("password")[index];
+    let password = document.getElementsByName("password")[index].value;
 
-    if (password.value.length === 0) {
+    if (password.length === 0) {
         error.innerHTML = "";
         return;
     }
@@ -319,7 +331,7 @@ function validatePassword(index) {
         .replace("\\"," ");
 
     // Validate length
-    if(password.value.length >= 8) {
+    if(password.length >= 8) {
         error.innerHTML = "";
     } else {
         error.innerHTML = "Invalid password: insert at least 8 characters";
@@ -328,7 +340,7 @@ function validatePassword(index) {
 
     // Validate lowercase letters
     let lowerCaseLetters = /[a-z]/g;
-    if(password.value.match(lowerCaseLetters)) {
+    if(password.match(lowerCaseLetters)) {
         error.innerHTML = "";
     } else {
         error.innerHTML = "Invalid password: insert at least one lower case character";
@@ -337,7 +349,7 @@ function validatePassword(index) {
 
     // Validate capital letters
     let upperCaseLetters = /[A-Z]/g;
-    if(password.value.match(upperCaseLetters)) {
+    if(password.match(upperCaseLetters)) {
         error.innerHTML = "";
     } else {
         error.innerHTML = "Invalid password: insert at least one upper case character";
@@ -346,7 +358,7 @@ function validatePassword(index) {
 
     // Validate numbers
     let numbers = /[0-9]/g;
-    if(password.value.match(numbers)) {
+    if(password.match(numbers)) {
         error.innerHTML = "";
     } else {
         error.innerHTML = "Invalid password: insert at least one number";
@@ -359,15 +371,15 @@ function validatePhoneNumber(index) {
     // Error section
     let error = document.getElementById("error");
 
-    let phonenumber = document.getElementsByName("phonenumberphonenumber")[index];
+    let phonenumber = document.getElementsByName("phonenumber")[index].value;
 
-    if (phonenumber.value.length === 0) {
+    if (phonenumber.length === 0) {
         error.innerHTML = "";
         return;
     }
 
     // Validate length
-    if(phonenumber.value.length >= 7 && phonenumber.value.length <= 14 ) {
+    if(phonenumber.length >= 7 && phonenumber.length <= 14 ) {
         error.innerHTML = "";
     } else {
         error.innerHTML = "Invalid phone number";
@@ -376,7 +388,7 @@ function validatePhoneNumber(index) {
 
     // Validate numbers
     let numbers = /^[0-9]*$/;
-    if(phonenumber.value.match(numbers)) {
+    if(phonenumber.match(numbers)) {
         error.innerHTML = "";
     } else {
         error.innerHTML = "Invalid phone number";
@@ -389,18 +401,20 @@ function validateIdCity(){
     let idCity = document.getElementById("idCity").value;
     if(idCity<=0){
         let error = document.getElementById("error");
-        idCity.className = "invalid";
         error.innerHTML = "Invalid ID";
+        return
+    } else {
+        error.innerHTML = "";
     }
 }
 
 
 function validateTitle(){
-    let title = document.getElementById("title");
+    let title = document.getElementById("title").value;
     let error = document.getElementById("error");
     let regex = /[\{\"\}]/g;
 
-    if (title.value.length === 0) {
+    if (title.length === 0) {
         error.innerHTML = "";
         return;
     }
@@ -413,16 +427,17 @@ function validateTitle(){
         .replace("\"", " ")
         .replace("\\"," ");
 
-    if (regex.test(title.value) || title.value.length < 5 || title.value.length > 200) {
-        if(error.innerHTML.includes("<article>Invalid title.</article>")){
+    if (regex.test(title) || title.length < 5 || title.length > 200) {
+        if(error.innerHTML.includes("<p>Invalid title.</p>")){
             return;
-        } else if(!error.innerHTML.includes("<article>Invalid title.</article>")){
-            error.innerHTML +="<article>Invalid title.</article>";
+        } else if(!error.innerHTML.includes("<p>Invalid title.</p>")){
+            error.innerHTML +="<p>Invalid title.</p>";
             return;
         }
     }
 
-    error.innerHTML = error.innerHTML.replace('<article>Invalid title.</article>','');
+    // At this point there are no errors
+    error.innerHTML = error.innerHTML.replace('<p>Invalid title.</p>','');
 }
 
 function validateDescription(){

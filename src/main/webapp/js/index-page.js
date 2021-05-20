@@ -62,7 +62,12 @@ function loadAdvertisementList(res){
     let advList = res.resourceList;
     let str;
     if (advList.length>0) {
-        str = "<h2 class=\"titleAdvList w3-center\">" + advList.length + " advertisements found" + "</h2>";
+        if (advList.length===1) {
+            str = "<h2 class=\"titleAdvList w3-center\"> Only 1 advertisement found" + "</h2>";
+        } else {
+            str = "<h2 class=\"titleAdvList w3-center\">" + advList.length + " advertisements found" + "</h2>";
+        }
+
         advList.forEach(function(resource) {
             let adv = resource.advertisement;
             let idAdv = adv.idAdvertisement;
