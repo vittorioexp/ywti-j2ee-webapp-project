@@ -77,12 +77,10 @@ function loadAdvertisementList(res){
             let dateStart = adv.dateStart;
             let dateEnd = adv.dateEnd;
 
-            let path = "";
-
             str +=
                 "<article class=\"advertisement w3-section w3-container w3-panel w3-card-4\">" +
                     "<span class=\"advSmallImage\">" +
-                        "<img class=\"\" src=\"https://cf.bstatic.com/xdata/images/hotel/square600/226809345.webp?k=f78d142a274e06bf0a6a7356c7d6d98e41eeeb8a9e9e616c014ff2154d220d61&o=\" alt=''/>"+
+                        "<img id=\"img"+ idAdv +"\" class=\"small-adv-img\" src=\"/ywti_wa2021_war/utility/img-default.jpg\" alt=''/>"+
                     "</span>" +
                     "<span class=\"gotoShowAdvertisement\" >" +
                         "<form name=gotoShowAdvertisementForm class=\"gotoShowAdvertisementForm\" method=GET />" +
@@ -91,7 +89,7 @@ function loadAdvertisementList(res){
                     "</span>" +
                     "<span class=\"advSummary\">" +
                         "<h3>" + title + "</h3>" +
-                        "<p>" + "Rated 5/5 - " + price + " euro" + "</p>" +
+                        "<p> Rated <span id=\"rate" + idAdv + "\"></span>/5 - " + price + " euro" + "</p>" +
                         "<p>" + description + "</p>" +
                         "<p>" + "Starting " + dateStart + "</p>" +
                         "<p>" + "Ending " + dateEnd + "</p>" +
@@ -100,11 +98,52 @@ function loadAdvertisementList(res){
 
         });
 
+        // Display textual ads
         advertisementList.innerHTML = str;
 
-        // TODO For each adv, load the rate
+        //For each adv, load the rate
+        advList.forEach(function(resource) {
+            let adv = resource.advertisement;
+            let idAdv = adv.idAdvertisement;
+            // Fetch the rate
+            sendJsonRequest(
+                contextPath+"/adv/" + idAdv +"/rate",
+                "GET",
+                "",
+                function(req) {
+                    // Parses the JSON obj
+                    let jsonData = JSON.parse(req).rate;
+                    let rate = jsonData['rate'];
+                    // Insert the rate inside the HTML
+                    document.getElementById("rate" + idAdv).innerText = rate;
+                });
+        });
 
-        // TODO For each adv, load an image
+        // fix broken images
+        $(".small-adv-img").on("error", function () {
+            $(this).attr("src", "/ywti_wa2021_war/utility/img-default.jpg");
+        });
+
+        //For each adv, load an image
+        advList.forEach(function(resource, index) {
+            let adv = resource.advertisement;
+            let idAdv = adv.idAdvertisement;
+            // Fetch the rate
+            sendJsonRequest(
+                contextPath+"/adv/" + idAdv +"/image",
+                "GET",
+                "",
+                function(req) {
+                    // Parses the JSON obj
+                    let imageList = JSON.parse(req).resourceList;
+                    if (imageList.length>0) {
+                        // Insert the last image inside the HTML
+                        let image = imageList[imageList.length-1].image;
+                        let path = image.path;
+                        document.getElementById("img" + idAdv).src = path;
+                    }
+                });
+        });
 
 
     } else {
