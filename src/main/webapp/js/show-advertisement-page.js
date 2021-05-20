@@ -19,11 +19,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     fetchFeedbackList();
     fetchImageList();
 
-
-    //images slideshow
-    slideIndex = 1;
-    showDivs(-1);
-
 });
 
 function validateRateFeedback(rateFeedback){
@@ -282,8 +277,8 @@ function loadImageList(req) {
     document.getElementById("advImages").innerHTML = str;
     document.getElementById("buttContainer").innerHTML = str2;
 
-    let slides = document.getElementsByClassName("mySlides");
-    slides[0].style.display= "inline";
+    //document.getElementsByClassName("mySlides")[0].style.display= "inline";
+    plusDivs(+1);
 
     // Removes broken images
     $("img").on("error", function () {
@@ -298,6 +293,7 @@ function loadImageList(req) {
             document.getElementById("buttContainer").innerHTML = str2;
             slides[0].style.display= "inline";
         }
+        plusDivs(+1);
     });
 
 
