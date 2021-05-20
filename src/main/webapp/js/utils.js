@@ -14,10 +14,6 @@ function loadHamburger() {
     }
 }
 
-
-
-/*
-
 function getTypeAdvList(elementId, placeholder) {
 
 let container = document.getElementById(elementId);
@@ -58,48 +54,6 @@ head = "<option value=\"\" disabled selected>" + placeholder + "</option>\n";
 str = localStorage.getItem("typeAdvList");
 container.innerHTML = head + str;
 }
-}
-*/
-
-function getTypeAdvList(elementId) {
-
-    //Pass "dropdown-menu"
-    let container = document.getElementById(elementId);
-    let head = "";
-    let str = "";
-
-    // Checks if the list is already in the storage
-    let storageList = localStorage.getItem("typeAdvList");
-
-    if (storageList===null || !storageList.includes("option")) {
-        // The list is not in the storage
-        let url = contextPath + "/typeAdv";
-        $.getJSON(url, function (res) {
-            let typeAdvList = res.resourceList;
-            if (typeAdvList.length>0) {
-                typeAdvList.forEach(function(resource) {
-                    let typeAdv = resource.typeAdvertisement;
-                    let idType = typeAdv.idType;
-                    let type = typeAdv.type;
-
-                    str+= "<button class=\"dropdown-item\" type=\"button\" vale=\"" + idType +"\">" + type + "</button>\n";
-                });
-
-                // Save the list in the storage
-                localStorage.setItem("typeAdvList", str);
-
-            } else {
-                str = "\"<button class=\"dropdown-item\" disabled type=\"button\" vale=\"" + 0 +"\" >" + Error + "</button>\n";
-            }
-            // Display the list
-            container.innerHTML = str;
-        });
-
-    } else {
-        // The list is in the storage
-        str = localStorage.getItem("typeAdvList");
-        container.innerHTML = str;
-    }
 }
 
 

@@ -286,7 +286,7 @@ function loadImageList(req) {
     slides[0].style.display= "inline";
 
     // Removes broken images
-    $("img").error(function () {
+    $("img").on("error", function () {
         $(this).remove();
 
         // If all img were removed: show default img and then remove buttons
