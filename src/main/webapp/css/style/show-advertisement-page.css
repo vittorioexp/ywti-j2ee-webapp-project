@@ -22,33 +22,38 @@ main {
     color: #333;
 }
 
-#createFeedback, #feedbackList, #createBooking, #bookingList {
-    margin-bottom: 15px;
-    padding: 10px;
+#createFeedback, #feedbackList, #createBooking, #bookingList , #infoSection, #imageSection{
+    margin: 3%;
 }
 
-#rateFeedback, #textFeedback, #createBookingForm {
-    width: 40%;
-    height: auto;
+img.mySlides{
+    height: 450px;
+    max-width: 600px;
+}
+
+.advInfoElement{
+    width: 600px;
 }
 
 #imageSection{
-    height: 470px;
+    flex-shrink: 0;
 }
 
-#imageSection > img {
-    width: auto;
-    height: 95%;
-    margin: auto;
-    padding-top: 20px;
+
+.rowAdv {
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
-.createBooking {
-    border-top: 1px solid #cd8900;
-    background: #ffe08a;
-    border-bottom: 1px solid #cd8900;
+@media (max-width: 800px) {
+    .rowAdv {
+        flex-direction: column;
+    }
 }
 
-.createFeedback {
-    background-color: #ebf3ff;
+.colAdv {
+    flex: 1;
+    justify-content: center;
 }

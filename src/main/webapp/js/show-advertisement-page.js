@@ -57,7 +57,8 @@ function fetchCreateBooking(){
         },
         error: function(res) {
             let resMessage = res.responseJSON.message;
-            alert(resMessage.message + " " + resMessage.errorDetails);
+            // alert(resMessage.message + " " + resMessage.errorDetails);
+            document.getElementById("errorBooking").innerHTML = resMessage.errorDetails;
         }
     });
 }
@@ -93,7 +94,8 @@ function fetchCreateFeedback(){
         },
         error: function(res) {
             let resMessage = res.responseJSON.message;
-            alert(resMessage.message);
+            // alert(resMessage.message);
+            document.getElementById("errorFeedback").innerHTML = resMessage.errorDetails;
         }
     });
 }
@@ -170,8 +172,8 @@ function loadRate(req) {
     let rate = jsonData['rate'];
 
     // Presents the JSON obj
-    let info = "<img src=\"/ywti_wa2021_war/css/image/" + rate + "s.jpg\" />\n" + document.getElementById("infoSection").innerHTML;
-    document.getElementById("infoSection").innerHTML = info;
+    let info = "<img src=\"/ywti_wa2021_war/css/image/" + rate + "s.jpg\" />\n";
+    document.getElementById("advTitle").innerHTML += info;
 }
 
 function fetchFeedbackList() {

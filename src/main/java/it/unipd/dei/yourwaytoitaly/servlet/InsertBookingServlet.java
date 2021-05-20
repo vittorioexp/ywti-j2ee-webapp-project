@@ -110,7 +110,7 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             if (adv.getDateEnd().compareTo(date)<0) {
                 ErrorCode ec = ErrorCode.WRONG_FORMAT;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getHTTPCode(),"Dates not valid.");
+                        ec.getHTTPCode(),"You can't book this: The event has ended on " + adv.getDateEnd());
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
@@ -145,7 +145,7 @@ public final class InsertBookingServlet extends AbstractDatabaseServlet {
             } catch (SQLException ex) {
                 ErrorCode ec = ErrorCode.BOOKING_ALREADY_DONE;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getHTTPCode(),"Booking already done.");
+                        ec.getHTTPCode(),"You have already booked this item.");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;

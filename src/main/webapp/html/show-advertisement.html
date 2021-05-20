@@ -32,22 +32,24 @@
 <div class="mainWrapper w3-main">
     <header class="">
         <img id="small-logo" class="small-logo" src="/ywti_wa2021_war/utility/small-logo-transparent.png" >
-        <div id="navbar-area" class="nav-area w3-bar w33-container" ></div>
+        <div id="navbar-area" class="topnav" ></div>
     </header>
     <main class="mainContent w3-container" >
         <div id="user-email" class=""></div>
             <div id="advTitle" class="w3-center">
                 Loading the title
             </div>
+            <div class="rowAdv w3-panel w3-card">
+                <section id="imageSection" class="colAdv w3-container">
+                    <div name="slideshow" class="w3-center" id="advImages"></div>
+                    <div id="buttContainer" class="w3-center"  ></div>
+                </section>
 
-            <section id="imageSection" class="w3-half w3-container">
-                <div name="slideshow" class="" id="advImages"></div>
-                <div id="buttContainer" class="w3-center"  ></div>
-            </section>
+                <section id ="infoSection" class="colAdv advInfo w3-container"></section>
+            </div>
 
-            <section id ="infoSection" class="advInfo w3-half w3-container"></section>
-
-            <section id="createFeedback" class="createFeedback w3-half w3-container">
+            <div class="rowAdv 2 w3-panel w3-card">
+                <section id="createFeedback" class="colAdv createFeedback w3-container">
                     <section id="errorCreateFeedback"></section>
                     <form id="createFeedbackForm" class="" name="createFeedbackForm" method="POST" >
                         <h3>Leave a feedback</h3>
@@ -59,24 +61,28 @@
                             <br>
                         <button id="createFeedbackButton" class="button" type="submit">Leave a feedback</button><br/>
                     </form>
-            </section>
-
-            <section id="feedbackList" class="feedbackList w3-half w3-container"></section>
-
-            <section id="createBooking" class="createBooking w3-half w3-container">
+                    <p id="errorFeedback"></p>
+                </section>
+                <section id="createBooking" class="colAdv createBooking w3-container">
                     <section id="errorCreateBooking"></section>
                     <form id="createBookingForm" class="" name="createBookingForm" method="POST">
                         <h3>Book your journey</h3>
-                        <input id="numBooking" name="numBooking" type="number" class="w3-input" placeholder="Number of items" required/>
+
+                        <input id="numBooking" name="numBooking" type="number" class="w3-input" placeholder="Number of items" required/>  <br>
+
 
                         <button id="createBookingButton" class="button" type="submit">Book your journey</button>
                     </form>
-            </section>
+                    <p id="errorBooking"></p>
+                </section>
 
-            <section id="bookingList" class="bookingList w3-half w3-container"></section>
+            </div>
+            <div class="rowAdv 3 w3-panel w3-card">
 
+                <section id="feedbackList" class="colAdv feedbackList w3-container"></section>
 
-
+                <section id="bookingList" class="colAdv bookingList w3-half w3-container"></section>
+            </div>
         </main>
     <!-- footer imported with javascript -->
     <div id="footer-area" class="w3-container w3-section"></div>
