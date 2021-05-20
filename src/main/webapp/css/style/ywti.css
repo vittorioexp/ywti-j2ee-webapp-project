@@ -274,4 +274,19 @@ header {
 
 .center{
     text-align: center;
+    padding-top: 5px;
+}
+
+.btnfooter {
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    color: #FFFFFF;
+    text-decoration: none;
+    line-height: 1.2;
+    background-color: #0A4275;
+    border-radius: 30px;
+    padding: 5px 20px;
+    border: 2px solid #FFFFFF;
+    cursor: pointer;
 }
