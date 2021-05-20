@@ -5,6 +5,14 @@ Version: 1.0
 Since: 1.0
  */
 
+.form-control {
+    background-color: white;
+}
+
+.form-control:hover {
+    background-color: #3c99dc;
+}
+
 #slideshow {
     max-width: 100%;
 }
