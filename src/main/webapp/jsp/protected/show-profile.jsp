@@ -101,6 +101,7 @@ Since: 1.0
                                         <td>Date</td>
                                         <td>Items</td>
                                         <td></td>
+                                        <td></td>
                                     </tr>
                                     <c:forEach items="<%=bookingList%>" var="booking">
                                         <tr>
@@ -111,6 +112,11 @@ Since: 1.0
                                                 <%=advertisementList.get(count).getDateStart()%>
                                             </td>
                                             <td> ${booking.numBooking} items  </td>
+                                            <td>
+                                                <form id="gotoShowBookingForm" name="showBookingForm" method="GET">
+                                                    <button name="showBookingButton" value="${booking.idAdvertisement}" class="button">Info</button>
+                                                </form>
+                                            </td>
                                             <td>
                                                 <form id="deleteBookingForm" name="deleteBookingForm" method="DELETE">
                                                     <button name="deleteBookingButton" value="${booking.idAdvertisement}" class="button">Delete</button>
@@ -167,13 +173,13 @@ Since: 1.0
                                         <tr>
                                             <td colspan="5">
                                                 <form id="gotoEditAdvertisementForm" class="buttonSection" name="gotoEditAdvertisementForm" method="GET"/>
-                                                <button name="editAdvertisementButton" value="${adv.idAdvertisement}" class="button listButtons">Edit</button><br/>
+                                                <button name="editAdvertisementButton" value="${adv.idAdvertisement}" class="button">Edit</button><br/>
                                                 </form>
                                                 <form id="gotoShowAdvertisementForm" class="buttonSection" name="gotoShowAdvertisementForm" method="GET"/>
-                                                <button name="showAdvertisementButton" value="${adv.idAdvertisement}" class="button listButtons">Info</button><br/>
+                                                <button name="showAdvertisementButton" value="${adv.idAdvertisement}" class="button">Info</button><br/>
                                                 </form>
                                                 <form id="deleteAdvertisementForm" class="buttonSection" name="deleteAdvertisementForm" method="DELETE">
-                                                    <button name="deleteAdvertisementButton" value="${adv.idAdvertisement}" class="button listButtons">Delete</button>
+                                                    <button name="deleteAdvertisementButton" value="${adv.idAdvertisement}" class="button">Delete</button>
                                                 </form>
                                             </td>
                                         </tr>
