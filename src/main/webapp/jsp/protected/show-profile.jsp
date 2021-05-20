@@ -61,13 +61,13 @@ Since: 1.0
 
 </head>
 <body>
-    <div class="mainWrapper w3-main">
-        <header class="">
-            <img id="small-logo" class="small-logo" src="/ywti_wa2021_war/utility/small-logo-transparent.png" >
-            <div id="navbar-area" class="nav-area w3-bar w33-container" ></div>
-        </header>
-        <main class="mainContent w3-container" >
-            <div id="user-email" class=""></div>
+<div class="mainWrapper w3-main">
+    <header id="header-bar" class="">
+        <img id="small-logo" class="small-logo" src="/ywti_wa2021_war/utility/small-logo-transparent.png" >
+        <div id="navbar-area" class="topnav" ></div>
+    </header>
+    <main class="mainContent w3-container" >
+        <div id="user-email" class=""></div>
             <c:choose>
                 <c:when test="${userType}">
                     <h1 class="usernameTitle w3-center">${user.name} ${user.surname}</h1>
@@ -148,7 +148,7 @@ Since: 1.0
                         %>
                         <h2 class="sectionTitle">My advertisements</h2>
                         <form action="/ywti_wa2021_war/adv-do-create" >
-                            <button type="submit" name="createAdvertisementButton" class="button infoButtons w3-section w3-container">New advertisement</button>
+                            <button type="submit" name="createAdvertisementButton" id="createAdvertisementButton" class="button infoButtons w3-section w3-container">New advertisement</button>
                         </form>
                         <c:choose>
                             <c:when test="${empty advertisementList}">

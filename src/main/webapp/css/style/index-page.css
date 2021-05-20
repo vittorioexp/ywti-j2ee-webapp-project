@@ -5,12 +5,12 @@ Version: 1.0
 Since: 1.0
  */
 
-.form-control {
+#searchAdv > select, input {
     background-color: white;
 }
 
-.form-control:hover {
-    background-color: #3c99dc;
+#searchAdv > select:hover, input:hover {
+    border-color: #3c99dc;
 }
 
 #slideshow {

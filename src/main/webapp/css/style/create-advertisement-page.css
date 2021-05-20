@@ -9,12 +9,6 @@ section {
     text-align: center;
 }
 
-main {
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-}
-
 .mainContent {
     box-sizing: border-box;
     position: relative;
