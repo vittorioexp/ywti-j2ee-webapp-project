@@ -53,6 +53,7 @@ function fetchAdvertisementList(){
     });
 }
 
+// TODO: fix the following (style, img and info to display)
 // Loads the list of advertisements
 function loadAdvertisementList(res){
 
