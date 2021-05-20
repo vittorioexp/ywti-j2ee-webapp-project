@@ -120,24 +120,22 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
 
             advertisement = new Advertisement(
                     idAdvertisement,
-                    null,
-                    null,
+                    advertisement.getTitle(),
+                    advertisement.getDescription(),
                     advertisement.getScore(),
                     advertisement.getPrice(),
                     advertisement.getNumTotItem()+numBooking,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    0
+                    advertisement.getDateStart(),
+                    advertisement.getDateEnd(),
+                    advertisement.getTimeStart(),
+                    advertisement.getTimeEnd(),
+                    advertisement.getEmailCompany(),
+                    advertisement.getIdType()
             );
 
             AdvertisementDAO.editAdvertisement(advertisement);
 
             res.setStatus(HttpServletResponse.SC_OK);
-            // disabled feature, javascript handling.
-//            res.sendRedirect(req.getContextPath()+"/user/profile");
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

@@ -241,8 +241,8 @@ public class AdvertisementRestResource extends RestResource {
                     dateEnd,
                     timeStart,
                     timeEnd,
-                    null,
-                    0
+                    emailCompany,
+                    advertisement.getIdType()
             );
 
             advertisement = AdvertisementDAO.editAdvertisement(advertisement);
