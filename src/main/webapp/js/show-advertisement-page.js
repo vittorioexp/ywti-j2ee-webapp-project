@@ -159,9 +159,11 @@ function loadAdvertisement(req) {
         });
     }else if(!isLoggedIn()){
         document.getElementById("createBookingButton").addEventListener("click", function(event){
+            event.preventDefault();
             window.location.href = contextPath + "/user/do-login";
         });
         document.getElementById("createFeedbackButton").addEventListener("click", function(event){
+            event.preventDefault();
             window.location.href = contextPath + "/user/do-login";
         });
     }
