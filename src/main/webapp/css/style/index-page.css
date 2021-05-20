@@ -44,10 +44,16 @@ Since: 1.0
 .advertisement {
     width: 70%;
     margin: auto;
-    height: 220px;
+    height: auto;
     position: relative;
     left:0;
     right:0;
+}
+
+@media screen and (max-width: 1024px) {
+    .advertisement {
+        width: 100%;
+    }
 }
 
 .advSmallImage {
@@ -64,6 +70,7 @@ Since: 1.0
 
 .advSummary {
     font-family: BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    clear: left;
 }
 
 .advSummary > h3 {

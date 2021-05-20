@@ -73,7 +73,7 @@ header {
     padding: 14px 16px;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1024px) {
 
     /* Hamburger not clicked */
     #header-bar .small-logo {
