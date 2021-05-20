@@ -202,7 +202,7 @@ function loadFeedbackList(req) {
     // Parses the JSON resourceList
     let isEmpty = true;
     let feedbackList = JSON.parse(req).resourceList;
-    let str;
+    let str = "<p class=\"feedbackElement\">" + "No reviews found for this advertisement" + "</p>\n";
     if (feedbackList.length>0) {
         feedbackList.forEach(function(resource) {
             let feedback = resource.feedback;
@@ -227,8 +227,6 @@ function loadFeedbackList(req) {
 
 
         });
-    } else {
-        str = "<p class=\"feedbackElement\">" + "No reviews found for this advertisement" + "</p>\n";
     }
     // Presents the JSON resourceList
     document.getElementById("feedbackList").innerHTML = str;
