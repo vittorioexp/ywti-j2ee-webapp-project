@@ -19,11 +19,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     fetchFeedbackList();
     fetchImageList();
 
-
-    //images slideshow
-    slideIndex = 1;
-    showDivs(-1);
-
 });
 
 function validateRateFeedback(rateFeedback){
@@ -114,22 +109,30 @@ function getIdAdvertisement() {
 
 function fetchAdvertisement() {
     let url = new URL(contextPath+"/adv/" + getIdAdvertisement());
-    sendJsonRequest(url,"GET","",loadAdvertisement);
+    $.ajax({
+        url: url,
+        method: 'GET',
+        success: function(res) {
+            loadAdvertisement(res);
+        },
+        error: function(res) {
+            window.location.href=contextPath+"/html/error.html";
+        }
+    });
 }
 
 function loadAdvertisement(req) {
-    // Parses the JSON obj
-    let jsonData = JSON.parse(req).advertisement;
-    let title = jsonData['title'];
-    let description = jsonData['description'];
-    let price = jsonData['price'];
-    let score = jsonData['score'];
-    let numTotItem = jsonData['numTotItem'];
-    let dateStart = jsonData['dateStart'];
-    let dateEnd = jsonData['dateEnd'];
-    let timeStart = jsonData['timeStart'];
-    let timeEnd = jsonData['timeEnd'];
-    let emailCompany = jsonData['emailCompany'];
+    let adv = req.advertisement;
+    let title = adv['title'];
+    let description = adv['description'];
+    let price = adv['price'];
+    let score = adv['score'];
+    let numTotItem = adv['numTotItem'];
+    let dateStart = adv['dateStart'];
+    let dateEnd = adv['dateEnd'];
+    let timeStart = adv['timeStart'];
+    let timeEnd = adv['timeEnd'];
+    let emailCompany = adv['emailCompany'];
 
     // Presents the JSON obj
     document.getElementById("advTitle").innerHTML = "<h1 id=\"advTitle\">" + title + "</h1>";
@@ -289,8 +292,8 @@ function loadImageList(req) {
     document.getElementById("advImages").innerHTML = str;
     document.getElementById("buttContainer").innerHTML = str2;
 
-    let slides = document.getElementsByClassName("mySlides");
-    slides[0].style.display= "inline";
+    //document.getElementsByClassName("mySlides")[0].style.display= "inline";
+    plusDivs(+1);
 
     // Removes broken images
     $("img").on("error", function () {
@@ -305,6 +308,7 @@ function loadImageList(req) {
             document.getElementById("buttContainer").innerHTML = str2;
             slides[0].style.display= "inline";
         }
+        plusDivs(+1);
     });
 
 
