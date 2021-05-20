@@ -12,7 +12,8 @@ html {
 }
 
 body {
-    font-family: "Avenir Next", Sans-serif;
+    background-color: #f5f5f5;
+    font-family: "Avenir Next", Sans-serif, serif;
     font-size: 15px;
     font-style: normal;
 }
@@ -20,7 +21,7 @@ body {
 header {
     background-color: #003B95;
     position: relative;
-    height: 60px;
+    height: auto;
     left:0;
     right:0;
 }
@@ -75,9 +76,6 @@ header {
 @media screen and (max-width: 900px) {
 
     /* Hamburger not clicked */
-    #header-bar {
-        height: 60px;
-    }
     #header-bar .small-logo {
         display: inline;
     }
@@ -93,9 +91,6 @@ header {
     }
 
     /* Hamburger clicked */
-    #header-bar.responsive {
-        height: auto;
-    }
     #header-bar.responsive .small-logo {
         display: none;
     }
@@ -125,6 +120,7 @@ header {
     padding-right: 15px;
 }
 
+/* TODO: fix button dimension, it must be dynamic (no fixed height/width) */
 .button {
     transition: all .25s ease-in-out;
     text-align: center;
