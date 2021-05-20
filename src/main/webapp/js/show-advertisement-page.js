@@ -154,6 +154,13 @@ function loadAdvertisement(req) {
             event.preventDefault();
             fetchCreateFeedback()
         });
+    }else if(!isLoggedIn()){
+        document.getElementById("createBookingButton").addEventListener("click", function(event){
+            window.location.href = contextPath + "/user/do-login";
+        });
+        document.getElementById("createFeedbackButton").addEventListener("click", function(event){
+            window.location.href = contextPath + "/user/do-login";
+        });
     }
 }
 
