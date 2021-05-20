@@ -89,7 +89,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 "click",
                 function(event) {
                     event.preventDefault();
-                    alert("Reload the page to see your information updated.");
+                    // Redirect to the show advertisement html
+                    let idAdvertisement = button.value;
+                    window.location.href = contextPath + "/adv-show/" + idAdvertisement;
                 });
         });
 
@@ -113,7 +115,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
                             data: data,
                             method: 'GET',
                             success: function(res) {
-                                window.location.href = contextPath;
+                                event.preventDefault();
+                                alert("Reload the page to see your information updated.");
                             },
                             error: function(res) {
                                 let resMessage = res.responseJSON.message;
