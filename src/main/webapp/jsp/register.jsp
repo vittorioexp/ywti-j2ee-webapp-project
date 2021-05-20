@@ -34,32 +34,30 @@ Since: 1.0
         <!-- The viewport meta element is the key to making a responsive site work. -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Register - Your Way to Italy</title>
-
         <!-- Common libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
         <!-- Common CSS -->
         <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
-        <link href="/ywti_wa2021_war/css/style/w3.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!-- Custom CSS -->
+        <link href="/ywti_wa2021_war/css/style/register-page.css" rel="stylesheet" type="text/css">
 
         <!-- Common JS -->
         <script src="/ywti_wa2021_war/js/utils.js"></script>
 
         <!-- Custom JS -->
         <script src="/ywti_wa2021_war/js/register-page.js"></script>
-
-        <!-- Custom CSS -->
-        <link href="/ywti_wa2021_war/css/style/register-page.css" rel="stylesheet" type="text/css">
-
     </head>
     <body>
     <div class="mainWrapper w3-main">
-        <header id="header-bar" class="">
+        <header class="">
             <img id="small-logo" class="small-logo" src="/ywti_wa2021_war/utility/small-logo-transparent.png" >
-            <div id="navbar-area" class="topnav" ></div>
+            <div id="navbar-area" class="nav-area w3-bar w33-container" ></div>
         </header>
         <main class="mainContent w3-container" >
             <div id="user-email" class=""></div>
@@ -139,8 +137,8 @@ Since: 1.0
                 </form>
             </section>
         </main>
+        <!-- footer imported with javascript -->
     </div>
-    <!-- footer imported with javascript -->
     <div id="footer-area"></div>
     </body>
 </html>
