@@ -47,8 +47,13 @@ function fetchCreateBooking(){
         data: data,
         method: 'POST',
         success: function(res) {
-            alert(res.message.message);
-            window.location.href = contextPath + "/user/profile";
+            if (res.message !== undefined) {
+                alert(res.message.message);
+                window.location.href = contextPath + "/user/profile";
+            } else {
+                // the filter wants the user to log in
+                window.location.href = contextPath + "/user/do-login";
+            }
         },
         error: function(res) {
             let resMessage = res.responseJSON.message;
