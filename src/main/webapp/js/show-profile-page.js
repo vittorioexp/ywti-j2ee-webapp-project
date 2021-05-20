@@ -91,15 +91,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     if(confirm("Are you sure you want to cancel the reservation?")){
                         // Send an http delete to the server
                         let idAdvertisement = button.value;
+                        console.log(idAdvertisement);
                         let url = contextPath + "/booking-delete";
                         let data = {
-                            "idAdvertisement": idAdvertisement,
+                            "idAdvertisement": idAdvertisement
                         }
 
                         $.ajax({
                             url: url,
                             data: data,
-                            method: 'DELETE',
+                            method: 'GET',
                             success: function(res) {
                                 location.reload();
                             },

@@ -113,7 +113,7 @@ Since: 1.0
                                             <td> ${booking.numBooking} items  </td>
                                             <td>
                                                 <form id="deleteBookingForm" name="deleteBookingForm" method="DELETE">
-                                                    <button name="deleteBookingButton" value="${adv.idAdvertisement}" class="button">Delete</button>
+                                                    <button name="deleteBookingButton" value="${booking.idAdvertisement}" class="button">Delete</button>
                                                 </form>
                                             </td>
                                             <%count++;%>

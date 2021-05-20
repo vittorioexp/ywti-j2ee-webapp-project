@@ -142,7 +142,7 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
             Message m = new Message(ec.getErrorMessage(),
-                    ec.getHTTPCode(), "Cannot delete this booking.");
+                    ec.getHTTPCode(), "Cannot delete this booking: " + ex.toString());
             res.setStatus(ec.getHTTPCode());
             m.toJSON(res.getOutputStream());
             return;
