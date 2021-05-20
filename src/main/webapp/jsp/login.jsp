@@ -28,14 +28,13 @@ Since: 1.0
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta name="author" content="Basso Marco, Esposito Vittorio, Piva Matteo, Giurisato Francesco"> <!-- who wrote the page -->
-        <meta name="description" content="Login page"> <!-- a textual description of it -->
-        <meta name="keywords" content="login, loginpage, ywti, local, travel, italy"> <!-- some keywords to make your page more easily findable -->
+        <meta name="author" content="Basso Marco, Esposito Vittorio, Piva Matteo, Giurisato Francesco">
+        <meta name="description" content="Login page">
+        <meta name="keywords" content="login, loginpage, ywti, local, travel, italy">
         <!-- The viewport meta element is the key to making a responsive site work. -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title>Login - Your Way to Italy</title>
-        <script src="/ywti_wa2021_war/js/utils.js"></script>
+
         <c:choose>
             <c:when test="${!empty sessionScope.Authorization}">
                 <c:set var="context" value="${pageContext.request.contextPath}" />
@@ -66,14 +65,26 @@ Since: 1.0
                 </script>
             </c:otherwise>
         </c:choose>
-        <script src="/ywti_wa2021_war/js/login-page.js"></script>
-        <link href="/ywti_wa2021_war/css/style/w3.css" rel="stylesheet" type="text/css">
-        <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
-        <link href="/ywti_wa2021_war/css/style/login-page.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!-- Common libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+        <!-- Common CSS -->
+        <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
+
+        <!-- Custom CSS -->
+        <link href="/ywti_wa2021_war/css/style/login-page.css" rel="stylesheet" type="text/css">
+
+        <!-- Common JS -->
+        <script src="/ywti_wa2021_war/js/utils.js"></script>
+
+        <!-- Custom JS -->
+        <script src="/ywti_wa2021_war/js/login-page.js"></script>
+
     </head>
     <body>
     <div class="mainWrapper w3-main">
