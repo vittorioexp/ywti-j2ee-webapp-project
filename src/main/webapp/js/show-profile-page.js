@@ -102,7 +102,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
                             data: data,
                             method: 'GET',
                             success: function(res) {
-                                location.reload();
+                                window.location.reload(true);
+                                //window.location.href = window.location.href;
                             },
                             error: function(res) {
                                 let resMessage = res.responseJSON.message;
