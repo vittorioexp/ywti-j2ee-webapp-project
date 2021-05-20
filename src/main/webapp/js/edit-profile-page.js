@@ -7,9 +7,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     //document.getElementById("idCity").addEventListener("keyup", function(event) {validateIdCity()});
 
     // Fetches the list of typeAdvertisements and Cities
-    $.getScript(contextPath + "/js/utils.js",function(){
-        getCityList("idCity", "City");
-    });
+    getCityList("idCity", "City");
 
     document.getElementById("edit-profile-button").addEventListener("click", function(event){
         event.preventDefault();

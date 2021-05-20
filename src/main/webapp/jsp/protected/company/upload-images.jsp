@@ -56,12 +56,13 @@ Since: 1.0
 
 </head>
 <body>
-<div class="mainWrapper">
-    <header>
-        <div id="navbar-area"></div>
-        <div id="user-email"></div>
+<div class="mainWrapper w3-main">
+    <header id="header-bar" class="">
+        <img id="small-logo" class="small-logo" src="/ywti_wa2021_war/utility/small-logo-transparent.png" >
+        <div id="navbar-area" class="topnav" ></div>
     </header>
-    <main class="mainContent" >
+    <main class="mainContent w3-container" >
+        <div id="user-email" class=""></div>
         <%
             String path = request.getRequestURI();
             String idAdvertisement = path.substring(path.lastIndexOf("image-do-upload") + 16);
