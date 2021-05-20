@@ -89,8 +89,7 @@ function fetchCreateFeedback(){
         data: data,
         method: 'POST',
         success: function(res) {
-            fetchFeedbackList();
-            fetchRate();
+            window.location.reload(true);
         },
         error: function(res) {
             let resMessage = res.responseJSON.message;
