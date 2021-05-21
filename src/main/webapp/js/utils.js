@@ -157,10 +157,6 @@ function loadNavbar(data){
     // Checks if the user is logged in or not
     if (isLoggedIn()) {
 
-        let email = getUserEmail();
-        document.getElementById("user-email").innerHTML = "Logged in as " + email;
-
-
         list = document.getElementsByClassName("unlogged");
         for (i = 0; i < list.length; i++) {
             list[i].setAttribute("class", "unlogged");
@@ -196,9 +192,14 @@ function loadFooter(data){
     }
     footer.innerHTML=data;
     if (isLoggedIn()) {
-        document.getElementById("footerRegister").style.display = "none";
+        document.getElementById("footer-register").style.display = "none";
+        document.getElementById("user-email").style.display = "block";
+        let email = getUserEmail();
+        document.getElementById("user-email").innerHTML = "Logged in as " + email;
     } else {
-        document.getElementById("footerRegister").style.display = "block";
+        document.getElementById("footer-register").style.display = "block";
+        document.getElementById("user-email").style.display = "none";
+        document.getElementById("user-email").innerHTML = "";
     }
 }
 
