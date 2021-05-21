@@ -13,16 +13,23 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
 
     loadSlideshow();
-    fetchDatePlaceholder();
-    function fetchDatePlaceholder(){
-        let todayDate = new Date;
-        todayDate = todayDate.getFullYear()+'-'+(todayDate.getMonth()+1)+'-'+todayDate.getDate();
-        document.getElementById("dateStart").setAttribute("value",todayDate.toDateString());
-    }
-
+    loadDatePlaceholder();
 });
 
-
+function loadDatePlaceholder(){
+    let todayDate = new Date;
+    let year = todayDate.getFullYear().toString();
+    let month = (todayDate.getMonth()+1).toString();
+    let day = todayDate.getDate().toString();
+    if (month.length===1) {
+        month = "0" + month;
+    }
+    if (day.length===1) {
+        day = "0" + day;
+    }
+    let strDate = year+"-"+month+"-"+day;
+    document.getElementById("dateStart").setAttribute("value",strDate);
+}
 
 // Fetches the list of advertisements
 function fetchAdvertisementList(){
