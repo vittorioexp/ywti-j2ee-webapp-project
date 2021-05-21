@@ -74,7 +74,7 @@ Since: 1.0
         <div id="navbar-area" class="topnav" ></div>
     </header>
     <main class="mainContent w3-container" >
-        <h1>Edit profile</h1>
+        <h1 class="h1">Edit profile</h1>
         <section id="EditSection" class="w3-panel w3-card-4 w3-section">
         <section id="error"></section>
         <form id="edit-profile-form" name="edit-profile-form" method="POST">

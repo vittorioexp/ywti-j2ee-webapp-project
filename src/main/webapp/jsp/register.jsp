@@ -70,7 +70,7 @@ Since: 1.0
         </header>
         <main class="mainContent" >
             <section class="w3-container w3-section">
-                <h1>Create your own account</h1>
+                <h1 class="h1">Create your own account</h1>
             </section>
 
             <section id ="companyornot" class="w3-container w3-panel w3-card-4 w3-section"><br/>

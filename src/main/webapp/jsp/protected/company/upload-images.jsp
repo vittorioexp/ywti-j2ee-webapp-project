@@ -79,7 +79,7 @@ Since: 1.0
             int id = Integer.parseInt(idAdvertisement);
             Advertisement a = AdvertisementDAO.searchAdvertisement(id);
         %>
-        <h1 id="advTitle">Upload images for <%= a.getTitle() %></h1>
+        <h1 class="h1" id="advTitle">Upload images for <%= a.getTitle() %></h1>
         <div class="rowImg">
             <section id="mainPanel" class="rowImg 2 w3-panel w3-card">
                 <form id="uploadImagesForm" class="w3-center" name="uploadImagesForm" method="post" enctype="multipart/form-data"

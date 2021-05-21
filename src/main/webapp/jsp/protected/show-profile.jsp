@@ -70,7 +70,7 @@ Since: 1.0
         <div id="user-email" class=""></div>
             <c:choose>
                 <c:when test="${userType}">
-                    <h1 class="usernameTitle w3-center">${user.name} ${user.surname}</h1>
+                    <h1 class="h1 usernameTitle w3-center">${user.name} ${user.surname}</h1>
                     <section class="userInfoSection w3-section w3-container w3-panel w3-card-4">
                         <h2>My info</h2>
                         <p>Email: ${user.email}</p>
@@ -132,7 +132,7 @@ Since: 1.0
 
                 </c:when>
                 <c:otherwise>
-                    <h1 class="usernameTitle w3-center">${user.name}</h1>
+                    <h1 class="h1 usernameTitle w3-center">${user.name}</h1>
                     <section class="w3-section w3-container w3-panel w3-card-4 userInfoSection">
                         <h2 class="sectionTitle">My info</h2>
                         <p>Email: ${user.email}</p>
