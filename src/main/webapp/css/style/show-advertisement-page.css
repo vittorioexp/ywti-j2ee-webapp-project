@@ -1,57 +1,50 @@
 
-
-#advTitle{
-    font-weight: bold;
-    line-height: 1.2;
-}
-
-.sectionTitle {
-    padding-bottom: 10px;
-    font-size: 24px;
-    line-height: 32px;
-    font-weight: 600;
-    color: #333;
-}
-
-main {
-    font-size: 14px;
-    line-height: 1.4;
-    font-family: BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-    color: #333;
-}
-
 #createFeedback, #feedbackList, #createBooking, #bookingList , #infoSection, #imageSection{
     margin: 3%;
 }
 
-img.mySlides{
-    height: 450px;
-    max-width: 600px;
-}
-
-.advInfoElement{
-    width: 600px;
-}
-
-#imageSection{
+#imageSection {
+    width: 45%;
+    max-width: 100%;
+    min-width: 360px;
     flex-shrink: 0;
 }
 
-
-.rowAdv {
-    flex-wrap: wrap;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+.mySlides {
+    width: 100%;
 }
 
-@media (max-width: 800px) {
+#infoSection {
+    width: 45%;
+    max-width: 100%;
+    min-width: 360px;
+}
+
+.advInfoElement{
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+@media (max-width: 1024px) {
     .rowAdv {
         flex-direction: column;
+    }
+    #imageSection {
+        width: 100%;
+    }
+    #infoSection {
+        width: 100%;
     }
 }
 
 .colAdv {
     flex: 1;
+    justify-content: center;
+}
+
+.rowAdv {
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
     justify-content: center;
 }
