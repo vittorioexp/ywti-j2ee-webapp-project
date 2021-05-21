@@ -9,13 +9,6 @@ section {
     text-align: center;
 }
 
-.mainContent {
-    box-sizing: border-box;
-    position: relative;
-    width: 100%;
-    padding: 16px 16px 0;
-}
-
 h1 {
     font-size: 24px;
     font-weight: 700;

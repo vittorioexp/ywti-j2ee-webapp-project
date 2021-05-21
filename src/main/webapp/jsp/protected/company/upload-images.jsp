@@ -64,7 +64,6 @@ Since: 1.0
         <div id="navbar-area" class="topnav" ></div>
     </header>
     <main class="mainContent w3-container" >
-        <div id="user-email" class=""></div>
         <%
             String path = request.getRequestURI();
             String idAdvertisement = path.substring(path.lastIndexOf("image-do-upload") + 16);

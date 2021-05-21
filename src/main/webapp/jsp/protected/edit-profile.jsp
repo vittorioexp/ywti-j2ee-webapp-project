@@ -65,7 +65,6 @@ Since: 1.0
         <div id="navbar-area" class="topnav" ></div>
     </header>
     <main class="mainContent w3-container" >
-        <div id="user-email" class=""></div>
         <h1>Edit profile</h1>
         <section id="EditSection" class="w3-panel w3-card-4 w3-section">
         <section id="error"></section>

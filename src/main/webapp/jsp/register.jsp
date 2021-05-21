@@ -60,7 +60,6 @@ Since: 1.0
             <div id="navbar-area" class="topnav" ></div>
         </header>
         <main class="mainContent" >
-            <div id="user-email" class=""></div>
             <section class="w3-container w3-section">
                 <h1>Create your own account</h1>
             </section>
