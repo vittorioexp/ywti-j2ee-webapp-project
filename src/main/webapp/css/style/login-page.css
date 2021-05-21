@@ -29,3 +29,9 @@ h1 {
     line-height: 32px;
     text-align:center;
 }
+
+#footer-area {
+    positon: absolute;
+    bottom: 0px;
+    width: 100%;
+}

@@ -9,12 +9,16 @@ Since: 1.0
 
 html {
     scroll-behavior: smooth;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 body {
     font-family: "Avenir Next", Sans-serif, serif;
     font-size: 15px;
     font-style: normal;
+
+    height: 100%;
 }
 
 header {
@@ -289,4 +293,9 @@ header {
     padding: 5px 20px;
     border: 2px solid #FFFFFF;
     cursor: pointer;
+}
+
+#footer-area {
+    position: absolute;
+    width: 100%;
 }
