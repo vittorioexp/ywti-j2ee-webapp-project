@@ -104,6 +104,7 @@ Since: 1.0
                         <option value="0" disabled selected>City</option>
                     </select>
 
+                    <label for="birthdate_t">Birthdate:</label>
                     <input class="form-select form-select-lg mb-3" name="birthDate" type="Date" id="birthdate_t" placeholder="Birthdate" required/>
 
                     <input type="hidden" id="userType" name="userType" value="tourist">
