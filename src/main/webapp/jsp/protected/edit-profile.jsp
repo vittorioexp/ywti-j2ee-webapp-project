@@ -85,7 +85,7 @@ Since: 1.0
 
             <input class="w3-input w3-section" id="address" name="address" type="text" placeholder="Insert new address"/>
 
-            <select class="w3-input w3-section" form="edit-profile-form" id="idCity" name="idCity">
+            <select class="form-select form-select-lg mb-3" form="edit-profile-form" id="idCity" name="idCity">
                 <option value="0" disabled selected>Where</option>
             </select>
 

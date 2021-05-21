@@ -100,11 +100,11 @@ Since: 1.0
 
                     <input class="w3-input w3-section" name="phone" type="text" id="phonenumber_t" placeholder="Phone number" required/>
 
-                    <select class="w3-input w3-section" form="registerFormTourist" id="idCity_t" name="idCity">
+                    <select class="form-select form-select-lg mb-3" form="registerFormTourist" id="idCity_t" name="idCity">
                         <option value="0" disabled selected>City</option>
                     </select>
 
-                    <input class="w3-input w3-section" name="birthDate" type="Date" id="birthdate_t" placeholder="Birthdate" required/>
+                    <input class="form-select form-select-lg mb-3" name="birthDate" type="Date" id="birthdate_t" placeholder="Birthdate" required/>
 
                     <input type="hidden" id="userType" name="userType" value="tourist">
                     <br/><br/>
@@ -132,7 +132,7 @@ Since: 1.0
 
                     <input class="w3-input w3-section" name="phone" type="text" id="phonenumber_c" placeholder="Company phone number" required/>
 
-                    <select class="w3-input w3-section" form="companyRegistration" id="idCity_c" name="idCity">
+                    <select class="form-select form-select-lg mb-3" form="companyRegistration" id="idCity_c" name="idCity">
                         <option value="0" disabled selected>City</option>
                     </select>
 
