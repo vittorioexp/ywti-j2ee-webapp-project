@@ -89,7 +89,7 @@ Since: 1.0
 .advSummary {
     font-family: BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
     clear: left !important;
-    padding-left: 15px !important;
+    padding-left: 20px !important;
     width: 70% !important;
     display: inline-block !important;
     text-align: justify !important;
@@ -101,7 +101,7 @@ Since: 1.0
 }
 
 .advSummary > h3 {
-    font-size: 30px !important;
+    font-size: 25px !important;
     text-decoration: none !important;
     vertical-align: top !important;
     word-break: break-word !important;
