@@ -11,7 +11,9 @@
 }
 
 .mySlides {
-    width: 100%;
+    max-width:100%;
+    max-height:300px;
+    align-self: center;
 }
 
 #infoSection {
@@ -30,10 +32,14 @@
         flex-direction: column;
     }
     #imageSection {
-        width: 100%;
+        max-width: 100%;
     }
     #infoSection {
-        width: 100%;
+        max-width: 100%;
+    }
+    .mySlides {
+        max-width:100%;
+        max-height:100%;
     }
 }
 
@@ -47,4 +53,23 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+
+.imgRow{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+    justify-content: center;
+}
+
+.slidesCol{
+    flex: 1;
+    display: flex;
+    align-items: baseline;
+    height: 300px;
+    justify-content: center;
+}
+
+.slidesButton{
+    width: 50%;
 }

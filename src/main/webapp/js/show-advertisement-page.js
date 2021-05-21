@@ -139,7 +139,7 @@ function loadAdvertisement(req) {
     let emailCompany = adv['emailCompany'];
 
     // Presents the JSON obj
-    document.getElementById("advTitle").innerHTML = "<h1 id=\"advTitle\">" + title + "</h1>";
+    document.getElementById("advTitle").innerHTML = "<br><h2 class=\"h1\">" + title + "</h2>";
 
     let info =
         "<p class=\"advInfoElement\">" + description + "</p>" +
@@ -189,7 +189,7 @@ function loadRate(req) {
 
     // Presents the JSON obj
     let info = "<img src=\"/ywti_wa2021_war/css/image/" + rate + "s.jpg\" />\n";
-    document.getElementById("advTitle").innerHTML += info;
+    document.getElementById("advRate").innerHTML = info;
 }
 
 function fetchFeedbackList() {
@@ -286,8 +286,8 @@ function loadImageList(req) {
             str += "<img class=\"mySlides\" style=\"display: none;\" src=\"" + "" + path + "\" alt='' />";
         })
         str2 +=
-            "<button class=\"w3-button\" onclick=\"plusDivs(-1)\">&#10094;</button>"
-            + "<button class=\"w3-button \" onClick=\"plusDivs(+1)\">&#10095;</button>";
+            "<button class=\"w3-button slidesButton\" onclick=\"plusDivs(-1)\">&#10094;</button>"
+            + "<button class=\"w3-button slidesButton\" onClick=\"plusDivs(+1)\">&#10095;</button>";
     } else {
         str = "<img class=\"mySlides\" src=\"/ywti_wa2021_war/css/image/noImage.jpg\" alt=''/>\n" ;
         str2 = "";
