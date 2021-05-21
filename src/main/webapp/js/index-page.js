@@ -45,27 +45,12 @@ function fetchAdvertisementList(){
         "idCity": idCity,
         "dateStart": dateStart
     }
-    /*
-    //URL encoded
-    var xhr = new XMLHttpRequest();
-    var url = "url?data=" + encodeURIComponent(data);
-    xhr.open("GET", url, true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            alert(JSON.parse(xhr.responseText););
-            loadAdvertisementList(xhr)
-        }
-    };
-    xhr.send();
-     */
 
     $.getJSON(url, data, function (res) {
         loadAdvertisementList(res);
     });
 }
 
-// TODO: fix the following (style, img and info to display)
 // Loads the list of advertisements
 function loadAdvertisementList(res){
 
@@ -78,9 +63,9 @@ function loadAdvertisementList(res){
     let str;
     if (advList.length>0) {
         if (advList.length===1) {
-            str = "<h2 class=\"titleAdvList w3-center\"> Only 1 advertisement found" + "</h2>";
+            str = "<h2 class=\"h2 titleAdvList w3-center\"> Only 1 advertisement found" + "</h2>";
         } else {
-            str = "<h2 class=\"titleAdvList w3-center\">" + advList.length + " advertisements found" + "</h2>";
+            str = "<h2 class=\"h2 titleAdvList w3-center\">" + advList.length + " advertisements found" + "</h2>";
         }
 
         advList.forEach(function(resource) {
@@ -105,7 +90,7 @@ function loadAdvertisementList(res){
                 "<img id=\"img"+ idAdv +"\" class=\"small-adv-img\" src=\"/ywti_wa2021_war/utility/img-default.jpg\" alt=''/>"+
                 "</span>" +
                 "<span class=\"advSummary\">" +
-                "<h3>" + title + "</h3>" +
+                "<h3 class\"h3\">" + title + "</h3>" +
                 "<p> Rated <span id=\"rate" + idAdv + "\">"+
                 "</span>/5 - " + price + " euro" + "</p>" +
                 "<p>" + description + "</p>" +

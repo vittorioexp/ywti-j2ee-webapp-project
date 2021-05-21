@@ -14,10 +14,8 @@ html {
 }
 
 body {
-    font-family: "Avenir Next", Sans-serif, serif;
-    font-size: 15px;
+    font-size: 1rem !important;
     font-style: normal;
-
     height: 100%;
 }
 
@@ -53,7 +51,7 @@ main {
 .topnav {
 
     color: white;
-    font-size: 16px;
+    font-size: 1.1rem !important;
     font-weight: 500;
 
     overflow: hidden;
@@ -69,7 +67,6 @@ main {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    font-size: 17px;
 }
 
 .topnav a:hover {
@@ -135,8 +132,7 @@ main {
     box-sizing: border-box;
     justify-content: center;
     padding: 10px 20px;
-    font-size: 16px;
-    line-height: 24px;
+    line-height: 1.5rem !important;
     font-weight: 500;
     border-radius: 8px;
     background-color: #003B95;
@@ -150,6 +146,10 @@ main {
 
 .button:hover{
     background-color: #032e4e;
+}
+
+form > * {
+    font-size: 1rem !important;
 }
 
 .row {
@@ -180,6 +180,11 @@ main {
     /*}*/
 }
 
+footer a, footer a:hover {
+    color: #FFFFFF;
+    text-decoration: none !important;
+}
+
 .copyright{
     color: #ffffff;
 }
@@ -194,7 +199,7 @@ main {
     text-align: center;
     white-space: nowrap;
     color: #FFFFFF;
-    text-decoration: none;
+    text-decoration: none !important;
     line-height: 1.2;
     background-color: #0A4275;
     border-radius: 30px;
@@ -206,7 +211,7 @@ main {
 #footer-area {
     position: fixed;
     width: 100%;
-    bottom: 0px;
+    bottom: 0;
 }
 
 #footer-area p {

@@ -38,8 +38,6 @@ Since: 1.0
     min-width: 200px !important;;
     display: block !important;
     margin: auto !important;
-    font-size: 20px !important;;
-    line-height: 30px !important;;
 }
 
 @media screen and (max-width: 1024px) {
@@ -56,7 +54,6 @@ Since: 1.0
 }*/
 
 .titleAdvList {
-    font-family: BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
     font-weight: bold;
 }
 
@@ -84,42 +81,30 @@ Since: 1.0
 .advSmallImage > img {
     width: 200px;
     height: 200px;
+    max-width: 100%;
 }
 
 .advSummary {
-    font-family: BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
     clear: left !important;
     padding-left: 20px !important;
     width: 70% !important;
     display: inline-block !important;
     text-align: justify !important;
     text-justify: inter-word !important;
-    line-height: 18px !important;
+    /*line-height: 18px !important;*/
     font-weight: 400 !important;
     color: #333 !important;
-    font-size: 17px !important;
+    /*font-size: 17px !important;*/
 }
 
 .advSummary > h3 {
-    font-size: 25px !important;
+    /*font-size: 25px !important;*/
     text-decoration: none !important;
     vertical-align: top !important;
     word-break: break-word !important;
     color: #003B95 !important;
     font-weight: bold !important;
-    line-height: 28px !important;
-    font-family: BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-}
-
-.gotoShowAdvertisement {
-
-    /* horizontal alignment inside the container*/
-    float: right;
-    margin: 10px;
-}
-
-.gotoShowAdvertisementForm {
-    padding-top: 80px;
+    /*line-height: 28px !important;*/
 }
 
 @media screen and (max-width: 1024px) {
