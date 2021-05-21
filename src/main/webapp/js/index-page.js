@@ -14,7 +14,25 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     loadSlideshow();
 
+    fetchDatePlaceholder();
+
 });
+
+function fetchDatePlaceholder(){
+    let todayDate = new Date;
+    let month = (todayDate.getMonth()+1).toString();
+    if (month.length===1) {
+        month = "0" + month;
+    }
+    let day = (todayDate.getDate()).toString();
+    if (day.length===1) {
+        day = "0" + day;
+    }
+    let printDate = todayDate.getFullYear().toString()+'-'+month+'-'+day;
+    console.log(todayDate);
+    document.getElementById("dateStart").setAttribute("value",printDate);
+}
+
 
 // Fetches the list of advertisements
 function fetchAdvertisementList(){

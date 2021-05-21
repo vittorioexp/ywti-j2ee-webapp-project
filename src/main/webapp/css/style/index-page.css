@@ -13,6 +13,11 @@ Since: 1.0
     width:100%;
 }
 
+#titles h1 {
+    padding-top: 0.5em !important;
+    font-family:  cursive !important;
+}
+
 .searchbar {
     text-align: center;
     position: relative;
@@ -22,6 +27,29 @@ Since: 1.0
     margin-right: auto ;
 }
 
+#searchAdv select,input {
+    width: 20% !important;
+    min-width: 180px !important;;
+    display: inline !important;
+    margin: 10px 5px 10px 5px !important;
+}
+
+#searchAdv button {
+    width: 20% !important;
+    min-width: 200px !important;;
+    display: block !important;
+    margin: auto !important;
+    font-size: 20px !important;;
+    line-height: 30px !important;;
+}
+
+@media screen and (max-width: 1024px) {
+    #searchAdv select,input {
+        display: block !important;;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+}
 
 /*
 #searchAdv > * {
