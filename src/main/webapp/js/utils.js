@@ -163,13 +163,13 @@ function loadNavbar(data){
 
         list = document.getElementsByClassName("unlogged");
         for (i = 0; i < list.length; i++) {
-            list[i].setAttribute("class", "unlogged d-none");
+            list[i].setAttribute("class", "unlogged");
             list[i].style.display = "none";
         }
 
         list = document.getElementsByClassName("logged");
         for (i = 0; i < list.length; i++) {
-            list[i].setAttribute("class", "logged d-block");
+            list[i].setAttribute("class", "logged");
             list[i].style.display = "inline-block";
         }
     } else {
@@ -182,7 +182,7 @@ function loadNavbar(data){
 
         list = document.getElementsByClassName("unlogged");
         for (i = 0; i < list.length; i++) {
-            list[i].setAttribute("class", "unlogged d-block");
+            list[i].setAttribute("class", "unlogged");
             list[i].style.display = "inline-block";
         }
     }
