@@ -195,6 +195,11 @@ function loadFooter(data){
         return;
     }
     footer.innerHTML=data;
+    if (isLoggedIn()) {
+        document.getElementById("footerRegister").style.display = "none";
+    } else {
+        document.getElementById("footerRegister").style.display = "block";
+    }
 }
 
 // Sends a generic HTTP request
