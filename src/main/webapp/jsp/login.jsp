@@ -102,7 +102,7 @@ Since: 1.0
             <img id="small-logo" class="small-logo" src="/ywti_wa2021_war/utility/small-logo-transparent.png" >
             <div id="navbar-area" class="topnav" ></div>
         </header>
-        <main class="mainContent w3-container" >
+        <main class="mainContent" >
             <div id="user-email" class=""></div>
             <h1>Login into your account</h1>
             <section id="loginSection" class="w3-panel w3-card-4 w3-section">

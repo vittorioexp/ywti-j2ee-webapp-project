@@ -59,7 +59,7 @@ Since: 1.0
             <img id="small-logo" class="small-logo" src="/ywti_wa2021_war/utility/small-logo-transparent.png" >
             <div id="navbar-area" class="topnav" ></div>
         </header>
-        <main class="mainContent w3-container" >
+        <main class="mainContent" >
             <div id="user-email" class=""></div>
             <section class="w3-container w3-section">
                 <h1>Create your own account</h1>
