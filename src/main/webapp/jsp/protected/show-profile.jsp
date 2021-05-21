@@ -72,7 +72,7 @@ Since: 1.0
                 <c:when test="${userType}">
                     <h1 class="h1 usernameTitle w3-center">${user.name} ${user.surname}</h1>
                     <section class="userInfoSection w3-section w3-container w3-panel w3-card-4">
-                        <h2>My info</h2>
+                        <h2 class="h2">My info</h2>
                         <p>Email: ${user.email}</p>
                         <p>Phone number: ${user.phoneNumber}</p>
                         <p>Birth date: ${user.birthDate}</p>
@@ -94,7 +94,7 @@ Since: 1.0
                                 <p name="emptyList">Reservations not yet made!</p>
                             </c:when>
                             <c:otherwise>
-                                <h2 class="sectionTitle">My bookings</h2>
+                                <h2 class="h2 sectionTitle">My bookings</h2>
                                 <table class="w3-table w3-container w3-section ">
                                     <tr>
                                         <td>Advertisement</td>
@@ -134,7 +134,7 @@ Since: 1.0
                 <c:otherwise>
                     <h1 class="h1 usernameTitle w3-center">${user.name}</h1>
                     <section class="w3-section w3-container w3-panel w3-card-4 userInfoSection">
-                        <h2 class="sectionTitle">My info</h2>
+                        <h2 class="h2 sectionTitle">My info</h2>
                         <p>Email: ${user.email}</p>
                         <p>Phone number: ${user.phoneNumber}</p>
                         <p>Address: ${user.address}</p>
@@ -152,7 +152,7 @@ Since: 1.0
                         <%
                             List<Advertisement> advertisementList = (List<Advertisement>) request.getAttribute("advertisementList");
                         %>
-                        <h2 class="sectionTitle">My advertisements</h2>
+                        <h2 class="h2 sectionTitle">My advertisements</h2>
                         <form action="/ywti_wa2021_war/adv-do-create" >
                             <button type="submit" name="createAdvertisementButton" id="createAdvertisementButton" class="button infoButtons w3-section w3-container">New advertisement</button>
                         </form>
