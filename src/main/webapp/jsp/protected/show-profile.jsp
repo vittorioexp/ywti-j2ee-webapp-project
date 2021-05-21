@@ -162,22 +162,22 @@ Since: 1.0
                             </c:when>
                             <c:otherwise>
                                 <c:forEach items="${advertisementList}" var="adv">
-                                    <table class="w3-table w3-container w3-section w3-panel w3-card">
+                                    <table class="w3-table w3-container w3-section">
                                         <tr>
-                                            <td class="titleAdv"><p class="w3-small w3-light-blue">Title : </p>${adv.title}   </td>
-                                            <td class="smallColumn"><p class="w3-small w3-light-blue">Starting : </p>${adv.dateStart}   </td>
-                                            <td class="smallColumn"><p class="w3-small w3-light-blue"> Ending : </p>${adv.dateEnd}   </td>
-                                            <td class="smallColumn"><p class="w3-small w3-light-blue"> # of Items : </p>${adv.numTotItem}   </td>
-                                            <td class="smallColumn"><p class="w3-small w3-light-blue"> Pricing € : </p> ${adv.price}   </td>
-                                        </tr>
-                                        <tr>
+                                            <td class=""><p class="">Advertisement </p>${adv.title}   </td>
+                                            <td class=""><p class="">Starting </p>${adv.dateStart}   </td>
+                                            <td class=""><p class=""> Ending </p>${adv.dateEnd}   </td>
+                                            <td class=""><p class=""> Items </p>${adv.numTotItem}   </td>
+                                            <td class=""><p class=""> Price </p> ${adv.price}   </td>
+
+
                                             <td colspan="5">
                                                 <form id="gotoEditAdvertisementForm" class="buttonSection" name="gotoEditAdvertisementForm" method="GET"/>
                                                 <button name="editAdvertisementButton" value="${adv.idAdvertisement}" class="button">Edit</button><br/>
                                                 </form>
                                                 <form id="gotoShowAdvertisementForm" class="buttonSection" name="gotoShowAdvertisementForm" method="GET"/>
                                                 <button name="showAdvertisementButton" value="${adv.idAdvertisement}" class="button">Info</button><br/>
-                                                </form>
+                                                 </form>
                                                 <form id="deleteAdvertisementForm" class="buttonSection" name="deleteAdvertisementForm" method="DELETE">
                                                     <button name="deleteAdvertisementButton" value="${adv.idAdvertisement}" class="button">Delete</button>
                                                 </form>
