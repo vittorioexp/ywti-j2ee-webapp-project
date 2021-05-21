@@ -13,25 +13,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
 
     loadSlideshow();
-
     fetchDatePlaceholder();
+    function fetchDatePlaceholder(){
+        let todayDate = new Date;
+        todayDate = todayDate.getFullYear()+'-'+(todayDate.getMonth()+1)+'-'+todayDate.getDate();
+        document.getElementById("dateStart").setAttribute("value",todayDate.toDateString());
+    }
 
 });
 
-function fetchDatePlaceholder(){
-    let todayDate = new Date;
-    let month = (todayDate.getMonth()+1).toString();
-    if (month.length===1) {
-        month = "0" + month;
-    }
-    let day = (todayDate.getDate()).toString();
-    if (day.length===1) {
-        day = "0" + day;
-    }
-    let printDate = todayDate.getFullYear().toString()+'-'+month+'-'+day;
-    console.log(todayDate);
-    document.getElementById("dateStart").setAttribute("value",printDate);
-}
 
 
 // Fetches the list of advertisements
@@ -75,7 +65,7 @@ function loadAdvertisementList(res){
     // make the section visible in index.html
     let advertisementList = document.getElementById("advertisementList");
     advertisementList.style.display = "block";
-    
+
     // show the list of adv
     let advList = res.resourceList;
     let str;
@@ -96,23 +86,21 @@ function loadAdvertisementList(res){
             let dateEnd = adv.dateEnd;
 
             str +=
+                "<a href=\"" + contextPath + "/adv-show/" + idAdv + "\">" +  "" +
                 "<article class=\"advertisement w3-section w3-container w3-panel w3-card-4\">" +
-                    "<span class=\"advSmallImage\">" +
-                        "<img id=\"img"+ idAdv +"\" class=\"small-adv-img\" src=\"/ywti_wa2021_war/utility/img-default.jpg\" alt=''/>"+
-                    "</span>" +
-                    "<span class=\"gotoShowAdvertisement\" >" +
-                        "<form name=gotoShowAdvertisementForm class=\"gotoShowAdvertisementForm\" method=GET />" +
-                        "<button name=showAdvertisementButton class=\"button showAdvertisementButton\" value=" + idAdv + ">Info</button>" +
-                        "</form>" +
-                    "</span>" +
-                    "<span class=\"advSummary\">" +
-                        "<h3>" + title + "</h3>" +
-                        "<p> Rated <span id=\"rate" + idAdv + "\"></span>/5 - " + price + " euro" + "</p>" +
-                        "<p>" + description + "</p>" +
-                        "<p>" + "Starting " + dateStart + "</p>" +
-                        "<p>" + "Ending " + dateEnd + "</p>" +
-                    "</span>" +
-                "</article> \n";
+                "<span class=\"advSmallImage\">" +
+                "<img id=\"img"+ idAdv +"\" class=\"small-adv-img\" src=\"/ywti_wa2021_war/utility/img-default.jpg\" alt=''/>"+
+                "</span>" +
+                "<span class=\"advSummary\">" +
+                "<h3>" + title + "</h3>" +
+                "<p> Rated <span id=\"rate" + idAdv + "\">"+
+                "</span>/5 - " + price + " euro" + "</p>" +
+                "<p>" + description + "</p>" +
+                "<p>" + "Starting " + dateStart + "</p>" +
+                "<p>" + "Ending " + dateEnd + "</p>" +
+                "</span>" +
+                "</article>" +
+                "</a> \n";
 
         });
 
@@ -168,22 +156,6 @@ function loadAdvertisementList(res){
         str = "<p>" + "No advertisement found" + "</p>";
         advertisementList.innerHTML = str;
     }
-
-
-    let showAdvButtons = document.getElementsByName("showAdvertisementButton");
-
-    showAdvButtons.forEach(function(button, index) {
-
-        // Adds an event listener (on click) on each show adv button
-        button.addEventListener(
-            "click",
-            function(event) {
-                event.preventDefault();
-
-                // Redirect to the show advertisement html
-                window.location.href = contextPath + "/adv-show/" + button.value;
-            });
-    });
 
     // smooth scroll to element
     let element = document.querySelector("#advertisementList");
