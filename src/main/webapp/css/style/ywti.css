@@ -122,10 +122,10 @@ main {
 }
 
 #user-email {
-    color: navy;
-    text-align: right;
     padding-top: 5px;
-    padding-right: 15px;
+    display: none;
+    color: white;
+    text-align: center;
 }
 
 .button {

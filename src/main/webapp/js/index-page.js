@@ -81,6 +81,12 @@ function loadAdvertisementList(res){
             let idAdv = adv.idAdvertisement;
             let title = adv.title;
             let description = adv.description;
+            if (description.length>300) {
+                description = description.substring(
+                    0,
+                    300
+                ) + "...";
+            }
             let price = adv.price;
             let dateStart = adv.dateStart;
             let dateEnd = adv.dateEnd;
