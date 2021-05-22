@@ -71,65 +71,73 @@ Since: 1.0
             <c:choose>
                 <c:when test="${userType}">
                     <h1 class="h1 usernameTitle w3-center">${user.name} ${user.surname}</h1>
-                    <section class="userInfoSection w3-section w3-container w3-panel w3-card-4">
-                        <h2 class="h2">My info</h2>
-                        <p>Email: ${user.email}</p>
-                        <p>Phone number: ${user.phoneNumber}</p>
-                        <p>Birth date: ${user.birthDate}</p>
-                        <p>Address: ${user.address}</p>
-                        <p name="userCity" id="${user.idCity}"></p>
-                        <p>Your score is ${score} </p>
-                        </br>
-                        <button name="editUserProfile" class="button w3-section w3-container w3-center">Edit Profile</button>
-                        <br/>
-                    </section>
-                    <section class="bookings w3-section w3-container w3-panel w3-card-4">
-                        <%
-                            List<Booking> bookingList = (List) request.getAttribute("bookingList");
-                            List<Advertisement> advertisementList = (List) request.getAttribute("advertisementList");
-                            int count = 0;
-                        %>
-                        <c:choose>
-                            <c:when test="${empty bookingList}">
-                                <p name="emptyList">Reservations not yet made!</p>
-                            </c:when>
-                            <c:otherwise>
-                                <h2 class="h2 sectionTitle">My bookings</h2>
-                                <table class="w3-table w3-container w3-section ">
-                                    <tr>
-                                        <td>Advertisement</td>
-                                        <td>Date</td>
-                                        <td>Items</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <c:forEach items="<%=bookingList%>" var="booking">
-                                        <tr>
-                                            <td>
-                                                <%=advertisementList.get(count).getTitle()%>
-                                            </td>
-                                            <td>
-                                                <%=advertisementList.get(count).getDateStart()%>
-                                            </td>
-                                            <td> ${booking.numBooking} items  </td>
-                                            <td>
-                                                <form id="gotoShowBookingForm" name="showBookingForm" method="GET">
-                                                    <button name="showBookingButton" value="${booking.idAdvertisement}" class="button">Info</button>
-                                                </form>
-                                            </td>
-                                            <td>
-                                                <form id="deleteBookingForm" name="deleteBookingForm" method="DELETE">
-                                                    <button name="deleteBookingButton" value="${booking.idAdvertisement}" class="button">Delete</button>
-                                                </form>
-                                            </td>
-                                            <%count++;%>
-                                        </tr>
-                                    </c:forEach>
-                                </table>
-                            </c:otherwise>
-                        </c:choose>
-                    </section>
+                    <div class="rowProfile">
+                        <section class="userInfoSection w3-section w3-container w3-panel w3-card-4">
+                            <h2 class="h2">My info</h2>
+                            <table  id="infoTable">
+                                <tr><td>Email:</td> <td>${user.email}</td></tr>
+                                <tr ><td>Phone number: </td><td>${user.phoneNumber}</td></tr>
+                                <tr><td>Birth date: </td><td>${user.birthDate}</td></tr>
+                                <tr ><td>Address:</td> <td>${user.address}</td></tr>
+                                <tr ><td>City:</td><td name="userCity" id="${user.idCity}"></td></tr>
+                                <tr><td>Your score is </td><td>${score} </td></tr>
+                            </table>
+                            </br>
+                            <button name="editUserProfile" class="button w3-section w3-container w3-center">Edit Profile</button>
+                            <br/>
+                        </section>
 
+                        <div class="colProfile">
+                            <section class="rowProfile w3-section w3-container w3-panel w3-card-4">
+                                <%
+                                    List<Booking> bookingList = (List) request.getAttribute("bookingList");
+                                    List<Advertisement> advertisementList = (List) request.getAttribute("advertisementList");
+                                    int count = 0;
+                                %>
+                                <c:choose>
+                                    <c:when test="${empty bookingList}">
+                                        <p name="emptyList" class="colProfile">Reservations not yet made!</p>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <h2 class="h2 w3-center sectionTitle ">My bookings</h2>
+<%--                                            <tr class="bookingsTableRow">--%>
+<%--                                                <td class="">Event</td>--%>
+<%--                                                <td class="">Date</td>--%>
+<%--                                                <td class="">Items</td>--%>
+<%--                                                <td class=""></td>--%>
+<%--                                                <td class=""></td>--%>
+<%--                                            </tr>--%>
+                                            <c:forEach items="<%=bookingList%>" var="booking">
+                                            <table id="bookingsTable" class="w3-table w3-container w3-section ">
+                                                <tr class="bookingsTableRow ">
+                                                    <td class="">
+                                                        <%=advertisementList.get(count).getTitle()%>
+                                                    </td>
+                                                    <td class="">
+                                                        <%=advertisementList.get(count).getDateStart()%>
+                                                    </td>
+                                                    <td class=""> ${booking.numBooking} items  </td>
+                                                </tr>
+                                                <tr class="bookingsTableRow ">
+                                                    <td class="">
+                                                        <form id="gotoShowBookingForm" name="showBookingForm" method="GET">
+                                                            <button name="showBookingButton" value="${booking.idAdvertisement}" class="button">Info</button>
+                                                        </form>
+                                                    </td>
+                                                    <td class="">
+                                                        <form id="deleteBookingForm" name="deleteBookingForm" method="DELETE">
+                                                            <button name="deleteBookingButton" value="${booking.idAdvertisement}" class="button">Delete</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                <%count++;%>
+                                            </c:forEach>
+                                        </table>
+                                    </c:otherwise>
+                                </c:choose>
+                            </section>
+                        </div>
+                    </div>
                 </c:when>
                 <c:otherwise>
                     <h1 class="h1 usernameTitle w3-center">${user.name}</h1>

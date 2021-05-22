@@ -140,7 +140,7 @@ function fetchUserCity() {
     $.getJSON(url, data, function (res) {
         let cityName = res.city.idCityName;
         parList.forEach(function(par) {
-            par.innerText = "City: " +  cityName;
+            par.innerText =  cityName;
         });
     });
 }

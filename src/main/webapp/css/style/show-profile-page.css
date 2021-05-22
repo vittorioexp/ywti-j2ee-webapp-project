@@ -1,49 +1,61 @@
 
-section {
-    /*width: 360px;*/
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+.rowProfile {
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 10px;
 }
 
-.buttonSection {
-    margin: 4%;
-    float: left;
-}
-/*
-.usernameTitle {
-    font-family: BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-    font-weight: bold;
+.colProfile{
+    flex: 1;
+    flex-basis: 150px;
 }
 
-.sectionTitle {
-    font-family: BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-    font-weight: bold;
-}
-*/
 .userInfoSection{
-    float: left;
-    width: 30%;
-    margin : 3%;
+    flex-basis: 400px;
+ }
+
+@media (max-width: 1024px) {
+    .bookingsTableRow {
+        flex-direction :column;
+    }
 }
 
-/*#newAdvButton{*/
-/*    width: 30%;*/
-/*    margin: 3%;*/
+#infoTable{
+    width: 100%;
+}
+
+.bookingsTableRow{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.bookInfo{
+    flex:1;
+}
+
+tr {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*#infoTable > tr{*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
 /*}*/
 
-.bookings{
-    float:right;
-    width: 58%;
-    margin : 3%;
-}
+/*#infoTableCol > tr >td{*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*}*/
 
-.listButtons{
-    width: 100px;
-    height: 48px;
-    border-radius: 8px;
-}
 
-.titleAdv{
-    width: 60%;
-}
+
+
+
+/*#bookingsTableCol > tr > td{*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*}*/
