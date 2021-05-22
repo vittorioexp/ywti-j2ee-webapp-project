@@ -5,6 +5,14 @@
     margin-right: auto;
 }
 
-section {
+label {
+    color: #808080;
+}
+
+h1 {
+    text-align: center;
+}
+
+.buttonSection {
     text-align: center;
 }
