@@ -85,12 +85,22 @@ public final class InsertFeedbackServlet extends AbstractDatabaseServlet {
             Booking booking = BookingDAO.searchBooking(emailTourist, idAdvertisement);
             Date currentDate = new Date(Calendar.getInstance().getTime().getTime());
 
-            // check if the user booked this advertisement and
-            // check if the current date is bigger than the dateStart of the advertisement
-            if (booking == null || currentDate.compareTo(advertisement.getDateStart())<0) {
+            // check if the user booked this advertisement
+
+            if (booking == null) {
                 ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
                 Message m = new Message(ec.getErrorMessage(),
-                        ec.getHTTPCode(),"The event has yet to begin");
+                        ec.getHTTPCode(),"You can't give feedback to an item you didn't book!");
+                res.setStatus(ec.getHTTPCode());
+                m.toJSON(res.getOutputStream());
+                return;
+            }
+
+            // check if the current date is bigger than the dateStart of the advertisement
+            if ( currentDate.compareTo(advertisement.getDateStart())<0) {
+                ErrorCode ec = ErrorCode.METHOD_NOT_ALLOWED;
+                Message m = new Message(ec.getErrorMessage(),
+                        ec.getHTTPCode(),"The event has yet to begin, you can't rate it!");
                 res.setStatus(ec.getHTTPCode());
                 m.toJSON(res.getOutputStream());
                 return;
