@@ -73,3 +73,8 @@
 .slidesButton{
     width: 50%;
 }
+
+h1 {
+    max-width: 90%;
+    text-align: center;
+}
