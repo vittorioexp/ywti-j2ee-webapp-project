@@ -53,7 +53,7 @@ function fetchEditProfile() {
         return;
     }else{
         let data = {
-            "password": password,
+            "password": CryptoJS.MD5(password).toString(),
             "phonenumber": phonenumber,
             "address": address,
             "idCity": city

@@ -23,7 +23,7 @@ function fetchLogin(){
 
     let data = {
         "email": email,
-        "password": password
+        "password": CryptoJS.MD5(password).toString()
     }
 
     $.ajax({

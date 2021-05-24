@@ -72,8 +72,8 @@ function fetchRegister(){
         data = {
             "userType": userType,
             "email": email,
-            "password": password,
-            "rpassword": rpassword,
+            "password": CryptoJS.MD5(password).toString(),
+            "rpassword": CryptoJS.MD5(rpassword).toString(),
             "name": name,
             "address": address,
             "phone": phone,
@@ -96,8 +96,8 @@ function fetchRegister(){
         data = {
             "userType": userType,
             "email": email,
-            "password": password,
-            "rpassword": rpassword,
+            "password": CryptoJS.MD5(password).toString(),
+            "rpassword": CryptoJS.MD5(rpassword).toString(),
             "name": name,
             "surname": surname,
             "birthDate": birthDate,

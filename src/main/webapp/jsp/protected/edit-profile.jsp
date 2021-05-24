@@ -54,6 +54,10 @@ Since: 1.0
     <!-- W3 school CSS -->
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
+    <!-- Crypto JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/md5.js"></script>
+
     <!-- Common CSS -->
     <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
 
