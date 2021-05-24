@@ -72,6 +72,10 @@ public class UploadImageServlet extends AbstractDatabaseServlet {
                         switch (name) {
                             case "idAdvertisement":
                                 idAdvertisement = Integer.parseInt(value);
+                                if(multipart.isEmpty()){
+                                    res.setStatus(HttpServletResponse.SC_OK);
+                                    res.sendRedirect(req.getContextPath() + "/adv-show/" + idAdvertisement);
+                                }
                                 if(idAdvertisement<=0){
                                     ErrorCode ec = ErrorCode.AD_NOT_FOUND;
                                     Message m = new Message(ec.getErrorMessage(),
