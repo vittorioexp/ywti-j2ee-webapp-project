@@ -19,13 +19,6 @@ input[type="file"] {
     cursor: pointer;
 }
 
-#advTitle{
-    text-align: center;
-    color: #3f51b5;
-    font-weight: bold;
-    color: #333;
-    line-height: 1.2;
-}
 
 #previews{
     display: flex;
