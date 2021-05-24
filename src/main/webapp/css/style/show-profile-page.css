@@ -12,9 +12,17 @@
     flex-basis: 150px;
 }
 
+.userInfoSection{
+    flex-basis: 400px;
+    width: 40%;
+    margin: auto;
+    padding: 1em;
+}
+
 .touristBookingList, .touristAdvList {
     width: 70%;
     margin: auto;
+    padding: 1em;
 }
 
 .touristBookingList table, .touristAdvList table {
@@ -22,21 +30,20 @@
     padding-top: 5%;
 }
 
-.touristBookingList th, .touristAdvList th {
+.touristAdvList th, .touristAdvList td {
     width: 15%;
 }
 
-.touristBookingList td, .touristAdvList td {
-    width: 15%;
+.small-btn {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
 }
 
-.userInfoSection{
-    flex-basis: 400px;
-    width: 40%;
-    margin: auto;
- }
-
-@media (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
     .bookingsTableRow {
         flex-direction :column;
     }
@@ -45,6 +52,12 @@
     }
     .touristBookingList, .touristAdvList {
         width: 100%;
+    }
+    .touristAdvList th, .touristAdvList td {
+        width: 50%;
+    }
+    .show-desktop {
+        display: none;
     }
 }
 

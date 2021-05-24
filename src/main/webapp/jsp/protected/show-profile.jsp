@@ -40,11 +40,20 @@ Since: 1.0
     <!-- The viewport meta element is the key to making a responsive site work. -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My profile - Your Way to Italy</title>
-    <!-- Common libraries -->
+
+    <!-- Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+    <!-- Font awesome -->
+    <link href="/ywti_wa2021_war/css/fontawesome-free-5.15.3-web/css/all.css" rel="stylesheet">
+
+    <!-- W3 school CSS -->
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <!-- Common CSS -->
@@ -67,10 +76,9 @@ Since: 1.0
         <div id="navbar-area" class="topnav" ></div>
     </header>
     <main class="mainContent w3-container" >
-        <div id="user-email" class=""></div>
             <c:choose>
                 <c:when test="${userType}">
-                    <h1 class="h1 usernameTitle w3-center">${user.name} ${user.surname}</h1>
+                    <h1 class="h1 usernameTitle w3-center p-2">${user.name} ${user.surname}</h1>
                     <div class="rowProfile">
                         <section class="userInfoSection w3-section w3-container w3-panel w3-card-4 w3-center">
                             <h2 class="h2">My info</h2>
@@ -140,7 +148,7 @@ Since: 1.0
                     </div>
                 </c:when>
                 <c:otherwise>
-                    <h1 class="h1 usernameTitle w3-center">${user.name}</h1>
+                    <h1 class="h1 usernameTitle w3-center p-2">${user.name}</h1>
                     <section class="w3-section w3-container w3-panel w3-card-4 w3-center userInfoSection">
                         <h2 class="h2 sectionTitle">My info</h2>
                         <p>Email: ${user.email}</p>
@@ -169,15 +177,14 @@ Since: 1.0
                                 <p name="emptyList">No advertisement created</p>
                             </c:when>
                             <c:otherwise>
-                        <div style="overflow-x:auto;">
-                                <table class="table table-striped">
+                                <table class="table table-borderless">
                                     <thead>
                                         <tr>
                                             <th scope="col">Advertisement</th>
-                                            <th scope="col">Starting</th>
-                                            <th scope="col">Ending</th>
-                                            <th scope="col">Items</th>
-                                            <th scope="col">Price</th>
+                                            <th scope="col" class="show-desktop">Starting</th>
+                                            <th scope="col" class="show-desktop">Ending</th>
+                                            <th scope="col" class="show-desktop">Items</th>
+                                            <th scope="col" class="show-desktop">Price</th>
                                             <th scope="col" ></th>
                                         </tr>
                                     </thead>
@@ -185,11 +192,17 @@ Since: 1.0
                                 <c:forEach items="${advertisementList}" var="adv">
                                         <tr>
                                             <td class="">${adv.title}   </td>
-                                            <td class="">${adv.dateStart}   </td>
-                                            <td class="">${adv.dateEnd}   </td>
-                                            <td class="">${adv.numTotItem}   </td>
-                                            <td class="">${adv.price}   </td>
+                                            <td class="show-desktop">${adv.dateStart}   </td>
+                                            <td class="show-desktop">${adv.dateEnd}   </td>
+                                            <td class="show-desktop">${adv.numTotItem}   </td>
+                                            <td class="show-desktop">${adv.price}   </td>
 
+                                            <td>
+                                                <button class="small-btn" name="showAdvertisementButton" value="${adv.idAdvertisement}"><i class="fas fa-info-circle"></i></button>
+                                                <button class="small-btn" name="editAdvertisementButton" value="${adv.idAdvertisement}"><i class="fas fa-edit"></i></button>
+                                                    <button class="small-btn" name="deleteAdvertisementButton" value="${adv.idAdvertisement}"><i class="far fa-trash-alt"></i></button>
+                                            </td>
+                                            <!--
                                             <td>
                                                 <form id="gotoEditAdvertisementForm" class="buttonSection" name="gotoEditAdvertisementForm" method="GET">
                                                 <button name="editAdvertisementButton" value="${adv.idAdvertisement}" class="button">Edit</button><br/>
@@ -201,11 +214,11 @@ Since: 1.0
                                                     <button name="deleteAdvertisementButton" value="${adv.idAdvertisement}" class="button">Delete</button>
                                                 </form>
                                             </td>
+                                            -->
                                         </tr>
                                 </c:forEach>
                                     </tbody>
                                 </table>
-                        </div>
                             </c:otherwise>
                         </c:choose>
                     </section>
