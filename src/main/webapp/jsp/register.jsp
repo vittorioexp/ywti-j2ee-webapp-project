@@ -77,7 +77,7 @@ Since: 1.0
                 <input type="checkbox" id="userTypeCheckbox" name="userTypeCheckbox" value="company" onclick="checkUserType()">
                 <label for="userType" class="lead" > I am a company</label><br/><br/>
             </section>
-            <section id="error">
+            <section id="error" class="w3-center">
             </section>
             <section id="touristRegistration" class="w3-panel w3-card-4 w3-section">
                 <p class="lead p-1 w3-center" >Register as a tourist and start your journey!</p>
@@ -110,7 +110,9 @@ Since: 1.0
                     <input type="hidden" id="userType" name="userType" value="tourist">
                     <br/><br/>
 
-                    <button name="register-button" class="button"type="submit">Register</button><br/><br/>
+                    <div class="w3-center">
+                        <button name="register-button" class="button"type="submit">Register</button><br/><br/>
+                    </div>
 
                 </form>
             </section>
@@ -140,8 +142,9 @@ Since: 1.0
                     <input type="hidden" name="userType" value="company">
 
                     <br/><br/>
-
-                    <button name="register-button" type="submit" class="button">Register</button><br/><br/>
+                    <div class="w3-center">
+                        <button name="register-button" type="submit" class="button">Register</button><br/><br/>
+                    </div>
 
                 </form>
             </section>
