@@ -27,7 +27,7 @@
     text-justify: inter-word;
 }
 
-@media (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
     .rowAdv {
         flex-direction: column;
     }
