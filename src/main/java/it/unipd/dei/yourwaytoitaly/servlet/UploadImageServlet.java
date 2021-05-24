@@ -72,7 +72,7 @@ public class UploadImageServlet extends AbstractDatabaseServlet {
                         switch (name) {
                             case "idAdvertisement":
                                 idAdvertisement = Integer.parseInt(value);
-                                if(multipart.isEmpty()){
+                                if(multipart.size() == 1){
                                     res.setStatus(HttpServletResponse.SC_OK);
                                     res.sendRedirect(req.getContextPath() + "/adv-show/" + idAdvertisement);
                                 }
