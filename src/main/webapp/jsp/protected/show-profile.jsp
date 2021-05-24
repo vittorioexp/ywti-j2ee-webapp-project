@@ -72,7 +72,7 @@ Since: 1.0
                 <c:when test="${userType}">
                     <h1 class="h1 usernameTitle w3-center">${user.name} ${user.surname}</h1>
                     <div class="rowProfile">
-                        <section class="userInfoSection w3-section w3-container w3-panel w3-card-4">
+                        <section class="userInfoSection w3-section w3-container w3-panel w3-card-4 w3-center">
                             <h2 class="h2">My info</h2>
                             <table  id="infoTable">
                                 <tr><td>Email:</td> <td>${user.email}</td></tr>
@@ -87,7 +87,7 @@ Since: 1.0
                             <br/>
                         </section>
 
-                        <div class="colProfile">
+                        <div class="colProfile touristBookingList w3-center">
                             <section class="rowProfile w3-section w3-container w3-panel w3-card-4">
                                 <%
                                     List<Booking> bookingList = (List) request.getAttribute("bookingList");
@@ -141,7 +141,7 @@ Since: 1.0
                 </c:when>
                 <c:otherwise>
                     <h1 class="h1 usernameTitle w3-center">${user.name}</h1>
-                    <section class="w3-section w3-container w3-panel w3-card-4 userInfoSection">
+                    <section class="w3-section w3-container w3-panel w3-card-4 w3-center userInfoSection">
                         <h2 class="h2 sectionTitle">My info</h2>
                         <p>Email: ${user.email}</p>
                         <p>Phone number: ${user.phoneNumber}</p>
@@ -156,7 +156,7 @@ Since: 1.0
 
 
 
-                    <section class="bookings w3-section w3-container w3-panel w3-card-4">
+                    <section class="bookings w3-section w3-container w3-panel w3-card-4 w3-center touristAdvList">
                         <%
                             List<Advertisement> advertisementList = (List<Advertisement>) request.getAttribute("advertisementList");
                         %>
@@ -169,21 +169,32 @@ Since: 1.0
                                 <p name="emptyList">No advertisement created</p>
                             </c:when>
                             <c:otherwise>
-                                <c:forEach items="${advertisementList}" var="adv">
-                                    <table class="w3-table w3-container w3-section">
+                        <div style="overflow-x:auto;">
+                                <table class="table table-striped">
+                                    <thead>
                                         <tr>
-                                            <td class=""><p class="">Advertisement </p>${adv.title}   </td>
-                                            <td class=""><p class="">Starting </p>${adv.dateStart}   </td>
-                                            <td class=""><p class=""> Ending </p>${adv.dateEnd}   </td>
-                                            <td class=""><p class=""> Items </p>${adv.numTotItem}   </td>
-                                            <td class=""><p class=""> Price </p> ${adv.price}   </td>
+                                            <th scope="col">Advertisement</th>
+                                            <th scope="col">Starting</th>
+                                            <th scope="col">Ending</th>
+                                            <th scope="col">Items</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col" ></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                <c:forEach items="${advertisementList}" var="adv">
+                                        <tr>
+                                            <td class="">${adv.title}   </td>
+                                            <td class="">${adv.dateStart}   </td>
+                                            <td class="">${adv.dateEnd}   </td>
+                                            <td class="">${adv.numTotItem}   </td>
+                                            <td class="">${adv.price}   </td>
 
-
-                                            <td colspan="5">
-                                                <form id="gotoEditAdvertisementForm" class="buttonSection" name="gotoEditAdvertisementForm" method="GET"/>
+                                            <td>
+                                                <form id="gotoEditAdvertisementForm" class="buttonSection" name="gotoEditAdvertisementForm" method="GET">
                                                 <button name="editAdvertisementButton" value="${adv.idAdvertisement}" class="button">Edit</button><br/>
                                                 </form>
-                                                <form id="gotoShowAdvertisementForm" class="buttonSection" name="gotoShowAdvertisementForm" method="GET"/>
+                                                <form id="gotoShowAdvertisementForm" class="buttonSection" name="gotoShowAdvertisementForm" method="GET">
                                                 <button name="showAdvertisementButton" value="${adv.idAdvertisement}" class="button">Info</button><br/>
                                                  </form>
                                                 <form id="deleteAdvertisementForm" class="buttonSection" name="deleteAdvertisementForm" method="DELETE">
@@ -191,8 +202,10 @@ Since: 1.0
                                                 </form>
                                             </td>
                                         </tr>
-                                    </table>
                                 </c:forEach>
+                                    </tbody>
+                                </table>
+                        </div>
                             </c:otherwise>
                         </c:choose>
                     </section>

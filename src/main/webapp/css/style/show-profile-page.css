@@ -12,14 +12,44 @@
     flex-basis: 150px;
 }
 
+.touristBookingList, .touristAdvList {
+    width: 70%;
+    margin: auto;
+}
+
+.touristBookingList table, .touristAdvList table {
+    width: 100%;
+    padding-top: 5%;
+}
+
+.touristBookingList th, .touristAdvList th {
+    width: 15%;
+}
+
+.touristBookingList td, .touristAdvList td {
+    width: 15%;
+}
+
 .userInfoSection{
     flex-basis: 400px;
+    width: 40%;
+    margin: auto;
  }
 
 @media (max-width: 1024px) {
     .bookingsTableRow {
         flex-direction :column;
     }
+    .userInfoSection{
+        width: 100%;
+    }
+    .touristBookingList, .touristAdvList {
+        width: 100%;
+    }
+}
+
+.buttonSection button {
+    width:100% !important;
 }
 
 #infoTable{
