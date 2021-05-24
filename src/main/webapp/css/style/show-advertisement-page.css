@@ -74,6 +74,10 @@
     width: 50%;
 }
 
+.slidesButton:hover {
+    background-color: transparent;
+}
+
 h1 {
     max-width: 90%;
     text-align: center;
