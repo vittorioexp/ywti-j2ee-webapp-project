@@ -61,12 +61,13 @@
     }
 }
 
-.buttonSection button {
-    width:100% !important;
-}
+/*.buttonSection button {*/
+/*    width:100% !important;*/
+/*}*/
 
-#infoTable{
-    width: 100%;
+.infoTable{
+    width: 90%;
+    margin: 5%;
 }
 
 .bookingsTableRow{
