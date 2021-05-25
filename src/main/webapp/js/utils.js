@@ -1,10 +1,22 @@
+/*
+Author: Vittorio Esposito
+Author: Matteo Piva
+Author: Marco Basso
+Author: Francesco Giurisato
 
+JS to provide utilities
+ */
+
+
+// Context path
 const contextPath = "http://localhost:8080/ywti_wa2021_war";
 
 document.addEventListener("DOMContentLoaded", function(event) {
+    // Load navbar and footer
     fetchTemplate();
 })
 
+// For mobile devices, load hamburger menu
 function loadHamburger() {
     let x = document.getElementById("header-bar");
     if (x.className === "") {
@@ -14,49 +26,50 @@ function loadHamburger() {
     }
 }
 
+// Load the list of type adv (locally or remotely)
 function getTypeAdvList(elementId, placeholder) {
 
-let container = document.getElementById(elementId);
-let head = "";
-let str = "";
+    let container = document.getElementById(elementId);
+    let head = "";
+    let str = "";
 
-// Checks if the list is already in the storage
-let storageList = localStorage.getItem("typeAdvList");
+    // Checks if the list is already in the storage
+    let storageList = localStorage.getItem("typeAdvList");
 
-if (storageList===null || !storageList.includes("option")) {
-// The list is not in the storage
-let url = contextPath + "/typeAdv";
-$.getJSON(url, function (res) {
-let typeAdvList = res.resourceList;
-if (typeAdvList.length>0) {
-    head = "<option value=\"\" disabled selected>" + placeholder + "</option>\n";
-    typeAdvList.forEach(function(resource) {
-        let typeAdv = resource.typeAdvertisement;
-        let idType = typeAdv.idType;
-        let type = typeAdv.type;
+    if (storageList===null || !storageList.includes("option")) {
+    // The list is not in the storage
+    let url = contextPath + "/typeAdv";
+    $.getJSON(url, function (res) {
+    let typeAdvList = res.resourceList;
+    if (typeAdvList.length>0) {
+        head = "<option value=\"\" disabled selected>" + placeholder + "</option>\n";
+        typeAdvList.forEach(function(resource) {
+            let typeAdv = resource.typeAdvertisement;
+            let idType = typeAdv.idType;
+            let type = typeAdv.type;
 
-        str += "<option value=" + idType + ">" + type + "</option>\n";
+            str += "<option value=" + idType + ">" + type + "</option>\n";
+        });
+
+        // Save the list in the storage
+        localStorage.setItem("typeAdvList", str);
+
+    } else {
+        head = "<option value=" + 0 + ">Error</option>\n";
+    }
+    // Display the list
+    container.innerHTML = head + str;
     });
 
-    // Save the list in the storage
-    localStorage.setItem("typeAdvList", str);
-
-} else {
-    head = "<option value=" + 0 + ">Error</option>\n";
-}
-// Display the list
-container.innerHTML = head + str;
-});
-
-} else {
-// The list is in the storage
-head = "<option value=\"\" disabled selected>" + placeholder + "</option>\n";
-str = localStorage.getItem("typeAdvList");
-container.innerHTML = head + str;
-}
+    } else {
+    // The list is in the storage
+    head = "<option value=\"\" disabled selected>" + placeholder + "</option>\n";
+    str = localStorage.getItem("typeAdvList");
+    container.innerHTML = head + str;
+    }
 }
 
-
+// Load the list of cities (locally or remotely)
 function getCityList(elementId, placeholder) {
 
     let container = document.getElementById(elementId);
@@ -99,10 +112,12 @@ function getCityList(elementId, placeholder) {
     }
 }
 
+// Returns true if the user is logged in (checking the storage)
 function isLoggedIn() {
     return localStorage.getItem("loggedIn")===true || localStorage.getItem("loggedIn")==="true";
 }
 
+// Returns the user email
 function getUserEmail() {
     if (!isLoggedIn()) {
         return "";
@@ -110,6 +125,7 @@ function getUserEmail() {
     return localStorage.getItem("userEmail");
 }
 
+// Returns the user role: company/tourist
 function getUserRole() {
     if (!isLoggedIn()) {
         return "";
@@ -155,6 +171,7 @@ function loadNavbar(data){
     let userAuthorization = getUserRole();
 
     // Checks if the user is logged in or not
+    // Show appropriate content to logged/unlogged user
     if (isLoggedIn()) {
 
         list = document.getElementsByClassName("unlogged");
@@ -280,6 +297,8 @@ function sendJsonRequest(url, method, data, callback) {
     }
 }
 
+// Checks if an email is valid. Takes in input the index of the input tag
+// Prints the error in a tag with id="error"
 function validateEmail(index) {
     // Error section
     let error = document.getElementById("error");
@@ -309,6 +328,8 @@ function validateEmail(index) {
     }
 }
 
+// Checks if a password is valid. Takes in input the index of the input tag
+// Prints the error in a tag with id="error"
 function validatePassword(index) {
 
     // Error section
@@ -357,6 +378,7 @@ function validatePassword(index) {
     }
 }
 
+// Checks if a phone number is valid. Takes in input the index of the input tag
 function validatePhoneNumber(index) {
 
     // Error section
@@ -388,6 +410,7 @@ function validatePhoneNumber(index) {
 
 }
 
+// Checks if a id city is valid. Takes in input the index of the input tag
 function validateIdCity(){
     let idCity = document.getElementById("idCity").value;
     if(idCity<=0){
@@ -399,7 +422,7 @@ function validateIdCity(){
     }
 }
 
-
+// Checks if a title is valid
 function validateTitle(){
     let title = document.getElementById("title").value;
     let error = document.getElementById("error");
@@ -426,6 +449,7 @@ function validateTitle(){
     error.innerHTML = error.innerHTML.replace('<p>Invalid title.</p>','');
 }
 
+// Checks if a description is valid
 function validateDescription(){
     let description = document.getElementById("description").value;
     let error = document.getElementById("error");
@@ -447,6 +471,7 @@ function validateDescription(){
     error.innerHTML = error.innerHTML.replace('<p>Invalid description.</p>','');
 }
 
+// Checks if a price is valid
 function validatePrice(){
     let price = document.getElementById("price").value;
     let error = document.getElementById("error");
@@ -467,6 +492,7 @@ function validatePrice(){
     error.innerHTML = error.innerHTML.replace('<p>Invalid price.</p>','');
 }
 
+// Checks if a number of items is valid
 function validateNumTotItem(){
     let numTotItem = document.getElementById("numTotItem").value;
     let error = document.getElementById("error");
