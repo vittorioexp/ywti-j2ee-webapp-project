@@ -1,8 +1,18 @@
 
+/*
+Author: Marco Basso
+Author: Matteo Piva
+Author: Vittorio Esposito
+
+Js to manage the creation of an advertisement
+ */
+
 document.addEventListener("DOMContentLoaded", function(event) {
 
+    // Load dropdrown menu for type adv
     getTypeAdvList("idType", "Type");
 
+    // Real time validation of some input fields
     document.getElementById("title").addEventListener("focusout", validateTitle);
     document.getElementById("description").addEventListener("focusout", validateDescription);
     document.getElementById("price").addEventListener("focusout", validatePrice);
@@ -14,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
 });
 
+// Reads the input field and send a message to the server
 function createAdvertisement() {
 
     let url = new URL(contextPath+"/adv-create");
@@ -29,6 +40,7 @@ function createAdvertisement() {
     let timeEnd = document.getElementById("timeEnd").value.toString();
     let idType = document.getElementById("idType").value.toString();
 
+    // Data to be send to the server
     let data = "{\"advertisement\":" +
         "{\"idAvdertisement\":\"" + idAdvertisement.toString() + "\"," +
         "\"title\":\"" + sanitizeString(title) +
