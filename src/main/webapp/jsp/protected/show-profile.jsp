@@ -76,10 +76,10 @@ Since: 1.0
         <div id="navbar-area" class="topnav" ></div>
     </header>
     <main class="mainContent w3-container" >
+        <!-- Tourist information -->
             <c:choose>
                 <c:when test="${userType}">
                     <h1 class="h1 usernameTitle w3-center p-2">${user.name} ${user.surname}</h1>
-<%--                    <div class="rowProfile">--%>
                         <section class="userInfoSection w3-section w3-container w3-panel w3-card-4 w3-center">
                             <h2 class="h2">My info</h2>
                             <table  class="infoTable">
@@ -94,6 +94,8 @@ Since: 1.0
                             <button name="editUserProfile" class="button w3-section w3-container w3-center">Edit Profile</button>
                             <br/>
                         </section>
+
+                    <!-- List of bookings of the tourist, shown below the user info -->
 
                         <div class=" touristBookingList w3-center">
                             <section class="rowProfile w3-section w3-container w3-panel w3-card-4">
@@ -129,14 +131,10 @@ Since: 1.0
                                                         </td>
                                                         <td class="show-desktop"> ${booking.numBooking} items  </td>
                                                         <td class="">
-<%--                                                            <form id="gotoShowBookingForm" name="showBookingForm" method="GET">--%>
+
+                                                            <!-- The tourist can view or delete the booking -->
                                                                 <button class="small-btn" name="showBookingButton" value="${booking.idAdvertisement}"><i class="fas fa-info-circle"></i></button>
-<%--                                                            </form>--%>
-<%--                                                        </td>--%>
-<%--                                                        <td class="show-desktop">--%>
-<%--                                                            <form id="deleteBookingForm" name="deleteBookingForm" method="DELETE">--%>
                                                                 <button class="small-btn" name="deleteBookingButton" value="${booking.idAdvertisement}"><i class="far fa-trash-alt"></i></button>
-<%--                                                            </form>--%>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -147,17 +145,13 @@ Since: 1.0
                                 </c:choose>
                             </section>
                         </div>
-<%--                    </div>--%>
                 </c:when>
+
+                <!-- Company information -->
                 <c:otherwise>
                     <h1 class="h1 usernameTitle w3-center p-2">${user.name}</h1>
                     <section class="w3-section w3-container w3-panel w3-card-4 w3-center userInfoSection">
                         <h2 class="h2 sectionTitle">My info</h2>
-
-<%--                        <p>Email: ${user.email}</p>--%>
-<%--                        <p>Phone number: ${user.phoneNumber}</p>--%>
-<%--                        <p>Address: ${user.address}</p>--%>
-<%--                        <p name="userCity" id="${user.idCity}"></p>--%>
 
                         <table  class="infoTable">
                             <tr><td>Email:</td> <td>${user.email}</td></tr>
@@ -173,7 +167,7 @@ Since: 1.0
                     </section>
 
 
-
+                    <!-- List of advertisement of the company -->
                     <section class="bookings w3-section w3-container w3-panel w3-card-4 w3-center touristAdvList">
                         <%
                             List<Advertisement> advertisementList = (List<Advertisement>) request.getAttribute("advertisementList");
@@ -208,23 +202,11 @@ Since: 1.0
                                             <td class="show-desktop">${adv.price}   </td>
 
                                             <td>
+                                                <!-- Show, edit or delete the selected adv -->
                                                 <button class="small-btn" name="showAdvertisementButton" value="${adv.idAdvertisement}"><i class="fas fa-info-circle"></i></button>
                                                 <button class="small-btn" name="editAdvertisementButton" value="${adv.idAdvertisement}"><i class="fas fa-edit"></i></button>
                                                 <button class="small-btn" name="deleteAdvertisementButton" value="${adv.idAdvertisement}"><i class="far fa-trash-alt"></i></button>
                                             </td>
-                                            <!--
-                                            <td>
-                                                <form id="gotoEditAdvertisementForm" class="buttonSection" name="gotoEditAdvertisementForm" method="GET">
-                                                <button name="editAdvertisementButton" value="${adv.idAdvertisement}" class="button">Edit</button><br/>
-                                                </form>
-                                                <form id="gotoShowAdvertisementForm" class="buttonSection" name="gotoShowAdvertisementForm" method="GET">
-                                                <button name="showAdvertisementButton" value="${adv.idAdvertisement}" class="button">Info</button><br/>
-                                                 </form>
-                                                <form id="deleteAdvertisementForm" class="buttonSection" name="deleteAdvertisementForm" method="DELETE">
-                                                    <button name="deleteAdvertisementButton" value="${adv.idAdvertisement}" class="button">Delete</button>
-                                                </form>
-                                            </td>
-                                            -->
                                         </tr>
                                 </c:forEach>
                                     </tbody>

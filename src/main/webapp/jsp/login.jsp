@@ -110,6 +110,8 @@ Since: 1.0
             <div id="user-email" class=""></div>
             <h1 class="h1 w3-center">Login into your account</h1>
             <section id="loginSection" class="w3-panel w3-card-4 w3-section">
+
+                <!-- User credentials form for login-->
                 <form class="" id="loginForm" name="loginForm" method="POST"/>
                     <input id="email" name="email" type="email" class="w3-input w3-section" required placeholder="Email"/>
                     <span class="error"></span>

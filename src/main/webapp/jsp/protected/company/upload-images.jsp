@@ -73,6 +73,7 @@ Since: 1.0
         <div id="navbar-area" class="topnav" ></div>
     </header>
     <main class="mainContent w3-container" >
+        <!-- Retrieve the advertisement for which we are uploading the image(s) -->
         <%
             String path = request.getRequestURI();
             String idAdvertisement = path.substring(path.lastIndexOf("image-do-upload") + 16);
@@ -82,6 +83,8 @@ Since: 1.0
         <h1 class="h1 p-3" id="advTitle">Upload images for <%= a.getTitle() %></h1>
         <div class="rowImg">
             <section id="mainPanel" class="rowImg 2 w3-panel w3-card">
+
+                <!-- Upload image(s) -->
                 <form id="uploadImagesForm" class="w3-center" name="uploadImagesForm" method="post" enctype="multipart/form-data"
                       action="<c:url value="/image-upload" />" >
                     <input type="hidden" name="idAdvertisement" value="<%= idAdvertisement %>" />

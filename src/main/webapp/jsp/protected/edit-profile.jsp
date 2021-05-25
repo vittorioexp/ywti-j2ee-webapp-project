@@ -1,6 +1,4 @@
 
-<!--
-
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Tourist" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.User" %>
 <!--
@@ -81,6 +79,8 @@ Since: 1.0
         <h1 class="h1">Edit profile</h1>
         <section id="EditSection" class="w3-panel w3-card-4 w3-section">
         <section id="error"></section>
+
+            <!-- Edit password, phonenumber, address or city of the user -->
         <form id="edit-profile-form" name="edit-profile-form" method="POST">
 
             <input class="w3-input w3-section" id="password" name="password" type="password" placeholder="Insert new password"/>

@@ -78,16 +78,18 @@ Since: 1.0
             <section class="w3-container w3-section">
                 <h1 class="h1 w3-center">Create your own account</h1>
             </section>
-
+            <!-- Select if the registration is for a tourist or company -->
             <section id ="companyornot" class="w3-container w3-panel w3-card-4 w3-section w3-center"><br/>
                 <input type="checkbox" id="userTypeCheckbox" name="userTypeCheckbox" value="company" onclick="checkUserType()">
                 <label for="userType" class="lead" > I am a company</label><br/><br/>
             </section>
             <section id="error" class="w3-center">
             </section>
+            <!-- Registration of a tourist-->
             <section id="touristRegistration" class="w3-panel w3-card-4 w3-section">
                 <p class="lead p-1 w3-center" >Register as a tourist and start your journey!</p>
                 <br/>
+                <!-- Form to insert tourist info -->
                 <form id="registerFormTourist" name="registerForm" method="POST">
 
                     <input class="w3-input w3-section" name="email" type="email" id="email_t" placeholder="Email"required/>
@@ -122,9 +124,11 @@ Since: 1.0
 
                 </form>
             </section>
+            <!-- Company registration -->
             <section id="companyRegistration" class="w3-panel w3-card-4 w3-section">
                 <p class="lead p-1 w3-center">Register as a company and start to create your event!</p>
                 <br/>
+                <!-- Form to insert company info -->
                 <form id="registerFormCompany" name="registerForm" method="POST">
 
                     <input class="w3-input w3-section" name="email" type="email" id="email_c" placeholder="Email" required/>
