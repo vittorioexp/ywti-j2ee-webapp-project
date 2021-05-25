@@ -1,3 +1,12 @@
+/*
+Author: Vittorio Esposito
+Author: Matteo Piva
+Author: Marco Basso
+Author: Francesco Giurisato
+
+JS to manage the register page
+ */
+
 document.addEventListener("DOMContentLoaded", function(event) {
 
     // By default, shows only the tourist registration form
@@ -42,7 +51,7 @@ function checkUserType(){
     let company = document.getElementById("companyRegistration");
 
     // If the checkbox is checked, display the proper form
-    if (checkBox.checked == true){
+    if (checkBox.checked === true){
         company.style.display = "block";
         tourist.style.display = "none";
     } else {
@@ -51,16 +60,17 @@ function checkUserType(){
     }
 }
 
-
+// sends register data to the server
 function fetchRegister(){
 
     let data;
 
     let checkBox = document.getElementById("userTypeCheckbox");
 
-    if (checkBox.checked == true){
+    if (checkBox.checked === true){
         // Company form
         let userType = "company";
+        // Data from input tags
         let email = document.getElementById("email_c").value.toString();
         let password = document.getElementById("password_c").value.toString();
         let rpassword = document.getElementById("rpassword_c").value.toString();
@@ -69,6 +79,7 @@ function fetchRegister(){
         let phone = document.getElementById("phonenumber_c").value.toString();
         let city = document.getElementById("idCity_c").value.toString();
 
+        // data to be sent
         data = {
             "userType": userType,
             "email": email,
@@ -83,6 +94,7 @@ function fetchRegister(){
     } else {
         // Tourist form
         let userType = "tourist";
+        // Data from input tags
         let email = document.getElementById("email_t").value.toString();
         let password = document.getElementById("password_t").value.toString();
         let rpassword = document.getElementById("rpassword_t").value.toString();
@@ -93,6 +105,7 @@ function fetchRegister(){
         let phone = document.getElementById("phonenumber_t").value.toString();
         let city = document.getElementById("idCity_t").value.toString();
 
+        // data to be sent
         data = {
             "userType": userType,
             "email": email,
@@ -107,6 +120,7 @@ function fetchRegister(){
         }
     }
 
+    // request to the server
     $.ajax({
         url: contextPath+"/user/register",
         data: data,

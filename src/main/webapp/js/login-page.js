@@ -1,3 +1,12 @@
+/*
+Author: Vittorio Esposito
+Author: Matteo Piva
+Author: Marco Basso
+Author: Francesco Giurisato
+
+JS to manage the login page
+ */
+
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
@@ -16,16 +25,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
 });
 
+// sends login data to the server
 function fetchLogin(){
 
+    // Data from input tags
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
 
+    // data to be sent
     let data = {
         "email": email,
         "password": CryptoJS.MD5(password).toString()
     }
 
+    // request to the server
     $.ajax({
         url: contextPath+"/user/login",
         data: data,
@@ -41,5 +54,3 @@ function fetchLogin(){
         }
     });
 }
-
-
