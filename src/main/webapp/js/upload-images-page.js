@@ -1,12 +1,10 @@
+/*
+Author: Francesco Giurisato
 
+Js to manage the upload of imgs of an advertisement
+ */
 
-// document.addEventListener("DOMContentLoaded", function(event) {
-//
-//     $("#image").change(function () {
-//         readURL(this);
-//     });
-// });
-//
+// Sets img previews while uploading them
 function readURL(input) {
     let i=0;
     for (; i < input.files.length; i++) {
@@ -14,24 +12,9 @@ function readURL(input) {
             let reader = new FileReader();
 
             reader.onload = function (e) {
-                //alert(e.target.result);
                 document.getElementById("previews").innerHTML += "<img class=\"preview\" src=\"" + e.target.result + "\"/>";
             }
-
             reader.readAsDataURL(input.files[i]);
-
         }
     }
 }
-
-// function img_pathUrl(input){
-//     let i=0;
-//     for (; i < input.files.length; i++) {
-//         document.getElementById("previews").innerHTML += "<img id=\"img" + i + "\"class=\"preview\" src=\"\"/>";
-//         let name = "img"+i;
-//         let url= (window.URL ? URL : webkitURL).createObjectURL(input.files[i]);
-//         alert(url);
-//         $(name).src = url;
-//     }
-//
-// }

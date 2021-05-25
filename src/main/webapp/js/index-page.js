@@ -1,8 +1,15 @@
+/*
+Author: Vittorio Esposito
+
+JS to manage the index page
+ */
+
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
     document.getElementById("advertisementList").style.display = "none";
 
+    // Loads the dropdowns fro cities and type adv
     getTypeAdvList("idType", "What");
     getCityList("idCity", "Where");
 
@@ -12,7 +19,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
         fetchAdvertisementList();
     });
 
+    // Load slideshow
     loadSlideshow();
+
+    // Insert the current date inside the Date input field
     loadDatePlaceholder();
 });
 
@@ -73,6 +83,7 @@ function loadAdvertisementList(res){
             let idAdv = adv.idAdvertisement;
             let title = adv.title;
             let description = adv.description;
+            // If the description is too long, cut it
             if (description.length>300) {
                 description = description.substring(
                     0,
@@ -161,6 +172,7 @@ function loadAdvertisementList(res){
 
 }
 
+// Loads the slideshow
 function loadSlideshow() {
     let myIndex = 0;
     carousel();
