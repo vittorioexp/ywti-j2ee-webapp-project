@@ -1,10 +1,11 @@
-document.addEventListener("DOMContentLoaded", function(event) {
+/*
+Author: Marco Basso
 
-    // Form validation while typing
-    //document.getElementById("password").addEventListener("focusout", function(event) {validatePassword(0)});
-    //document.getElementById("phonenumber").addEventListener("focusout", function(event) {validatePhoneNumber(0)});
-    //document.getElementById("address").addEventListener("keyup", function(event) {})
-    //document.getElementById("idCity").addEventListener("keyup", function(event) {validateIdCity()});
+JS that manages the modification of the user's profile. Checks are made on the submit button.
+
+ */
+
+document.addEventListener("DOMContentLoaded", function(event) {
 
     // Fetches the list of typeAdvertisements and Cities
     getCityList("idCity", "City");
@@ -21,12 +22,13 @@ function fetchEditProfile() {
     let messageError = "";
     let errorOccurred = false;
 
+    // Retrieve the values of the input fields
     let password = document.getElementById("password").value;
     let phonenumber = document.getElementById("phonenumber").value;
     let address = document.getElementById("address").value;
     let city = document.getElementById("idCity").value;
 
-
+    // Validate the various input fields
     if (validatePasswordOnSubmit(password)) {
         messageError += "Password invalid" + "\n";
         document.getElementById("password").value = document.getElementById("password").defaultValue;
@@ -52,6 +54,7 @@ function fetchEditProfile() {
         alert("Error found:" + "\n" + messageError);
         return;
     }else{
+        // If the fields are entered correctly
         let data = {
             "password": CryptoJS.MD5(password).toString(),
             "phonenumber": phonenumber,
@@ -65,10 +68,12 @@ function fetchEditProfile() {
             data: data,
             method: 'POST',
             success: function(res) {
+                // Successful edit request
                 alert(res.message.message);
                 window.location.href = contextPath + "/user/profile";
             },
             error: function(res) {
+                // Error in sending the request
                 let resMessage = res.responseJSON.message;
                 alert(resMessage.message + " " + resMessage.errorDetails);
                 document.getElementById("edit-profile-form").reset();
@@ -79,10 +84,12 @@ function fetchEditProfile() {
 }
 
 function validatePasswordOnSubmit(password){
+    // Min. size of the password = 8
     return password.length < 8;
 }
 
 function validatePhoneNumberOnSubmit(phonenumber){
+    // Regex for the phone number
     let numbers = /^[0-9]$/;
     return (phonenumber.match(numbers) || phonenumber.length < 7 || phonenumber.length > 14);
 }

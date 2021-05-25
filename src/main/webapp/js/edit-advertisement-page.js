@@ -1,4 +1,9 @@
+/*
+Author: Marco Basso
 
+JS that manages the modification of the advertisement. Checks are made on the input fields.
+
+ */
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
@@ -19,7 +24,7 @@ function fetchEditAdvertisement(currentUrl){
         currentUrl.lastIndexOf("adv-edit/")+9
     );
 
-
+    // Retrieve the values of the input fields
     let title = document.getElementById("title").value;
     let description = document.getElementById("description").value;
     let dateStart = document.getElementById("dateStart").value.toString();
@@ -35,6 +40,7 @@ function fetchEditAdvertisement(currentUrl){
     let messageError="";
     let errorOccurred=false;
 
+    // Validate the various input fields
     if(!validateStringOnSubmit(title)){
         messageError+="Title invalid"+"\n";
         document.getElementById("title").value = document.getElementById("title").defaultValue;
@@ -57,9 +63,11 @@ function fetchEditAdvertisement(currentUrl){
     }
 
     if(errorOccurred){
+        // Display an error message
         alert("Error found:"+"\n"+messageError);
         return;
     }else{
+        // If no error occured
         let emailCompany = getUserEmail();
 
         let url = new URL(contextPath+"/adv/" + idAdvertisement);
@@ -72,6 +80,7 @@ function fetchEditAdvertisement(currentUrl){
             "\"dateEnd\":\"" + dateEnd
             + "\",\"timeStart\":\"" + timeStart + "\",\"timeEnd\":\"" + timeEnd + "\",\"emailCompany\":\"" + emailCompany + "\",\"idType\":\"0\"}}";
 
+        // Send JSON object to the url
         sendJsonRequest(url, "PUT", data, function(req){
             window.location.replace(contextPath + "/adv-show/" + idAdvertisement);
         });
