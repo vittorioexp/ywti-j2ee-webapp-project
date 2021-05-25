@@ -128,9 +128,9 @@ Since: 1.0
                                                             <%=advertisementList.get(count).getDateStart()%>
                                                         </td>
                                                         <td class="show-desktop"> ${booking.numBooking} items  </td>
-                                                        <td class="show-desktop">
+                                                        <td class="">
 <%--                                                            <form id="gotoShowBookingForm" name="showBookingForm" method="GET">--%>
-                                                                <button class="small-btn" name="showBookingButton" value="${booking.idAdvertisement}"><i class="fas fa-info-circle"></button>
+                                                                <button class="small-btn" name="showBookingButton" value="${booking.idAdvertisement}"><i class="fas fa-info-circle"></i></button>
 <%--                                                            </form>--%>
 <%--                                                        </td>--%>
 <%--                                                        <td class="show-desktop">--%>

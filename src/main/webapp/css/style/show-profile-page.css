@@ -1,16 +1,16 @@
 
-.rowProfile {
-    flex-wrap: wrap;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin: 10px;
-}
+/*.rowProfile {*/
+/*    flex-wrap: wrap;*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    justify-content: center;*/
+/*    margin: 10px;*/
+/*}*/
 
-.colProfile{
-    flex: 1;
-    flex-basis: 150px;
-}
+/*.colProfile{*/
+/*    flex: 1;*/
+/*    flex-basis: 150px;*/
+/*}*/
 
 .userInfoSection{
     flex-basis: 400px;
@@ -25,12 +25,16 @@
     padding: 1em;
 }
 
+.touristBookingList section{
+    padding: 5%;
+}
+
 .touristBookingList table, .touristAdvList table {
     width: 100%;
     padding-top: 5%;
 }
 
-.touristAdvList th, .touristAdvList td {
+.touristAdvList th, .touristAdvList td , .touristBookingList th, .touristBookingList td{
     width: 15%;
 }
 
@@ -53,7 +57,7 @@
     .touristBookingList, .touristAdvList {
         width: 100%;
     }
-    .touristAdvList th, .touristAdvList td {
+    .touristAdvList th, .touristAdvList td , .touristBookingList th, .touristBookingList td{
         width: 50%;
     }
     .show-desktop {
@@ -70,15 +74,15 @@
     margin: 5%;
 }
 
-.bookingsTableRow{
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-}
+/*.bookingsTableRow{*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    flex-direction: row;*/
+/*}*/
 
-.bookInfo{
-    flex:1;
-}
+/*.bookInfo{*/
+/*    flex:1;*/
+/*}*/
 
 tr {
     display: flex;
