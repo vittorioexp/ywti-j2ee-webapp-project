@@ -1,8 +1,10 @@
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
+    // Replaces the idCity integer with the name of the city everywhere on the page
     fetchUserCity();
 
+    // edit user event listener
     document.getElementsByName("editUserProfile")[0].addEventListener(
         "click",
         function (event) {
@@ -10,12 +12,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
             window.location.href = contextPath+"/user/do-edit"
         });
 
+    //enabling company features on profile
     if (getUserRole()==="company") {
 
         let deleteAdvButtons = document.getElementsByName("deleteAdvertisementButton");
         let editAdvButtons = document.getElementsByName("editAdvertisementButton");
         let showAdvButtons = document.getElementsByName("showAdvertisementButton");
 
+        // delete adv event listener
         deleteAdvButtons.forEach(function(button, index) {
             // Adds an event listener (on click) on each delete adv button
             button.addEventListener(
@@ -43,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 });
         });
 
+        // edit adv event listener
         editAdvButtons.forEach(function(button, index) {
 
             // Adds an event listener (on click) on each edit adv button
@@ -57,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 });
         });
 
+        // show adv event listener
         showAdvButtons.forEach(function(button, index) {
 
             // Adds an event listener (on click) on each show adv button
@@ -70,18 +76,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     window.location.href = contextPath + "/adv-show/" + idAdvertisement;
                 });
         });
-
+        // create adv event listener
         document.getElementById("createAdvertisementButton").addEventListener(
             "click",
             function (event) {
                 event.preventDefault();
                 window.location.href = contextPath+"/adv-do-create"
             });
-    } else if (getUserRole()==="tourist") {
+    }
+    // enabling only the tourist functionalities
+    else if (getUserRole()==="tourist") {
 
         let deleteBookingButtons = document.getElementsByName("deleteBookingButton");
         let showBookingButton = document.getElementsByName("showBookingButton");
 
+        // show adv event listener
         showBookingButton.forEach(function(button, index) {
 
             // Adds an event listener (on click) on each delete booking button
@@ -95,6 +104,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 });
         });
 
+        // delete booking event listener
         deleteBookingButtons.forEach(function(button, index) {
 
             // Adds an event listener (on click) on each delete booking button
@@ -133,6 +143,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     }
 });
 
+// Replaces the idCity integer with the name of the city everywhere on the page
 function fetchUserCity() {
     let url = contextPath + "/city";
     let parList = document.getElementsByName("userCity");

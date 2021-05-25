@@ -1,17 +1,4 @@
 
-/*.rowProfile {*/
-/*    flex-wrap: wrap;*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
-/*    justify-content: center;*/
-/*    margin: 10px;*/
-/*}*/
-
-/*.colProfile{*/
-/*    flex: 1;*/
-/*    flex-basis: 150px;*/
-/*}*/
-
 .userInfoSection{
     flex-basis: 400px;
     width: 40%;
@@ -65,24 +52,12 @@
     }
 }
 
-/*.buttonSection button {*/
-/*    width:100% !important;*/
-/*}*/
 
 .infoTable{
     width: 90%;
     margin: 5%;
 }
 
-/*.bookingsTableRow{*/
-/*    display: flex;*/
-/*    justify-content: space-between;*/
-/*    flex-direction: row;*/
-/*}*/
-
-/*.bookInfo{*/
-/*    flex:1;*/
-/*}*/
 
 tr {
     display: flex;
@@ -93,21 +68,3 @@ main {
     margin-top: 5%;
 }
 
-/*#infoTable > tr{*/
-/*    display: flex;*/
-/*    justify-content: space-between;*/
-/*}*/
-
-/*#infoTableCol > tr >td{*/
-/*    display: flex;*/
-/*    justify-content: space-between;*/
-/*}*/
-
-
-
-
-
-/*#bookingsTableCol > tr > td{*/
-/*    display: flex;*/
-/*    justify-content: space-between;*/
-/*}*/
