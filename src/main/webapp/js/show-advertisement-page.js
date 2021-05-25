@@ -1,9 +1,19 @@
+/*
+Author: Vittorio Esposito
+Author: Matteo Piva
+Author: Marco Basso
+Author: Francesco Giurisato
+
+JS to manage the login page
+ */
+
 let slideIndex = 1;
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
     let idAdv = getIdAdvertisement();
 
+    // If idAdvertisement is invalid, the user is redirect to the error page
     if (idAdv===-1) {
         window.location.replace(contextPath + "/html/error.html");
     }
@@ -29,6 +39,7 @@ function fetchCreateBooking(){
 
     let numBooking = document.getElementById("numBooking").value;
     if(validateNumBooking(numBooking)){
+        // If the number of seats is invalid
         let errorObj = document.getElementById("errorCreateBooking");
         errorObj.innerHTML="Invalid total number of item.";
         errorObj.value="";
@@ -41,20 +52,22 @@ function fetchCreateBooking(){
         "idAdvertisement": getIdAdvertisement(),
         "numBooking": numBooking
     }
-
+    // Make the request tho the servlet
     $.ajax({
         url: url,
         data: data,
         method: 'POST',
         success: function(res) {
             if (res.message !== undefined) {
+                // If the response is successfull
                 window.location.href = contextPath + "/user/profile";
             } else {
-                // the filter wants the user to log in
+                // The filter servlet wants the user to log in
                 window.location.href = contextPath + "/user/do-login";
             }
         },
         error: function(res) {
+            // If an error occured, display the error message
             let resMessage = res.responseJSON.message;
             // alert(resMessage.message + " " + resMessage.errorDetails);
             document.getElementById("errorBooking").innerHTML = resMessage.errorDetails;
@@ -65,7 +78,7 @@ function fetchCreateBooking(){
 function fetchCreateFeedback(){
 
     let rateFeedback = document.getElementById("rateFeedback").value;
-
+    // If the rate is invalid
     if(validateRateFeedback(rateFeedback)){
         let errorObj = document.getElementById("errorCreateFeedback");
         errorObj.innerHTML="Invalid rate.";
@@ -82,17 +95,18 @@ function fetchCreateFeedback(){
         "rateFeedback":rateFeedback,
         "textFeedback":textFeedback
     }
-
+    // Make the request tho the servlet
     $.ajax({
         url: url,
         data: data,
         method: 'POST',
         success: function(res) {
+            // If the response is successfull
             fetchFeedbackList();
             fetchRate();
-            //window.location.reload(true);
         },
         error: function(res) {
+            // If an error occured, display the error message
             let resMessage = res.responseJSON.message;
             // alert(resMessage.message);
             document.getElementById("errorFeedback").innerHTML = resMessage.errorDetails;
@@ -100,6 +114,7 @@ function fetchCreateFeedback(){
     });
 }
 
+// Function to get the id of the advertisement
 function getIdAdvertisement() {
     let url = window.location.href;
     url = url.substring(
@@ -112,6 +127,7 @@ function getIdAdvertisement() {
     return url;
 }
 
+// Function to load the advertisement
 function fetchAdvertisement() {
     let url = new URL(contextPath+"/adv/" + getIdAdvertisement());
     $.ajax({
@@ -151,9 +167,11 @@ function loadAdvertisement(req) {
 
     document.getElementById("infoSection").innerHTML = info;
 
+    // If the company is logged in and it is the owner of the advertisement
     if (isLoggedIn() && emailCompany==getUserEmail()) {
         fetchBookingList();
     }else if(isLoggedIn() && getUserRole()==="tourist"){
+        // If the tourist is logged in
         document.getElementById("createBookingButton").addEventListener("click", function(event){
             event.preventDefault();
             fetchCreateBooking()
@@ -163,6 +181,7 @@ function loadAdvertisement(req) {
             fetchCreateFeedback()
         });
     }else if(!isLoggedIn()){
+        // If the user is not logged in
         document.getElementById("createBookingButton").addEventListener("click", function(event){
             event.preventDefault();
             window.location.href = contextPath + "/user/do-login";
@@ -193,6 +212,7 @@ function loadRate(req) {
     document.getElementById("advRate").innerHTML = info;
 }
 
+// Function to load the feedback list
 function fetchFeedbackList() {
     let url = new URL(contextPath+"/adv/" + getIdAdvertisement()+"/feedback");
     sendJsonRequest(url,"GET","",loadFeedbackList);
@@ -233,6 +253,7 @@ function loadFeedbackList(req) {
 
 }
 
+// Function to load the booking list
 function fetchBookingList() {
     let url = new URL(contextPath+"/adv/" + getIdAdvertisement()+"/booking");
     sendJsonRequest(url,"GET","",loadBookingList);
@@ -265,6 +286,7 @@ function loadBookingList(req) {
     document.getElementById("bookingList").innerHTML += str;
 }
 
+// Function to load the image list
 function fetchImageList() {
     let url = new URL(contextPath+"/adv/" + getIdAdvertisement()+"/image");
     sendJsonRequest(url,"GET","",loadImageList);
@@ -297,7 +319,7 @@ function loadImageList(req) {
     document.getElementById("advImages").innerHTML = str;
     document.getElementById("buttContainer").innerHTML = str2;
 
-    //document.getElementsByClassName("mySlides")[0].style.display= "inline";
+
     plusDivs(+1);
 
     // Removes broken images
