@@ -1,8 +1,6 @@
 
 /*
-Author: Marco Basso
 Author: Matteo Piva
-Author: Vittorio Esposito
 
 Js to manage the creation of an advertisement
  */
