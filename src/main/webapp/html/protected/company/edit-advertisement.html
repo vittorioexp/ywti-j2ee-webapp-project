@@ -45,40 +45,38 @@
     </header>
     <main class="mainContent w3-container" >
         <h1 class="h1 ">Edit Advertisement</h1>
-        <section class="w3-panel section w3-card-4">
+        <section id="edit" class="w3-panel section w3-card-4">
             <form id="editAdvertisementForm" name="editAdvertisementForm" method="POST">
-                <div class="row">
-                    <div class="editFields col" >
 
                         <input class="w3-input w3-section" id="title" name="title" type="text" placeholder="Title"/>
+
                         <textarea class="w3-input w3-section" id="description" name="description" type="text" placeholder="Insert description"></textarea>
+
                         <input class="w3-input w3-section" id="price" name="price" type="number" placeholder="Price"/>
+
                         <input class="w3-input w3-section" id="numTotItem" name="numTotItem" type="number" placeholder="Number of items to sell"/>
-
-                    </div>
-
-                    <div class="col editFields">
 
                         <label for="dateStart">Date of start</label>
                         <input class="form-select form-select-lg mb-3 " id="dateStart" name="dateStart" type="date" placeholder="Starting day"/>
+
                         <label for="dateEnd">Date of end</label>
                         <input class="form-select form-select-lg mb-3" id="dateEnd" name="dateEnd" type="date" placeholder="Ending day"/>
+
                         <label for="timeStart">Time of start</label>
                         <input class="form-select form-select-lg mb-3" id="timeStart" name="timeStart" type="time" value="05:00:00" placeholder="Starting at"/>
+
                         <label for="timeEnd">Time of end</label>
                         <input class="form-select form-select-lg mb-3" id="timeEnd" name="timeEnd" type="time" value="23:30:00" placeholder="Ending at"/>
 
-                    </div>
-                </div>
-                <div class="row 2">
-                    <div class=" col buttonSection">
-                        <button type="reset" id="reset-button" class="button infoButtons">Reset</button><br/>
-                    </div>
-                    <div class=" col buttonSection">
+                <br/>
+
+                <section class="buttonSection">
+                        <button type="reset" id="reset-button" class="button infoButtons">Reset</button><br/><br/>
                         <button type="submit" id="edit-button" class="button infoButtons">Edit</button><br/>
-                    </div>
-                </div>
+                </section>
+
             </form>
+
         </section>
     </main>
     <div id="footer-area"></div>
