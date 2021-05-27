@@ -162,7 +162,7 @@ function loadAdvertisementList(res){
 
 
     } else {
-        str = "<p>" + "No advertisement found" + "</p>";
+        str = "<p>" + "Sorry, no ads were found for this category" + "</p>";
         advertisementList.innerHTML = str;
     }
 
