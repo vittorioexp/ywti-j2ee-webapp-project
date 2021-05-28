@@ -429,20 +429,15 @@ function validateTitle(){
     let regex = /[\{\}]/g;
 
     if (title.length === 0) {
-        error.innerHTML = "";
+        error.innerHTML = error.innerHTML.replace('<p>Invalid title.</p>','');
         return;
     }
 
-    document.getElementById("title").value = title;
-    document.getElementById("title").innerText = title;
-
     if (regex.test(title) || title.length < 5 || title.length > 200) {
-        if(error.innerHTML.includes("<p>Invalid title.</p>")){
-            return;
-        } else if(!error.innerHTML.includes("<p>Invalid title.</p>")){
+        if(!error.innerHTML.includes("<p>Invalid title.</p>")){
             error.innerHTML +="<p>Invalid title.</p>";
-            return;
         }
+        return;
     }
 
     // At this point there are no errors
@@ -456,7 +451,7 @@ function validateDescription(){
     let regex = /[\{\}]/g;
 
     if (description.length === 0) {
-        error.innerHTML = "";
+        error.innerHTML = error.innerHTML.replace('<p>Invalid description.</p>','');
         return;
     }
 
@@ -477,11 +472,11 @@ function validatePrice(){
     let error = document.getElementById("error");
 
     if (price.length === 0) {
-        error.innerHTML = "";
+        error.innerHTML = error.innerHTML.replace('<p>Invalid price.</p>','');
         return;
     }
 
-    if (price.length === 0 || price.value<=0) {
+    if (price.length === 0 || price<=0) {
         if(error.innerHTML.includes("<p>Invalid price.</p>")){
             return;
         } else if(!error.innerHTML.includes("<p>Invalid price.</p>")){
@@ -498,7 +493,7 @@ function validateNumTotItem(){
     let error = document.getElementById("error");
 
     if (numTotItem.length === 0) {
-        error.innerHTML = "";
+        error.innerHTML = error.innerHTML.replace('<p>Invalid number of item.</p>','');
         return;
     }
 

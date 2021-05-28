@@ -38,11 +38,15 @@ function createAdvertisement() {
     let timeEnd = document.getElementById("timeEnd").value.toString();
     let idType = document.getElementById("idType").value.toString();
 
+    // Sanitize inputs
+    title = sanitizeString(title);
+    description = sanitizeString(description);
+
     // Data to be send to the server
     let data = "{\"advertisement\":" +
         "{\"idAvdertisement\":\"" + idAdvertisement.toString() + "\"," +
-        "\"title\":\"" + sanitizeString(title) +
-        "\",\"description\":\"" + sanitizeString(description) + "\"," +
+        "\"title\":\"" + title +
+        "\",\"description\":\"" + description + "\"," +
         "\"price\":\"" + price + "\"," +
         "\"score\":\"" + 0 + "\"," +
         "\"numTotItem\":\"" + numTotItem + "\"," +
@@ -53,13 +57,26 @@ function createAdvertisement() {
         "\"emailCompany\":\"" + getUserEmail() + "\"," +
         "\"idType\":\"" + idType + "\"}}";
 
-    sendJsonRequest(url, "POST", data, function(req){
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(data){
 
-        // Parses the JSON obj
-        let jsonData = JSON.parse(req).advertisement;
-        let idAdvertisement = jsonData.idAdvertisement;
+            // Parses the JSON obj
+            let jsonData = data.advertisement;
+            let idAdvertisement = jsonData.idAdvertisement;
 
-        // Sends to the upload images page
-        window.location.href = contextPath + "/image-do-upload/" + idAdvertisement;
+            // Sends to the upload images page
+            window.location.href = contextPath + "/image-do-upload/" + idAdvertisement;
+            },
+        error: function(res) {
+            let resMessage = res.responseJSON.message;
+            alert(resMessage.message + " " + resMessage.errorDetails);
+        }
     });
+
+
 }
