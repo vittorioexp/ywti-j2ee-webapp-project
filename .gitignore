@@ -4,7 +4,7 @@
 
 # Java
 *.class
-
+target/
 log/
 
 # Package Files
