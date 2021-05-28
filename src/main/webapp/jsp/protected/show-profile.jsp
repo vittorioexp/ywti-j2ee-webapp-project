@@ -147,8 +147,8 @@ Since: 1.0
                         </div>
                 </c:when>
 
-                <!-- Company information -->
                 <c:otherwise>
+                    <!-- Company information -->
                     <h1 class="h1 usernameTitle w3-center p-2">${user.name}</h1>
                     <section class="w3-section w3-container w3-panel w3-card-4 w3-center userInfoSection">
                         <h2 class="h2 sectionTitle">My info</h2>
