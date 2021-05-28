@@ -83,21 +83,48 @@ function fetchEditProfile() {
 
 }
 
+// Returns true in case of error
 function validatePasswordOnSubmit(password){
-    // Min. size of the password = 8
-    return password.length < 8;
+
+    // Validate length
+    if(password.length < 8) {
+        return true;
+    }
+
+    // Validate lowercase letters
+    let lowerCaseLetters = /[a-z]/g;
+    if(!password.match(lowerCaseLetters)) {
+        return true;
+    }
+
+    // Validate capital letters
+    let upperCaseLetters = /[A-Z]/g;
+    if(!password.match(upperCaseLetters)) {
+        return true;
+    }
+
+    // Validate numbers
+    let numbers = /[0-9]/g;
+    if(!password.match(numbers)) {
+        return true;
+    }
+    return false;
 }
 
+// Returns true in case of error
 function validatePhoneNumberOnSubmit(phonenumber){
     // Regex for the phone number
-    let numbers = /^[0-9]$/;
-    return (phonenumber.match(numbers) || phonenumber.length < 7 || phonenumber.length > 14);
+    let numbers = /[0-9]/;
+
+    return (isNaN(phonenumber) || phonenumber.length < 7 || phonenumber.length > 14);
 }
 
+// Returns true in case of error
 function validateAddressOnSubmit(address){
     return address.length < 4 || address.length > 150 ;
 }
 
+// Returns true in case of error
 function validateCityOnSubmit(city){
     return city==="" || city < 1;
 }
