@@ -10,7 +10,7 @@ POST /adv-create	->	RestAdvertisementServlet.java > AdvertisementRestResource.ja
 
 DELETE /adv/ID		->	RestAdvertisementServlet.java > AdvertisementRestResource.java > deleteAdvertisement() > 
 
-GET /adv/ID/rate	-> 	RestAdvertisementServlet.java > AdvertisementRestResource.java > listAdvertisements() > JSON obj
+GET /adv/ID/rate	-> 	RestAdvertisementServlet.java > AdvertisementRestResource.java > indexPage() > JSON obj
 
 GET /adv/ID/image	->	RestAdvertisementServlet.java > AdvertisementRestResource.java > listImages() > JSON list
 
@@ -18,7 +18,7 @@ GET /adv/ID/feedback	->	RestAdvertisementServlet.java > AdvertisementRestResourc
 
 GET /adv/ID/booking	->	RestAdvertisementServlet.java > AdvertisementRestResource.java > listBookings() > JSON list
 
-GET /adv		->	RestAdvertisementServlet.java > AdvertisementRestResource.java > listAdvertisements() > JSON list
+GET /adv		->	RestAdvertisementServlet.java > AdvertisementRestResource.java > indexPage() > JSON list
 
 
 

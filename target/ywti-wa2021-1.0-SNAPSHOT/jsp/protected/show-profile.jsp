@@ -1,9 +1,8 @@
-<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Tourist" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Company" %>
-<%@ page import="java.util.List" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Booking" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.database.CityDAO" %>
 <%@ page import="it.unipd.dei.yourwaytoitaly.resource.Advertisement" %>
-<%@ page import="it.unipd.dei.yourwaytoitaly.database.AdvertisementDAO" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.Booking" %>
+<%@ page import="it.unipd.dei.yourwaytoitaly.resource.User" %>
+<%@ page import="java.util.List" %>
 <!--
 Copyright 2021 University of Padua, Italy
 
@@ -30,130 +29,196 @@ Since: 1.0
 
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>show profile</title>
-    </head>
-    <body>
-    <header>
-        <h1>Show profile</h1>
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Basso Marco, Esposito Vittorio, Piva Matteo, Giurisato Francesco">
+    <meta name="description" content="Show profile page">
+    <meta name="keywords" content="profile, page, show, ywti">
+    <!-- The viewport meta element is the key to making a responsive site work. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My profile - Your Way to Italy</title>
+
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+    <!-- Font awesome -->
+    <link href="/ywti_wa2021_war/css/fontawesome-free-5.15.3-web/css/all.css" rel="stylesheet">
+
+    <!-- W3 school CSS -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <!-- Common CSS -->
+    <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom CSS -->
+    <link href="/ywti_wa2021_war/css/style/show-profile-page.css" rel="stylesheet" type="text/css">
+
+    <!-- Common JS -->
+    <script src="/ywti_wa2021_war/js/utils.js"></script>
+
+    <!-- Custom JS -->
+    <script src="/ywti_wa2021_war/js/show-profile-page.js"></script>
+
+</head>
+<body>
+<div class="mainWrapper w3-main">
+    <header id="header-bar" class="">
+        <img id="small-logo" class="small-logo" src="/ywti_wa2021_war/utility/small-logo-transparent.png" >
+        <div id="navbar-area" class="topnav" ></div>
     </header>
-    <nav>
-        <a href="${pageContext.request.contextPath}/index">Home</a>
+    <main class="mainContent w3-container" >
+        <!-- Tourist information -->
+            <c:choose>
+                <c:when test="${userType}">
+                    <h1 class="h1 usernameTitle w3-center p-2">${user.name} ${user.surname}</h1>
+                        <section class="userInfoSection w3-section w3-container w3-panel w3-card-4 w3-center">
+                            <h2 class="h2">My info</h2>
+                            <table  class="infoTable">
+                                <tr><td>Email:</td> <td>${user.email}</td></tr>
+                                <tr ><td>Phone number: </td><td>${user.phoneNumber}</td></tr>
+                                <tr><td>Birth date: </td><td>${user.birthDate}</td></tr>
+                                <tr ><td>Address:</td> <td>${user.address}</td></tr>
+                                <tr ><td>City:</td><td name="userCity" id="${user.idCity}"></td></tr>
+                                <tr><td>Your score is </td><td>${score} </td></tr>
+                            </table>
+                            </br>
+                            <button name="editUserProfile" class="button w3-section w3-container w3-center">Edit Profile</button>
+                            <br/>
+                        </section>
 
-        <c:choose>
-            <c:when test="${empty sessionScope.Authorization}">
-            </c:when>
-            <c:otherwise>
-                <a href="${pageContext.request.contextPath}/user/do-logout">Logout</a>
-                <a href="${pageContext.request.contextPath}/user/do-edit">Edit profile</a>
-            </c:otherwise>
-        </c:choose>
+                    <!-- List of bookings of the tourist, shown below the user info -->
 
-        <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
+                        <div class=" touristBookingList w3-center">
+                            <section class="rowProfile w3-section w3-container w3-panel w3-card-4">
+                                <%
+                                    List<Booking> bookingList = (List) request.getAttribute("bookingList");
+                                    List<Advertisement> advertisementList = (List) request.getAttribute("advertisementList");
+                                    int count = 0;
+                                %>
+                                <c:choose>
+                                    <c:when test="${empty bookingList}">
+                                        <p name="emptyList" class="">Reservations not yet made!</p>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <h2 class="h2 w3-center sectionTitle ">My bookings</h2>
 
-    </nav>
+                                            <c:forEach items="<%=bookingList%>" var="booking">
+                                            <table class="table table-borderless">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Advertisement</th>
+                                                        <th scope="col" class="show-desktop">Starting</th>
+                                                        <th scope="col" class="show-desktop">Items</th>
+                                                        <th scope="col" ></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr >
+                                                        <td class="">
+                                                            <%=advertisementList.get(count).getTitle()%>
+                                                        </td>
+                                                        <td class="show-desktop">
+                                                            <%=advertisementList.get(count).getDateStart()%>
+                                                        </td>
+                                                        <td class="show-desktop"> ${booking.numBooking} items  </td>
+                                                        <td class="">
 
-    <p>This is a mock page to show the user profile.</p>
+                                                            <!-- The tourist can view or delete the booking -->
+                                                                <button class="small-btn" name="showBookingButton" value="${booking.idAdvertisement}"><i class="fas fa-info-circle"></i></button>
+                                                                <button class="small-btn" name="deleteBookingButton" value="${booking.idAdvertisement}"><i class="far fa-trash-alt"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <%count++;%>
+                                            </c:forEach>
+                                        </table>
+                                    </c:otherwise>
+                                </c:choose>
+                            </section>
+                        </div>
+                </c:when>
 
-    <c:choose>
-        <c:when test="${userType}">
-            </br>
-                <p>Name: ${user.name}</p>
-                <p>Surname: ${user.surname}</p>
-                <p>Email: ${user.email}</p>
-                <p>Phone number: ${user.phoneNumber}</p>
-                <p>Birth date: ${user.birthDate}</p>
-                <p>Address: ${user.address}</p>
-                <p>City: ${user.idCity}</p>
-                <p>Your score is ${score} </p>
-            </br>
-            <p>These are your bookings</p>
-            </br>
-            <%
-                List<Booking> bookinglist = (List) request.getAttribute("bookingList");
-                List<Advertisement> advertisementList = (List) request.getAttribute("advertisementList");
-                int count = 0;
-            %>
-            <table>
-            <c:forEach items="<%=bookinglist%>" var="booking">
-                    <tr>
-                        <td>
-                            <%=advertisementList.get(count).getDateStart()%>
-                        </td>
-                        <td>
-                            <%=advertisementList.get(count).getTitle()%>
-                        </td>
-                        <td> ${booking.numBooking} items booked  </td>
-                        <td>
-                            <form id="deleteBookingForm" name="deleteBookingForm" action = "<c:url value="/booking-delete"/>" method="DELETE">
-                                <input type="hidden" name="idAdvertisement" value="${booking.idAdvertisement}"/>
-                                <button type="submit" >Delete</button><br/>
-                            </form>
-                        </td>
-                        <%count++;%>
-                    </tr>
-            </c:forEach>
-            </table>
-        </c:when>
-        <c:otherwise>
-            </br>
-            <p>Name: ${user.name}</p>
-            <p>Email: ${user.email}</p>
-            <p>Phone number: ${user.phoneNumber}</p>
-            <p>Address: ${user.address}</p>
-            <p>City: ${user.idCity}</p>
-            </br>
-            </br>
-            <p>Click this button to create a new advertisement</p>
-            </br>
-            <form method="GET" action="<c:url value="/adv-do-create"/>">
-                <button type="submit">New advertisement</button>
-            </form>
-            <%
-                List<Advertisement> advertisementList = (List<Advertisement>) request.getAttribute("advertisementList");
-            %>
-            </br>
-            <p>These are your active advertisements</p>
-            </br>
-            <table>
-            <c:forEach items="${advertisementList}" var="adv">
-                    <tr>
-                        <td>${adv.title}   </td>
-                        <td>${adv.dateStart}   </td>
-                        <td>${adv.dateEnd}   </td>
-                        <td>${adv.numTotItem}   </td>
-                        <td>${adv.price}   </td>
-                        <td>
-                            <form id="gotoEditAdvertisementForm" name="gotoEditAdvertisementForm" method="GET"
-                                  action="<c:url value="/adv-edit"/>">
-                                <input type="hidden" name="idAdvertisement" value="${adv.idAdvertisement}">
-                                <button type="submit">Edit</button><br/>
-                            </form>
-                        </td>
-                        <td>
-                            <form id="gotoShowAdvertisementForm" name="gotoShowAdvertisementForm" method="GET"
-                                  action="<c:url value="/adv-show/${adv.idAdvertisement}"/>" >
-                                <button type="submit">Info</button><br/>
-                            </form>
-                        </td>
-                        <td>
-                            <form id="deleteAdvertisementForm" name="deleteAdvertisementForm" method="DELETE"
-                                  action="<c:url value="/adv/${adv.idAdvertisement}"/>" >
-                                <button type="submit">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-            </c:forEach>
-            </table>
-        </c:otherwise>
-    </c:choose>
+                <c:otherwise>
+                    <!-- Company information -->
+                    <h1 class="h1 usernameTitle w3-center p-2">${user.name}</h1>
+                    <section class="w3-section w3-container w3-panel w3-card-4 w3-center userInfoSection">
+                        <h2 class="h2 sectionTitle">My info</h2>
 
-     <div>
-         <c:import url="/jsp/include/show-message.jsp"/>
-     </div>
+                        <table  class="infoTable">
+                            <tr><td>Email:</td> <td>${user.email}</td></tr>
+                            <tr ><td>Phone number: </td><td>${user.phoneNumber}</td></tr>
+                            <tr ><td>Address:</td> <td>${user.address}</td></tr>
+                            <tr ><td>City:</td><td name="userCity" id="${user.idCity}"></td></tr>
+                        </table>
 
-    </body>
+                        <section class="w3-center">
+                            <button name="editUserProfile" class="button infoButtons w3-section w3-container">Edit Profile</button>
+                        </section>
+
+                    </section>
+
+
+                    <!-- List of advertisement of the company -->
+                    <section class="bookings w3-section w3-container w3-panel w3-card-4 w3-center touristAdvList">
+                        <%
+                            List<Advertisement> advertisementList = (List<Advertisement>) request.getAttribute("advertisementList");
+                        %>
+                        <h2 class="h2 sectionTitle">My advertisements</h2>
+                        <form action="/ywti_wa2021_war/adv-do-create" >
+                            <button type="submit" name="createAdvertisementButton" id="createAdvertisementButton" class="button infoButtons w3-section w3-container">New advertisement</button>
+                        </form>
+                        <c:choose>
+                            <c:when test="${empty advertisementList}">
+                                <p name="emptyList">No advertisement created</p>
+                            </c:when>
+                            <c:otherwise>
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Advertisement</th>
+                                            <th scope="col" class="show-desktop">Starting</th>
+                                            <th scope="col" class="show-desktop">Ending</th>
+                                            <th scope="col" class="show-desktop">Items</th>
+                                            <th scope="col" class="show-desktop">Price</th>
+                                            <th scope="col" ></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                <c:forEach items="${advertisementList}" var="adv">
+                                        <tr>
+                                            <td class="">${adv.title}   </td>
+                                            <td class="show-desktop">${adv.dateStart}   </td>
+                                            <td class="show-desktop">${adv.dateEnd}   </td>
+                                            <td class="show-desktop">${adv.numTotItem}   </td>
+                                            <td class="show-desktop">${adv.price}   </td>
+
+                                            <td>
+                                                <!-- Show, edit or delete the selected adv -->
+                                                <button class="small-btn" name="showAdvertisementButton" value="${adv.idAdvertisement}"><i class="fas fa-info-circle"></i></button>
+                                                <button class="small-btn" name="editAdvertisementButton" value="${adv.idAdvertisement}"><i class="fas fa-edit"></i></button>
+                                                <button class="small-btn" name="deleteAdvertisementButton" value="${adv.idAdvertisement}"><i class="far fa-trash-alt"></i></button>
+                                            </td>
+                                        </tr>
+                                </c:forEach>
+                                    </tbody>
+                                </table>
+                            </c:otherwise>
+                        </c:choose>
+                    </section>
+                </c:otherwise>
+            </c:choose>
+        </main>
+        <!-- footer imported with javascript -->
+    </div>
+    <div id="footer-area"></div>
+</body>
 </html>

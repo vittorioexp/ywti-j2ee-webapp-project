@@ -15,6 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 Author: Vittorio Esposito
+        Marco Basso
+        Matteo Piva
+        Francecso Giurisato
 Version: 1.0
 Since: 1.0
 -->
@@ -23,95 +26,141 @@ Since: 1.0
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>register</title>
-</head>
-<body>
-<header>
-    <h1>Register</h1>
-</header>
-<nav>
-    <a href="${pageContext.request.contextPath}/index">Home</a>
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Basso Marco, Esposito Vittorio, Piva Matteo, Giurisato Francesco"> <!-- who wrote the page -->
+        <meta name="description" content="Login page"> <!-- a textual description of it -->
+        <meta name="keywords" content="login, loginpage, ywti, local, travel, italy"> <!-- some keywords to make your page more easily findable -->
+        <!-- The viewport meta element is the key to making a responsive site work. -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Register - Your Way to Italy</title>
 
-    <c:choose>
-        <c:when test="${empty sessionScope.Authorization}">
-            <a href="${pageContext.request.contextPath}/user/do-login">Login</a>
-        </c:when>
-        <c:otherwise>
-            <a href="${pageContext.request.contextPath}/user/profile">Profile</a>
-            <a href="${pageContext.request.contextPath}/user/do-logout">Logout</a>
-        </c:otherwise>
-    </c:choose>
+        <!-- Jquery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <a href="${pageContext.request.contextPath}/html/contacts.html">Contacts</a>
-</nav>
-<br/>
-<p>This is a mock page to register</p>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
-<table>
-    <tr>
-        <td>
-            <p>Register as a tourist and start your journey!</p>
-            <br/>
-            <form method="POST" action="<c:url value="/user/register"/>">
+        <!-- Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
-                <label for="email_t">email:</label>
-                <input name="email" type="text" id="email_t" required/><br/><br/>
-                <label for="password_t">password:</label>
-                <input name="password" type="password" id="password_t" required/><br/><br/>
-                <label for="rpassword_t">repeat password:</label>
-                <input name="rpassword" type="password" id="rpassword_t" required/><br/><br/>
-                <label for="name_t">name:</label>
-                <input name="name" type="text" id="name_t" required/><br/><br/>
-                <label for="surname_t">surname:</label>
-                <input name="surname" type="text" id="surname_t" required/><br/><br/>
-                <label for="address_t">address:</label>
-                <input name="address" type="text" id="address_t" required/><br/><br/>
-                <label for="phonenumber_t">phone number:</label>
-                <input name="phone" type="text" id="phonenumber_t" required/><br/><br/>
-                <label for="city_t">city:</label>
-                <input name="city" type="number" id="city_t" required/><br/><br/>
-                <label for="birthdate_t">birth date:</label>
-                <input name="birthDate" type="Date" id="birthdate_t" required/><br/><br/>
+        <!-- Font awesome -->
+        <link href="/ywti_wa2021_war/css/fontawesome-free-5.15.3-web/css/all.css" rel="stylesheet">
 
-                <input type="hidden" id="userType" name="userType" value="tourist">
+        <!-- W3 school CSS -->
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-                <button type="submit">Register</button><br/>
+        <!-- Crypto JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/md5.js"></script>
 
-            </form>
-        </td>
-        <td>
-            <p>Register as a company and create your event!</p>
-            <br/>
-            <form method="POST" action="<c:url value="/user/register"/>">
+        <!-- Common CSS -->
+        <link href="/ywti_wa2021_war/css/style/ywti.css" rel="stylesheet" type="text/css">
 
-                <label for="email_c">email:</label>
-                <input name="email" type="text" id="email_c"/><br/><br/>
-                <label for="password_c">password:</label>
-                <input name="password" type="password" id="password_c"/><br/><br/>
-                <label for="rpassword_c">repeat password:</label>
-                <input name="rpassword" type="password" id="rpassword_c"/><br/><br/>
-                <label for="name_c">name:</label>
-                <input name="name" type="text" id="name_c"/><br/><br/>
-                <label for="address_c">address:</label>
-                <input name="address" type="text" id="address_c"/><br/><br/>
-                <label for="phonenumber_c">phone number:</label>
-                <input name="phone" type="text" id="phonenumber_c"/><br/><br/>
-                <label for="city">city:</label>
-                <input name="city" type="number" id="city"/><br/><br/>
+        <!-- Custom CSS -->
+        <link href="/ywti_wa2021_war/css/style/register-page.css" rel="stylesheet" type="text/css">
 
-                <input type="hidden" name="userType" value="company">
+        <!-- Common JS -->
+        <script src="/ywti_wa2021_war/js/utils.js"></script>
 
-                <button type="submit">Register</button><br/>
+        <!-- Custom JS -->
+        <script src="/ywti_wa2021_war/js/register-page.js"></script>
 
-            </form>
-        </td>
-    </tr>
-</table>
 
-<div>
-    <c:import url="/jsp/include/show-message.jsp"/>
-</div>
-</body>
+    </head>
+    <body>
+    <div class="mainWrapper w3-main">
+        <header id="header-bar" class="">
+            <img id="small-logo" class="small-logo" src="/ywti_wa2021_war/utility/small-logo-transparent.png" >
+            <div id="navbar-area" class="topnav" ></div>
+        </header>
+        <main class="mainContent" >
+            <section class="w3-container w3-section">
+                <h1 class="h1 w3-center">Create your own account</h1>
+            </section>
+            <!-- Select if the registration is for a tourist or company -->
+            <section id ="companyornot" class="w3-container w3-panel w3-card-4 w3-section w3-center"><br/>
+                <input type="checkbox" id="userTypeCheckbox" name="userTypeCheckbox" value="company" onclick="checkUserType()">
+                <label for="userType" class="lead" > I am a company</label><br/><br/>
+            </section>
+            <section id="error" class="w3-center">
+            </section>
+            <!-- Registration of a tourist-->
+            <section id="touristRegistration" class="w3-panel w3-card-4 w3-section">
+                <p class="lead p-1 w3-center" >Register as a tourist and start your journey!</p>
+                <br/>
+                <!-- Form to insert tourist info -->
+                <form id="registerFormTourist" name="registerForm" method="POST">
+
+                    <input class="w3-input w3-section" name="email" type="email" id="email_t" placeholder="Email"required/>
+
+                    <input class="w3-input w3-section" name="password" type="password" id="password_t" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Password" required/>
+
+                    <input class="w3-input w3-section" name="rpassword" type="password" id="rpassword_t" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Repeat password" required/>
+
+                    <input class="w3-input w3-section" name="name" type="text" id="name_t"  placeholder="Name" required/>
+
+                    <input class="w3-input w3-section" name="surname" type="text" id="surname_t" placeholder="Surname" required/>
+
+                    <input class="w3-input w3-section" name="address" type="text" id="address_t" placeholder="Address"  required/>
+
+                    <input class="w3-input w3-section" name="phone" type="text" id="phonenumber_t" placeholder="Phone number" required/>
+
+                    <select class="form-select form-select-lg mb-3" form="registerFormTourist" id="idCity_t" name="idCity">
+                        <option value="0" disabled selected>City</option>
+                    </select>
+
+                    <label class="label" for="birthdate_t" style="color: gray;">Birthdate</label>
+                    <input class="form-select form-select-lg mb-3" name="birthDate" type="Date" id="birthdate_t" placeholder="Birthdate" required/>
+
+                    <input type="hidden" id="userType" name="userType" value="tourist">
+                    <br/><br/>
+
+                    <div class="w3-center">
+                        <button name="register-button" class="button"type="submit">Register</button><br/><br/>
+                    </div>
+
+                </form>
+            </section>
+            <!-- Company registration -->
+            <section id="companyRegistration" class="w3-panel w3-card-4 w3-section">
+                <p class="lead p-1 w3-center">Register as a company and start to create your event!</p>
+                <br/>
+                <!-- Form to insert company info -->
+                <form id="registerFormCompany" name="registerForm" method="POST">
+
+                    <input class="w3-input w3-section" name="email" type="email" id="email_c" placeholder="Email" required/>
+
+                    <input class="w3-input w3-section" name="password" type="password" id="password_c" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Password" required/>
+
+                    <input class="w3-input w3-section" name="rpassword" type="password" id="rpassword_c" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 characters" placeholder="Repeat Password" required/>
+
+                    <input class="w3-input w3-section" name="name" type="text" id="name_c" placeholder="Company name" required/>
+
+                    <input class="w3-input w3-section" name="address" type="text" id="address_c" placeholder="Company address" required/>
+
+                    <input class="w3-input w3-section" name="phone" type="text" id="phonenumber_c" placeholder="Company phone number" required/>
+
+                    <select class="form-select form-select-lg mb-3" form="companyRegistration" id="idCity_c" name="idCity">
+                        <option value="0" disabled selected>City</option>
+                    </select>
+
+                    <input type="hidden" name="userType" value="company">
+
+                    <br/><br/>
+                    <div class="w3-center">
+                        <button name="register-button" type="submit" class="button">Register</button><br/><br/>
+                    </div>
+
+                </form>
+            </section>
+        </main>
+        <!-- footer imported with javascript -->
+    </div>
+    <div id="footer-area"></div>
+    </body>
 </html>
