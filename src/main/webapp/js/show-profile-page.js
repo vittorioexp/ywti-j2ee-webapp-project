@@ -34,8 +34,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                             url: url,
                             method: 'DELETE',
                             success: function(res) {
-                                event.preventDefault();
-                                alert("Reload the page to see your information updated.");
+                                alert(res.message.message + " Reload the page to see your information updated.");
                             },
                             error: function(res) {
                                 let resMessage = res.responseJSON.message;
@@ -125,8 +124,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                             data: data,
                             method: 'GET',
                             success: function(res) {
-                                event.preventDefault();
-                                alert("Reload the page to see your information updated.");
+                                alert(res.message.message + " Reload the page to see your information updated.");
                             },
                             error: function(res) {
                                 let resMessage = res.responseJSON.message;

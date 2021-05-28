@@ -136,6 +136,8 @@ public class DeleteBookingServlet extends AbstractDatabaseServlet{
             AdvertisementDAO.editAdvertisement(advertisement);
 
             res.setStatus(HttpServletResponse.SC_OK);
+            Message m = new Message("Booking successfully deleted!");
+            m.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;
