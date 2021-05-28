@@ -162,7 +162,7 @@ function loadAdvertisementList(res){
 
 
     } else {
-        str = "<p>" + "Sorry, no ads were found for this category" + "</p>";
+        str = "<p class=\"w3-center\">" + "Sorry, no ads were found for this category" + "</p>";
         advertisementList.innerHTML = str;
     }
 
