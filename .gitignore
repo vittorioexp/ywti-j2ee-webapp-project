@@ -1,5 +1,19 @@
-*/.idea/
-*/target/
-
-
+# IntelliJ Idea
 *.iml
+.idea/
+
+# Java
+*.class
+target/
+log/
+
+# Package Files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+### OSX ###
+.DS_Store
