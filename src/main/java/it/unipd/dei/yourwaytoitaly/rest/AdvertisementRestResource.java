@@ -247,7 +247,9 @@ public class AdvertisementRestResource extends RestResource {
 
             advertisement = AdvertisementDAO.editAdvertisement(advertisement);
 
+            Message success = new Message("Advertisement edited successfully!");
             res.setStatus(HttpServletResponse.SC_OK);
+            success.toJSON(res.getOutputStream());
 
         } catch (Exception ex) {
             ErrorCode ec = ErrorCode.INTERNAL_ERROR;

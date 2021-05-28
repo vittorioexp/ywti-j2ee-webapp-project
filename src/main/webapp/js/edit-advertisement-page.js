@@ -72,18 +72,39 @@ function fetchEditAdvertisement(currentUrl){
 
         let url = new URL(contextPath+"/adv/" + idAdvertisement);
 
+        // Sanitize inputs
+        title = sanitizeString(title);
+        description = sanitizeString(description);
+
         let data =
-            "{\"advertisement\": {\"idAdvertisement\":\"" + idAdvertisement + "\",\"title\":\"" + sanitizeString(title)
-            + "\",\"description\":\"" + sanitizeString(description) + "\",\"score\":\"" + "0" + "\",\"price\":\"" + price +
+            "{\"advertisement\": {\"idAdvertisement\":\"" + idAdvertisement + "\",\"title\":\"" + title
+            + "\",\"description\":\"" + description + "\",\"score\":\"" + "0" + "\",\"price\":\"" + price +
             "\",\"numTotItem\":\"" + numTotItem + "\"," +
             "\"dateStart\":\"" + dateStart + "\"," +
             "\"dateEnd\":\"" + dateEnd
             + "\",\"timeStart\":\"" + timeStart + "\",\"timeEnd\":\"" + timeEnd + "\",\"emailCompany\":\"" + emailCompany + "\",\"idType\":\"0\"}}";
 
+        $.ajax({
+            type: "PUT",
+            url: url,
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data){
+                alert(data.message.message);
+                window.location.replace(contextPath + "/adv-show/" + idAdvertisement);
+            },
+            error: function(res) {
+                let resMessage = res.responseJSON.message;
+                alert(resMessage.message + " " + resMessage.errorDetails);
+            }
+        });
+
         // Send JSON object to the url
+        /*
         sendJsonRequest(url, "PUT", data, function(req){
             window.location.replace(contextPath + "/adv-show/" + idAdvertisement);
-        });
+        });*/
     }
 
 
