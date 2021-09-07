@@ -2,7 +2,7 @@
 
 ### What is this repository for? ###
 
-* Web Application Project Your Way To Italy
+* University Project: Your Way To Italy
 * Version 1.0
 
 # How do I run tests? #
