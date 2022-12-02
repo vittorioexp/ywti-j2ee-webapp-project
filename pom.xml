@@ -11,8 +11,8 @@
 
     <!-- Project description elements -->
     <name>Your Way To Italy</name>
-    <description>Your Way To Italy description.</description>
-    <url>https://github.com/vittorioexp/your-way-to-italy-webapp</url>
+    <description>Java EE project example</description>
+    <url>https://github.com/vittorioexp/Java-EE-project-example</url>
     <inceptionYear>2021</inceptionYear>
     <developers>
         <developer>
