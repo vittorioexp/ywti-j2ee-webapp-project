@@ -1,4 +1,4 @@
-Java EE project example
+YourWayToItaly J2EE Web App project
 =====
 
 This repository is a Java EE project that showcases how to interact with a [PostgreSQL](https://www.postgresql.org/) database management system (DBMS) using [JDBC](https://docs.oracle.com/javase/8/docs/technotes/guides/jdbc/). The front end of the web application was built using HTML, CSS, and JavaScript. This project serves as a useful example for those looking to gain a better understanding of how to connect to and query a database using Java.
